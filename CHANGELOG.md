@@ -7,6 +7,7 @@ All notable changes to Super Cursor are documented here.
 ### Fixed
 
 - **README.md** — GitHub 链接 owner 与 remote 对齐（`wangqiqi/cursor-ai`）
+- **.gitignore** — `plan.md` 改为 `/plan.md`，避免误忽略 `.cursor/templates/plan.md` 导致 CI verify 失败
 
 ## [4.11.0] - 2026-06-09
 
