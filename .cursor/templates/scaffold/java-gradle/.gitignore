@@ -1,0 +1,11 @@
+.gradle/
+build/
+bin/
+out/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Super Cursor (plan/run local)
+plan.md
+.cursorGrowth/

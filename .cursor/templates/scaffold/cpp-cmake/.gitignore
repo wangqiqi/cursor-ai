@@ -1,0 +1,9 @@
+build/
+cmake-build-*/
+*.o
+*.out
+*.exe
+
+# Super Cursor (plan/run local)
+plan.md
+.cursorGrowth/

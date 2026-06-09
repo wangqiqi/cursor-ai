@@ -1,0 +1,38 @@
+---
+description: 反馈规范 — CHANGELOG 结构与 plan 分工
+globs:
+  - CHANGELOG.md
+  - plan.md
+  - archive/**/*
+alwaysApply: false
+---
+
+# 反馈规范 · CHANGELOG
+
+读 `.cursor/config/release.json` 获取 tag 格式与文件名。
+
+## 版本节
+
+- 标题：`## [x.y.z] - YYYY-MM-DD`（或 config 约定）
+- **新版在上**
+- 未发布工作积压在 `## [Unreleased]`；打版时折叠进版本节
+
+## 内容
+
+- 用户可见行为、API 变更、修复、breaking changes
+- 有 issue/PR 则链接
+- 长进度叙事放 `plan.md` 或 `archive/`，勿堆进 CHANGELOG
+
+## 与 plan.md
+
+- **plan.md**（根目录）：本地 Sprint 状态 · **gitignore** · 不 commit
+- **CHANGELOG**：对外发布说明
+- 归档用 `archive/` 时间戳文件名（gitignore）；`plan.md` ROADMAP 留本地索引
+
+## 打版前
+
+- [ ] Unreleased 已审阅分组
+- [ ] 版本顺序正确
+- [ ] 行为变更已更新文档
+
+CHANGELOG 供 **`/learn`** 输入；摘要仅 `.cursorGrowth/learn/`。

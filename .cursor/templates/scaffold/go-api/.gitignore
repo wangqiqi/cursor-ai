@@ -1,0 +1,9 @@
+bin/
+dist/
+*.exe
+*.test
+coverage.out
+
+# Super Cursor (plan/run local)
+plan.md
+.cursorGrowth/

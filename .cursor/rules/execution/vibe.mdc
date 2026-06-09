@@ -1,0 +1,16 @@
+---
+description: VIBE development — documentation, tests, API alignment
+globs:
+  - "**/*"
+alwaysApply: false
+---
+
+# VIBE SOP
+
+- **Document first**: spec or plan acceptance before large multi-file implementation.
+- **Test early**: add/update tests with behavior changes; green before ✅ task.
+- **API contract**: agree request/response shape before parallel frontend/backend work.
+- **Align often**: grep field names and routes against docs when touching both sides.
+- **Layer order** (B/S): UI → interaction → API surface → backend → persistence — skip only if user confirms.
+- New projects: prefer `/scaffold` + `/plan` over ad-hoc directory sprawl.
+- **Pre-merge / pre-release product check**: UI/feature sprints → **`/delivery`** before **`/finish`** or **release** (see **delivery** skill).

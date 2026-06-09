@@ -1,0 +1,12 @@
+{
+  "changelog_file": "CHANGELOG.md",
+  "unreleased_heading": "## [Unreleased]",
+  "version_heading_pattern": "## [{version}]",
+  "tag_format": "semver",
+  "tag_prefix": "v",
+  "annotated_tags": true,
+  "order": "newest_first",
+  "merge_policy": "one_user_story_per_release",
+  "plan_file": "plan.md",
+  "archive_dir": "archive"
+}

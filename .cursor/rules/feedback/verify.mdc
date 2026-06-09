@@ -1,0 +1,32 @@
+---
+description: 验收反馈 — 见 workflow.mdc
+globs:
+  - plan.md
+  - scripts/verify.sh
+  - scripts/test.sh
+  - .cursor/config/workflow.json
+alwaysApply: false
+---
+
+# 验收
+
+遵循 `rules/workflow.mdc`：`gate-check`/`task-verify` 非 OK 不得 ✅ 或 commit；打 tag 前 `verify`。
+
+## 命令
+
+```bash
+./.cursor/bin/runner.sh gate-check
+./.cursor/bin/runner.sh task-verify    # 当前 ACTIVE 任务
+./.cursor/bin/runner.sh verify         # Sprint / 打版前全量
+```
+
+## 验收列约定
+
+| 阶段 | 推荐 |
+|------|------|
+| 开发任务 | `./scripts/test.sh` |
+| 任务收尾 / P0 | `./scripts/verify.sh` |
+
+`task_verify_heuristics.enabled` 默认 **false**（`config/workflow.json`）。设为 `true` 时，描述性验收列回退 `fallback_test_script` / `fallback_verify_script`。
+
+用户可见修复 → CHANGELOG `### Fixed`。
