@@ -3,12 +3,17 @@
 <!-- SPRINT: SPRINT-01 -->
 <!-- PLAN_APPROVED: YYYY-MM-DD -->
 <!-- AUTONOMOUS: false -->
+<!-- SPRINT_STATUS: active -->
 <!-- ACTIVE: TASK-001 -->
 <!-- NEXT: TASK-001 -->
+<!-- LAST_DONE: (none) -->
 <!-- VERIFY: ./scripts/verify.sh -->
 <!-- MAX_LOOPS: 15 -->
+<!-- VERSION_TARGET: (optional) -->
 
 # Plan
+
+> **plan 双态**：HTML 注释（`ACTIVE` / `LAST_DONE` / `SPRINT_STATUS`）供 `runner.sh` 解析；**Done when**、TASK ✅、基线矩阵等正文须在 Sprint 收尾时与 archive 对齐（见 **run** skill · plan 正文 reconciliation）。
 
 ## Active sprint · SPRINT-01 Example
 
@@ -35,4 +40,5 @@
 
 ## Changelog index
 
-- Move completed sprint notes to `archive/` with timestamped filenames.
+- Move completed sprint notes to `archive/` with timestamped filenames (`YYYYMMDD_HHMMSS_功能_模块_sprint闭环.md`).
+- Sprint 收尾：`SPRINT_STATUS: closed` · Done when 全 `[x]` · TASK 全 ✅ · 标题改「已完成 Sprint」· 历史表补归档链（**run** skill reconciliation 清单）。

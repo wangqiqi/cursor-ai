@@ -96,6 +96,37 @@ plan_last_done() {
   plan_meta "LAST_DONE"
 }
 
+plan_sprint_status() {
+  plan_meta "SPRINT_STATUS"
+}
+
+# Sprint 是否已闭合（元数据或 ACTIVE 空且 LAST_DONE 有值）
+plan_sprint_appears_closed() {
+  local active last status
+  status="$(plan_sprint_status)"
+  [[ "$status" == "closed" ]] && return 0
+  active="$(plan_active)"
+  last="$(plan_last_done)"
+  if [[ "$active" == "(none)" || -z "$active" ]]; then
+    [[ -n "$last" && "$last" != "(none)" ]] && return 0
+  fi
+  return 1
+}
+
+# Done when 小节内未勾选项数
+plan_done_when_unchecked() {
+  if [[ ! -f "$PLAN_FILE" ]]; then
+    echo "0"
+    return 0
+  fi
+  awk '
+    /^### Done when/ { in_done=1; next }
+    /^### / && in_done { exit }
+    in_done && /^- \[ \]/ { count++ }
+    END { print count+0 }
+  ' "$PLAN_FILE" 2>/dev/null || echo "0"
+}
+
 plan_next_meta() {
   plan_meta "NEXT"
 }

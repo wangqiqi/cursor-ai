@@ -4,6 +4,19 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.12.0] - 2026-06-09
+
+### Added
+
+- **plan-parse.sh** — `plan_sprint_status` · `plan_sprint_appears_closed` · `plan_done_when_unchecked` 供 Sprint 闭合检测
+- **plan** skill — 基线分析 / 审查快照与闭环对齐表（防 plan 头身不一致）
+- **templates/plan.md** — `SPRINT_STATUS` · `LAST_DONE` · `VERSION_TARGET` 元数据 · plan 双态说明
+
+### Changed
+
+- **run** skill — Sprint 收尾 **plan 正文 reconciliation** 清单（Done when · TASK ✅ · 基线矩阵 · 标题改「已完成 Sprint」）
+- **runner.sh** `plan-check` — Sprint 已闭合时 WARN 未 reconciliation 的正文；无活跃任务时跳过误报
+
 ### Fixed
 
 - **README.md** — GitHub 链接 owner 与 remote 对齐（`wangqiqi/cursor-ai`）

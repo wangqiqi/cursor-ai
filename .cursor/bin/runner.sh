@@ -112,12 +112,16 @@ plan_check() {
     return 1
   fi
   if ! grep -q '| ⬜ |' "$PLAN" 2>/dev/null && ! grep -q '| 🔧 |' "$PLAN" 2>/dev/null; then
-    echo "WARN: 无活跃 ⬜/🔧 任务"
-    issues=$((issues + 1))
+    if ! plan_sprint_appears_closed; then
+      echo "WARN: 无活跃 ⬜/🔧 任务"
+      issues=$((issues + 1))
+    fi
   fi
   if [[ -z "$(plan_active)" ]]; then
-    echo "WARN: <!-- ACTIVE --> 未设置"
-    issues=$((issues + 1))
+    if ! plan_sprint_appears_closed; then
+      echo "WARN: <!-- ACTIVE --> 未设置"
+      issues=$((issues + 1))
+    fi
   fi
   if [[ -z "$(plan_sprint)" ]]; then
     echo "WARN: <!-- SPRINT --> 未设置"
@@ -144,6 +148,29 @@ plan_check() {
   if [[ "$bad" -gt 0 ]]; then
     echo "WARN: ${bad} 行活跃任务可能缺「验收」或「落点」"
     issues=$((issues + 1))
+  fi
+  # Sprint 已闭合但 plan 正文未 reconciliation
+  if plan_sprint_appears_closed; then
+    local unchecked pending_tasks
+    unchecked="$(plan_done_when_unchecked)"
+    if [[ "${unchecked:-0}" -gt 0 ]]; then
+      echo "WARN: Sprint 已闭合但 Done when 仍有 ${unchecked} 项未 [x] — 见 run skill · plan 正文 reconciliation"
+      issues=$((issues + 1))
+    fi
+    if grep -qE '^##[[:space:]]+活跃[[:space:]]+[Ss]print' "$PLAN" 2>/dev/null; then
+      echo "WARN: 标题仍为「活跃 Sprint」— 收尾时应改为「已完成 Sprint」"
+      issues=$((issues + 1))
+    fi
+    if [[ "$(plan_sprint_status)" != "closed" ]]; then
+      echo "WARN: <!-- SPRINT_STATUS --> 未设 closed（建议 Sprint 收尾时写入）"
+      issues=$((issues + 1))
+    fi
+    pending_tasks="$(grep -cE '\| ⬜ \|' "$PLAN" 2>/dev/null || true)"
+    pending_tasks="${pending_tasks:-0}"
+    if [[ "$pending_tasks" -gt 0 ]]; then
+      echo "WARN: Sprint 已闭合但 TASK 表仍有 ${pending_tasks} 行 ⬜"
+      issues=$((issues + 1))
+    fi
   fi
   if [[ "$issues" -eq 0 ]]; then
     echo "OK: handoff 就绪"

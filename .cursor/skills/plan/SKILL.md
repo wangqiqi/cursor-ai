@@ -77,6 +77,18 @@ disable-model-invocation: true
 
 Sprint 表 + **执行顺序** 行：`TASK-001` → `TASK-002` → …
 
+### 基线分析 · 与闭环对齐（防 plan 头身不一致）
+
+Sprint 内若含 **触点矩阵**、**现状 vs 目标**、**差距列表** 等「规划基线」段落：
+
+| 阶段 | 要求 |
+|------|------|
+| **规划（/plan）** | 标题或段首标明 **审查基线 / vX 快照**；链 `archive/...审查清单.md` 若已归档 |
+| **执行（/run）** | 单任务 ✅ 时同步 TASK 表 **✅**；**不得**只改 `LAST_DONE` |
+| **Sprint 收尾** | 按 **run** skill **plan 正文 reconciliation** 清单：Done when 全 `[x]` · 矩阵改 **交付态** 或保留快照链 · 标题改 **已完成 Sprint** |
+
+`runner.sh plan-check` 在 Sprint 已闭合（`ACTIVE=(none)` + `LAST_DONE` 有值）时会 **WARN** 未 reconciliation 的正文。
+
 ### 阶段 3 · handoff
 
 用户确认后设 `PLANNING:false` · `PLAN_APPROVED` · `ACTIVE`/`NEXT`：
@@ -84,6 +96,7 @@ Sprint 表 + **执行顺序** 行：`TASK-001` → `TASK-002` → …
 ```markdown
 <!-- PLANNING: false -->
 <!-- PLAN_APPROVED: YYYY-MM-DD -->
+<!-- SPRINT_STATUS: active -->
 <!-- ACTIVE: TASK-001 -->
 <!-- NEXT: TASK-001 -->
 ```
