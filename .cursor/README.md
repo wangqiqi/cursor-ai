@@ -9,7 +9,8 @@
 
 ```
 rules/   communication · execution · feedback · tech
-skills/  master plan run learn scaffold git finish release security api debug test mcp refactor perf review study delivery
+skills/  master plan run learn scaffold git finish release security api ux ia debug test mcp refactor perf review study delivery
+commands/ ux ia delivery
 agents/  ship review spike
 hooks/   growth-init run-start run-stop
 config/  workflow.json release.json roles.json
@@ -36,9 +37,14 @@ bash .cursor/verify-system.sh                # 同上 layout（alias）
 | `/run` | run |
 | `/learn` | learn |
 | `/scaffold` | scaffold（8 栈 / audit） |
+| `/ux` | ux（体验分流 → ia / delivery） |
+| `/ia` | ia（信息架构 · UX 结构层） |
+| `/delivery` | delivery（7 维交付验收） |
 | Git 提交 | git skill |
 | 安全审查 | security skill |
 | API 设计 | api skill |
+| UX / 体验分流 | **ux** skill · `rules/execution/ux.mdc` |
+| 信息架构 / 导航 | **ia** skill（UX 结构层）· `rules/execution/ia.mdc` |
 | 发版清单 | release skill |
 | 自治发版 | **ship** agent |
 
@@ -64,7 +70,7 @@ bash .cursor/verify-system.sh                # 同上 layout（alias）
 | 后端 / 系统 | `python` · `go` · `rust` · `java` · `cpp` · `c` | `*.py` · `*.go` · `*.rs` · `*.java` · `*.{c,cc,cpp,h,hpp}` |
 
 治理：`constitution.mdc` · `evolution.mdc` · `config/roles.json`（12 人格，仅语气）。  
-扩展 skills：**debug** · **test** · **review** · **study** · **delivery** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。
+扩展 skills：**ux** · **ia** · **debug** · **test** · **review** · **study** · **delivery** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。
 
 ### 场景速查
 
@@ -88,6 +94,8 @@ bash .cursor/verify-system.sh                # 同上 layout（alias）
 | 配置或排查 verify | `workflow.json` · `runner.sh verify` · `verify.mdc` |
 | 加项目私有规则 | `.cursor/rules/local/` |
 | 写 CHANGELOG / 打 tag | **release** · `changelog.mdc` · `tag.mdc` |
+| UX / 体验问题（分流） | **ux** |
+| 信息架构 / 导航迷路 | **ia** · `docs/design/*-ia*` |
 | 查 API / 安全 | **api** · **security** |
 | 自治发版 | **ship** agent |
 | 验证模板完整性 | `bash .cursor/bin/template-verify.sh` |

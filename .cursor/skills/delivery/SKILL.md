@@ -76,6 +76,17 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 ### 5. 组件与交互完整度
 
+#### 导航与 IA（结构层 UX）
+
+> 原则：`rules/execution/ia.mdc` R1–R4 · 项目 `docs/design/*-ia*`（若有）。规划阶段应已走 **ia** skill。
+
+- [ ] 主要页面可一句话说出 **主工作流意图**（无 Dashboard 多工作流并列主 CTA）
+- [ ] 角色若有差异：**默认着陆** / 侧栏权重与 RBAC 一致（非人人同一首页叙事）
+- [ ] 跨页协作经 **分支点**（深链 / `from` / 来源条），不在 drawer 内嵌无关工作流表单
+- [ ] 多步交付类具备可辨识的 **实体上下文**（顶栏或面包屑中的当前对象）
+
+#### 组件与状态
+
 - [ ] 无 TODO/FIXME/placeholder 交互留于生产路径
 - [ ] **真实交互感**：操作有即时反馈（hover/focus/disabled/loading）；非静态假按钮
 - [ ] 加载/空态/错误态有 UI，非白屏或 `console.log`
@@ -99,9 +110,12 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 | 阶段 | delivery | 不做 |
 |------|----------|------|
+| **ia** | — | 结构规划 · `docs/design/*-ia*`（先于大改） |
 | **run** | — | 实现 · task-verify · 三公理审计 |
 | **delivery** | 7 维走查 · 冲突上报 | 不写业务代码（除非用户 steering 修 Blocker） |
 | **finish** | Blocker 须先报告 | 不跳过 verify |
+
+UX 分流不明时 → **ux** skill；结构问题回流 **ia**，非结构抛光留在本 skill。
 
 ## 禁止
 

@@ -4,6 +4,5 @@ dist/
 *.test
 coverage.out
 
-# Super Cursor (plan/run local)
-plan.md
+# Super Cursor (plan · archive · learn · rules)
 .cursorGrowth/

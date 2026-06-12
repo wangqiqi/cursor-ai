@@ -10,9 +10,9 @@ disable-model-invocation: true
 
 ## 必读
 
-`plan.md` 元数据/Sprint/ROADMAP · `archive/` · 匹配 rules · `learn/`（若有）· grep 落点（**不写代码**）
+`.cursorGrowth/plan.md` 元数据/Sprint/ROADMAP · `.cursorGrowth/archive/` · `learn/` · grep 落点（**不写代码**）
 
-**`plan.md` 不纳入 git**：根目录为本地工作副本（`.gitignore`）；安装时由 `templates/plan.md` 复制；可提交进度在 `archive/` + CHANGELOG。
+**`.cursorGrowth/` 不纳入 git**：`plan.md` · `archive/` · `learn/` · `rules/local` 均在此；安装时由 `templates/plan.md` 复制到 `.cursorGrowth/plan.md`。
 
 空仓库 / 用户要「新建项目」：在 `PLANNING:true` 用 **AskQuestion** 确认栈 → 预览 `scaffold.sh apply --dry-run` → 用户确认后 apply 或写入 `TASK-001`（见 **scaffold** skill）。**不写业务代码**直至用户确认脚手架范围。
 
@@ -77,17 +77,17 @@ disable-model-invocation: true
 
 Sprint 表 + **执行顺序** 行：`TASK-001` → `TASK-002` → …
 
-### 基线分析 · 与闭环对齐（防 plan 头身不一致）
+### Plan 头身一致（通用）
 
-Sprint 内若含 **触点矩阵**、**现状 vs 目标**、**差距列表** 等「规划基线」段落：
+HTML 注释（`ACTIVE` / `LAST_DONE` / `SPRINT_STATUS`）与正文须同步：
 
 | 阶段 | 要求 |
 |------|------|
-| **规划（/plan）** | 标题或段首标明 **审查基线 / vX 快照**；链 `archive/...审查清单.md` 若已归档 |
+| **规划（/plan）** | 团队可选基线段落 → 登记在 **`.cursorGrowth/learn/plan-conventions.md`**（`/learn` 维护） |
 | **执行（/run）** | 单任务 ✅ 时同步 TASK 表 **✅**；**不得**只改 `LAST_DONE` |
-| **Sprint 收尾** | 按 **run** skill **plan 正文 reconciliation** 清单：Done when 全 `[x]` · 矩阵改 **交付态** 或保留快照链 · 标题改 **已完成 Sprint** |
+| **Sprint 收尾** | 按 **run** skill **plan 正文 reconciliation**；可选段落按 `plan-conventions.md` 改 **交付态** 或链 `archive/` |
 
-`runner.sh plan-check` 在 Sprint 已闭合（`ACTIVE=(none)` + `LAST_DONE` 有值）时会 **WARN** 未 reconciliation 的正文。
+`runner.sh plan-check` 在 Sprint 已闭合时会 **WARN** 未 reconciliation 的正文（Done when · TASK ⬜ · `SPRINT_STATUS` · 进行中标题）。
 
 ### 阶段 3 · handoff
 

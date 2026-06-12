@@ -1,6 +1,6 @@
 ---
 name: master
-description: 总入口（/master）：不确定用什么指令时用。AskQuestion 路由到 plan/run/learn/scaffold/release/git/security/api/debug/test/review/study 及 README 全场景。说「help」「不知道用什么」「从哪开始」时也触发。
+description: 总入口（/master）：不确定用什么指令时用。AskQuestion 路由到 plan/run/learn/scaffold/release/git/security/api/ux/ia/debug/test/review/study 及 README 全场景。说「help」「不知道用什么」「从哪开始」时也触发。
 ---
 
 # master · 路由

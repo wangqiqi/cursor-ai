@@ -24,6 +24,8 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 | `security` | 安全审查 | **security** | — |
 | `api` | API 设计 | **api** | `rules/execution/api.mdc` |
 | `delivery` | 交付验收 / 上线前 | **delivery** | `rules/execution/delivery.mdc` |
+| `ux` | UX / 体验不好 / 界面乱（未明 IA/交付） | **ux** | `rules/execution/ux.mdc` → **ia** / **delivery** |
+| `ia` | 信息架构 / 导航迷路 / 角色首页 | **ia** | `rules/execution/ia.mdc` · `docs/design/*-ia*` |
 | `docs` | 文档同步 | **plan** `DOC-*` 或直述 | `rules/execution/docs.mdc` |
 | `deps` | 依赖 / submodule | 直述 + 规范 | `rules/execution/submodule.mdc` |
 | `config` | verify / 本地 rules / 母版自测 | 见 [扩展场景](#扩展场景) | `config/workflow.json` |
@@ -45,6 +47,8 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 | 测试、E2E、Playwright | **test** |
 | MCP、工具服务器 | **mcp** |
 | 重构 | **refactor** |
+| UX、体验、不好用、界面乱 | **ux** |
+| 信息架构、导航、迷路、Dashboard、角色入口、工作流分支 | **ia** |
 | 性能、慢、瓶颈 | **perf** |
 | 代码回顾、REV | **review** · **review** agent |
 | 学新技术、study | **study** |

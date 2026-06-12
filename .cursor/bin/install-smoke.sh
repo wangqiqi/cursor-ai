@@ -49,10 +49,12 @@ echo "=== install smoke ==="
 # 1. full · empty target
 FULL="$TMP_ROOT/full-empty"
 "$INSTALL" "$FULL" --profile full >/dev/null
-assert_file "$FULL/plan.md" "full: plan.md copied"
-assert_grep "$FULL/.gitignore" '^plan\.md$' "full: gitignore plan.md"
+assert_file "$FULL/.cursorGrowth/plan.md" "full: .cursorGrowth/plan.md copied"
+assert_file "$FULL/.cursorGrowth/learn/plan-conventions.md" "full: learn seeds"
 assert_grep "$FULL/.gitignore" 'cursorGrowth' "full: gitignore .cursorGrowth/"
-assert_grep "$FULL/plan.md" '执行顺序' "full: plan template 执行顺序"
+assert_absent "$FULL/plan.md" "full: no root plan.md"
+assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template 执行顺序"
+[[ -L "$FULL/.cursor/rules/local" ]] && ok "full: rules/local symlink" || fail "full: rules/local symlink"
 (
   cd "$FULL"
   bash .cursor/bin/runner.sh plan-check >/dev/null
@@ -62,13 +64,13 @@ assert_grep "$FULL/plan.md" '执行顺序' "full: plan template 执行顺序"
 # 2. lite · no --copy-plan
 LITE="$TMP_ROOT/lite-no-plan"
 "$INSTALL" "$LITE" --profile lite >/dev/null
-assert_absent "$LITE/plan.md" "lite: no plan.md without --copy-plan"
-assert_grep "$LITE/.gitignore" '^plan\.md$' "lite: gitignore still has plan.md"
+assert_absent "$LITE/.cursorGrowth/plan.md" "lite: no plan without --copy-plan"
+assert_grep "$LITE/.gitignore" 'cursorGrowth' "lite: gitignore .cursorGrowth/"
 
 # 3. lite · --copy-plan
 LITE_COPY="$TMP_ROOT/lite-copy"
 "$INSTALL" "$LITE_COPY" --profile lite --copy-plan >/dev/null
-assert_file "$LITE_COPY/plan.md" "lite --copy-plan: plan.md copied"
+assert_file "$LITE_COPY/.cursorGrowth/plan.md" "lite --copy-plan: .cursorGrowth/plan.md"
 
 # 4. merge existing .gitignore
 EXISTING="$TMP_ROOT/existing"
@@ -76,11 +78,10 @@ mkdir -p "$EXISTING"
 echo 'node_modules/' >"$EXISTING/.gitignore"
 "$INSTALL" "$EXISTING" --profile full >/dev/null
 assert_grep "$EXISTING/.gitignore" 'node_modules' "merge: keeps node_modules/"
-assert_grep "$EXISTING/.gitignore" '^plan\.md$' "merge: adds plan.md"
 assert_grep "$EXISTING/.gitignore" 'cursorGrowth' "merge: adds .cursorGrowth/"
 
-# 5. plan.md not tracked after git init
-assert_git_ignored "$FULL" "plan.md" "full: plan.md gitignored"
+# 5. .cursorGrowth not tracked after git init
+assert_git_ignored "$FULL" ".cursorGrowth/plan.md" "full: .cursorGrowth/plan.md gitignored"
 
 echo "---"
 if [[ "$FAIL" -eq 0 ]]; then

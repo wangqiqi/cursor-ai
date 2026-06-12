@@ -7,6 +7,6 @@
   "annotated_tags": true,
   "order": "newest_first",
   "merge_policy": "one_user_story_per_release",
-  "plan_file": "plan.md",
-  "archive_dir": "archive"
+  "plan_file": ".cursorGrowth/plan.md",
+  "archive_dir": ".cursorGrowth/archive"
 }

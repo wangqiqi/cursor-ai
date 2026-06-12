@@ -4,6 +4,5 @@ cmake-build-*/
 *.out
 *.exe
 
-# Super Cursor (plan/run local)
-plan.md
+# Super Cursor (plan · archive · learn · rules)
 .cursorGrowth/

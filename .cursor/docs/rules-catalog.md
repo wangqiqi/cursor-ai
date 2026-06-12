@@ -32,6 +32,8 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 | PR review 分角 | `rules/communication/collaboration.mdc` |
 | Svelte 5 | `rules/tech/svelte.mdc` |
 | Next Supabase auth | `rules/tech/nextjs.mdc` § Auth |
+| IA / 导航迷路 / 角色入口 | `rules/execution/ux.mdc` · `ia.mdc` · **ux** / **ia** skills |
+| 交付 UX 验收 | `rules/execution/delivery.mdc` · **delivery** §5 导航与 IA |
 
 ## 引用到 local/
 

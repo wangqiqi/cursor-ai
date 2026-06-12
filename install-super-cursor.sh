@@ -8,14 +8,14 @@ usage() {
 
 选项:
   --profile full|lite|rules-only   工作流配置（默认 full）
-  --copy-plan                      复制 templates/plan.md → plan.md
+  --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
   -h, --help                       显示帮助
 
 示例:
   $0 /path/to/my-app
   $0 /path/to/my-app --profile lite --copy-plan
 
-项目认知 → .cursorGrowth/ · 私有规则 → .cursor/rules/local/
+项目特化与产出 → .cursorGrowth/（plan · archive · learn · rules/local）
 EOF
 }
 
@@ -74,9 +74,8 @@ jw_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 
 if [[ -f "$TARGET/.gitignore" ]]; then
   grep -q '.cursorGrowth' "$TARGET/.gitignore" 2>/dev/null || echo '.cursorGrowth/' >> "$TARGET/.gitignore"
-  grep -qE '^plan\.md$' "$TARGET/.gitignore" 2>/dev/null || echo 'plan.md' >> "$TARGET/.gitignore"
 else
-  printf '%s\n' '.cursorGrowth/' 'plan.md' > "$TARGET/.gitignore"
+  printf '%s\n' '.cursorGrowth/' > "$TARGET/.gitignore"
 fi
 
 # .cursorignore — Agent 硬排除（与 .gitignore 互补；密钥须重复声明）
@@ -103,11 +102,56 @@ fi
 
 jw_chmod_scripts "$TARGET/.cursor"
 
-# Auto-copy plan for full profile when repo has no plan.md
-if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$TARGET/plan.md" ) ]]; then
+# Bootstrap .cursorGrowth (plan · archive · learn · rules — gitignored on target)
+GROWTH_TEMPLATE="$SOURCE/.cursor/templates/cursorGrowth"
+GROWTH_DIR="$TARGET/.cursorGrowth"
+if [[ -d "$GROWTH_TEMPLATE" ]]; then
+  if [[ ! -d "$GROWTH_DIR" ]]; then
+    jw_copy_tree "$GROWTH_TEMPLATE" "$GROWTH_DIR"
+    echo "已引导 .cursorGrowth/（项目特化与产出，git 忽略）"
+  else
+    mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \
+      "$GROWTH_DIR/logs" "$GROWTH_DIR/perception"
+    [[ -f "$GROWTH_DIR/README.md" || ! -f "$GROWTH_TEMPLATE/README.md" ]] || \
+      cp "$GROWTH_TEMPLATE/README.md" "$GROWTH_DIR/README.md"
+    for stub in "$GROWTH_TEMPLATE/learn"/*.md; do
+      [[ -f "$stub" ]] || continue
+      dest="$GROWTH_DIR/learn/$(basename "$stub")"
+      [[ -f "$dest" ]] || cp "$stub" "$dest"
+    done
+    if [[ -f "$GROWTH_TEMPLATE/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/local/README.md" ]]; then
+      cp "$GROWTH_TEMPLATE/rules/local/README.md" "$GROWTH_DIR/rules/local/README.md"
+    fi
+  fi
+fi
+mkdir -p "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" 2>/dev/null || true
+
+# Legacy: root plan.md / archive/ → .cursorGrowth/
+if [[ -f "$TARGET/plan.md" && ! -f "$GROWTH_DIR/plan.md" ]]; then
+  mv "$TARGET/plan.md" "$GROWTH_DIR/plan.md"
+  echo "已迁移 plan.md → .cursorGrowth/plan.md"
+fi
+if [[ -d "$TARGET/archive" && ! -d "$GROWTH_DIR/archive" ]]; then
+  mv "$TARGET/archive" "$GROWTH_DIR/archive"
+  echo "已迁移 archive/ → .cursorGrowth/archive/"
+fi
+
+# Auto-copy plan into .cursorGrowth for full profile
+if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan.md" ) ]]; then
   if [[ -f "$TARGET/.cursor/templates/plan.md" ]]; then
-    cp "$TARGET/.cursor/templates/plan.md" "$TARGET/plan.md"
-    echo "已复制 plan.md（profile=$PROFILE）"
+    cp "$TARGET/.cursor/templates/plan.md" "$GROWTH_DIR/plan.md"
+    echo "已复制 .cursorGrowth/plan.md（profile=$PROFILE）"
+  fi
+fi
+
+# Symlink .cursor/rules/local → .cursorGrowth/rules/local (Cursor glob 加载)
+CURSOR_LOCAL="$TARGET/.cursor/rules/local"
+if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
+  if [[ ! -e "$CURSOR_LOCAL" ]] || { [[ -d "$CURSOR_LOCAL" ]] && \
+    [[ "$(find "$CURSOR_LOCAL" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')" -le 1 ]]; }; then
+    rm -rf "$CURSOR_LOCAL"
+    ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL"
+    echo "已链接 .cursor/rules/local → .cursorGrowth/rules/local"
   fi
 fi
 

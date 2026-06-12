@@ -10,16 +10,22 @@ disable-model-invocation: true
 
 ## 输出（仅 `.cursorGrowth/learn/`）
 
-首次 **`/learn`** 时按表创建；母版模板见 `templates/cursorGrowth/README.md`（不预置内容文件，仅目录说明）。
+**自动引导**（无需等用户说 `/learn`）：
+
+1. **`install-super-cursor.sh`** — 复制 `templates/cursorGrowth/` → 目标 `.cursorGrowth/`
+2. **`hooks/growth-init.sh`**（`beforeSubmitPrompt`）— 若目录缺失则创建；**按文件**种子 `learn/*.md`（已存在的不覆盖）
+
+首次 **`/learn`** 在种子文件上**增量填写**「待填」项，并吸收 CHANGELOG / archive / plan。
 
 | 文件 | 内容 |
 |------|------|
+| `plan-conventions.md` | archive 命名 · 可选 plan 段落 · Sprint 标题用语 — 供 **plan** / **run** / `plan-check` |
 | `dev-conventions.md` | 命名、目录、测试/verify 命令、分支策略 |
 | `module-map.md` | 模块边界、入口、依赖方向 |
 | `release-rhythm.md` | 发版频率、谁打 tag、CHANGELOG 习惯 |
 | `changelog-insights.md` | 近期对外变更摘要 |
 | `last-sync.md` | 本次同步时间、来源、待确认项 |
-| `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill；模板见 `templates/cursorGrowth/learn/acceptance.md` |
+| `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill |
 
 ## 何时运行
 
@@ -43,7 +49,7 @@ disable-model-invocation: true
 |----------|------|--------|
 | 项目约定、模块地图 | `.cursorGrowth/learn/` | **learn** |
 | 母版 `.cursor/` SOP | 须用户明确授权 + plan 任务 | 非日常 learn |
-| Sprint 决策 | `archive/` + plan 索引 | **plan** 收尾 |
+| Sprint 决策 | `.cursorGrowth/archive/` + plan 索引 | **plan** 收尾 |
 
 - 母版与项目边界：见 `rules/feedback/evolution.mdc`
 - 增量合并 learn；标 `（已废弃）` 而非静默删除

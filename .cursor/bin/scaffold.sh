@@ -238,9 +238,9 @@ cmd_audit() {
   echo "--- Essentials ---"
   audit_check "verify script" "scripts/verify.sh" "添加可执行验收脚本，或在 plan.md 设 VERIFY"
   audit_check "README" "README.md" "补充安装、运行、验证说明"
-  audit_check "gitignore" ".gitignore" "排除 plan.md · .cursorGrowth/ · 构建产物与密钥"
+  audit_check "gitignore" ".gitignore" "排除 .cursorGrowth/ · 构建产物与密钥"
   audit_check "cursorignore" ".cursorignore" "硬拦 Agent 读 .env 等；scaffold apply 会生成"
-  audit_check "plan" "plan.md" "可选：cp .cursor/templates/plan.md ./plan.md 启用 plan/run"
+  audit_check "plan" ".cursorGrowth/plan.md" "可选：install --copy-plan 或 cp templates/plan.md → .cursorGrowth/plan.md"
   echo ""
   echo "--- Stack signals ---"
   audit_check "package.json" "package.json" "前端/Node 项目"
@@ -257,8 +257,8 @@ cmd_audit() {
   if [[ ! -f "$ROOT/scripts/verify.sh" ]]; then
     echo "  → 用 /scaffold 补 scripts/verify.sh，或从模板 manifest 选相近栈"
   fi
-  if [[ ! -f "$ROOT/plan.md" && -f "$ROOT/.cursor/templates/plan.md" ]]; then
-    echo "  → cp .cursor/templates/plan.md ./plan.md 后 /plan"
+  if [[ ! -f "$ROOT/.cursorGrowth/plan.md" && -f "$ROOT/.cursor/templates/plan.md" ]]; then
+    echo "  → mkdir -p .cursorGrowth && cp .cursor/templates/plan.md .cursorGrowth/plan.md 后 /plan"
   fi
   if [[ "$stack" != "none "* && "$stack" != "none" ]]; then
     echo "  → 已有栈检测：$stack — 运行 /learn 沉淀约定，勿盲目 apply 全量脚手架"

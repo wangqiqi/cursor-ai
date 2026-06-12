@@ -21,13 +21,13 @@ alwaysApply: false
 
 - 用户可见行为、API 变更、修复、breaking changes
 - 有 issue/PR 则链接
-- 长进度叙事放 `plan.md` 或 `archive/`，勿堆进 CHANGELOG
+- 长进度叙事放 `.cursorGrowth/plan.md` 或 `.cursorGrowth/archive/`，勿堆进 CHANGELOG
 
-## 与 plan.md
+## 与 plan
 
-- **plan.md**（根目录）：本地 Sprint 状态 · **gitignore** · 不 commit
+- **`.cursorGrowth/plan.md`**：本地 Sprint 状态 · **gitignore** · 不 commit
 - **CHANGELOG**：对外发布说明
-- 归档用 `archive/` 时间戳文件名（gitignore）；`plan.md` ROADMAP 留本地索引
+- 归档用 `.cursorGrowth/archive/` 时间戳文件名；plan ROADMAP 留本地索引
 
 ## 打版前
 

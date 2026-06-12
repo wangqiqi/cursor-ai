@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 核心
 
-`.cursor/`=通用SOP · `.cursorGrowth/`=项目认知（git忽略）· 读序：rules → config → `learn/`（若有）
+`.cursor/`=通用SOP · `.cursorGrowth/`=项目特化与产出（plan·archive·learn·rules，git忽略）· 读序：rules → config → `.cursorGrowth/`
 
 | 场景 | 入口 |
 |------|------|
@@ -18,6 +18,8 @@ alwaysApply: true
 | Git | **git** skill |
 | 安全审查 | **security** skill |
 | API 设计 | **api** skill |
+| UX / 体验（分流） | **`/ux`** · **ux** skill · `rules/execution/ux.mdc` |
+| 信息架构 / 导航 / 角色入口 | **`/ia`** · **ia** skill · `rules/execution/ia.mdc`（UX 结构层） |
 | 调试 / 测试 / 回顾 / 交付 | **debug** · **test** · **review** · **delivery** skill；**review** agent |
 | 学新技术 | **study** skill（≠ `/learn` 项目认知） |
 
@@ -31,8 +33,8 @@ alwaysApply: true
 
 | 禁止（默认） | 允许去向 |
 |--------------|----------|
-| 主动/自动改 `rules/` `skills/` `agents/` `hooks/` `bin/` `config/` `templates/` | 项目认知 → `.cursorGrowth/`（**learn**） |
-| 「顺便优化」模板、补 skill、改 config | 私有约定 → `.cursor/rules/local/`（**用户**添加） |
+| 主动/自动改 `rules/` `skills/` `agents/` `hooks/` `bin/` `config/` `templates/` | 项目特化 → `.cursorGrowth/`（plan · learn · archive · rules/local） |
+| 「顺便优化」模板、补 skill、改 config | 团队 rules → `.cursorGrowth/rules/local/`（链 `.cursor/rules/local`） |
 | 因业务任务顺带改 hooks 或 workflow | 行为开关 → 用户自行编辑 `config/*.json`，或明确授权后由 Agent 改 |
 
 发现缺口：**说明 + 建议**，等用户确认后再动 `.cursor/`。日常 `/master` `/plan` `/run` `/learn` **不得**触发对 `.cursor/` 的写入。

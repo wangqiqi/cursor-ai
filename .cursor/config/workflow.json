@@ -1,7 +1,7 @@
 {
   "profile": "full",
-  "plan_file": "plan.md",
-  "archive_dir": "archive",
+  "plan_file": ".cursorGrowth/plan.md",
+  "archive_dir": ".cursorGrowth/archive",
   "verify_default": "./scripts/verify.sh",
   "version_line_meta": "VERSION_LINE",
   "version_tag_glob_env": "VERSION_TAG_GLOB",
@@ -15,8 +15,8 @@
     "learn_dir": "learn",
     "learn_sources": [
       "CHANGELOG.md",
-      "archive/",
-      "plan.md"
+      ".cursorGrowth/archive/",
+      ".cursorGrowth/plan.md"
     ]
   },
   "release": {

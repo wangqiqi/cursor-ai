@@ -46,10 +46,10 @@ ts="$(jw_iso8601_now)"
 
 if jw_has_json_tool; then
   pf="$(jw_json_cfg "$CURSOR_DIR/config/workflow.json" plan_file __missing__)"
-  if [[ "$pf" == "plan.md" ]]; then
+  if [[ "$pf" == ".cursorGrowth/plan.md" ]]; then
     echo "OK   jw_json_cfg plan_file=$pf"
   else
-    echo "FAIL jw_json_cfg plan_file=$pf (expected plan.md)"
+    echo "FAIL jw_json_cfg plan_file=$pf (expected .cursorGrowth/plan.md)"
     FAIL=$((FAIL + 1))
   fi
   he="$(jw_json_cfg "$CURSOR_DIR/config/workflow.json" workflow.enabled __missing__)"

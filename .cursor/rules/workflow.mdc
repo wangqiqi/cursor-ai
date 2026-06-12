@@ -33,6 +33,6 @@ CLI：`.cursor/bin/runner.sh` — `gate-check` · `task-verify` · `verify` · `
 
 ## Growth
 
-禁止项目认知写入 `.cursor/` · `/learn` → `.cursorGrowth/learn/` · 细则 **learn** skill
+项目特化与产出统一 `.cursorGrowth/`（plan·archive·learn·rules）· 禁止写入 `.cursor/` · 细则 **learn** skill
 
 **`.cursor/` 只读**：见 `core.mdc`「.cursor 不可变」— 非用户明确要求，不得改 `.cursor/**`（含 `config/`）。

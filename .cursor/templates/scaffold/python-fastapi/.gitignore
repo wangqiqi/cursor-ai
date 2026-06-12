@@ -5,6 +5,5 @@ __pycache__/
 dist/
 *.egg-info/
 
-# Super Cursor (plan/run local)
-plan.md
+# Super Cursor (plan · archive · learn · rules)
 .cursorGrowth/

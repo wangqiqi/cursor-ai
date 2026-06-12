@@ -14,6 +14,8 @@
 | **release** | 发版清单 | CHANGELOG · tag | 自动 push |
 | **security** | 审查 | 密钥 · auth · PII 清单 | — |
 | **api** | API 变更 | REST/OpenAPI 清单 | — |
+| **ux** | UX / 体验 · 分流 | IA⊂UX 分层 · 路由 ia/delivery/plan | 不写 checklist |
+| **ia** | 信息架构 · 导航迷路 | R1–R4 · 角色入口 · 分支点 · `docs/design/` | 业务路由进母版 |
 | **debug** | 调试 | 隔离 · 模式聚类 | — |
 | **test** | 测试 | 单测/集成/E2E · TDD | — |
 | **mcp** | MCP | 工具设计要点 | — |

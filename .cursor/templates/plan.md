@@ -1,4 +1,4 @@
-<!-- 复制到仓库根 plan.md · 该文件在 .gitignore · 勿 git commit -->
+<!-- 工作副本：.cursorGrowth/plan.md（gitignore）· 模板 .cursor/templates/plan.md -->
 <!-- PLANNING: false -->
 <!-- SPRINT: SPRINT-01 -->
 <!-- PLAN_APPROVED: YYYY-MM-DD -->
@@ -13,7 +13,7 @@
 
 # Plan
 
-> **plan 双态**：HTML 注释（`ACTIVE` / `LAST_DONE` / `SPRINT_STATUS`）供 `runner.sh` 解析；**Done when**、TASK ✅、基线矩阵等正文须在 Sprint 收尾时与 archive 对齐（见 **run** skill · plan 正文 reconciliation）。
+> **plan 双态**：HTML 注释供 `runner.sh` 解析；**Done when**、TASK ✅ 等正文须在 Sprint 收尾与 `.cursorGrowth/archive/` 对齐（**run** skill · reconciliation）。团队约定 → `.cursorGrowth/learn/plan-conventions.md`。
 
 ## Active sprint · SPRINT-01 Example
 
@@ -40,5 +40,5 @@
 
 ## Changelog index
 
-- Move completed sprint notes to `archive/` with timestamped filenames (`YYYYMMDD_HHMMSS_功能_模块_sprint闭环.md`).
-- Sprint 收尾：`SPRINT_STATUS: closed` · Done when 全 `[x]` · TASK 全 ✅ · 标题改「已完成 Sprint」· 历史表补归档链（**run** skill reconciliation 清单）。
+- Sprint notes → `.cursorGrowth/archive/`（命名见 `learn/plan-conventions.md`）。
+- Sprint 收尾：`SPRINT_STATUS: closed` · Done when 全 `[x]` · TASK 全 ✅ · 标题改已闭合 · 历史表补归档链（**run** skill reconciliation）。

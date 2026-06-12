@@ -4,6 +4,35 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.14.0] - 2026-06-12
+
+### Added
+
+- **templates/cursorGrowth/learn/** — `plan-conventions.md` 等 7 个种子文件；项目特化**不再写进 rules/skills 正文**
+- **templates/cursorGrowth/rules/local/** — 团队 rules canonical 路径；安装后链 `.cursor/rules/local`
+- **install-super-cursor.sh** · **growth-init.sh** — 自动引导 `.cursorGrowth/`（plan · archive · learn · rules）
+
+### Changed
+
+- **Breaking（路径）** — `plan.md` · `archive/` · `rules/local` 统一迁入 **`.cursorGrowth/`**；`workflow.json` `plan_file` → `.cursorGrowth/plan.md`
+- **plan** · **run** · **core** · **commit** · **changelog** — 对齐新路径；遗留根 `plan.md` 自动迁移
+- **scaffold** `.gitignore` — 仅 `.cursorGrowth/`（移除独立 `plan.md` 行）
+- **learn** skill — Sprint 收尾建议 `/learn`；团队约定读 `learn/plan-conventions.md`
+
+## [4.13.0] - 2026-06-12
+
+### Added
+
+- **ux** skill · **ia** skill — UX 体验分流与信息架构（IA ⊂ UX · Garrett 结构层）；`rules/execution/ux.mdc` · `ia.mdc`（R1–R4 · C1–C4 · 反模式）
+- **commands/** — `/ux` · `/ia` · `/delivery` slash 入口（此前 delivery 仅有 skill）
+
+### Changed
+
+- **delivery** skill · **delivery.mdc** — §5 **导航与 IA** 验收清单；与 ia/ux 分工（规划 vs 抽检）
+- **master** · **core** · **AGENTS** · **walkthrough** · **plan-run** · **rules-catalog** · **training/skills** — 注册 ux/ia 路由
+- **verify-super-cursor.sh** — check ux/ia rules · skills · commands
+- **migration-catalog** — 完整性边界 20 skills · 32 rules
+
 ## [4.12.0] - 2026-06-09
 
 ### Added

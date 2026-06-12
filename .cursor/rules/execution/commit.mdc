@@ -9,7 +9,7 @@ alwaysApply: false
 
 用 **git** skill：`type(scope): summary` · 一逻辑一 commit · plan 任务引用 ID。
 
-**`plan.md`**：根目录工作副本在 **`.gitignore`**，**禁止** `git add` / commit（进度写 `archive/` + CHANGELOG；模板在 `.cursor/templates/plan.md`）。
+**`.cursorGrowth/plan.md`** 与 **`archive/`**：在 **`.gitignore`**（整个 `.cursorGrowth/`），**禁止** `git add` / commit；对外变更写 CHANGELOG；模板在 `.cursor/templates/plan.md`。
 
 **/run` 路径**：每个 TASK/DOC/SPIKE 任务 ✅ 与 Sprint 收尾时 **Agent 必须自动 commit**，勿等用户手动提交（见 **run** skill「及时 commit」）。
 

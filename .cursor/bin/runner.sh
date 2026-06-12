@@ -34,8 +34,13 @@ jw_config_join() {
   echo "$default"
 }
 
-PLAN_REL="$(jw_config '.plan_file' 'plan.md')"
+PLAN_REL="$(jw_config '.plan_file' '.cursorGrowth/plan.md')"
 PLAN="$ROOT/$PLAN_REL"
+# Legacy: root plan.md before .cursorGrowth migration
+if [[ ! -f "$PLAN" && -f "$ROOT/plan.md" ]]; then
+  PLAN="$ROOT/plan.md"
+  PLAN_REL="plan.md"
+fi
 FRONTEND_DIR="$(jw_config '.task_verify_heuristics.frontend_test_dir' '')"
 BACKEND_DIR="$(jw_config '.task_verify_heuristics.backend_test_dir' '')"
 FRONTEND_TEST_CMD="$(jw_config '.task_verify_heuristics.frontend_test_cmd' '')"
@@ -108,7 +113,7 @@ plan_check() {
   local issues=0
   echo "=== plan / run plan-check ==="
   if [[ ! -f "$PLAN" ]]; then
-    echo "FAIL: plan.md 不存在"
+    echo "FAIL: plan 不存在（config plan_file 或 .cursorGrowth/plan.md）"
     return 1
   fi
   if ! grep -q '| ⬜ |' "$PLAN" 2>/dev/null && ! grep -q '| 🔧 |' "$PLAN" 2>/dev/null; then
@@ -157,8 +162,8 @@ plan_check() {
       echo "WARN: Sprint 已闭合但 Done when 仍有 ${unchecked} 项未 [x] — 见 run skill · plan 正文 reconciliation"
       issues=$((issues + 1))
     fi
-    if grep -qE '^##[[:space:]]+活跃[[:space:]]+[Ss]print' "$PLAN" 2>/dev/null; then
-      echo "WARN: 标题仍为「活跃 Sprint」— 收尾时应改为「已完成 Sprint」"
+    if grep -qE '^##[[:space:]]+(活跃[[:space:]]+[Ss]print|Active[[:space:]]+[Ss]print)' "$PLAN" 2>/dev/null; then
+      echo "WARN: Sprint 标题仍为「进行中」— 收尾时改为 Completed/已完成（见 .cursorGrowth/learn/plan-conventions.md）"
       issues=$((issues + 1))
     fi
     if [[ "$(plan_sprint_status)" != "closed" ]]; then
