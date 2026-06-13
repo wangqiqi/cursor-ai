@@ -177,6 +177,18 @@ plan_check() {
       issues=$((issues + 1))
     fi
   fi
+  local vmeta vpath
+  vmeta="$(plan_verify)"
+  if [[ "$vmeta" == *"runner.sh"* && "$vmeta" == *"verify"* ]]; then
+    echo "FAIL: <!-- VERIFY --> 不得为 runner.sh verify（无限递归）；应写 ./scripts/verify.sh"
+    issues=$((issues + 1))
+  elif [[ "$vmeta" != *" "* && "$vmeta" == ./* ]]; then
+    vpath="${vmeta#./}"
+    if [[ ! -f "$ROOT/$vpath" ]]; then
+      echo "WARN: VERIFY 脚本不存在: $vmeta"
+      issues=$((issues + 1))
+    fi
+  fi
   if [[ "$issues" -eq 0 ]]; then
     echo "OK: handoff 就绪"
     return 0
@@ -293,9 +305,26 @@ print_status() {
   echo "GATE:       ${gate}"
 }
 
+verify_cmd_is_runner_recursion() {
+  local cmd="$1"
+  [[ "$cmd" == *"runner.sh"* && "$cmd" == *"verify"* ]]
+}
+
 run_verify() {
-  local verify_cmd
+  local verify_cmd fallback
   verify_cmd="$(plan_verify)"
+  if verify_cmd_is_runner_recursion "$verify_cmd"; then
+    echo "FAIL: plan VERIFY 不得指向 runner.sh verify（会无限递归）" >&2
+    echo "      CLI 入口: ./.cursor/bin/runner.sh verify" >&2
+    echo "      plan 应设: ./scripts/verify.sh" >&2
+    fallback="$(jw_config 'verify_default' './scripts/verify.sh')"
+    if [[ -f "$ROOT/${fallback#./}" ]]; then
+      echo "==> 回退执行: $fallback"
+      verify_cmd="$fallback"
+    else
+      exit 1
+    fi
+  fi
   echo "==> Full VERIFY: $verify_cmd"
   cd "$ROOT"
   # shellcheck disable=SC2086

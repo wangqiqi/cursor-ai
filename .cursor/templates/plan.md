@@ -8,6 +8,7 @@
 <!-- NEXT: TASK-001 -->
 <!-- LAST_DONE: (none) -->
 <!-- VERIFY: ./scripts/verify.sh -->
+<!-- 禁止写 runner.sh verify — CLI 入口会读本行；指回自身会无限递归 -->
 <!-- MAX_LOOPS: 15 -->
 <!-- VERSION_TARGET: (optional) -->
 

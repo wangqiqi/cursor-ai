@@ -17,8 +17,10 @@ alwaysApply: false
 ```bash
 ./.cursor/bin/runner.sh gate-check
 ./.cursor/bin/runner.sh task-verify    # 当前 ACTIVE 任务
-./.cursor/bin/runner.sh verify         # Sprint / 打版前全量
+./.cursor/bin/runner.sh verify         # Sprint / 打版前全量（读 plan VERIFY 后执行脚本）
 ```
+
+**勿混淆**：`runner.sh verify` 是 **CLI 入口**；`plan.md` 的 `<!-- VERIFY: ... -->` 必须指向 **项目验收脚本**（默认 `./scripts/verify.sh`），**禁止**写 `runner.sh verify`（会无限递归）。
 
 ## 验收列约定
 
