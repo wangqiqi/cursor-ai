@@ -4,6 +4,30 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.16.0] - 2026-06-15
+
+### Added
+
+- **maintain** skill — `/maintain` Linux 开发环境诊断与安全清理；`dev-maintain.sh` · `load-config.py` · 可配置受保护目录
+- **templates/cursorGrowth/maintain-config.example.json** — 本机覆盖模板
+
+### Changed
+
+- **disk** skill — 与 maintain 分工说明；快照目录统一 `.cursorGrowth/disk-snapshots/`
+- **master** routes · **AGENTS.md** · **docs/training/skills.md** · **README** — 注册 maintain（23 skills）
+
+## [4.15.0] - 2026-06-15
+
+### Added
+
+- **week** skill — `/week` 跨仓 CHANGELOG 周报；`collect-week.py` 采集 · 写入 `.cursorGrowth/week-report/`
+- **disk** skill — `/disk` 磁盘快照与历史 diff；`collect-disk.py` · `config/default-paths.json` · `templates/cursorGrowth/disk-paths.example.json`
+
+### Changed
+
+- **master** routes · **AGENTS.md** · **docs/training/skills.md** · **README** — 注册 week · disk（22 skills）
+- **templates/cursorGrowth/README.md** — 说明 `week-report/` · `disk-snapshots/` · 可选 `disk-paths.json`
+
 ## [4.14.0] - 2026-06-12
 
 ### Added

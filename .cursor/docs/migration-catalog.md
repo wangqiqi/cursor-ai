@@ -60,7 +60,7 @@
 
 | 范围 | 标准 |
 |------|------|
-| 结构 | 20 skills · 3 agents · 32 rules · commands · config/hooks/bin 齐全 |
+| 结构 | 23 skills · 3 agents · 32 rules · commands · config/hooks/bin 齐全 |
 | 注册 | 每个 `rules/**/*.mdc` 在 `verify-super-cursor.sh` 有 check |
 | 交叉引用 | AGENTS ↔ 磁盘 · routes ↔ skills/agents · roles=12 |
 | 旧版 parity | **不要求** 1:1 全量迁移；上表「刻意不迁移」为产品边界 |

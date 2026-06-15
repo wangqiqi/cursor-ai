@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.13.0-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.16.0-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -31,7 +31,7 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行 · 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     20 个：master · plan · run · learn · scaffold · git · finish · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery
+├── skills/     23 个：master · plan · run · learn · scaffold · git · finish · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · week · disk · maintain
 ├── commands/   ux · ia · delivery
 ├── agents/     ship · review · spike
 ├── hooks/      会话初始化 · run 循环控制
@@ -129,6 +129,9 @@ flowchart LR
 | `/ia` | 信息架构：工作流正交 · 角色入口 · `docs/design/*-ia*` |
 | `/delivery` | 交付验收：7 维含导航与 IA（finish 前建议） |
 | `/learn` | 项目认知 → `.cursorGrowth/learn/` |
+| `/week` | 跨仓 CHANGELOG 周报 → `.cursorGrowth/week-report/` |
+| `/disk` | 磁盘占用快照与变动对比 → `.cursorGrowth/disk-snapshots/` |
+| `/maintain` | 开发环境诊断与安全清理（Linux） |
 | `/scaffold` | 8 栈脚手架 / 已有项目 audit |
 
 发版：**release** skill（清单）· **ship** agent（自治）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git** · **finish**。

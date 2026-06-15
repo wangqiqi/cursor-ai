@@ -23,6 +23,9 @@
 | **perf** | 性能 | 测量优先 | — |
 | **review** | REV-* · PR 回顾 | 坏味道清单 · 委派 review agent | 写代码 |
 | **delivery** | `/delivery` · 上线前 | 7 维交付验收 · finish 前建议 | 替代 task-verify |
+| **week** | `/week` · 周报 | CHANGELOG 跨仓汇总 → `.cursorGrowth/week-report/` | 打 tag |
+| **disk** | `/disk` · 磁盘快照 | 结构化占用 · 历史 diff → `.cursorGrowth/disk-snapshots/` | 删除文件 |
+| **maintain** | `/maintain` · 环境维护 | Linux 诊断与安全清理 · 委托 disk 对比 | 无配置乱删 |
 | **study** | 学新技术 | 最小示例 · SPIKE 归档 | 项目认知（用 learn） |
 
 Agents：**ship**（发版）· **review** · **spike**（后二者只读）
