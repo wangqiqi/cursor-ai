@@ -9,11 +9,13 @@ usage() {
 选项:
   --profile full|lite|rules-only   工作流配置（默认 full）
   --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
+  --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
 
 示例:
   $0 /path/to/my-app
   $0 /path/to/my-app --profile lite --copy-plan
+  $0 /path/to/my-app --replace     # 干净覆盖，清除旧版残留
 
 项目特化与产出 → .cursorGrowth/（plan · archive · learn · rules/local）
 EOF
@@ -23,6 +25,7 @@ SOURCE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET=""
 PROFILE="full"
 COPY_PLAN="false"
+REPLACE="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -33,6 +36,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --copy-plan)
       COPY_PLAN="true"
+      shift
+      ;;
+    --replace)
+      REPLACE="true"
       shift
       ;;
     *)
@@ -70,6 +77,10 @@ fi
 source "$SOURCE/.cursor/lib/platform.sh"
 
 mkdir -p "$TARGET"
+if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
+  rm -rf "$TARGET/.cursor"
+  echo "已删除旧 .cursor/（--replace 干净覆盖）"
+fi
 jw_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 
 if [[ -f "$TARGET/.gitignore" ]]; then

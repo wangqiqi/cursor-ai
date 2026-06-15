@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.17.1] - 2026-06-15
+
+### Added
+
+- **install-super-cursor.sh `--replace`** — 安装前删除目标 `.cursor/`，避免 rsync 残留旧版文件
+
 ## [4.17.0] - 2026-06-15
 
 ### Added
