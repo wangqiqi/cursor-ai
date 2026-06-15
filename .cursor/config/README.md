@@ -21,7 +21,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
 | `task_verify_heuristics.frontend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `task_verify_heuristics.backend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
-| `release.mode` | `patch-per-task` | 打版粒度（见 `rules/feedback/release.mdc`） |
+| `release.mode` | `patch-per-task` | 打版粒度：`patch-per-task`（Sprint 末 ship）· `tag-per-commit`（每 commit + `release-tag`） |
 | `role.default` | `professional` | 人格预设 id（见 `config/roles.json`） |
 | `role.config` | `.cursor/config/roles.json` | 人格列表；**仅语气，全能** |
 | `autonomous.default` | `false` | plan 模板默认是否自治 |
@@ -54,7 +54,11 @@ Install profiles（`install-super-cursor.sh --profile`）:
 | `tag_format` | `semver` |
 | `tag_prefix` | `v` |
 | `annotated_tags` | `true` |
-| `archive_dir` | `archive` |
+| `tag_per_commit` | `false` | 配合 `release.mode: tag-per-commit` |
+| `bump.default` | `patch` | `release-tag` 默认 bump |
+| `bump.auto_minor` / `auto_major` | `false` | minor/major 须 `RELEASE_ALLOW_*` |
+| `version_source` | plan meta + git tag | `VERSION_LINE` · `VERSION_DEFAULT` · `RELEASE_BUMP` |
+| `archive_dir` | `.cursorGrowth/archive` |
 
 ## Templates
 

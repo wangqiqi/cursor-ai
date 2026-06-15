@@ -44,7 +44,11 @@ git status                              # 无未提交 WIP
 ### 4. Tag
 
 ```bash
+# patch-per-task（默认）：ship 手动打 tag
 git tag -a "<prefix><version>" -m "Release <version>: <one-line summary>"
+
+# tag-per-commit：每 commit 已打 tag 时复核；或批量收尾：
+./.cursor/bin/runner.sh release-tag
 ```
 
 - annotated tag（`release.json` → `annotated_tags`）

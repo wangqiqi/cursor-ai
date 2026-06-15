@@ -60,6 +60,7 @@ assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template �
   bash .cursor/bin/runner.sh plan-check >/dev/null
   bash .cursor/bin/runner.sh gate-check >/dev/null
 ) && ok "full: plan-check + gate-check" || fail "full: plan-check + gate-check"
+assert_grep "$FULL/.cursor/bin/runner.sh" 'release-tag' "full: runner.sh release-tag"
 
 # 2. lite · no --copy-plan
 LITE="$TMP_ROOT/lite-no-plan"

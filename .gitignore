@@ -1,3 +1,6 @@
 .cursorGrowth/
+archive/
 *.log
 .DS_Store
+plan.md
+learn/

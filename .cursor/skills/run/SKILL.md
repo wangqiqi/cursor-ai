@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 **禁止**在任务 ✅ 后仅更新 plan/CHANGELOG 却留给用户手动 commit。单轮顺序固定：
 
-ACTIVE → 🔧 → 实现 → `task-verify` → **审计复核** → CHANGELOG（若有用户可见变更）→ **README 同步（若触发）** → **更新 plan.md** → **`git commit`（必做）** → `next-task`
+ACTIVE → 🔧 → 实现 → `task-verify` → **审计复核** → CHANGELOG（若有用户可见变更）→ **README 同步（若触发）** → **更新 plan.md** → **`git commit`（必做）** → **`release-tag`（`tag-per-commit` 时必做）** → `next-task`
 
 ```bash
 ./.cursor/bin/runner.sh task-verify
@@ -31,7 +31,7 @@ git status && git diff --stat    # commit 前：无密钥、无意外文件
 
 | 时机 | 规则 |
 |------|------|
-| **每个 TASK / DOC / SPIKE 归档任务 ✅** | 同轮 **必须** `git commit`（**不含** `plan.md`）；一任务一 commit |
+| **每个 TASK / DOC / SPIKE 归档任务 ✅** | 同轮 **必须** `git commit`（**不含** `plan.md`）；`tag-per-commit` 时同轮 **`release-tag`** |
 | **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `.cursorGrowth/archive/` |
 | **仅改 `.cursorGrowth/plan.md`** | **勿** commit（`.cursorGrowth/` gitignore） |
 | **push** | 默认 **不** push；用户说 push 或 **ship** / **finish** 再推 |

@@ -18,7 +18,7 @@ description: Git — 分支、提交、合并。需要 git 操作时用。
 
 ## /run 自动提交
 
-启用 plan/run 时，**run** skill 要求每任务 ✅ 与 Sprint 收尾 **同轮 commit**；Agent 执行 `/run` 不得把 commit 留给用户。
+启用 plan/run 时，**run** skill 要求每任务 ✅ 与 Sprint 收尾 **同轮 commit**；`tag-per-commit` 时同轮 **`release-tag`**。
 
 **`plan.md`** 为本地工作文件（`.gitignore`），commit 只含代码/CHANGELOG/README 等已跟踪文件。
 

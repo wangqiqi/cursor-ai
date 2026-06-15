@@ -4,6 +4,21 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.17.0] - 2026-06-15
+
+### Added
+
+- **runner.sh `release-tag`** — semver bump + annotated tag；`bump_version` 支持 patch/minor/major 闸门
+- **release.json** 扩展 — `tag_per_commit` · `bump` · `version_source`
+- **templates/workflow.tag-per-commit.json** — 高频交付项目可选 `tag-per-commit` 模式
+
+### Changed
+
+- **release** · **run** · **git** skills · **ship** agent — 双发版模式文档（`patch-per-task` 默认 · `tag-per-commit` 可选）
+- **commit** · **release** · **changelog** · **tag** rules — 对齐 `release-tag` CLI
+- **config/README.md** — 新 release 键与 `release.mode` 说明
+- **runner-smoke** · **install-smoke** — 覆盖 `release-tag`
+
 ## [4.16.0] - 2026-06-15
 
 ### Added

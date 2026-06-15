@@ -25,5 +25,6 @@ alwaysApply: false
 
 ```bash
 git tag -a "v1.2.3" -m "Release 1.2.3: short summary"
+./.cursor/bin/runner.sh release-tag    # tag-per-commit 模式
 git push origin "v1.2.3"
 ```

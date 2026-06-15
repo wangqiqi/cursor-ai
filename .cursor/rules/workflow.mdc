@@ -15,7 +15,7 @@ CLI：`.cursor/bin/runner.sh` — `gate-check` · `task-verify` · `verify` · `
 
 - 每任务：`task-verify` 通过才 ✅/commit
 - Sprint/打版前：`verify`
-- 打版：`release.mode`（见 `rules/feedback/release.mdc`）
+- 打版：`release.mode`（`patch-per-task` | `tag-per-commit`；见 `rules/feedback/release.mdc`）
 - `AUTONOMOUS:true` 直接执行；高风险删除须确认；`⚠️` → `/plan`
 
 ## 任务 ID

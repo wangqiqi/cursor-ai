@@ -56,11 +56,17 @@ source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
 cmd="${1:-status}"
 
 next_version() {
-  local latest ver major minor patch tag_glob default_ver version_line
+  bump_version patch
+}
+
+bump_version() {
+  local bump="${1:-patch}"
+  local latest ver major minor patch tag_glob default_ver version_line plan_default
   version_line="$(plan_meta "VERSION_LINE")"
   version_line="${version_line:-1.0}"
   tag_glob="${JW_VERSION_TAG_GLOB:-v${version_line}.*}"
-  default_ver="${JW_VERSION_DEFAULT:-${version_line}.0}"
+  plan_default="$(plan_meta "VERSION_DEFAULT")"
+  default_ver="${JW_VERSION_DEFAULT:-${plan_default:-${version_line}.0}}"
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ -z "$latest" ]]; then
     echo "$default_ver"
@@ -68,8 +74,58 @@ next_version() {
   fi
   ver="${latest#v}"
   IFS='.' read -r major minor patch <<< "$ver"
+  major="${major:-0}"
+  minor="${minor:-0}"
   patch="${patch:-0}"
-  echo "${major}.${minor}.$((patch + 1))"
+  case "$bump" in
+    patch) echo "${major}.${minor}.$((patch + 1))" ;;
+    minor) echo "${major}.$((minor + 1)).0" ;;
+    major) echo "$((major + 1)).0.0" ;;
+    *)
+      echo "Unknown bump: $bump (patch|minor|major)" >&2
+      return 1
+      ;;
+  esac
+}
+
+release_tag() {
+  local bump="${RELEASE_BUMP:-$(plan_meta RELEASE_BUMP)}"
+  bump="${bump:-patch}"
+  local release_config="$CURSOR_DIR/config/release.json"
+  local auto_minor auto_major tag_prefix annotated version tag_name msg
+  auto_minor="$(jw_json_cfg "$release_config" "bump.auto_minor" "false" 2>/dev/null || echo false)"
+  auto_major="$(jw_json_cfg "$release_config" "bump.auto_major" "false" 2>/dev/null || echo false)"
+  tag_prefix="$(jw_json_cfg "$release_config" "tag_prefix" "v" 2>/dev/null || echo v)"
+  annotated="$(jw_json_cfg "$release_config" "annotated_tags" "true" 2>/dev/null || echo true)"
+
+  if [[ "$bump" == "minor" && "$auto_minor" != "true" && "${RELEASE_ALLOW_MINOR:-}" != "true" ]]; then
+    echo "BLOCK: minor 须评估并设 RELEASE_ALLOW_MINOR=true 或 plan <!-- RELEASE_BUMP: minor -->（见 release skill）" >&2
+    return 1
+  fi
+  if [[ "$bump" == "major" && "$auto_major" != "true" && "${RELEASE_ALLOW_MAJOR:-}" != "true" ]]; then
+    echo "BLOCK: major 须用户明确授权 RELEASE_ALLOW_MAJOR=true（见 release skill）" >&2
+    return 1
+  fi
+
+  version="$(bump_version "$bump")"
+  tag_name="${tag_prefix}${version}"
+
+  if git -C "$ROOT" rev-parse "$tag_name" >/dev/null 2>&1; then
+    echo "FAIL: tag $tag_name 已存在" >&2
+    return 1
+  fi
+
+  msg="${RELEASE_TAG_MSG:-Release ${version}}"
+  if [[ "$annotated" == "true" ]]; then
+    git -C "$ROOT" tag -a "$tag_name" -m "$msg"
+  else
+    git -C "$ROOT" tag "$tag_name" -m "$msg"
+  fi
+
+  echo "OK: tagged $tag_name at $(git -C "$ROOT" rev-parse --short HEAD)"
+  echo "version=$version"
+  echo "tag=$tag_name"
+  echo "bump=$bump"
 }
 
 release_check() {
@@ -359,6 +415,9 @@ case "$cmd" in
   release-check)
     release_check
     ;;
+  release-tag)
+    release_tag
+    ;;
   plan-check)
     plan_check
     ;;
@@ -373,11 +432,16 @@ case "$cmd" in
   plan-check    plan handoff 结构检查
   next-task     按执行顺序解析下一 ⬜ ID
   release-check P0 是否全部 ✅
+  release-tag   在当前 HEAD 打 annotated tag（默认 patch bump）
   next_version  下一 patch 版本号
 
 环境变量（跨项目）:
   JW_VERSION_TAG_GLOB   git tag 匹配（默认读 plan VERSION_LINE，如 v1.0.*）
-  JW_VERSION_DEFAULT    无 tag 时起始版本（默认 {VERSION_LINE}.0）
+  JW_VERSION_DEFAULT    无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 {VERSION_LINE}.0）
+  RELEASE_BUMP          patch（默认）| minor | major
+  RELEASE_ALLOW_MINOR   minor 时须 true（除非 release.json bump.auto_minor）
+  RELEASE_ALLOW_MAJOR   major 时须 true（除非 release.json bump.auto_major）
+  RELEASE_TAG_MSG       tag message（默认 Release <version>）
 
 配置: .cursor/config/workflow.json
 EOF

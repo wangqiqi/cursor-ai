@@ -29,4 +29,8 @@ echo "OK  gate-check would pass"
 next="$(plan_next_task)"
 echo "OK  next-task=$next"
 
+bash "$CURSOR_DIR/bin/runner.sh" help 2>/dev/null | grep -q 'release-tag' \
+  && echo "OK  runner help lists release-tag" \
+  || { echo "FAIL: runner help missing release-tag"; exit 1; }
+
 echo "runner smoke passed."

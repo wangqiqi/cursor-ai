@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.16.0-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.17.0-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -36,7 +36,7 @@
 ├── agents/     ship · review · spike
 ├── hooks/      会话初始化 · run 循环控制
 ├── config/     workflow.json · release.json · roles.json
-├── bin/        gate-check · task-verify · scaffold · cursor-coherence
+├── bin/        gate-check · task-verify · release-tag · scaffold · cursor-coherence
 └── templates/  plan.md · 8 栈脚手架
 ```
 
