@@ -64,6 +64,12 @@ mkdir -p .cursorGrowth/week-report
 - **按项目**：有进展的仓库各一小节（版本 + 日期 + 要点）
 - 中文为主；无条目时在概览说明
 
+### CHANGELOG 格式兼容
+
+采集器识别版本节分隔符：**ASCII `-`** · **en dash `–`** · **em dash `—`**（规范仍为 `-`，见 `changelog.mdc`）。
+
+验收：`bash .cursor/skills/week/scripts/verify_collect_week.sh`
+
 ### 3. 确认
 
 ```bash

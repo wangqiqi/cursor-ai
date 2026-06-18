@@ -11,8 +11,12 @@ from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+# ASCII hyphen, en-dash (U+2013), em-dash (U+2014)
+DATE_SEP = "[-\u2013\u2014]"
 VERSION_HEADING = re.compile(
-    r"^##\s+\[(?!Unreleased\])[^\]]+\]\s*-\s*(\d{4}-\d{2}-\d{2})\s*$",
+    "^##\\s+\\[(?!Unreleased\\])[^\\]]+\\]\\s*"
+    + DATE_SEP
+    + r"\s*(\d{4}-\d{2}-\d{2})\s*$",
     re.IGNORECASE,
 )
 SKIP_DIRS = {"3rdparty", "node_modules", ".git", ".venv", "venv", "vendor", "dist", "build", "target"}
