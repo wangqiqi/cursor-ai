@@ -4,6 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.18.1] - 2026-06-23
+
+### Added
+
+- **README** — **兼容 Roo Code** 章节：`.cursor/` 整体可复制到 `.roo/`，共享 `.cursorGrowth/`，双方都用开放 skills/rules 协议
+- **commands/plan.md** — 补回 verify 注册的 `/plan` command 占位（与 `plan` skill 配套）
+
+### Fixed
+
+- **.gitignore** — `plan.md` · `learn/` 加 `/` 锚定，避免误忽略 `.cursor/commands/plan.md` 等 command 文件
+
 ## [4.18.0] - 2026-06-23
 
 ### Added

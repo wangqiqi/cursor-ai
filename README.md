@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.17.1-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.18.1-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -16,6 +16,8 @@
 ## 一句话
 
 把「怎么和 Agent 协作」从聊天里的口头约定，变成 **rules + skills + hooks + config** —— 装一次，每个仓库都能用；项目特化知识进 `.cursorGrowth/`（git 忽略），**不污染通用模板**。
+
+> **Roo Code 兼容** — `.cursor/` 内的所有内容**也可以整体复制到 `.roo/`**（`cp -r .cursor .roo` 即可），既支持 **Roo Code** 模式，也兼容 **Cursor 内遵循相同 skills/rules 协议** 的 Agent；详见 [§ 兼容 Roo Code](#兼容-roo-code)。
 
 ## 适合谁
 
@@ -164,6 +166,35 @@ flowchart LR
 2. **Config over fork** — 行为开关在 `config/*.json`，不必 fork 母版
 3. **Growth boundary** — 项目认知只进 `.cursorGrowth/`，模板保持干净
 4. **Immutable after install** — Agent 默认不改 `.cursor/`，除非你明确要求
+5. **Protocol-agnostic** — `.cursor/` 用业界**开放的 skills/rules 协议**，整体复制到 `.roo/` 即可被 Roo Code 加载，详见下节
+
+## 兼容 Roo Code
+
+**Roo Code** 采用与 Cursor 兼容的 skills / rules / commands 协议，**Super Cursor 的所有内容可以原样投喂**。一次安装，两端生效：
+
+```bash
+# Cursor 用户：标准安装
+./install-super-cursor.sh /path/to/your-project
+
+# Roo Code 用户：复制到 .roo/ 即可
+./install-super-cursor.sh /path/to/your-project
+cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
+```
+
+| 路径 | 作用 |
+|------|------|
+| `.cursor/` | Cursor Agent 加载（rules / skills / hooks / config） |
+| `.roo/` | **可选**：Roo Code 加载同源内容（`cp -r .cursor .roo`） |
+| `.cursorGrowth/` | 共享，**无需重复**（两边 Agent 都按 `learn/` 读序） |
+
+**设计要点**：
+
+- 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `commands/*.md` · `config/*.json`
+- **不**依赖 Cursor 私有特性（如 `.cursorrules` 单一文件、自定义 hooks 协议）
+- `.cursorGrowth/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移
+- 装一次、两端都用 —— 适合团队混用编辑器，或同时上 Cursor + Roo Code 的项目
+
+> 协议细节见 [Roo Code 文档](https://docs.roocode.com) 与 Cursor 官方 `rules` / `skills` 加载机制。
 
 ## 文档
 
