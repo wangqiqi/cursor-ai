@@ -8,7 +8,7 @@ Super Cursor 命名：**短、见名知意、不与 Cursor 内置冲突**。
 |------|--------|------|
 | Skill | `master` `plan` `run` `learn` `scaffold` `git` `release` `security` `api` | `shell` `loop` `canvas` `sdk`…（见下） |
 | Agent | **`ship`**（发版 subagent） | **`release`**（Cursor 内置 subagent） |
-| Command | **【日常】** `/run` `/plan` `/master` · **【生命周期】** `/scaffold` `/learn` `/release` · **【高级】** `/delivery` `/ux` `/ia` |
+| Command | **【日常】** `/run` `/plan` `/master` · **【生命周期】** `/scaffold` `/learn` `/release` · **【高级】** `/delivery` `/ux` `/ia` · **无 slash** `week` `disk` `maintain`（关键词触发） |
 | Config | `workflow.json` `release.json` | — |
 | Hooks 脚本 | `growth-init` `run-start` `run-stop` | 事件名用官方：`sessionStart` `stop` 等 |
 
@@ -40,6 +40,8 @@ Cursor Task 体系有内置 subagent **`release`**。项目 `.cursor/agents/rele
 | `plan` | 规划 skill + `/plan` | IDE **Plan 模式**（只读规划 UI） |
 | `run` | 执行 skill + `/run` | Agent 一次 run（口语） |
 | `release` | Sprint 出口 **skill**（§分支 + §打版） | 内置 **release** subagent（我们用 `ship` 代替） |
+| `review` | 项目 **review** skill + **review** agent（REV-* · PR 清单） | 全局 `~/.cursor/skills-cursor/review`（路由 Bugbot / Security Review） |
+| `week` · `disk` · `maintain` | 仅有 **skill**（`/week` 等为口语触发词） | 无 `commands/*.md` — 设计如此，经 `/master` 或关键词 |
 
 ## 五层关系（commands · skills · agents · rules · hooks）
 
@@ -55,7 +57,8 @@ rules/      编辑匹配文件时 glob 自动加载
 hooks/      会话：growth-init · plan 上下文注入
 ```
 
-**review**：同名 **skill**（母会话清单）+ **agent**（只读子进程）— 委派时用 agent。
+**review**（项目内）：同名 **skill**（母会话清单）+ **agent**（只读子进程）— 委派时用 agent。  
+**全局 review**（`skills-cursor/review`）只路由 Bugbot / Security — 与项目 REV-* 无关；安全专项优先 **security** skill。
 
 ## Rules
 

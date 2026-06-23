@@ -41,10 +41,20 @@ Create `.cursor/skills/<name>/SKILL.md` with `name` + `description`.
 After install, a project may add:
 
 ```
-.cursor/rules/local/     # not part of the template repo
+.cursor/rules/local/     # symlink → .cursorGrowth/rules/local/
 ```
 
 Never commit company-specific paths into the **template** repository.
+
+### Mother repo dev bootstrap
+
+母版仓库 `.cursor/rules/local` 为符号链接，目标在 **gitignore** 的 `.cursorGrowth/rules/local/`。首次 clone 或链接悬空时：
+
+```bash
+bash .cursor/bin/bootstrap-growth.sh
+```
+
+`template-verify.sh` 会在验收前自动调用。仅补全 `rules/local/README.md` 与 learn 种子，不覆盖已有 `plan.md`。
 
 ## Install
 

@@ -180,6 +180,7 @@ flowchart LR
 ## 验证
 
 ```bash
+bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .cursorGrowth/rules/local（template-verify 会自动调用）
 bash .cursor/verify-super-cursor.sh          # 布局检查
 bash .cursor/bin/cursor-coherence.sh         # 交叉自洽（skills/agents/rules 注册）
 bash .cursor/bin/template-verify.sh          # 母版完整自测（含 install/scaffold/runner/coherence）

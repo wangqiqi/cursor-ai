@@ -4,18 +4,24 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.18.0] - 2026-06-23
+
 ### Added
 
 - **commands** — 9 个 slash 入口：`run` · `plan` · `master` · `scaffold` · `learn` · `release` · `delivery` · `ux` · `ia`；description 标注 **【日常】/【生命周期】/【高级】**
 - **release** skill — 吸收原 **finish**（§分支 4 选 1 + §打版）；`/release` command
+- **bootstrap-growth.sh** — 母版 dev 补全 `.cursorGrowth/rules/local`；`template-verify` 验收前自动调用
 
 ### Changed
 
 - **master** · **run** · **plan** · **routes** — slash 三层 UX；`/run` 为默认做事入口；master 勿滥用
 - **plan** · **run** · **git** · **delivery** · **walkthrough** · **collaboration** · rules — `finish` → **release** 全链对齐
 - **rules/local** — 安装后 symlink → `.cursorGrowth/rules/local/`（删除母版内静态 README）
-- **docs** — naming · quickstart · plan-run · training · migration-catalog · README 门面同步
-- **verify-super-cursor.sh** — 注册 learn/scaffold commands；移除 finish skill 检查
+- **cursor-coherence.sh** — 校验 `rules/local` symlink 可解析
+- **runner-smoke.sh** — 与 plan 模板默认空 ACTIVE 对齐（smoke fixture）
+- **review** skill · **naming.md** — 与全局 `skills-cursor/review`（Bugbot/Security）区分
+- **docs** — naming · quickstart · plan-run · training · migration-catalog · building-super-cursor · README 门面同步
+- **verify-super-cursor.sh** — 注册 learn/scaffold commands · bootstrap-growth
 - **week** skill — `collect-week.py` 兼容 CHANGELOG 版本节分隔符 `-` / `–` / `—`；新增 `verify_collect_week.sh` fixture 验收
 
 ### Removed

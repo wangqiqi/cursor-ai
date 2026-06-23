@@ -1,11 +1,15 @@
 ---
 name: review
-description: 代码/PR 回顾 — REV-* 任务；坏味道与复杂度清单。
+description: >-
+  代码/PR 回顾 — REV-* 任务；坏味道与复杂度清单。可委派 review agent（只读）。
+  ≠ 全局 skills-cursor/review（Bugbot/Security 路由）；安全专项用 security skill。
 ---
 
 # review
 
 用于 `REV-*` 或合并前结构化回顾。可委派 **review** agent（只读）。
+
+**≠ 全局 `review`**：`~/.cursor/skills-cursor/review` 只路由 Bugbot / Security Review；本 skill 管 REV-* 与 PR 结构化清单。
 
 ## 输出格式
 

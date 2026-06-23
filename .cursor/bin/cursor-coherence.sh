@@ -148,6 +148,23 @@ for agent_file in "$CUR"/agents/*.md; do
     || fail "README missing agent $agent_name"
 done
 
+# 15. rules/local symlink resolves (.cursorGrowth/rules/local)
+repo_root="$(cd "$CUR/.." && pwd)"
+local_link="$CUR/rules/local"
+if [[ -L "$local_link" ]]; then
+  if [[ -d "$local_link" && -f "$local_link/README.md" ]]; then
+    ok "rules/local symlink resolves"
+  else
+    fail "rules/local symlink broken — run: bash .cursor/bin/bootstrap-growth.sh"
+  fi
+elif [[ -d "$local_link" && -f "$local_link/README.md" ]]; then
+  ok "rules/local directory"
+elif [[ ! -e "$local_link" ]]; then
+  fail "rules/local missing — run: bash .cursor/bin/bootstrap-growth.sh"
+else
+  fail "rules/local not a symlink or directory with README"
+fi
+
 echo "---"
 [[ "$FAIL" -eq 0 ]] && echo "Coherence checks passed." && exit 0
 echo "$FAIL coherence check(s) failed." && exit 1

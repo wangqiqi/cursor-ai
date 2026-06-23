@@ -5,6 +5,10 @@ CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
 cd "$ROOT"
 
+echo "=== Bootstrap .cursorGrowth (mother repo) ==="
+bash "$CUR/bin/bootstrap-growth.sh"
+
+echo ""
 echo "=== Super Cursor template verify ==="
 bash "$CUR/verify-super-cursor.sh"
 

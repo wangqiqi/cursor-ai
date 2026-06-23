@@ -9,6 +9,14 @@ trap 'rm -f "$TMP_PLAN"' EXIT
 
 cp "$CURSOR_DIR/templates/plan.md" "$TMP_PLAN"
 
+# Template default is closed/empty; smoke needs an active sprint fixture.
+sed -i \
+  -e 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-001 -->/' \
+  -e 's/<!-- PLAN_APPROVED: (none) -->/<!-- PLAN_APPROVED: 2099-01-01 -->/' \
+  -e 's/<!-- SPRINT_STATUS: closed -->/<!-- SPRINT_STATUS: active -->/' \
+  -e 's/<!-- SPRINT: (none) -->/<!-- SPRINT: SPRINT-01 -->/' \
+  "$TMP_PLAN"
+
 # shellcheck source=../hooks/lib/plan-parse.sh
 source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$TMP_PLAN"
 
