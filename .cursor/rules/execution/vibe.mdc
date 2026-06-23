@@ -13,4 +13,22 @@ alwaysApply: false
 - **Align often**: grep field names and routes against docs when touching both sides.
 - **Layer order** (B/S): UI → interaction → API surface → backend → persistence — skip only if user confirms.
 - New projects: prefer `/scaffold` + `/plan` over ad-hoc directory sprawl.
-- **Pre-merge / pre-release product check**: UI/feature sprints → **`/delivery`** before **`/finish`** or **release** (see **delivery** skill).
+- **Pre-merge / pre-release product check**: UI/feature sprints → **`/delivery`** before **`/release`** (see **delivery** skill).
+
+## 垂直切片（full-stack feature）
+
+新能力跨持久化 + API + 客户端时，**默认按切片交付**（每层可单独 ✅ TASK）：
+
+| 序 | 层 | 要点 |
+|----|-----|------|
+| 1 | **契约** | 请求/响应 · 错误码 · 分页（**api** skill；OpenAPI 若已有） |
+| 2 | **持久化** | migration / schema / 存储（若需要） |
+| 3 | **领域服务** | 业务逻辑，非 HTTP 入口 |
+| 4 | **API 面** | routes · handlers · auth/校验 |
+| 5 | **测试** | 单测 + 集成；配套 `verify_<feature>.sh` L1（`rules/feedback/verify.mdc`） |
+| 6 | **客户端类型** | types / client wrapper 与契约同步 |
+| 7 | **UI** | 页面/组件接线 |
+
+**禁止**未定契约时前后端并行改字段名。跳层须用户确认。
+
+拆 TASK → **plan** 阶段 2 引用本表 · 验收分层 → verify.mdc。

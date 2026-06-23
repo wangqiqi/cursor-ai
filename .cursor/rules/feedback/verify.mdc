@@ -32,3 +32,24 @@ alwaysApply: false
 `task_verify_heuristics.enabled` 默认 **false**（`config/workflow.json`）。设为 `true` 时，描述性验收列回退 `fallback_test_script` / `fallback_verify_script`。
 
 用户可见修复 → CHANGELOG `### Fixed`。
+
+## 分层验收（verify-layers）
+
+大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（命名示例 `scripts/verify_<feature>.sh`，路径由项目自定）。
+
+| 层 | 典型内容 | 外部依赖 | 默认 CI |
+|----|----------|----------|---------|
+| **L0** | 关键文件 / 配置存在 | 无 | ✅ |
+| **L1** | import · 单元测试 · 静态检查 | 无 | ✅ |
+| **L2** | schema / migration head / 契约快照断言 | 可选本地工具 | 视项目 |
+| **L3** | `--full`：真实 DB · 服务 · HTTP 冒烟 | 基础设施 | 本地 / nightly |
+
+约定：
+
+- **默认**（无参）：跑到 **L1**（或项目文档约定的最快绿层）
+- **`--full`**：跑到 **L3**
+- **聚合脚本**（示例 `scripts/verify_all.sh`）：顺序调用各域脚本；新域交付时 **注册一行**，勿复制整套逻辑进每个域脚本
+
+plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）；Sprint 全量走 `plan VERIFY` 或 `./scripts/verify.sh`。
+
+细则 → **test** skill · `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。

@@ -1,18 +1,18 @@
 ---
 name: delivery
-description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后端对接 · 组件完整度 · 可维护性 · 生产就绪。Sprint 收尾或 /finish 前走查。说「交付验收」「上线前检查」「生产就绪」时用。
+description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后端对接 · 组件完整度 · 可维护性 · 生产就绪。Sprint 收尾或 /release 分支前走查。说「交付验收」「上线前检查」「生产就绪」时用。
 ---
 
 # delivery · 交付验收
 
-功能已实现、**task-verify** 已绿之后，在 **`/finish`**（merge/PR）或 Sprint **Done when** 要求时，做 **7 维度**走查。不替代 **run** 三公理审计或自动化 **verify**。
+功能已实现、**task-verify** 已绿之后，在 **`/release`**（merge/PR）或 Sprint **Done when** 要求时，做 **7 维度**走查。不替代 **run** 三公理审计或自动化 **verify**。
 
 项目特化路径（design tokens、i18n 库、OpenAPI 位置）→ `.cursorGrowth/learn/acceptance.md`（若无则 **AskQuestion** 或 grep 惯例）。
 
 ## 何时进入
 
 - 用户说 **`/delivery`** · 「交付验收」「上线前检查」「生产就绪」
-- **finish** 前：UI/功能 Sprint **建议**先走一遍（见 **finish** skill）
+- **release** §分支前：UI/功能 Sprint **建议**先走一遍（见 **release** skill）
 - plan **Done when** 含 `delivery 无 Blocker`
 - `REV-*` 任务范围含交付走查 → 可委派 **review** agent（只读）+ 本清单
 
@@ -22,7 +22,7 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 2. 按下方 **7 条**逐项检查（grep · Read · 对照 docs/OpenAPI）
 3. 第 4 条 API 子集 → 对照 **api** skill
 4. 第 7 条 → 对照 **security** skill · `security-sdlc.mdc`
-5. 输出报告；**Blocker** 须用户决策后再 **finish**
+5. 输出报告；**Blocker** 须用户决策后再 **release**
 
 ## 输出格式
 
@@ -36,7 +36,7 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 |--------|------|
 | **Blocker** | 不可 merge/上线；须修或用户明确接受风险 |
 | **High** | 应在本 Sprint 内修 |
-| **Medium** | 可跟 issue；不挡 finish |
+| **Medium** | 可跟 issue；不挡 release |
 | **Low** | 风格/ nit |
 
 **文档 ↔ 实现冲突**（第 3、4 条）须标 **`Decision needed`**，列：
@@ -64,6 +64,15 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 - [ ] 规格/README/用户文档描述的行为，代码已实现
 - [ ] 已实现能力在文档中有对应说明（非仅代码自解释）
 - [ ] 冲突 → **`Decision needed`**，等你拍板后再改文档或代码
+
+#### 脚本化 vs 人工（doc-coherence）
+
+| 手段 | 用途 |
+|------|------|
+| **`docs/scripts/verify_doc_*.sh`**（见 `rules/execution/docs.mdc`） | 断链 · 版本锚点 · 防回退 grep — **可写进 plan 验收列** |
+| **本 §3 清单** | 语义完整 · 读者可读 · 冲突上报 |
+
+DOC Sprint 的 Done when：**脚本绿** + delivery §3 **无 Blocker**（若用户可见）。
 
 ### 4. 后端对接 · API · 数据
 
@@ -113,7 +122,7 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 | **ia** | — | 结构规划 · `docs/design/*-ia*`（先于大改） |
 | **run** | — | 实现 · task-verify · 三公理审计 |
 | **delivery** | 7 维走查 · 冲突上报 | 不写业务代码（除非用户 steering 修 Blocker） |
-| **finish** | Blocker 须先报告 | 不跳过 verify |
+| **release** | Blocker 须先报告 | 不跳过 verify |
 
 UX 分流不明时 → **ux** skill；结构问题回流 **ia**，非结构抛光留在本 skill。
 

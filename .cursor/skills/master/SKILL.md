@@ -5,6 +5,8 @@ description: 总入口（/master）：不确定用什么指令时用。AskQuesti
 
 # master · 路由
 
+**日常只需 `/run` ↔ `/plan`；真迷路 `/master`。** 其余 skill（delivery · test · api …）由 Agent 按 plan 的 Goal/Done when **自动选用**，你不必记名字。
+
 **只做路由与说明，不代替下游 skill 执行具体工作。** 弄清意图后 handoff 到对应 skill / rules，并给出「接下来你可以说 `/xxx`」。
 
 路由表：[routes.md](routes.md) · 场景对照：`.cursor/README.md` 场景速查 · 速查：`docs/training/skills.md`
@@ -16,7 +18,7 @@ description: 总入口（/master）：不确定用什么指令时用。AskQuesti
 - 用户描述目标但未带 slash（如「帮我搭个项目」「验收总失败」「怎么发版」）
 - 新会话、刚安装模板、空仓库且用户只说「开始吧」
 
-**已有明确 slash**（如 `/plan` `/run`）→ **不要**拦截，直接走对应 skill。
+**已有明确 slash**（如 `/plan` `/run` `/scaffold`）→ **不要**拦截，直接走对应 skill；**不要**为了「保险」多绕 `/master`。
 
 ## 流程
 
@@ -89,7 +91,7 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 
 | 子选项 id | 用户看到 | 路由 |
 |-----------|----------|------|
-| `git` | Git 提交 / PR / push / 收尾 | **git** · **finish** · babysit · split-to-prs · `commit.mdc` · collaboration |
+| `git` | Git 提交 / PR / push / 收尾 | **git** · **release** · babysit · split-to-prs · `commit.mdc` · collaboration |
 | `security` | 安全审查（密钥 / PII / 鉴权） | **security** |
 | `api` | REST / OpenAPI 设计审查 | **api** · `rules/execution/api.mdc` |
 | `delivery` | 交付验收 / 上线前走查 | **delivery** · `rules/execution/delivery.mdc` |

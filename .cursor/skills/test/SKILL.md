@@ -23,6 +23,21 @@ description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 
 | 集成 | API、DB、模块边界 |
 | E2E | 关键用户路径（Playwright/Cypress 若项目已有） |
 
+## 验收脚本分层（verify-layers）
+
+与 `rules/feedback/verify.mdc` 对齐；**母版不写项目路径**，坐标记入 `.cursorGrowth/learn/dev-conventions.md`。
+
+| 层 | 测试侧重 | plan 验收列示例 |
+|----|----------|-----------------|
+| L0 | 文件/配置存在 | `test -f path/to/module` |
+| L1 | pytest / vitest / go test 单测+import | `bash scripts/verify_<feature>.sh` |
+| L2 | migration head · schema 断言 | 同上脚本内（可选） |
+| L3 | `--full` 集成 / curl 冒烟 | `bash scripts/verify_<feature>.sh --full` |
+
+- 新功能域：**优先** L1 进 `task-verify`；L3 进 Sprint Done when 或 nightly
+- 红测停在 L1 即可标 🔧；**勿**为 ✅ 跳过 L1 直接跑 L3
+- 聚合脚本仅编排，不测业务逻辑（见 verify.mdc）
+
 ## Playwright / E2E（若栈具备）
 
 - 测行为与可见结果，非 DOM 实现细节

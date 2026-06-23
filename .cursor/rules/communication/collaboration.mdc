@@ -40,7 +40,7 @@ alwaysApply: false
 ## 与执行规范的分工
 
 - **提交**：见 `rules/execution/commit.mdc`
-- **Git**：**git** skill · Sprint/Task 收尾 → **finish** skill
+- **Git**：**git** skill · Sprint/Task 汇入主轨 → **release** skill §分支
 - **安全**：**security** skill
 - PR 维护、CI 循环 → `babysit`（`more` → `git`）
 - 大 diff 拆 PR → `split-to-prs`（须用户批准计划）

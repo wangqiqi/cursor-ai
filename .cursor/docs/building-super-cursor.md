@@ -70,8 +70,8 @@ See `config/README.md` for all keys. Copy `templates/plan.md` when using the pla
 |------|--------|
 | Plan | `/plan` · Done when 可含 `delivery 无 Blocker` |
 | Implement | `/run` · `task-verify` |
-| Product gate | `/delivery` · **finish** 前建议 |
-| Branch | `/finish` · **git** |
+| Product gate | `/delivery` · **release** §分支前建议 |
+| Branch / tag | `/release` · **git** |
 | Release | **release** / **ship** · verify + security + delivery |
 
 Verify template integrity:

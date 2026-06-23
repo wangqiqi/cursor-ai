@@ -31,8 +31,8 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行 · 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     23 个：master · plan · run · learn · scaffold · git · finish · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · week · disk · maintain
-├── commands/   ux · ia · delivery
+├── skills/     22 个：master · plan · run · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · week · disk · maintain
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia
 ├── agents/     ship · review · spike
 ├── hooks/      会话初始化 · run 循环控制
 ├── config/     workflow.json · release.json · roles.json
@@ -80,7 +80,7 @@ flowchart LR
   H --> F
   F --> U["/ux · /ia<br/>体验/导航（可选）"]
   H --> J["/delivery<br/>交付验收（可选）"]
-  J --> K["/finish<br/>merge/PR"]
+  J --> K["/release<br/>merge/PR/打 tag"]
   H --> I["verify + release/ship"]
 ```
 
@@ -99,42 +99,41 @@ flowchart LR
 | 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → `/run` 逐条验收 |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
-| 分支收尾 | merge/PR 靠口头约定 | **finish** skill（4 选 1）· PR 维护用 `babysit` |
+| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护用 `babysit` |
 | 合并前 | 靠人想起来查安全/API | **security** · **api** · **delivery** · **git** skills |
 | 发版 | 口头 checklist | **release** skill 或 **ship** agent |
 
 ## 30 秒上手
 
-对 Agent 说：
+对 Agent 说（**记三个即可**）：
 
 ```text
-/master
+/run     # 默认：做事 · 写代码
+/plan    # 拆 Sprint（无 ACTIVE 时）
+/master  # 真迷路才用
 ```
 
-它会 AskQuestion 了解你的意图，并推荐下一步。常见路径：
+完整 slash 见 [`.cursor/README.md`](.cursor/README.md) 三层表。常见路径：
 
 ```text
-新仓库     →  /scaffold  →  /plan  →  /run
+新仓库     →  /scaffold  →  /learn  →  /plan  →  /run
 已有代码   →  /learn  →  /plan  →  /run
-小修小补   →  描述复现步骤（自动匹配 bugfix rules）
+小修小补   →  /run 或描述复现步骤（bugfix rules）
 ```
 
-| Command | 作用 |
-|---------|------|
-| `/master` | 不确定时 — 路由到下方入口 |
-| `/plan` | 先总后分：Goal · Done when → 拆 TASK · 写 `plan.md`（≠ IDE Plan 模式） |
-| `/run` | 按 ACTIVE 实现 · `task-verify` · commit |
-| `/finish` | Sprint/Task 完成后 merge / PR / 保留 / 丢弃 |
-| `/ux` | UX 体验分流 → ia（结构）或 delivery（抛光） |
-| `/ia` | 信息架构：工作流正交 · 角色入口 · `docs/design/*-ia*` |
-| `/delivery` | 交付验收：7 维含导航与 IA（finish 前建议） |
-| `/learn` | 项目认知 → `.cursorGrowth/learn/` |
-| `/week` | 跨仓 CHANGELOG 周报 → `.cursorGrowth/week-report/` |
-| `/disk` | 磁盘占用快照与变动对比 → `.cursorGrowth/disk-snapshots/` |
-| `/maintain` | 开发环境诊断与安全清理（Linux） |
-| `/scaffold` | 8 栈脚手架 / 已有项目 audit |
+| 层 | Command | 作用 |
+|----|---------|------|
+| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit（**默认入口**） |
+| **【日常】** | `/plan` | 先总后分：Goal · Done when → 拆 TASK |
+| **【日常】** | `/master` | 真迷路时 AskQuestion 路由 |
+| **【生命周期】** | `/scaffold` | 8 栈脚手架 / 已有项目 audit |
+| **【生命周期】** | `/learn` | 项目认知 → `.cursorGrowth/learn/` |
+| **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
+| **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
+| **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
+| 工具 | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护（skill 触发） |
 
-发版：**release** skill（清单）· **ship** agent（自治）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git** · **finish**。
+发版：**release** skill（清单）· **ship** agent（自治）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git**。
 
 ## 8 栈脚手架
 

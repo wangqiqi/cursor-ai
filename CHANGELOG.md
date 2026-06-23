@@ -4,9 +4,23 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **commands** — 9 个 slash 入口：`run` · `plan` · `master` · `scaffold` · `learn` · `release` · `delivery` · `ux` · `ia`；description 标注 **【日常】/【生命周期】/【高级】**
+- **release** skill — 吸收原 **finish**（§分支 4 选 1 + §打版）；`/release` command
+
 ### Changed
 
+- **master** · **run** · **plan** · **routes** — slash 三层 UX；`/run` 为默认做事入口；master 勿滥用
+- **plan** · **run** · **git** · **delivery** · **walkthrough** · **collaboration** · rules — `finish` → **release** 全链对齐
+- **rules/local** — 安装后 symlink → `.cursorGrowth/rules/local/`（删除母版内静态 README）
+- **docs** — naming · quickstart · plan-run · training · migration-catalog · README 门面同步
+- **verify-super-cursor.sh** — 注册 learn/scaffold commands；移除 finish skill 检查
 - **week** skill — `collect-week.py` 兼容 CHANGELOG 版本节分隔符 `-` / `–` / `—`；新增 `verify_collect_week.sh` fixture 验收
+
+### Removed
+
+- **finish** skill — 合并进 **release**（`/finish` → `/release`）
 
 ## [4.17.1] - 2026-06-15
 

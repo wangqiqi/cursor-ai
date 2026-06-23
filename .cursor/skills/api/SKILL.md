@@ -46,3 +46,12 @@ description: REST/OpenAPI 设计审查。
 - [ ]  contract test 或 consumer-driven test 若项目已有
 - [ ]  pagination 边界（空页、末页、非法 cursor）
 - [ ]  跑项目 test / `curl` 示例与 OpenAPI 一致
+
+## 垂直切片（跨层交付）
+
+全栈新 API 域时，在上方审查清单之外按序自检（层序见 `rules/execution/vibe.mdc` §垂直切片）：
+
+- [ ] 契约已定再动 persistence / service
+- [ ] server 与 client types / mocks **同 PR**
+- [ ] 测试：happy path + 主要 4xx；域脚本 L1 绿（`rules/feedback/verify.mdc`）
+- [ ] 公开行为变更已更 docs / CHANGELOG

@@ -48,5 +48,5 @@ curl -o .cursor/rules/local/my-stack.mdc \
 ## 与 skills 分工
 
 - **Rules** — 纪律、栈约定、globs 触发
-- **Skills** — 多步流程（plan/run/finish/git）
+- **Skills** — 多步流程（plan/run/release/git）
 - 流程不要写进长 rule；rule 不要重复 skill 全文

@@ -45,10 +45,10 @@ description: Git — 分支、提交、合并。需要 git 操作时用。
 
 ```bash
 git worktree add ../repo-feature-<name> -b feat/<name>
-# 完成后见 **finish** skill · 选项 1/4 可清理 worktree
+# 完成后见 **release** skill §分支 · 选项 1/4 可清理 worktree
 git worktree list
 git worktree remove <path>   # 须无未提交改动 · 用户确认
 ```
 
 - 主 worktree 保持可发布基线
-- 清理前 verify 绿 · 与 **finish** 4 选 1 一致
+- 清理前 verify 绿 · 与 **release** §分支 4 选 1 一致

@@ -7,7 +7,13 @@
 cd /path/to/your-project
 ```
 
-`full` profile 会自动复制 `plan.md`。不确定下一步 → **`/master`**。
+`full` profile 会自动复制 `plan.md`。**记三个 slash 即可**：`/run`（做事）· `/plan`（拆 Sprint）· `/master`（真迷路）。
+
+| 层 | Slash |
+|----|-------|
+| 【日常】 | `/run` · `/plan` · `/master` |
+| 【生命周期】 | `/scaffold` · `/learn` · `/release` |
+| 【高级】 | `/delivery` · `/ux` · `/ia`（Agent 也常自动选用） |
 
 | profile | 适合 |
 |---------|------|
@@ -41,8 +47,8 @@ cd /path/to/your-project
 
 ```
 /run
-/delivery          # UI/功能 Sprint：finish 或发版前建议走查
-/finish            # merge / PR（可选）
+/delivery          # UI/功能 Sprint：release 或发版前建议走查
+/release           # merge / PR / 打 tag（可选）
 ./.cursor/bin/runner.sh verify
 release / ship
 ```

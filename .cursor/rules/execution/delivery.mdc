@@ -21,7 +21,7 @@ alwaysApply: false
 | 时机 | 动作 |
 |------|------|
 | Sprint **Done when** 含 delivery | Sprint 收尾前完整 `/delivery` |
-| UI/功能/feature Sprint | **finish** 前 **建议** `/delivery`（见 **finish** skill） |
+| UI/功能/feature Sprint | **release** §分支前 **建议** `/delivery`（见 **release** skill） |
 | 用户说「上线前」「生产就绪」 | 立即 **delivery** skill |
 | `REV-*` 含交付范围 | **review** agent + delivery 清单（只读） |
 

@@ -17,7 +17,7 @@
 | git / commit | **git** | 已有 |
 | api | **api** | 已有 |
 | plan / run / learn / scaffold / master / release | 同名 | 核心 |
-| finish / delivery | **finish** · **delivery** | Sprint 收尾 · 7 维交付验收 |
+| finish / delivery | **release** · **delivery** | Sprint 出口 · 7 维交付验收 |
 | spike / POC | **spike** agent + `SPIKE-*` | 只读调研 |
 | command-center 等编排 | **master** routes | 无伪 class 引擎 |
 

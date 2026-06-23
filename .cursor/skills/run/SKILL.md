@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # run
 
+**日常三指令之二**：`/plan` 拆好任务 → **`/run`** 做到底。Sprint 收尾后 merge/打版 → **`/release`**。
+
 闸门见 `rules/workflow.mdc`。先读 `learn/`（若有）。规划侧见 **plan** skill「先总后分」— run 负责 **按坐标执行**、**归档** 与 **及时 commit**。
 
 ```bash
@@ -34,7 +36,7 @@ git status && git diff --stat    # commit 前：无密钥、无意外文件
 | **每个 TASK / DOC / SPIKE 归档任务 ✅** | 同轮 **必须** `git commit`（**不含** `plan.md`）；`tag-per-commit` 时同轮 **`release-tag`** |
 | **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `.cursorGrowth/archive/` |
 | **仅改 `.cursorGrowth/plan.md`** | **勿** commit（`.cursorGrowth/` gitignore） |
-| **push** | 默认 **不** push；用户说 push 或 **ship** / **finish** 再推 |
+| **push** | 默认 **不** push；用户说 push 或 **ship** / **release** §分支 再推 |
 
 Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`type(scope): summary (ID)`。
 
@@ -44,8 +46,10 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 | 阶段 | 推荐命令 |
 |------|----------|
-| 开发任务 | `./scripts/test.sh` |
-| 任务收尾 / P0 闭合 | `./scripts/verify.sh` |
+| 开发任务 | `./scripts/test.sh` 或域脚本 **L1**（`bash scripts/verify_<feature>.sh`） |
+| 任务收尾 / P0 闭合 | `./scripts/verify.sh` 或域脚本 **`--full`（L3）** |
+
+分层定义 → `rules/feedback/verify.mdc` · 测试侧重 → **test** skill。
 
 `task_verify_heuristics.enabled=true` 时，描述性验收列会回退到 `./scripts/test.sh`（若存在）。
 
@@ -115,22 +119,20 @@ bash .cursor/bin/cursor-coherence.sh   # README ↔ 磁盘 skills/agents 一致
 
 1. `./.cursor/bin/runner.sh verify` — **须满足 Sprint Done when**（母版含 `cursor-coherence.sh` · README 与 CHANGELOG 对齐）
 2. 将本 Sprint 笔记写入 **`.cursorGrowth/archive/`**（命名见 `learn/plan-conventions.md`）
-3. **plan 正文 reconciliation**（与 archive 笔记一致；**必做**，仅 `.cursorGrowth/plan.md`）：
+3. **plan 正文 reconciliation**（与 archive 一致；**必做**，仅 `.cursorGrowth/plan.md`）：
    - [ ] `<!-- SPRINT_STATUS: closed -->` · `<!-- ACTIVE: (none) -->` · `<!-- NEXT: (none) -->`
-   - [ ] **Done when** 全部 `[x]`
-   - [ ] **TASK 表** 全部 ✅（或清理已完成行）
+   - [ ] **从 plan 删除整个已闭合 Active Sprint 区块**（Goal · Done when · TASK 表）— **勿**改标题留「已闭合」正文
+   - [ ] **勿**在 plan 补 ROADMAP `done` 表或「历史 Sprint」链接列表
+   - [ ] **保留**「下一 Sprint 候选」表；已交付项从候选表移除（若曾立项）
    - [ ] **VERSION_TARGET**（若有）与 CHANGELOG / 打版 tag 一致
-   - [ ] 团队在 `plan-conventions.md` 登记的可选段落 → **交付态** 或链 `.cursorGrowth/archive/` 快照
-   - [ ] Sprint 区块标题改为 **已闭合**（见 `plan-conventions.md` 标题表）；**历史** 表补归档链接
-   - **策略 A（推荐）**：保留 Sprint 区块作本地索引 · **策略 B**：清空 Active Sprint 区块（模板默认）
-4. 更新 ROADMAP → `done`（仅 `.cursorGrowth/plan.md`）
-5. 对外变更写入 CHANGELOG `[Unreleased]`
-6. **`git commit`（必做）** — 仅已跟踪文件；message 例：`docs: close SPRINT-NN readme sync (DOC-00N)`
-7. **`/learn`** — 吸收 archive / CHANGELOG 到 `.cursorGrowth/learn/`（**建议**，非可选偷懒）
-8. `./.cursor/bin/runner.sh plan-check` — 无 reconciliation **WARN**
-9. 确认 `git status` 无意外脏文件（`.cursorGrowth/` 改动可存在且不必提交）
+   - [ ] 团队在 `plan-conventions.md` 登记的可选段落 → 交付态或仅 archive
+4. 对外变更写入 CHANGELOG `[Unreleased]`（**勿**在 plan 维护 ROADMAP 全表）
+5. **`git commit`（必做）** — 仅已跟踪文件；message 例：`docs: close SPRINT-NN readme sync (DOC-00N)`
+6. **`/learn`** — 吸收 archive / CHANGELOG 到 `.cursorGrowth/learn/`（**建议**）
+7. `./.cursor/bin/runner.sh plan-check` — plan 内无已闭合 Sprint 正文
+8. 确认 `git status` 无意外脏文件（`.cursorGrowth/` 改动可存在且不必提交）
 
-Sprint 收尾后若需 **merge/PR** → **`/finish`**；新开 Sprint → **`/plan`**（设 `<!-- SPRINT_STATUS: active -->`）。
+Sprint 收尾后若需 **merge/PR 或打 tag** → **`/release`**；新开 Sprint → **`/plan`**（设 `<!-- SPRINT_STATUS: active -->`）。
 
 ## 与 plan 分工
 

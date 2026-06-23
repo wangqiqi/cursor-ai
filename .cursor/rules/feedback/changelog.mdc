@@ -24,6 +24,23 @@ alwaysApply: false
 - 有 issue/PR 则链接
 - 长进度叙事放 `.cursorGrowth/plan.md` 或 `.cursorGrowth/archive/`，勿堆进 CHANGELOG
 
+### Sprint 小节结构（可选 · 业务仓库）
+
+用户可见 Sprint 交付时，版本节下可用统一小节（**写业务差异**，不写 SOP 步骤）：
+
+```markdown
+### 主题（SPRINT-ID）
+
+- **API / 服务**：…
+- **前端 / CLI**（若有）：…
+- **迁移 / 配置**（若有）：…
+- **验收**：`verify_<feature>.sh` 并入聚合脚本
+- **未做（backlog）**：…
+- **任务**：TASK-… …
+```
+
+母版 `.cursor/` 规则变更 → `### Changed` 一行摘要即可，细则在 rules/skills。
+
 ## 与 plan
 
 - **`.cursorGrowth/plan.md`**：本地 Sprint 状态 · **gitignore** · 不 commit

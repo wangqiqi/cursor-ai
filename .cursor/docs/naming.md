@@ -8,7 +8,7 @@ Super Cursor 命名：**短、见名知意、不与 Cursor 内置冲突**。
 |------|--------|------|
 | Skill | `master` `plan` `run` `learn` `scaffold` `git` `release` `security` `api` | `shell` `loop` `canvas` `sdk`…（见下） |
 | Agent | **`ship`**（发版 subagent） | **`release`**（Cursor 内置 subagent） |
-| Command | `/master` `/plan` `/run` `/learn` `/scaffold` | 非内置 slash，需项目注册或靠 description 触发 |
+| Command | **【日常】** `/run` `/plan` `/master` · **【生命周期】** `/scaffold` `/learn` `/release` · **【高级】** `/delivery` `/ux` `/ia` |
 | Config | `workflow.json` `release.json` | — |
 | Hooks 脚本 | `growth-init` `run-start` `run-stop` | 事件名用官方：`sessionStart` `stop` 等 |
 
@@ -39,7 +39,23 @@ Cursor Task 体系有内置 subagent **`release`**。项目 `.cursor/agents/rele
 |------|--------|-----------------|
 | `plan` | 规划 skill + `/plan` | IDE **Plan 模式**（只读规划 UI） |
 | `run` | 执行 skill + `/run` | Agent 一次 run（口语） |
-| `release` | 打版 **skill**（清单） | 内置 **release** subagent（我们用 `ship` 代替） |
+| `release` | Sprint 出口 **skill**（§分支 + §打版） | 内置 **release** subagent（我们用 `ship` 代替） |
+
+## 五层关系（commands · skills · agents · rules · hooks）
+
+```text
+你记的 slash          commands/*.md（薄）     skills/*.md（SOP）
+【日常】/run /plan /master ────────────────→ run · plan · master
+【生命周期】/scaffold /learn /release ─────→ scaffold · learn · release
+【高级】/delivery /ux /ia ─────────────────→ delivery · ux · ia
+git · test · api … ────────────────────────→ Agent 按 plan 自动读 skill（无 slash）
+
+agents/     仅委派：ship（自治打版）· review/spike（只读）
+rules/      编辑匹配文件时 glob 自动加载
+hooks/      会话：growth-init · plan 上下文注入
+```
+
+**review**：同名 **skill**（母会话清单）+ **agent**（只读子进程）— 委派时用 agent。
 
 ## Rules
 

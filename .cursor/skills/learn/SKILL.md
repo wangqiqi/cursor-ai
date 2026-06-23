@@ -27,6 +27,8 @@ disable-model-invocation: true
 | `last-sync.md` | 本次同步时间、来源、待确认项 |
 | `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill |
 
+**实验 / 批跑坐标**（通用闭环见 **spike** agent §experiment-loop）→ 写入 `dev-conventions.md` 或 `learn/` 专节：产物根目录 · 报告命名 · 索引 README · gate 脚本路径。**勿**把项目路径写进 `.cursor/` 母版。
+
 ## 何时运行
 
 | 时机 | 动作 |
