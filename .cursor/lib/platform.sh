@@ -35,12 +35,12 @@ jw_jq_path() {
 }
 
 # ISO-8601 timestamp (BSD date on macOS lacks GNU -Iseconds flag)
-jw_iso8601_now() {
+iso8601_now() {
   date +"%Y-%m-%dT%H:%M:%S%z" 2>/dev/null || date
 }
 
 # Read a dotted path from a JSON file (jq or python)
-jw_json_cfg() {
+json_cfg() {
   local file="$1" dotted="$2" default="${3:-}"
   local val="" jqpath py
 
@@ -75,7 +75,7 @@ PY
 }
 
 # Join JSON array at dotted path with spaces (jq or python)
-jw_json_cfg_join() {
+json_cfg_join() {
   local file="$1" dotted="$2" default="${3:-}"
   local joined="" jqpath py
 

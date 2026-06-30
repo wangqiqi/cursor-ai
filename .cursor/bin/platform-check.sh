@@ -41,22 +41,22 @@ probe rsync optional "install/hooks use cp -a when missing"
 probe column optional "scaffold list uses awk when missing"
 
 echo "--- smoke ---"
-ts="$(jw_iso8601_now)"
-[[ -n "$ts" ]] && echo "OK   jw_iso8601_now=$ts" || { echo "FAIL jw_iso8601_now"; FAIL=$((FAIL + 1)); }
+ts="$(iso8601_now)"
+[[ -n "$ts" ]] && echo "OK   iso8601_now=$ts" || { echo "FAIL iso8601_now"; FAIL=$((FAIL + 1)); }
 
 if jw_has_json_tool; then
-  pf="$(jw_json_cfg "$CURSOR_DIR/config/workflow.json" plan_file __missing__)"
+  pf="$(json_cfg "$CURSOR_DIR/config/workflow.json" plan_file __missing__)"
   if [[ "$pf" == ".cursorGrowth/plan.md" ]]; then
-    echo "OK   jw_json_cfg plan_file=$pf"
+    echo "OK   json_cfg plan_file=$pf"
   else
-    echo "FAIL jw_json_cfg plan_file=$pf (expected .cursorGrowth/plan.md)"
+    echo "FAIL json_cfg plan_file=$pf (expected .cursorGrowth/plan.md)"
     FAIL=$((FAIL + 1))
   fi
-  he="$(jw_json_cfg "$CURSOR_DIR/config/workflow.json" workflow.enabled __missing__)"
+  he="$(json_cfg "$CURSOR_DIR/config/workflow.json" workflow.enabled __missing__)"
   if [[ "$he" == "true" ]]; then
-    echo "OK   jw_json_cfg workflow.enabled=$he"
+    echo "OK   json_cfg workflow.enabled=$he"
   else
-    echo "FAIL jw_json_cfg workflow.enabled=$he (expected true)"
+    echo "FAIL json_cfg workflow.enabled=$he (expected true)"
     FAIL=$((FAIL + 1))
   fi
 fi

@@ -46,13 +46,13 @@ jw_plan_path() {
 jw_cfg() {
   local jqpath="$1"
   local default="$2"
-  jw_json_cfg "$JW_CONFIG" "${jqpath#.}" "$default"
+  json_cfg "$JW_CONFIG" "${jqpath#.}" "$default"
 }
 
 jw_cfg_join() {
   local jqpath="$1"
   local default="$2"
-  jw_json_cfg_join "$JW_CONFIG" "${jqpath#.}" "$default"
+  json_cfg_join "$JW_CONFIG" "${jqpath#.}" "$default"
 }
 
 jw_cfg_first() {

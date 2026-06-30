@@ -71,7 +71,7 @@ cat > "$STATE_DIR/run.json" <<EOF
   "verify_cmd": "$verify",
   "autonomous": $autonomous,
   "pending_count": $pending,
-  "session_started_at": "$(jw_iso8601_now)"
+  "session_started_at": "$(iso8601_now)"
 }
 EOF
 

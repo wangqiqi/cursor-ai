@@ -15,7 +15,7 @@ jw_config() {
   local val=""
 
   if [[ -f "$CONFIG" ]]; then
-    val="$(jw_json_cfg "$CONFIG" "$dotted" "")"
+    val="$(json_cfg "$CONFIG" "$dotted" "")"
     [[ -n "$val" && "$val" != "null" ]] && { echo "$val"; return 0; }
   fi
   echo "$default"
@@ -28,7 +28,7 @@ jw_config_join() {
   local joined=""
 
   if [[ -f "$CONFIG" ]]; then
-    joined="$(jw_json_cfg_join "$CONFIG" "$dotted" "")"
+    joined="$(json_cfg_join "$CONFIG" "$dotted" "")"
     [[ -n "$joined" && "$joined" != "null" ]] && { echo "$joined"; return 0; }
   fi
   echo "$default"
@@ -93,10 +93,10 @@ release_tag() {
   bump="${bump:-patch}"
   local release_config="$CURSOR_DIR/config/release.json"
   local auto_minor auto_major tag_prefix annotated version tag_name msg
-  auto_minor="$(jw_json_cfg "$release_config" "bump.auto_minor" "false" 2>/dev/null || echo false)"
-  auto_major="$(jw_json_cfg "$release_config" "bump.auto_major" "false" 2>/dev/null || echo false)"
-  tag_prefix="$(jw_json_cfg "$release_config" "tag_prefix" "v" 2>/dev/null || echo v)"
-  annotated="$(jw_json_cfg "$release_config" "annotated_tags" "true" 2>/dev/null || echo true)"
+  auto_minor="$(json_cfg "$release_config" "bump.auto_minor" "false" 2>/dev/null || echo false)"
+  auto_major="$(json_cfg "$release_config" "bump.auto_major" "false" 2>/dev/null || echo false)"
+  tag_prefix="$(json_cfg "$release_config" "tag_prefix" "v" 2>/dev/null || echo v)"
+  annotated="$(json_cfg "$release_config" "annotated_tags" "true" 2>/dev/null || echo true)"
 
   if [[ "$bump" == "minor" && "$auto_minor" != "true" && "${RELEASE_ALLOW_MINOR:-}" != "true" ]]; then
     echo "BLOCK: minor 须评估并设 RELEASE_ALLOW_MINOR=true 或 plan <!-- RELEASE_BUMP: minor -->（见 release skill）" >&2

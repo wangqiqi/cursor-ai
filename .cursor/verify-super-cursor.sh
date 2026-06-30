@@ -157,12 +157,12 @@ check_grep_absent "$CUR" "master 指令"
 echo "--- platform helpers ---"
 # shellcheck source=lib/platform.sh
 source "$CUR/lib/platform.sh"
-ts="$(jw_iso8601_now)"
-[[ -n "$ts" ]] && echo "OK  jw_iso8601_now=$ts" || { echo "FAIL jw_iso8601_now"; FAIL=$((FAIL+1)); }
-pf="$(jw_json_cfg "$CUR/config/workflow.json" plan_file __missing__)"
-[[ "$pf" == ".cursorGrowth/plan.md" ]] && echo "OK  jw_json_cfg plan_file=$pf" || { echo "FAIL jw_json_cfg plan_file=$pf"; FAIL=$((FAIL+1)); }
-we="$(jw_json_cfg "$CUR/config/workflow.json" workflow.enabled __missing__)"
-[[ "$we" == "true" ]] && echo "OK  jw_json_cfg workflow.enabled=$we" || { echo "FAIL jw_json_cfg workflow.enabled=$we"; FAIL=$((FAIL+1)); }
+ts="$(iso8601_now)"
+[[ -n "$ts" ]] && echo "OK  iso8601_now=$ts" || { echo "FAIL iso8601_now"; FAIL=$((FAIL+1)); }
+pf="$(json_cfg "$CUR/config/workflow.json" plan_file __missing__)"
+[[ "$pf" == ".cursorGrowth/plan.md" ]] && echo "OK  json_cfg plan_file=$pf" || { echo "FAIL json_cfg plan_file=$pf"; FAIL=$((FAIL+1)); }
+we="$(json_cfg "$CUR/config/workflow.json" workflow.enabled __missing__)"
+[[ "$we" == "true" ]] && echo "OK  json_cfg workflow.enabled=$we" || { echo "FAIL json_cfg workflow.enabled=$we"; FAIL=$((FAIL+1)); }
 
 echo "---"
 [[ "$FAIL" -eq 0 ]] && echo "All checks passed." && exit 0
