@@ -115,6 +115,17 @@ DOC Sprint 的 Done when：**脚本绿** + delivery §3 **无 Blocker**（若用
 - [ ] 日志不含 PII/密钥；错误信息对用户友好
 - [ ] 与 `./scripts/verify.sh` / 项目 verify 结果一致（已绿）
 
+### 8. 长任务闭环（可选 · 含上传/导入/向导）
+
+> 规则：`long-running-ui.mdc` · `async-progress.mdc` · `modal-layering.mdc`
+
+- [ ] **完成态可见** — 100% 后用户能看到结果/「确定」，非 `loading=false` 即卸载
+- [ ] **列表刷新** — 成功后目标列表/网格含新数据
+- [ ] **决策层可操作** — 治理/确认弹窗不被进度层挡住
+- [ ] **失败可理解** — `error_message`/`detail` 可见，非假死 0%（`error-context.mdc`）
+
+UI/功能 Sprint **建议** 在 **`/release`** 前勾选；纯后端可省略。
+
 ## 与下游分工
 
 | 阶段 | delivery | 不做 |

@@ -4,6 +4,28 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.19.0] - 2026-07-01
+
+### Added
+
+- **rules/execution/** — 5 条通用 SOP：`async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector`（长任务/弹窗/重复 patch 防回归）
+- **templates/spike-regression-cluster.md** — 同症状簇 ≥2 patch 时的 SPIKE 模板
+- **workflow.json** — `followup_gate`（软闸门 · 症状簇规则列表 · `require_spike_after_patches`）
+- **delivery** skill §8 — 长任务闭环走查（上传/导入/向导）
+- **learn** skill — CHANGELOG 重复模式审计流程
+- **plan** skill — Follow-up 立项闸门（禁止第三个 symptomatic patch）
+- **refactor** skill — 死代码删除协议
+
+### Changed
+
+- **bugfix** · **vibe** · **changelog** · **release** · **core** · **AGENTS** · **verify-super-cursor** — 对齐 follow-up 闸门与 5 条 execution rules
+- **templates/cursorGrowth/learn/changelog-insights.md** — 重复工作模式表 + 建议下一 Sprint
+- **.cursor/README.md** — 扩展 skills 列表（disk · maintain · week）
+
+### Fixed
+
+- **hooks/lib/config-load.sh** · **json-utils.sh** — 修正 `platform.sh` 引用路径（`../lib` → `../../lib`）
+
 ## [4.18.1] - 2026-06-23
 
 ### Added

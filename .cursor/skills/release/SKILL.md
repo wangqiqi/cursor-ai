@@ -76,6 +76,13 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 | **minor** | 用户可见新能力、无 breaking | **否** — 须 `RELEASE_ALLOW_MINOR=true` |
 | **major** | Breaking change | **几乎从不自动** |
 
+### Follow-up 发版与 patch 密度
+
+- **同一症状簇** 连续多个 patch：CHANGELOG 须能 grep 到 **根因 Sprint ID**；**`/learn`** 审计 `changelog-insights` §重复模式
+- **建议**：短期 follow-up 合并为 **一次 minor** 或 **weekly tag**，避免 4 日 N patch（见 `learn/release-rhythm.md`）
+- **打版前**：若本版仅 follow-up UX，**建议** **`/delivery`** §8（长任务闭环）无 Blocker
+- `workflow.followup_gate` — 见 `config/workflow.json`（软闸门，plan §Follow-up 引用）
+
 ### patch-per-task 清单
 
 - [ ] 版本已定 · plan 本版 ✅（若用）

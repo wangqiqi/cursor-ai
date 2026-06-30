@@ -37,6 +37,19 @@ disable-model-invocation: true
 | Sprint 结束 | 吸收 archive 中 **Goal**、决策、**Out of scope** / ROADMAP |
 | 大重构后 | 更新 `module-map` |
 | 发版后 | 更新 `release-rhythm` + `changelog-insights` |
+| 重复劳动审计 | 用户要求或 Sprint 密集 patch 后 → §CHANGELOG 重复模式审计 |
+
+## CHANGELOG 重复模式审计（可选）
+
+当用户说「重复工作」「follow-up 太多」或 `followup_gate` 触发时：
+
+1. 读 `CHANGELOG.md` 最近 7/30 天（或用户指定窗口）
+2. grep 症状关键词簇（进度/上传/弹窗/刷新/error_message/检测器/死代码…）
+3. 对照 `.cursor/rules/execution/async-progress.mdc` 等 **通用根因类型** 归类
+4. 更新 `.cursorGrowth/learn/changelog-insights.md` §重复工作模式（**只写项目符号与版本**）
+5. 建议 plan 候选：合并 Sprint · SPIKE · 关闭多余 follow-up
+
+模板：`.cursor/templates/cursorGrowth/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`
 
 ## 合并原则
 

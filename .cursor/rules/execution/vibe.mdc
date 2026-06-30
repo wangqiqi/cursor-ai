@@ -32,3 +32,7 @@ alwaysApply: false
 **禁止**未定契约时前后端并行改字段名。跳层须用户确认。
 
 拆 TASK → **plan** 阶段 2 引用本表 · 验收分层 → verify.mdc。
+
+## 长任务 / 异步进度（横切）
+
+跨 **Worker + API + 轮询 UI** 或 **多阶段上传/导入** 时，除垂直切片外须联读：`async-progress.mdc` · `long-running-ui.mdc` · `modal-layering.mdc` · `error-context.mdc`。

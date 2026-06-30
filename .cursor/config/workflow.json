@@ -46,6 +46,18 @@
     "default": "professional",
     "config": ".cursor/config/roles.json"
   },
+  "followup_gate": {
+    "enabled": true,
+    "require_spike_after_patches": 2,
+    "require_spike": false,
+    "symptom_cluster_rules": [
+      "async-progress.mdc",
+      "long-running-ui.mdc",
+      "modal-layering.mdc",
+      "error-context.mdc",
+      "single-detector.mdc"
+    ]
+  },
   "task_verify_heuristics": {
     "enabled": false,
     "fallback_test_script": "./scripts/test.sh",

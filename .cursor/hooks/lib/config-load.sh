@@ -3,8 +3,8 @@
 set -euo pipefail
 
 _LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=../lib/platform.sh
-source "$_LIB_DIR/../lib/platform.sh"
+# shellcheck source=../../lib/platform.sh
+source "$_LIB_DIR/../../lib/platform.sh"
 
 JW_CONFIG="${JW_CONFIG:-}"
 JW_PROJECT_ROOT="${JW_PROJECT_ROOT:-}"

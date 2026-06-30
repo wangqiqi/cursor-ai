@@ -25,9 +25,14 @@ alwaysApply: false
 ## 4. 反馈
 
 - 用户可见修复写入 CHANGELOG `### Fixed`（见 `rules/feedback/changelog.mdc`）。
-- 若暴露流程/约定缺口，运行 **`/learn`** 更新 `.cursorGrowth/learn/`（勿写入 `.cursor/`）。
+- 若暴露流程/约定缺口，运行 **`/learn`** 更新 `.cursorGrowth/learn/`（通用规则缺口 → 用户授权后补 `.cursor/rules/`）
 
 ## 5. 与 run
 
 - plan 任务 ID 可用 `TASK-*`；hotfix 可走 **git** + CHANGELOG
 - 阻塞 → plan 标 `⚠️` 回流 `/plan`
+
+## 6. Follow-up 与重复症状
+
+- 同症状 **≥2** 已发布 patch → **不得** 直接第三个 hotfix； **`/plan`** §Follow-up 或 **`SPIKE-*`**（`.cursor/templates/spike-regression-cluster.md`）
+- 改 progress / 长任务 UI / 弹窗 z-index / 错误 message / 格式检测 → 读对应 rule：`async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector`
