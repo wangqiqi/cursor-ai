@@ -87,6 +87,8 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 分层验收 verify-layers | `rules/feedback/verify.mdc` · **test** skill |
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
 | 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill |
+| 数据批处理 IN/分块 | `rules/execution/data-batch.mdc` |
+| MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |
 
 项目路径与聚合脚本名 → `.cursorGrowth/learn/dev-conventions.md`，不写进母版。
