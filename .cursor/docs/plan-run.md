@@ -2,8 +2,8 @@
 
 迷路或刚安装 → **`/master`** · 日常 **`/run` ↔ `/plan`** · `/learn` → `.cursorGrowth/learn/`
 
-1. `config/workflow.json` · 复制 `templates/plan.md` → 根目录（**gitignore，不提交**）
-2. **`/plan`** — 先总后分：Goal · Done when · ROADMAP → 再拆 TASK · **执行顺序**（**无 ACTIVE 时用**）
+1. `config/workflow.json` · 复制 `templates/plan.md` → **`plan_file` 所指工作副本**（默认在 Growth 目录；**gitignore，不提交**；安装/bootstrap 会引导）
+2. **`/plan`** — 先总后分：Goal · Done when → 再拆 TASK · **执行顺序**（**无 ACTIVE 时用**）
 3. **`/run`** — 按 `ACTIVE` 执行（**默认做事入口**）；门面变更 **同 commit 同步 README**；Sprint 收尾对照 Done when 并归档
 4. **`/ia`**（【高级】）— 导航/角色大改：先结构稿 `docs/design/*-ia*` · `ia.mdc` R1–R4
 5. **`/delivery`**（【高级】）— UI/功能 Sprint：**release** §分支前建议 7 维走查；Blocker 须先报告

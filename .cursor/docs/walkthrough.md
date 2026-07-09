@@ -9,7 +9,7 @@
 cd /path/to/demo-app
 ```
 
-`full` profile 会自动复制 `plan.md`。不确定下一步 → 对 Agent 说 **`/master`**。
+`full` profile 会引导复制 `templates/plan.md` → **`workflow.json` 的 `plan_file`**（Growth 工作副本）。不确定下一步 → 对 Agent 说 **`/master`**。
 
 ## 1. 脚手架
 
@@ -26,7 +26,7 @@ go mod tidy
 
 ```text
 /learn     → 写入模块路径、verify 命令到 .cursorGrowth/learn/
-/plan      → 在 plan.md 上拆真实 Sprint
+/plan      → 在 `plan_file`（Growth 工作副本）上拆真实 Sprint
 ```
 
 验收列示例：
