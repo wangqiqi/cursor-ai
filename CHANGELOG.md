@@ -7,6 +7,7 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **rules/execution/data-batch.mdc** — 数据访问批处理护栏（IN 分块 · 列表参数上限 · 多阶段范围一致）`TASK-001`
+- **skills/mcp** — 扩写建服四阶段 + `reference/`（best-practices · TS/Python 骨架；去旧 `@master` 路由）`TASK-002`
 
 ## [4.19.0] - 2026-07-01
 
