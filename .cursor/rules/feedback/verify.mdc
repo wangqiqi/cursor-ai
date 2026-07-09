@@ -20,7 +20,7 @@ alwaysApply: false
 ./.cursor/bin/runner.sh verify         # Sprint / 打版前全量（读 plan VERIFY 后执行脚本）
 ```
 
-**勿混淆**：`runner.sh verify` 是 **CLI 入口**；`plan.md` 的 `<!-- VERIFY: ... -->` 必须指向 **项目验收脚本**（默认 `./scripts/verify.sh`），**禁止**写 `runner.sh verify`（会无限递归）。
+**勿混淆**：`runner.sh verify` 是 **CLI 入口**；plan 工作副本（`workflow.json` → `plan_file`）里的 `<!-- VERIFY: ... -->` 必须指向 **项目验收脚本**（默认 `./scripts/verify.sh`），**禁止**写 `runner.sh verify`（会无限递归）。
 
 ## 验收列约定
 
@@ -52,4 +52,4 @@ alwaysApply: false
 
 plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）；Sprint 全量走 `plan VERIFY` 或 `./scripts/verify.sh`。
 
-细则 → **test** skill · `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。
+**L0–L3 真源在本文件**；**test** skill 只引用本表，勿另写一份层定义。测试文件细则 → `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。

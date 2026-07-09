@@ -25,18 +25,11 @@ description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 
 
 ## 验收脚本分层（verify-layers）
 
-与 `rules/feedback/verify.mdc` 对齐；**母版不写项目路径**，坐标记入 `.cursorGrowth/learn/dev-conventions.md`。
-
-| 层 | 测试侧重 | plan 验收列示例 |
-|----|----------|-----------------|
-| L0 | 文件/配置存在 | `test -f path/to/module` |
-| L1 | pytest / vitest / go test 单测+import | `bash scripts/verify_<feature>.sh` |
-| L2 | migration head · schema 断言 | 同上脚本内（可选） |
-| L3 | `--full` 集成 / curl 冒烟 | `bash scripts/verify_<feature>.sh --full` |
+**层定义真源**：`rules/feedback/verify.mdc` §分层验收（L0–L3）。本 skill **不重复**该表。
 
 - 新功能域：**优先** L1 进 `task-verify`；L3 进 Sprint Done when 或 nightly
 - 红测停在 L1 即可标 🔧；**勿**为 ✅ 跳过 L1 直接跑 L3
-- 聚合脚本仅编排，不测业务逻辑（见 verify.mdc）
+- 项目路径坐标 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进 `.cursor/`；聚合脚本仅编排（见 verify.mdc）
 
 ## Playwright / E2E（若栈具备）
 
