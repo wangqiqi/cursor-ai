@@ -12,6 +12,10 @@ All notable changes to Super Cursor are documented here.
 ### Changed
 
 - **README** · **.cursor/README** · **rules-catalog** · **training/skills** — 门面同步 data-batch 与 mcp reference `TASK-003`
+- **docs/plan-run · walkthrough** — plan 工作副本改为 `workflow.json` → `plan_file`（Growth），去掉「根目录 plan」误导 `TASK-001`
+- **verify.mdc / test skill** — L0–L3 真源收敛到 verify.mdc；test 只引用 `TASK-002`
+- **modal-layering** — 叠层编号 L1–L3 → Z1–Z3，避免与验收层混淆；示例去项目化命名 `TASK-003`
+- **.cursor/README · training/skills · migration-catalog** — 路由详表指向 `routes.md`；计数 22 skills / 42 rules `TASK-004`
 
 ## [4.19.0] - 2026-07-01
 

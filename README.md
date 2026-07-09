@@ -46,7 +46,7 @@
 
 ```text
 .cursor/  install-super-cursor.sh  README.md  CHANGELOG.md  .gitignore  .cursorignore
-plan.md   # 本地 plan/run 工作副本（gitignore，安装时从 templates 复制）
+# plan 工作副本：安装时从 templates/plan.md → workflow.json 的 plan_file（Growth，gitignore）
 ```
 
 **一条命令安装到其它项目：**

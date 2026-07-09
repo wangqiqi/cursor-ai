@@ -91,38 +91,20 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |
 
-项目路径与聚合脚本名 → `.cursorGrowth/learn/dev-conventions.md`，不写进母版。
+项目路径与聚合脚本名 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进母版 `.cursor/`。
 
-### 场景速查
+### 场景速查（摘要）
 
-| 我想… | 推荐入口 |
-|-------|----------|
-| **不知道用什么 / 刚上手** | **`/master`** |
-| 让 Agent 了解这个项目 | `/learn` |
-| 空项目创建脚手架 | `/scaffold` |
-| 已有项目改进建议 | `/scaffold` → audit |
-| 拆需求、写 Sprint | `/plan` |
-| 按任务实现并提交 | `/run` |
-| 修线上 bug | 描述问题 + bugfix rules；复杂则 `/plan` |
-| 任务卡住 / 验收失败 | `runner.sh gate-check` · 回流 `/plan` |
-| 写 PR / 回应 Review | **git** · **review** · `collaboration.mdc` |
-| 交付验收 / 上线前走查 | **delivery** · `/delivery` · **release** §分支前建议 |
-| merge / PR / 打 tag | **`/release`** |
-| 文档随代码一起改 | `docs.mdc`；术语地图 → `/learn` |
-| 升级 submodule / vendor | `submodule.mdc` |
-| 规范地 commit | **git** · `commit.mdc` |
-| 做调研 / 只写文档 | `SPIKE-` / `DOC-` · **spike** agent |
-| Sprint 做完归档 | `archive/` + ROADMAP · 见 **run** skill Sprint 收尾 |
-| 配置或排查 verify | `workflow.json` · `runner.sh verify` · `verify.mdc` |
-| 加项目私有规则 | `.cursor/rules/local/` |
-| 写 CHANGELOG / 打 tag | **release** · `changelog.mdc` · `tag.mdc` |
-| UX / 体验问题（分流） | **ux** |
-| 信息架构 / 导航迷路 | **ia** · `docs/design/*-ia*` |
-| 查 API / 安全 | **api** · **security** |
-| 自治发版 | **ship** agent |
-| 验证模板完整性 | `bash .cursor/bin/template-verify.sh` |
+完整关键词与子路由 → **`skills/master/routes.md`**（canonical）。日常只需：
 
-细节与关键词索引 → [skills/master/routes.md](skills/master/routes.md)。
+| 我想… | 入口 |
+|-------|------|
+| 做事 / 写代码 | **`/run`** |
+| 拆 Sprint | **`/plan`** |
+| 真迷路 | **`/master`** |
+| 空仓 / 发版 / 交付 / UX·IA | `/scaffold` · `/release` · `/delivery` · `/ux` · `/ia` |
+
+培训表 → [docs/training/skills.md](docs/training/skills.md)。
 
 ## 更多文档
 
