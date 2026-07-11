@@ -14,6 +14,7 @@ alwaysApply: false
 - 只做 ACTIVE 任务或用户明确请求；无静默扩 scope。
 - 不碰 Sprint **Out of scope**（见 `plan.md`）。
 - 「顺便」重构、格式化全库、重命名无关标识符 → 单独 **TASK** 或 `/plan`。
+- **禁止无理由自研轮子**：有宽松开源同类时，优先依赖或 vendor 改编（`oss-first.mdc`）；自研须能回答「无同类 / 不适应」的具体点。
 
 ## 最小正确 diff
 
@@ -30,5 +31,6 @@ alwaysApply: false
 ## 分工
 
 - 规划边界 → **plan** · `plan.md`
+- 开源 vs 自研 → `oss-first.mdc`（二级）
 - 执行审计 → **run** skill
 - 重构方法论 → **refactor** skill

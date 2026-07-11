@@ -29,7 +29,7 @@ alwaysApply: false
 
 - **task-verify** / **verify** — 自动化脚本绿/红（不变）
 - **run 审计** — 三公理 · scope · README 门面（不变）
-- **delivery** — 产品/文档/UX/对接维度（含 **§5 导航与 IA** 抽检 · `ia.mdc`）；**不替代** 上述两者
+- **delivery** — 产品/文档/UX/对接维度（含 **§5 导航与 IA** · 可选 **§8 长任务** · **§9 导入**）；**不替代** 上述两者
 - **ia** / **ux** — 结构层规划；delivery **验收** IA，不代替规划
 
 ## 冲突与决策

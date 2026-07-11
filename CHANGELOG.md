@@ -10,6 +10,15 @@ All notable changes to Super Cursor are documented here.
 - **rules/execution/input-bounds.mdc** — 输入边界与安全默认（clamp · 白名单 · deny-by-default）
 - **rules/execution/extensibility.mdc** — 可选扩展宿主（能力白名单 · 槽位隔离 · Manifest）
 
+### Changed
+
+- **submodule** — vendor 溯源（LICENSE · ORIGIN.md）与 oss-first 配套
+- **scope · vibe · security-sdlc · api** — 对齐开源优先 / 输入边界
+- **async-progress** — 持久化重试队列（outbox）护栏
+- **long-running-ui** — 可取消 · 可重试 · 速率反馈
+- **docs** — ROADMAP / archive / CHANGELOG 职责分工
+- **delivery** rule — 索引 §8 长任务 · §9 导入
+
 ## [4.20.0] - 2026-07-09
 
 ### Added
