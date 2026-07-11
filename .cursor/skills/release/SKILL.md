@@ -109,4 +109,4 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 RELEASE_BUMP=minor RELEASE_ALLOW_MINOR=true ./.cursor/bin/runner.sh release-tag
 ```
 
-自治打版（Agent 按序执行清单）→ **ship** agent · 清单以本节 + `rules/feedback/release.mdc` 为准。
+自治打版（Agent 按序执行清单）→ **ship** agent（**执行本节**；入口指针见 `agents/ship.md`）· 清单以本节 + `rules/feedback/release.mdc` 为准。
