@@ -22,6 +22,8 @@ alwaysApply: true
 | 信息架构 / 导航 / 角色入口 | **`/ia`** · **ia** skill · `rules/execution/ia.mdc`（UX 结构层） |
 | 调试 / 测试 / 回顾 / 交付 | **debug** · **test** · **review** · **delivery** skill；**review** agent |
 | 长任务 / 异步进度 / 弹窗分层 | `rules/execution/async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector` |
+| 开源选型 / vendor / 输入边界 | `oss-first` · `submodule` · `input-bounds`（二级；`/master` → deps） |
+| 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
 | ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
 | 学新技术 | **study** skill（≠ `/learn` 项目认知） |
 

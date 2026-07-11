@@ -19,6 +19,8 @@ All notable changes to Super Cursor are documented here.
 - **docs** — ROADMAP / archive / CHANGELOG 职责分工
 - **delivery** rule — 索引 §8 长任务 · §9 导入
 - **api / security / delivery / plan / release / master** skills — 清单与 deps 路由对齐新二级规范
+- **core · AGENTS · .cursor/README · rules-catalog · migration-catalog · verify-super-cursor** — 门面与验收登记 45 rules
+- **根 README** — rules 树摘要含 oss-first / input-bounds / extensibility
 
 ## [4.20.0] - 2026-07-09
 

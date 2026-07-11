@@ -35,6 +35,9 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 | IA / 导航迷路 / 角色入口 | `rules/execution/ux.mdc` · `ia.mdc` · **ux** / **ia** skills |
 | 交付 UX 验收 | `rules/execution/delivery.mdc` · **delivery** §5 导航与 IA |
 | 数据访问批处理（IN 分块） | `rules/execution/data-batch.mdc`（吸收自跨项目通用护栏） |
+| 开源优先 / vendor 溯源 | `rules/execution/oss-first.mdc` · `submodule.mdc`（吸收自跨项目通用护栏） |
+| 输入边界 / 安全默认 | `rules/execution/input-bounds.mdc` |
+| 扩展宿主（可选） | `rules/execution/extensibility.mdc`（三级 · glob） |
 
 ## 引用到 local/
 
