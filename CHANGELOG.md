@@ -18,6 +18,7 @@ All notable changes to Super Cursor are documented here.
 - **long-running-ui** — 可取消 · 可重试 · 速率反馈
 - **docs** — ROADMAP / archive / CHANGELOG 职责分工
 - **delivery** rule — 索引 §8 长任务 · §9 导入
+- **api / security / delivery / plan / release / master** skills — 清单与 deps 路由对齐新二级规范
 
 ## [4.20.0] - 2026-07-09
 

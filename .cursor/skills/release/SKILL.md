@@ -92,6 +92,15 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 - [ ] CHANGELOG `[Unreleased]` · manifest bump · docs
 - [ ] Annotated tag · push 按团队策略
 
+### 多架构打包（可选 · 桌面 / 原生产物）
+
+纯 Web / 无原生安装包时跳过。有安装包或二进制分发时：
+
+- [ ] **架构矩阵显式** — 目标 OS × CPU（如 x64 / arm64）写在 docs 或 CI，非隐式「本机 arch」
+- [ ] **构建脚本 / CI job** 覆盖矩阵中每一格（或文档标明刻意不做的格）
+- [ ] 原生依赖（若有）在矩阵内可解析、可复现
+- [ ] 发版说明或 CHANGELOG 注明支持的平台组合
+
 ### 命令
 
 ```bash
