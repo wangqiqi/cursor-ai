@@ -54,10 +54,16 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 ### 2. 国际化（i18n）
 
-- [ ] 用户可见文案均走 i18n API（`t` / `$t` / `useTranslation` 等）
+> 项目路径/库名 → `.cursorGrowth/learn/acceptance.md`（模板见 `templates/cursorGrowth/learn/acceptance.md`）。
+
+**何时跳过（须在走查报告写明）**：纯内部 CLI/库、无用户可见 UI、或团队书面确认「本版不交付多语言」。跳过 ≠ 忽略：单语产品仍检查**无硬编码散落**与术语一致。
+
+- [ ] 用户可见文案均走 i18n API（`t` / `$t` / `useTranslation` 等）— 有 i18n 栈时
 - [ ] 无遗漏字面量（grep 中文/英文 UI 字符串 vs key 文件）
 - [ ] 新增 key 在各 locale 文件齐全；无空翻译
 - [ ] 日期/数字/复数格式符合 locale
+- [ ] 错误/toast/空态文案同样走 i18n（与 `error-context.mdc` 用户可见句对齐）
+- [ ] **Acceptance 指针**：改 i18n 库或 locale 目录时，同步更新 `learn/acceptance.md`
 
 ### 3. 文档 ↔ 实现（双向）
 

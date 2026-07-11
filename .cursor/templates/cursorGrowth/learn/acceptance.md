@@ -17,6 +17,7 @@
 | 库 / API | （例：`vue-i18n` · `$t()` · `useTranslation`） |
 | locale 目录 | （例：`src/locales/`） |
 | 默认 locale | |
+| 本版是否交付多语言 | 是 / 否（否 → delivery §2 走查须声明跳过理由） |
 
 ## API / 后端对接
 
