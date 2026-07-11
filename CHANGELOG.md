@@ -6,12 +6,14 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **verify-super-cursor** — CHANGELOG `## [x.y.z]` **newest_first** 序自检（破例 FAIL）
 - **rules/execution/oss-first.mdc** — 开源优先选型（宽松授权 → vendor → 自研；授权口径）
 - **rules/execution/input-bounds.mdc** — 输入边界与安全默认（clamp · 白名单 · deny-by-default）
 - **rules/execution/extensibility.mdc** — 可选扩展宿主（能力白名单 · 槽位隔离 · Manifest）
 
 ### Changed
 
+- **changelog.mdc** — 登记序自检与 `release.json` `order: newest_first` 对齐
 - **submodule** — vendor 溯源（LICENSE · ORIGIN.md）与 oss-first 配套
 - **scope · vibe · security-sdlc · api** — 对齐开源优先 / 输入边界
 - **async-progress** — 持久化重试队列（outbox）护栏

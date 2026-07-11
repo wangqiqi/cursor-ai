@@ -168,6 +168,45 @@ pf="$(json_cfg "$CUR/config/workflow.json" plan_file __missing__)"
 we="$(json_cfg "$CUR/config/workflow.json" workflow.enabled __missing__)"
 [[ "$we" == "true" ]] && echo "OK  json_cfg workflow.enabled=$we" || { echo "FAIL json_cfg workflow.enabled=$we"; FAIL=$((FAIL+1)); }
 
+echo "--- changelog order (newest_first) ---"
+# release.json order=newest_first：已发布 ## [x.y.z] 节须严格新→旧；## [Unreleased] 可置顶
+CL="$ROOT/CHANGELOG.md"
+if [[ ! -f "$CL" ]]; then
+  echo "OK  no root CHANGELOG.md (skip order check)"
+elif ! command -v python3 >/dev/null 2>&1; then
+  echo "FAIL python3 required for CHANGELOG order check"
+  FAIL=$((FAIL+1))
+else
+  if python3 - "$CL" <<'PY'
+import re, sys
+from pathlib import Path
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+# capture semver headings only (skip Unreleased)
+vers = re.findall(r"^## \[(\d+\.\d+\.\d+)\]", text, flags=re.M)
+if len(vers) < 2:
+    print("OK  CHANGELOG version headings <%d (skip strict order)" % len(vers))
+    sys.exit(0)
+
+def key(v: str):
+    return tuple(int(x) for x in v.split("."))
+
+for i in range(len(vers) - 1):
+    if key(vers[i]) <= key(vers[i + 1]):
+        print(
+            "FAIL CHANGELOG not newest_first: %s then %s (index %d)"
+            % (vers[i], vers[i + 1], i)
+        )
+        sys.exit(1)
+print("OK  CHANGELOG newest_first (%d version headings)" % len(vers))
+sys.exit(0)
+PY
+  then
+    :
+  else
+    FAIL=$((FAIL+1))
+  fi
+fi
+
 echo "---"
 [[ "$FAIL" -eq 0 ]] && echo "All checks passed." && exit 0
 echo "$FAIL check(s) failed." && exit 1
