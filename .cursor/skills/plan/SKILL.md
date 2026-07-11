@@ -8,6 +8,16 @@ disable-model-invocation: true
 
 闸门见 `rules/workflow.mdc`。配置：`config/workflow.json`
 
+## 规模门禁 · plan≥5
+
+| 条件 | 动作 |
+|------|------|
+| 预估 / 已列 **todolist 或 TASK 超过 5 条** | **先**写入 / 更新 `.cursorGrowth/plan.md`（Goal · Done when · TASK 表），**等用户确认**后再 `/run` 编码 |
+| 大改动、跨模块、不确定选型 | 同上；必要时先 `SPIKE-*` |
+| ≤5 且范围清晰的小修 | 可直述执行；仍建议 gate-check |
+
+禁止：脑内排 6+ 步却只在聊天里列 checklist、不落 plan。与用户规则「>5 todolist → plan.md」对齐；可观测落点为本节 + `workflow.mdc`。
+
 ## 必读
 
 `.cursorGrowth/plan.md` 元数据 · **未完成** Sprint/TASK · `.cursorGrowth/archive/` · `learn/plan-conventions.md` · grep 落点（**不写代码**）

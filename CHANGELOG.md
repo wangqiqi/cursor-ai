@@ -17,6 +17,7 @@ All notable changes to Super Cursor are documented here.
 - **changelog.mdc** — 登记序自检与 `release.json` `order: newest_first` 对齐
 - **security** skill — Prompt/Agent 清单对齐 `prompt-security.mdc`
 - **delivery** §2 i18n — 可跳过声明 · `learn/acceptance.md` 指针；**ux** 内容层对齐
+- **plan** skill · **workflow.mdc** — plan≥5 规模门禁（>5 todolist 须先写 plan）
 - **submodule** — vendor 溯源（LICENSE · ORIGIN.md）与 oss-first 配套
 - **scope · vibe · security-sdlc · api** — 对齐开源优先 / 输入边界
 - **async-progress** — 持久化重试队列（outbox）护栏
