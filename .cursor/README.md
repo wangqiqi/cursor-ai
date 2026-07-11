@@ -87,6 +87,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 开源优先 / vendor 溯源 | `rules/execution/oss-first.mdc` · `submodule.mdc`（**二级**；入口 `/master` → deps） |
 | 输入边界 / 安全默认 | `rules/execution/input-bounds.mdc` · **api** / **security** 清单 |
 | 扩展宿主（可选） | `rules/execution/extensibility.mdc`（**三级** · glob；无独立 slash） |
+| Prompt / Agent 安全 | `rules/execution/prompt-security.mdc` · **security** 清单 |
 | 分层验收 verify-layers | `rules/feedback/verify.mdc` · **test** skill |
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
 | 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill |

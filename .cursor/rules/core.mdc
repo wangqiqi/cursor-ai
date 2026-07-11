@@ -24,6 +24,7 @@ alwaysApply: true
 | 长任务 / 异步进度 / 弹窗分层 | `rules/execution/async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector` |
 | 开源选型 / vendor / 输入边界 | `oss-first` · `submodule` · `input-bounds`（二级；`/master` → deps） |
 | 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
+| Prompt / Agent 安全 | `prompt-security`（二级；**security** 清单） |
 | ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
 | 学新技术 | **study** skill（≠ `/learn` 项目认知） |
 
