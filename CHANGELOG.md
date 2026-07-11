@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.21.0] - 2026-07-12
+
 ### Added
 
 - **verify-super-cursor** — CHANGELOG `## [x.y.z]` **newest_first** 序自检（破例 FAIL）
@@ -11,6 +13,7 @@ All notable changes to Super Cursor are documented here.
 - **rules/execution/oss-first.mdc** — 开源优先选型（宽松授权 → vendor → 自研；授权口径）
 - **rules/execution/input-bounds.mdc** — 输入边界与安全默认（clamp · 白名单 · deny-by-default）
 - **rules/execution/extensibility.mdc** — 可选扩展宿主（能力白名单 · 槽位隔离 · Manifest）
+- **commands** — `/week` · `/disk` · `/maintain` slash 入口
 
 ### Changed
 
@@ -19,7 +22,6 @@ All notable changes to Super Cursor are documented here.
 - **delivery** §2 i18n — 可跳过声明 · `learn/acceptance.md` 指针；**ux** 内容层对齐
 - **plan** skill · **workflow.mdc** — plan≥5 规模门禁（>5 todolist 须先写 plan）
 - **ship** agent — 打版 SSOT 指向 **release** §打版；**error-context** glob 收窄（告别 `**/*`）
-- **commands** — 补 `/week` · `/disk` · `/maintain` 与 README/routes 口径一致
 - **submodule** — vendor 溯源（LICENSE · ORIGIN.md）与 oss-first 配套
 - **scope · vibe · security-sdlc · api** — 对齐开源优先 / 输入边界
 - **async-progress** — 持久化重试队列（outbox）护栏
@@ -27,7 +29,7 @@ All notable changes to Super Cursor are documented here.
 - **docs** — ROADMAP / archive / CHANGELOG 职责分工
 - **delivery** rule — 索引 §8 长任务 · §9 导入
 - **api / security / delivery / plan / release / master** skills — 清单与 deps 路由对齐新二级规范
-- **core · AGENTS · .cursor/README · rules-catalog · migration-catalog · verify-super-cursor** — 门面与验收登记 45 rules
+- **core · AGENTS · .cursor/README · rules-catalog · migration-catalog · verify-super-cursor** — 门面与验收登记 **46 rules**
 - **根 README** — rules 树摘要含 oss-first / input-bounds / extensibility
 
 ## [4.20.0] - 2026-07-09
