@@ -103,7 +103,7 @@ flowchart LR
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
 | 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护用 `babysit` |
 | 合并前 | 靠人想起来查安全/API | **security** · **api** · **delivery** · **git** skills |
-| 发版 | 口头 checklist | **release** skill 或 **ship** agent |
+| 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
 
 ## 30 秒上手
 

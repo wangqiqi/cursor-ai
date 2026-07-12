@@ -14,7 +14,7 @@ alwaysApply: true
 | 执行 | `/run` → **run** |
 | 学习 | `/learn` → **learn** |
 | 脚手架 | `/scaffold` → **scaffold** |
-| 打版 | **release** skill · **ship** agent |
+| 打版 | **`/release`**（人主导）· **ship** agent（自治执行同一 §打版；无 `/ship`） |
 | Git | **git** skill |
 | 安全审查 | **security** skill |
 | API 设计 | **api** skill |

@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # release · Sprint 出口
 
+**用这个**：`/release` 人主导（分支 4 选 1 + 可选打版清单）。**不是那个**：自治执行打版步骤 → 委派 **ship**（同一 §打版 SSOT，无第二套流程）。
+
 Sprint/Task 代码已绿、**run** 归档后：**先汇入主轨，再打版**。不替代日常 **git** commit 纪律。
 
 ```bash
