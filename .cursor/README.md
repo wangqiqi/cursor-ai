@@ -92,11 +92,12 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 分层验收 verify-layers | `rules/feedback/verify.mdc` · **test** skill |
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
 | 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill |
-| 浏览器走查（可选） | **delivery** §10 — UI Sprint 建议；纯后端可跳过并声明；无强制 MCP |
-| 无障碍（可选） | **delivery** §11 — 键盘·焦点·语义/label·对比度提示；可跳过；不强制 axe/MCP |
+| 浏览器走查（可选） | **delivery** §10（`skills/delivery/reference/checklist-optional.md`）— UI Sprint 建议；可跳过；无强制 MCP |
+| 无障碍（可选） | **delivery** §11（同上 optional 清单）— 键盘·焦点·语义/label·对比度；可跳过；不强制 axe/MCP |
 | 系统调试循环 | **debug** skill — 复现→假设→隔离→验证→记录；无复现不盲改；`/run` 自修≤2 后 `⚠️`→`/plan` |
 | 数据批处理 IN/分块 | `rules/execution/data-batch.mdc` |
 | MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
+| delivery / plan 详单 | **delivery** / **plan** · 各自 `skills/*/reference/`（SKILL 为薄索引） |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |
 
 项目路径与聚合脚本名 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进母版 `.cursor/`。
