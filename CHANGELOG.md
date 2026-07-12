@@ -4,6 +4,15 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.21.1] - 2026-07-12
+
+### Changed
+
+- **master** — **AskQuestion 约定（SSOT）**：无该工具时正文编号选项（对齐官方 Grok/部分模型限制）
+- **plan · scaffold · ux · release · commands/master · core · constitution · agent-discipline · routes · README · building-super-cursor** — AskQuestion 不可用兜底
+- **mcp** — Agent 调用序：`GetMcpTools` → `CallMcpTool`；鉴权 `mcp_auth` 指引
+- **docs/naming** — 官方 skill 保留名（`onboard` · `review-bugbot` · `review-security`）；`/week` `/disk` `/maintain` slash；**官方工具与模型差异**表
+
 ## [4.21.0] - 2026-07-12
 
 ### Added

@@ -28,7 +28,7 @@ git status && git diff --stat
 
 ### 流程
 
-**Verify** → **（建议）delivery** → **AskQuestion（4 选 1）** → **执行** → 可选 **worktree 清理**（见 **git** skill）
+**Verify** → **（建议）delivery** → **AskQuestion（4 选 1；不可用 → 正文编号，见 master「AskQuestion 约定」）** → **执行** → 可选 **worktree 清理**（见 **git** skill）
 
 | # | 选项 | 动作 |
 |---|------|------|

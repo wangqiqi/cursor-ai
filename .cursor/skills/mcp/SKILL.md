@@ -44,12 +44,14 @@ description: >-
 
 - [ ] 无重复巨型「万能」工具
 - [ ] 错误信息可行动
-- [ ] `npx @modelcontextprotocol/inspector` 或 Cursor `CallMcpTool` 冒烟
+- [ ] `npx @modelcontextprotocol/inspector` 或 Cursor：`GetMcpTools` → 只读 `CallMcpTool` 冒烟
 - [ ] 写路径有确认/幂等说明
 
 ### 4 · 接入 Cursor
 
 - 在项目 MCP 配置注册 server（用户/团队批准后；勿擅自装 shadow MCP）
+- **调用顺序（Agent）**：先 **`GetMcpTools`**（按 `server` / `toolName` / `pattern`）取 schema → 再 **`CallMcpTool`**；未读 schema 勿盲调
+- 鉴权失败 / `needsAuth` → 对该 server 调 `mcp_auth` 一次后再试；勿对未授权 server 反复 auth
 - 工具名与 description 在 Agent 侧可发现
 - 失败时检查：stdio 路径、env、schema 与实参类型
 
@@ -60,7 +62,7 @@ description: >-
 npx @modelcontextprotocol/inspector
 ```
 
-或在 Cursor 中对目标 tool 做一次只读 `CallMcpTool`。
+或在 Cursor 中：`GetMcpTools` → 对目标 tool 做一次只读 `CallMcpTool`。
 
 ## 与 rules / 其他 skill
 

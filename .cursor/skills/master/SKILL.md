@@ -34,6 +34,18 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 
 ### 2. AskQuestion — 主路由（**≤7 项**）
 
+#### AskQuestion 约定（工具可用性 · SSOT）
+
+**优先**调用 Cursor 原生 `AskQuestion`（结构化多选；每轮 ≤7 项）。
+
+若当前会话**无**该工具（模型未注入时常见，例如部分 Grok 会话；官方亦写 *when unavailable, ask in prose*）：
+
+1. **勿空转、勿假装已弹出选择 UI**
+2. 用**同一选项表**写成正文编号列表，请用户回复 **id 或序号**
+3. 收到选择后按表 handoff — 流程与选项不变
+
+下游 skill（plan · scaffold · ux · release …）凡写 AskQuestion，均遵循本约定。
+
 文案跟用户语言；中文示例：
 
 | 选项 id | 用户看到 | 路由 |
@@ -129,5 +141,6 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 
 - 用户已明确 `/plan` 等 slash 时仍强行走 master 问答
 - 未弄清意图就执行 scaffold apply、commit、改 `.cursor/`
-- 一次抛出全部 skill 列表让用户自己猜（必须 AskQuestion 收敛）
+- 一次抛出全部 skill 列表让用户自己猜（必须 AskQuestion **或正文编号选项**收敛）
 - 主路由或子路由单轮超过 7 个选项
+- AskQuestion 不可用时卡住或只说「请用别的模型」而不给出正文选项

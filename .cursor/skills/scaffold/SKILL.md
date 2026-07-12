@@ -27,7 +27,7 @@ disable-model-invocation: true
 ./.cursor/bin/scaffold.sh list
 ```
 
-2. **AskQuestion**（至少确认栈；可多轮）
+2. **AskQuestion**（至少确认栈；可多轮；不可用 → 正文选项，见 **master**「AskQuestion 约定」）
 
 | 问题 | 选项示例 |
 |------|----------|

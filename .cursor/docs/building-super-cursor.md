@@ -10,7 +10,7 @@
 6. **Immutable after install** — Agent must not modify `.cursor/**` unless the user explicitly asks to change or improve `.cursor`. Suggest only; wait for confirmation.
 7. **Cross-platform** — scripts target Linux · macOS · Git Bash; shared helpers in `.cursor/lib/platform.sh` (see `docs/platforms.md`).
 
-不确定从哪开始 → **`/master`**（AskQuestion 路由到 plan/run/scaffold 等）。
+不确定从哪开始 → **`/master`**（AskQuestion 路由；无该工具时正文编号选项，见 master「AskQuestion 约定」）。
 
 ## Cursor ignore
 

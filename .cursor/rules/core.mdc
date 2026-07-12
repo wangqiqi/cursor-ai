@@ -9,7 +9,7 @@ alwaysApply: true
 
 | 场景 | 入口 |
 |------|------|
-| **不确定 / 从哪开始** | **`/master`** → **master**（AskQuestion 路由） |
+| **不确定 / 从哪开始** | **`/master`** → **master**（AskQuestion 路由；无工具则正文选项） |
 | 规划 | `/plan` → **plan** |
 | 执行 | `/run` → **run** |
 | 学习 | `/learn` → **learn** |

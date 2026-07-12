@@ -1,6 +1,7 @@
 # master · 路由表
 
 AskQuestion 选项与关键词 → 下游 skill / agent / rules。  
+无 AskQuestion 工具时：同表**正文编号选项**（见 **master**「AskQuestion 约定」）。  
 与 `.cursor/README.md` **场景速查** 对齐；详表在本文件，README 为摘要链。
 
 ## 主路由（第 1 轮 · ≤7 项）

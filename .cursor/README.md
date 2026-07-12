@@ -58,7 +58,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 
 ## 使用场景
 
-完整路由与关键词索引 → **`skills/master/routes.md`**（master AskQuestion 的 canonical 源）。  
+完整路由与关键词索引 → **`skills/master/routes.md`**（master AskQuestion 的 canonical 源；无该工具时正文编号选项）。  
 培训速查 → [docs/training/skills.md](docs/training/skills.md) · 端到端示例 → [walkthrough.md](docs/walkthrough.md)。
 
 ### 推荐路径
