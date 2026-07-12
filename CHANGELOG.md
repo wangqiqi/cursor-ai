@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.22.1] - 2026-07-12
+
 ### Added
 
 - **roles Growth aliases**：`.cursorGrowth/session/aliases.json`（称呼→persona_id，优先于母版 nicknames）
@@ -17,6 +19,8 @@ All notable changes to Super Cursor are documented here.
 - **resolve-role**：可选项目根 / 自动发现 Growth aliases；返回 `_resolved_via`
 - **master**：显式「呼叫/切换」→ resolve-role → 写会话态 → 改语气
 - **run-start / coherence / config README**：人格摘要与别名唯一性校验
+
+## [4.22.0] - 2026-07-12
 
 ### Added
 
