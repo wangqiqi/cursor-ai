@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # disk · 磁盘快照
 
+**工具技能**（非 plan/run 主路径）。**用这个**：占用快照与对比。**不是那个**：业务代码清理重构 → **refactor**；系统清理流程 → **`/maintain`**。
+
 结构化采集磁盘占用，写入 **`.cursorGrowth/disk-snapshots/`**（本地、**不提交 git**），支持对比两次快照的变动。
 
 ## 何时进入

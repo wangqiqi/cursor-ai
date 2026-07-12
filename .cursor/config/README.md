@@ -36,11 +36,11 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 
 Install profiles（`install-super-cursor.sh --profile`）:
 
-| profile | workflow | hooks |
-|---------|----------|-------|
-| `full` | enabled | enabled |
-| `lite` | enabled | disabled |
-| `rules-only` | disabled | disabled |
+| profile | workflow | hooks | 工具技能 week/disk/maintain |
+|---------|----------|-------|------------------------------|
+| `full` | enabled | enabled | 默认提供（slash + skill；非 plan/run 主路径） |
+| `lite` | enabled | disabled | 磁盘上可有；文档不强调为日常必选 |
+| `rules-only` | disabled | disabled | 通常不依赖这些 slash |
 
 跨平台：`bash .cursor/bin/platform-check.sh` · 详见 `docs/platforms.md`。
 

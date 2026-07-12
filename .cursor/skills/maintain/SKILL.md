@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # maintain · 开发环境维护
 
+**工具技能**（非 plan/run 主路径）。**用这个**：本机诊断/安全清理（Linux）。**不是那个**：业务 refactor；先看占用 → **`/disk`**。
+
 诊断与本机安全清理（**Linux**）。快照与对比委托 **disk** skill。
 
 ## 何时进入
