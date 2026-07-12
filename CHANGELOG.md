@@ -6,12 +6,16 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **delivery §11**：可选无障碍清单（键盘 · 焦点 · 语义/label · 对比度提示；可跳过；不强制 axe/MCP）
 - **debug**：系统调试循环（复现→假设→隔离→验证→记录）·「用这个/不是那个」· 铁律禁止无复现盲改
 - **delivery §10**：可选浏览器走查清单（URL / snapshot / console / network / 轻量 a11y；可声明跳过，不强制 MCP）
 - **acceptance 模板**：浏览器走查字段（默认验收 URL · 是否执行）
 
 ### Changed
 
+- **review**：结构化清单（范围·正确性·安全/API·可测性·可维护性）·「用这个/不是那个」
+- **delivery §10**：轻量 a11y 指向 §11；分工表含 §8–§11
+- **delivery.mdc / README**：索引 §11 与 `/review` 场景
 - **run / bugfix**：自修≤2 对齐 debug 循环；`⚠️`→`/plan` 交叉指针
 - **README**：重复劳动 SOP + 场景速查索引 debug
 - **delivery.mdc / README**：分工与可选节索引指向 §10；无新 slash
