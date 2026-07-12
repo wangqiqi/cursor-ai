@@ -51,13 +51,18 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 
 **Agent 必做顺序**：
 
-1. `bash .cursor/bin/resolve-role.sh .cursor/config/roles.json '<称呼>'`
+1. `bash .cursor/bin/resolve-role.sh .cursor/config/roles.json '<称呼>' [项目根]`
 2. **唯一命中** → 写 `.cursorGrowth/session/persona.json`（`persona_id` · `resolved_via` · `updated_at` ISO8601）→ **本会话改用该人格语气**（`skills` 仍 full）
 3. **exit 2 多命中** → AskQuestion / 正文编号消歧，**禁止**静默猜人
 4. **exit 1 未命中** → 说明无此人，列出 `/master` → `style` 或常用称呼
 
+**解析优先级**：
+
+1. `.cursorGrowth/session/aliases.json` → `aliases`（项目覆盖，gitignore）
+2. 母版 `roles.json`：`id` / `role_name` / `nicknames` / `given_name`
+
 - 持久默认仍用 `workflow.json` → `role.default`（可选；会话态优先由 `run-start` 注入）
-- 模板：`templates/cursorGrowth/session/persona.json`（gitignore，勿 commit）
+- 模板：`templates/cursorGrowth/session/persona.json` · `aliases.json`（勿 commit Growth）
 
 **轮 1 · 日常/硬核**：`professional` · `zhiyin` · `tough_guy` · `strict` · `old_master` · `dashu` · `pretty_boy`
 

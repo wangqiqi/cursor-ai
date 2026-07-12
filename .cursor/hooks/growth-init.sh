@@ -59,10 +59,14 @@ if [[ -d "$TEMPLATE_DIR/learn" ]]; then
   done
 fi
 
-# Seed session/persona.json (idempotent)
+# Seed session/persona.json + aliases.json (idempotent)
 if [[ -f "$TEMPLATE_DIR/session/persona.json" && ! -f "$GROWTH_DIR/session/persona.json" ]]; then
   mkdir -p "$GROWTH_DIR/session"
   cp "$TEMPLATE_DIR/session/persona.json" "$GROWTH_DIR/session/persona.json"
+fi
+if [[ -f "$TEMPLATE_DIR/session/aliases.json" && ! -f "$GROWTH_DIR/session/aliases.json" ]]; then
+  mkdir -p "$GROWTH_DIR/session"
+  cp "$TEMPLATE_DIR/session/aliases.json" "$GROWTH_DIR/session/aliases.json"
 fi
 
 if [[ -f "$TEMPLATE_DIR/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/local/README.md" ]]; then
