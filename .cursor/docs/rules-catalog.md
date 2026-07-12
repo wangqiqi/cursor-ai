@@ -13,14 +13,24 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 
 保持 alwaysApply ≤2 · 单 rule 宜 <500 行 · 细节进 skills 或 `references/`。
 
-## 社区策展（高引用）
+## 社区策展（高引用 · 只链不拷）
 
 | 资源 | 说明 |
 |------|------|
 | [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | ~40k ⭐ · 最大 .mdc 列表 |
+| [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | ~43k ⭐ · 跨工具 SKILL 合集 |
+| [spencerpauly/awesome-cursor-skills](https://github.com/spencerpauly/awesome-cursor-skills) | Cursor 原生向 skill 策展（browser QA 等） |
 | [cursor.directory](https://cursor.directory/) | 社区 rule 浏览 |
 | [digitalchild/cursor-best-practices](https://github.com/digitalchild/cursor-best-practices) | 规则组织与模式 |
 | [Cursor Docs · Rules](https://cursor.com/docs/rules) | 官方 globs / RULE.md |
+
+### 吸收门禁（母版）
+
+| 做 | 不做 |
+|----|------|
+| 栈专用 → 目标项目 **`.cursor/rules/local/`** | **禁止**整仓拷贝进母版 `.cursor/skills/` / `rules/` |
+| 通用缺口 → 蒸馏进**现有** skill/rule（过通用性门禁） | 为追星新建第 N 个平行入口 skill |
+| 本表外链仅作策展索引 | 把业务包名/产品路径写进母版 |
 
 ## 母版已吸收（SPRINT-07）
 
