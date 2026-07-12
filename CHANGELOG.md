@@ -14,6 +14,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **delivery / plan**：长清单与阶段细则外置 `skills/*/reference/`（对齐 mcp）；SKILL 为薄索引
+- **README**：§10/§11 与 delivery/plan reference 指针
 - **dev-conventions 模板**：增加「建议约定」待填表
 - **README**：`/learn` 行注明可建议约定
 - **review**：结构化清单（范围·正确性·安全/API·可测性·可维护性）·「用这个/不是那个」
