@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **learn**：建议约定（证据→条文→落点；默认 Growth / local；禁止擅自写 `.cursor/`）
 - **delivery §11**：可选无障碍清单（键盘 · 焦点 · 语义/label · 对比度提示；可跳过；不强制 axe/MCP）
 - **debug**：系统调试循环（复现→假设→隔离→验证→记录）·「用这个/不是那个」· 铁律禁止无复现盲改
 - **delivery §10**：可选浏览器走查清单（URL / snapshot / console / network / 轻量 a11y；可声明跳过，不强制 MCP）
@@ -13,6 +14,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **dev-conventions 模板**：增加「建议约定」待填表
+- **README**：`/learn` 行注明可建议约定
 - **review**：结构化清单（范围·正确性·安全/API·可测性·可维护性）·「用这个/不是那个」
 - **delivery §10**：轻量 a11y 指向 §11；分工表含 §8–§11
 - **delivery.mdc / README**：索引 §11 与 `/review` 场景
