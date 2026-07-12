@@ -93,6 +93,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
 | 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill |
 | 浏览器走查（可选） | **delivery** §10 — UI Sprint 建议；纯后端可跳过并声明；无强制 MCP |
+| 系统调试循环 | **debug** skill — 复现→假设→隔离→验证→记录；无复现不盲改；`/run` 自修≤2 后 `⚠️`→`/plan` |
 | 数据批处理 IN/分块 | `rules/execution/data-batch.mdc` |
 | MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |
@@ -109,6 +110,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 拆 Sprint | **`/plan`** |
 | 真迷路 | **`/master`** |
 | 空仓 / 发版 / 交付 / UX·IA | `/scaffold` · `/release` · `/delivery` · `/ux` · `/ia` |
+| 修 bug / 测挂了 | **`/debug`**（系统循环）· `bugfix.mdc` |
 
 培训表 → [docs/training/skills.md](docs/training/skills.md)。
 
