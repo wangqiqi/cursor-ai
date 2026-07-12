@@ -45,7 +45,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | Command | 何时用 | Skill |
 |---------|--------|-------|
 | `/scaffold` | 空仓库建栈 · 已有项目 audit | scaffold |
-| `/learn` | 让 Agent 了解本项目 | learn |
+| `/learn` | 让 Agent 了解本项目；可据证据**建议约定**（落 Growth / local，不擅自改 `.cursor/`） | learn |
 | `/release` | merge / PR / 打 tag（Sprint 出口） | release |
 
 ### 【高级】按需 · Agent 也常自动选用
