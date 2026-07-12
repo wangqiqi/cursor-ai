@@ -1,16 +1,34 @@
 ---
 name: debug
-description: 调试方法论 — 隔离、模式聚类、与 bugfix 衔接。
+description: 系统调试循环（/debug）— 复现→假设→隔离→验证→记录；禁止无复现盲改。说「修 bug」「测挂了」「不知道为啥挂」时用。
 ---
 
 # debug
 
-衔接 `rules/execution/bugfix.mdc`。输出仍须 file:line 与可复现步骤。
+**用这个**：测挂 / 异常行为 / 要找根因再改。**不是那个**：已知实现任务继续做 → **`/run`**；范围不清要重排 → **`/plan`**；上线走查 → **`/delivery`**。
+
+衔接 `rules/execution/bugfix.mdc`。结论须含 **file:line** 与可复现步骤。
+
+## 铁律
+
+**无根因调查，不提修复。** 禁止无复现、无假设的盲改；symptomatic patch 视为失败。
+
+## 系统循环（按序）
+
+| 步 | 动作 | 完成标准 |
+|----|------|----------|
+| **1 复现** | 固定步骤 / 最小用例；读完整报错与栈 | 能稳定触发，或明确「不可复现→先采证」 |
+| **2 假设** | 1～3 条可证伪原因（含「近期变更 / 环境」） | 写下假设，勿边猜边改 |
+| **3 隔离** | 见下节；缩小到单层/单文件 | 证据指向失败边界 |
+| **4 验证** | 最小 diff + `task-verify` / 项目 test | 绿且回归不过度 |
+| **5 记录** | 用户可见 → CHANGELOG `### Fixed`；流程缺口 → `/learn` | 可审计 |
+
+跨组件（API↔DB、CI↔脚本）时：先在边界打诊断日志，**定位断裂层**再深入，勿多处同时猜改。
 
 ## 隔离法
 
-1. 最小复现或补测试
-2. 注释/禁用可疑块（先备份或 git stash 思路）
+1. 最小复现或补失败测试
+2. 注释/禁用可疑块（备份或 stash 思路）
 3. 跑 `task-verify` / 项目 test 对比前后
 4. 二分缩小范围
 
@@ -19,7 +37,8 @@ description: 调试方法论 — 隔离、模式聚类、与 bugfix 衔接。
 - 同类报错一批修（同根因别打补丁）
 - 区分环境 vs 代码（config、版本、路径）
 
-## Escalation
+## Escalation（与 run）
 
-- 自修 ≤2 轮 → 仍失败标 `⚠️` 回流 `/plan`
-- 线上 hotfix：小 diff + CHANGELOG `### Fixed`
+- **`/run` 失败自修 ≤2 轮** → 仍失败：plan 标 `⚠️` → **`/plan`**
+- 线上 hotfix：小 diff + CHANGELOG `### Fixed`；仍须先复现/采证
+- 同症状 ≥2 已发布 patch → **禁止**第三个 symptomatic hotfix；走 `bugfix` §Follow-up / `SPIKE-*`
