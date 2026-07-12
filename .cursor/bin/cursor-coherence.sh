@@ -35,20 +35,36 @@ for agent_file in "$CUR"/agents/*.md; do
   grep -qF "**$agent_name**" "$CUR/AGENTS.md" && ok "agent $agent_name in AGENTS.md" || fail "agent $agent_name not in AGENTS.md"
 done
 
-# 4. roles.json — 12 personas, unique ids, includes professional
+# 4. roles.json — 12 personas, unique call aliases, skills=full
 roles_file="$CUR/config/roles.json"
 if [[ -f "$roles_file" ]]; then
   py="$(command -v python3 || command -v python || true)"
   if [[ -n "$py" ]]; then
     "$py" - "$roles_file" <<'PY'
 import json, sys
-data = json.load(open(sys.argv[1]))
+data = json.load(open(sys.argv[1], encoding="utf-8"))
 personas = data.get("personas", [])
 ids = [p.get("id") for p in personas]
 assert len(personas) == 12, f"expected 12 personas, got {len(personas)}"
 assert len(ids) == len(set(ids)), "duplicate persona id"
 assert "professional" in ids, "missing professional persona"
-print("OK  roles.json personas=12 unique ids")
+assert data.get("skills_policy") == "full", "skills_policy must be full"
+aliases = {}
+for p in personas:
+    assert p.get("skills") == "full", f"{p.get('id')} skills must be full"
+    for key in ("role_name", "given_name", "personality", "tone", "hint"):
+        assert p.get(key), f"{p.get('id')} missing {key}"
+    keys = [p.get("id"), p.get("role_name"), p.get("given_name")]
+    keys += list(p.get("nicknames") or [])
+    for k in keys:
+        if not k:
+            continue
+        kl = str(k).lower()
+        prev = aliases.get(kl)
+        if prev and prev != p.get("id"):
+            raise AssertionError(f"duplicate call alias '{k}' for {prev} and {p.get('id')}")
+        aliases[kl] = p.get("id")
+print("OK  roles.json personas=12 unique ids+aliases skills=full")
 PY
   else
     fail "python not found for roles.json check"

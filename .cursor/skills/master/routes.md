@@ -34,7 +34,25 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 
 ## 人格预设 (`style`)
 
-> 仅改语气，**全能**；默认 `professional`。12 项分两轮 AskQuestion（每轮 ≤7）。
+> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `professional`。12 项分两轮 AskQuestion（每轮 ≤7）。
+
+每人字段：`id` · `role_name`（角色名）· `nicknames[]`（昵称）· `given_name`（具体名字）· `personality` · `tone` · `skills`。
+
+### 呼叫（会话内）
+
+用户说「呼叫 / 切换」+ 下列任一即可匹配（大小写不敏感）：
+
+| 字段 | 例（萝莉） |
+|------|------------|
+| `id` | `loli` |
+| `role_name` | 萝莉 |
+| `nicknames` | 小妮 |
+| `given_name` | 妮妮 |
+
+- **唯一命中** → 切换该人格语气继续（能力不减）
+- **多命中**（同一称呼挂在多人）→ AskQuestion / 正文编号消歧，**禁止**静默猜人
+- 解析脚本：`bash .cursor/bin/resolve-role.sh .cursor/config/roles.json <称呼>`
+- 持久默认：改 `workflow.json` → `role.default` 为 persona `id`
 
 **轮 1 · 日常/硬核**：`professional` · `zhiyin` · `tough_guy` · `strict` · `old_master` · `dashu` · `pretty_boy`
 

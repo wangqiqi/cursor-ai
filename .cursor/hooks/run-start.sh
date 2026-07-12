@@ -22,9 +22,19 @@ jw_role_hint() {
   py="$(jw_python 2>/dev/null)" || return 0
   "$py" - "$roles_file" "$role_id" <<'PY'
 import json, sys
-for p in json.load(open(sys.argv[1])).get("personas", []):
-    if p.get("id") == sys.argv[2]:
-        print(p.get("hint", ""))
+q = sys.argv[2].strip().lower()
+for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
+    keys = {str(p.get("id","")).lower(), str(p.get("role_name") or p.get("name") or "").lower(), str(p.get("given_name","")).lower()}
+    for n in p.get("nicknames") or []:
+        keys.add(str(n).lower())
+    if q in keys or p.get("id") == sys.argv[2]:
+        role = p.get("role_name") or p.get("name") or p.get("id")
+        given = p.get("given_name") or ""
+        nicks = "、".join(p.get("nicknames") or [])
+        skills = p.get("skills") or "full"
+        hint = p.get("hint") or ""
+        pers = p.get("personality") or ""
+        print(f"{role}（{given}）· nick={nicks or '-'} · skills={skills} · {pers} · {hint}".strip(" ·"))
         break
 PY
 }

@@ -4,7 +4,14 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
-## [4.22.0] - 2026-07-12
+### Added
+
+- **roles**：每人补齐 `role_name` · `nicknames[]` · `given_name` · `personality` · `skills: full`；`bin/resolve-role.sh` 按称呼解析
+- **呼叫约定**：id / 角色名 / 昵称 / 具体名字均可切换；多命中须消歧（见 master routes）
+
+### Changed
+
+- **run-start / coherence / config README**：人格摘要与别名唯一性校验
 
 ### Added
 
