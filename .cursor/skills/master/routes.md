@@ -11,7 +11,7 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 | `scaffold` | 新建 / 空项目 | **scaffold** `/scaffold` | 脚手架、初始化、空仓库、new project、bootstrap |
 | `plan` | 规划 / Sprint / 调研 / 文档 | **plan** `/plan` | 规划、需求、Sprint、SPIKE、DOC、归档 |
 | `run` | 继续开发 | **run** `/run` | 继续、做任务、ACTIVE、next task |
-| `learn` | 了解项目 | **learn** `/learn` | 了解项目、约定、onboarding、术语 |
+| `learn` | 了解本仓 | **learn** `/learn` | 本仓约定（**不是** study 学技术） |
 | `fix` | bug / 验收 / 闸门 | bugfix · **run**/**plan** | bug、hotfix、verify 失败、gate-check、卡住 |
 | `ship` | 发版 | **release** · **ship** | 打版、发版、CHANGELOG、tag、release |
 | `more` | 审查 / 文档 / 依赖 / 配置 | 见下表 | commit、PR、security、api、submodule、config |

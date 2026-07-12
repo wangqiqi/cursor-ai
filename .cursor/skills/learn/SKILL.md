@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # learn
 
+**用这个**：沉淀**本仓库**约定 → `.cursorGrowth/learn/`。**不是那个**：学 Rust/新框架等通用技术 → **study**（可写 `SPIKE-*`）。
+
 边界见 `rules/workflow.mdc` · **`core.mdc`「.cursor 不可变」**。来源：`workflow.json` → `growth.learn_sources`
 
 ## 输出（仅 `.cursorGrowth/learn/`）
