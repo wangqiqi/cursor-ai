@@ -5,6 +5,8 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 # delivery · 交付验收
 
+**用这个**：功能已绿、要上线前 7 维走查。**不是那个**：还在规划导航结构 → **`/ia`** / **`/ux`**；自动化脚本绿/红 → **verify** / **run**（本 skill 不替代）。
+
 功能已实现、**task-verify** 已绿之后，在 **`/release`**（merge/PR）或 Sprint **Done when** 要求时，做 **7 维度**走查。不替代 **run** 三公理审计或自动化 **verify**。
 
 项目特化路径（design tokens、i18n 库、OpenAPI 位置）→ `.cursorGrowth/learn/acceptance.md`（若无则 **AskQuestion** 或 grep 惯例）。

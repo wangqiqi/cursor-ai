@@ -24,9 +24,9 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 | `pr` | PR 描述 / Review / babysit | **git** · **review** · `babysit` | collaboration |
 | `security` | 安全审查 | **security** | — |
 | `api` | API 设计 | **api** | `rules/execution/api.mdc` |
-| `delivery` | 交付验收 / 上线前 | **delivery** | `rules/execution/delivery.mdc` |
-| `ux` | UX / 体验不好 / 界面乱（未明 IA/交付） | **ux** | `rules/execution/ux.mdc` → **ia** / **delivery** |
-| `ia` | 信息架构 / 导航迷路 / 角色首页 | **ia** | `rules/execution/ia.mdc` · `docs/design/*-ia*` |
+| `delivery` | 交付验收 / 上线前 | **delivery** | **用这个**上线走查；**不是** `/ia` 规划 |
+| `ux` | UX / 体验不好 / 界面乱（未明 IA/交付） | **ux** | **用这个**分流；明导航→**ia** · 明上线→**delivery** |
+| `ia` | 信息架构 / 导航迷路 / 角色首页 | **ia** | **用这个**结构层；**不是** delivery 视觉抛光 |
 | `docs` | 文档同步 | **plan** `DOC-*` 或直述 | `rules/execution/docs.mdc` |
 | `deps` | 依赖 / 选型 / vendor / submodule | 直述 + 规范 | `oss-first.mdc` · `submodule.mdc` · **security** |
 | `config` | verify / 本地 rules / 母版自测 | 见 [扩展场景](#扩展场景) | `config/workflow.json` |
