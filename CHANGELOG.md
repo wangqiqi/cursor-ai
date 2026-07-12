@@ -4,8 +4,14 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **delivery §10**：可选浏览器走查清单（URL / snapshot / console / network / 轻量 a11y；可声明跳过，不强制 MCP）
+- **acceptance 模板**：浏览器走查字段（默认验收 URL · 是否执行）
+
 ### Changed
 
+- **delivery.mdc / README**：分工与可选节索引指向 §10；无新 slash
 - **入口消歧（SPRINT-lean-disambiguate）** — ux/ia/delivery · release/ship · security 三件套 · study/learn 各加「用这个 / 不是那个」
 - **week / disk / maintain** — 标明工具技能（非 plan/run 主路径）；lite/full 口径见 `config/README`
 - **rules-catalog** — 外链 agentic-awesome-skills · awesome-cursor-skills；吸收门禁「只链不拷」
