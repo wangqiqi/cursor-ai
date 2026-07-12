@@ -53,7 +53,7 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 `task_verify_heuristics.enabled=true` 时，描述性验收列会回退到 `./scripts/test.sh`（若存在）。
 
-失败自修 ≤2 轮 · 仍失败 `⚠️` → `/plan` · 打版读 **release** skill
+失败自修 ≤2 轮（须按 **debug** 循环：复现→假设→隔离→验证；**禁止无复现盲改**）· 仍失败 `⚠️` → `/plan` · 打版读 **release** skill
 
 ## 对外文档同步（必做）
 
