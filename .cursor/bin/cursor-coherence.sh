@@ -54,6 +54,8 @@ for p in personas:
     assert p.get("skills") == "full", f"{p.get('id')} skills must be full"
     for key in ("role_name", "given_name", "personality", "tone", "hint"):
         assert p.get(key), f"{p.get('id')} missing {key}"
+    ex = p.get("speech_examples") or []
+    assert isinstance(ex, list) and len(ex) >= 2, f"{p.get('id')} needs >=2 speech_examples"
     keys = [p.get("id"), p.get("role_name"), p.get("given_name")]
     keys += list(p.get("nicknames") or [])
     for k in keys:

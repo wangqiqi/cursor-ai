@@ -77,7 +77,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 前端 | `typescript` · `react` · `vue` · `nextjs` · `eslint` · `javascript` | `*.ts(x)` · `*.js(x)` · `*.vue` |
 | 后端 / 系统 | `python` · `go` · `rust` · `java` · `cpp` · `c` | `*.py` · `*.go` · `*.rs` · `*.java` · `*.{c,cc,cpp,h,hpp}` |
 
-治理：`constitution.mdc` · `evolution.mdc` · `config/roles.json`（12 人格：角色名/昵称/名字/性格/语气；**skills 全员 full**）。  
+治理：`constitution.mdc` · `evolution.mdc` · `config/roles.json`（12 人格 · 呼叫可解析 · Growth 会话态 · speech_examples；**skills 全员 full**）。  
 扩展 skills（主路径）：**ux** · **ia** · **debug** · **test** · **review** · **study** · **delivery** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。  
 **工具技能**（非日常主路径；`/week` · `/disk` · `/maintain`）：**week** · **disk** · **maintain** — full 默认带；lite/rules-only 可不强调（见 `config/README`）。
 

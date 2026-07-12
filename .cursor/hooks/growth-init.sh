@@ -37,12 +37,12 @@ if [[ ! -d "$GROWTH_DIR" ]]; then
     jw_copy_tree "$TEMPLATE_DIR" "$GROWTH_DIR"
   else
     mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \
-      "$GROWTH_DIR/logs" "$GROWTH_DIR/perception"
+      "$GROWTH_DIR/logs" "$GROWTH_DIR/perception" "$GROWTH_DIR/session"
   fi
 fi
 
 mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \
-  "$GROWTH_DIR/logs" "$GROWTH_DIR/perception"
+  "$GROWTH_DIR/logs" "$GROWTH_DIR/perception" "$GROWTH_DIR/session"
 
 if [[ ! -f "$GROWTH_DIR/README.md" && -f "$TEMPLATE_DIR/README.md" ]]; then
   cp "$TEMPLATE_DIR/README.md" "$GROWTH_DIR/README.md"
@@ -57,6 +57,12 @@ if [[ -d "$TEMPLATE_DIR/learn" ]]; then
       cp "$stub" "$dest"
     fi
   done
+fi
+
+# Seed session/persona.json (idempotent)
+if [[ -f "$TEMPLATE_DIR/session/persona.json" && ! -f "$GROWTH_DIR/session/persona.json" ]]; then
+  mkdir -p "$GROWTH_DIR/session"
+  cp "$TEMPLATE_DIR/session/persona.json" "$GROWTH_DIR/session/persona.json"
 fi
 
 if [[ -f "$TEMPLATE_DIR/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/local/README.md" ]]; then

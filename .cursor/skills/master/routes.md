@@ -49,10 +49,15 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 | `nicknames` | 小妮 |
 | `given_name` | 妮妮 |
 
-- **唯一命中** → 切换该人格语气继续（能力不减）
-- **多命中**（同一称呼挂在多人）→ AskQuestion / 正文编号消歧，**禁止**静默猜人
-- 解析脚本：`bash .cursor/bin/resolve-role.sh .cursor/config/roles.json <称呼>`
-- 持久默认：改 `workflow.json` → `role.default` 为 persona `id`
+**Agent 必做顺序**：
+
+1. `bash .cursor/bin/resolve-role.sh .cursor/config/roles.json '<称呼>'`
+2. **唯一命中** → 写 `.cursorGrowth/session/persona.json`（`persona_id` · `resolved_via` · `updated_at` ISO8601）→ **本会话改用该人格语气**（`skills` 仍 full）
+3. **exit 2 多命中** → AskQuestion / 正文编号消歧，**禁止**静默猜人
+4. **exit 1 未命中** → 说明无此人，列出 `/master` → `style` 或常用称呼
+
+- 持久默认仍用 `workflow.json` → `role.default`（可选；会话态优先由 `run-start` 注入）
+- 模板：`templates/cursorGrowth/session/persona.json`（gitignore，勿 commit）
 
 **轮 1 · 日常/硬核**：`professional` · `zhiyin` · `tough_guy` · `strict` · `old_master` · `dashu` · `pretty_boy`
 

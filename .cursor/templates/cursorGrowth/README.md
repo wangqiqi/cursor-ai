@@ -16,6 +16,7 @@
 | `rules/local/` | 团队私有 `.mdc` rules（安装后常链到 `.cursor/rules/local`） |
 | `logs/` | 可选：本地 hook 或会话日志 |
 | `perception/` | 可选：用户偏好、临时上下文 |
+| `session/persona.json` | 当前呼叫人格 id（会话态；`run-start` 优先注入） |
 
 ### `learn/` 文件（安装或首条 prompt 自动种子）
 

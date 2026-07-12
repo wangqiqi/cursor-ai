@@ -15,8 +15,20 @@ jw_init_config "$CURSOR_DIR"
 jw_role_hint() {
   local cursor_dir="$1"
   local roles_file="${cursor_dir}/config/roles.json"
-  local role_id
+  local role_id project_root session_file
   role_id="$(jw_cfg '.role.default' 'professional')"
+  project_root="${JW_PROJECT_ROOT:-}"
+  session_file="${project_root}/.cursorGrowth/session/persona.json"
+  if [[ -n "$project_root" && -f "$session_file" ]]; then
+    local sid
+    sid="$(json_get "$(cat "$session_file")" persona_id 2>/dev/null || true)"
+    if [[ -z "$sid" ]]; then
+      sid="$(json_get "$(cat "$session_file")" id 2>/dev/null || true)"
+    fi
+    if [[ -n "$sid" && "$sid" != "null" ]]; then
+      role_id="$sid"
+    fi
+  fi
   [[ -f "$roles_file" ]] || return 0
   local py
   py="$(jw_python 2>/dev/null)" || return 0
@@ -34,7 +46,9 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
         skills = p.get("skills") or "full"
         hint = p.get("hint") or ""
         pers = p.get("personality") or ""
-        print(f"{role}（{given}）· nick={nicks or '-'} · skills={skills} · {pers} · {hint}".strip(" ·"))
+        examples = p.get("speech_examples") or []
+        ex = (" · 例：" + " / ".join(examples[:2])) if examples else ""
+        print(f"{role}（{given}）· nick={nicks or '-'} · skills={skills} · {pers} · {hint}{ex}".strip(" ·"))
         break
 PY
 }

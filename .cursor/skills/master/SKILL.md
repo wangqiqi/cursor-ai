@@ -20,6 +20,8 @@ description: 总入口（/master）：不确定用什么指令时用。AskQuesti
 
 **已有明确 slash**（如 `/plan` `/run` `/scaffold`）→ **不要**拦截，直接走对应 skill；**不要**为了「保险」多绕 `/master`。
 
+**呼叫人格**（「呼叫小妮」「切换御姐」等）→ **不要**当普通闲聊：按 [routes.md §人格·呼叫](routes.md#呼叫会话内) 跑 `resolve-role.sh` → 写 `.cursorGrowth/session/persona.json` → 改语气（能力不减）。
+
 ## 流程
 
 ### 1. 快速感知（可选，不阻塞提问）

@@ -31,9 +31,10 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 
 - 默认 id：`professional`（见 `config/roles.json`）
 - **字段**：`role_name` · `nicknames[]` · `given_name` · `personality` · `tone` · `skills`（全员 `full`）
-- **呼叫**：会话内「呼叫 X」可用 id / 角色名 / 昵称 / 具体名字；多命中须消歧（见 `bin/resolve-role.sh`）
-- **持久切换**：编辑 `config/workflow.json` → `role.default` 为 persona `id`
-- **生效**：`run-start` hook 注入 persona 摘要；能力不减，只改语气
+- **呼叫**：会话内「呼叫 X」→ `resolve-role.sh` → 写 `.cursorGrowth/session/persona.json`；多命中须消歧
+- **会话态优先**：`run-start` 读 Growth `session/persona.json` 的 `persona_id`，覆盖 `role.default` 注入 hint
+- **持久切换**：编辑 `config/workflow.json` → `role.default` 为 persona `id`（可选）
+- **生效**：`run-start` hook 注入 persona 摘要（含 speech_examples）；能力不减，只改语气
 - **选型**：`/master` → `more` → `style`（12 项分两轮 AskQuestion）
 
 Install profiles（`install-super-cursor.sh --profile`）:

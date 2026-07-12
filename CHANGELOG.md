@@ -6,11 +6,14 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **roles 会话态**：`.cursorGrowth/session/persona.json`（模板 + growth-init 种子）；`run-start` 优先注入
 - **roles**：每人补齐 `role_name` · `nicknames[]` · `given_name` · `personality` · `skills: full`；`bin/resolve-role.sh` 按称呼解析
+- **roles speech_examples**：12 人各 ≥2 句口吻样例（coherence 校验）
 - **呼叫约定**：id / 角色名 / 昵称 / 具体名字均可切换；多命中须消歧（见 master routes）
 
 ### Changed
 
+- **master**：显式「呼叫/切换」→ resolve-role → 写会话态 → 改语气
 - **run-start / coherence / config README**：人格摘要与别名唯一性校验
 
 ### Added
