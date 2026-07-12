@@ -7,6 +7,16 @@ description: 合并前安全审查 — auth、密钥、PII。
 
 输出格式：**严重度**（Critical / High / Medium / Low）· **位置**（文件:行）· **问题** · **修复建议**
 
+## 三件套边界（用这个 / 不是那个）
+
+| 层 | 写什么 | 不写什么 |
+|----|--------|----------|
+| **本 skill（security）** | 合并前**可勾选清单**（密钥·鉴权·输入·Prompt·依赖） | 长期 SDLC 习惯散文；选型决策树全文 |
+| **`prompt-security.mdc`** | Agent/提示注入、越权指令、泄密拒答（二级 glob） | 业务 auth/IDOR 细则（仍在本清单「鉴权」） |
+| **`security-sdlc.mdc`** | 合并/发版**习惯要点**（audit、deny-by-default、发版前跑清单） | 逐条 checklist（避免与本 skill 双份） |
+
+入口：**审查点本 skill**；习惯点 `security-sdlc`；Prompt 面点 `prompt-security`。
+
 ## 密钥与凭证
 
 - [ ] 无硬编码 API key、token、密码、私钥

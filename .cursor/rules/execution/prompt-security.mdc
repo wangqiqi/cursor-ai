@@ -12,6 +12,8 @@ alwaysApply: false
 
 # 执行规范 · Prompt 安全（prompt-security）
 
+**用这个**：skills/agents/prompts 路径上的注入与越权拒答。**不是那个**：业务鉴权/密钥清单 → **security** skill；合并习惯 → `security-sdlc.mdc`。
+
 **二级规范**：随 skills/agents/prompts 路径加载。审查入口仍是 **security**，**无**独立 slash。
 
 ## 必须

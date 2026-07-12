@@ -12,11 +12,11 @@ alwaysApply: true
 | **不确定 / 从哪开始** | **`/master`** → **master**（AskQuestion 路由；无工具则正文选项） |
 | 规划 | `/plan` → **plan** |
 | 执行 | `/run` → **run** |
-| 学习 | `/learn` → **learn** |
+| 学习 | `/learn` → **learn**（本仓认知；≠ **study** 学技术） |
 | 脚手架 | `/scaffold` → **scaffold** |
 | 打版 | **`/release`**（人主导）· **ship** agent（自治执行同一 §打版；无 `/ship`） |
 | Git | **git** skill |
-| 安全审查 | **security** skill |
+| 安全审查 | **security** skill（清单）· `security-sdlc`（习惯）· `prompt-security`（Prompt 面） |
 | API 设计 | **api** skill |
 | UX / 体验（分流） | **`/ux`** · **ux** skill · `ux.mdc` — 类型不明先分流；明导航 → **`/ia`**；明上线 → **`/delivery`** |
 | 信息架构 / 导航 / 角色入口 | **`/ia`** · **ia** skill · `ia.mdc`（UX 结构层；≠ 视觉抛光） |
@@ -26,7 +26,7 @@ alwaysApply: true
 | 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
 | Prompt / Agent 安全 | `prompt-security`（二级；**security** 清单） |
 | ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
-| 学新技术 | **study** skill（≠ `/learn` 项目认知） |
+| 学新技术 | **study** skill（学技术；≠ `/learn` 本仓认知） |
 
 扩展路由（关键词命中）：**mcp** · **refactor** · **perf** · **spike** agent（`SPIKE-*`）→ **`/master`**
 
