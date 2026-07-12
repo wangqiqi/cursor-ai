@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **入口消歧（SPRINT-lean-disambiguate）** — ux/ia/delivery · release/ship · security 三件套 · study/learn 各加「用这个 / 不是那个」
+- **week / disk / maintain** — 标明工具技能（非 plan/run 主路径）；lite/full 口径见 `config/README`
+- **rules-catalog** — 外链 agentic-awesome-skills · awesome-cursor-skills；吸收门禁「只链不拷」
+
 ## [4.21.1] - 2026-07-12
 
 ### Changed

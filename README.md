@@ -133,9 +133,9 @@ flowchart LR
 | **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
 | **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
 | **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
-| 工具 | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护（skill 触发） |
+| 工具（非主路径） | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护 |
 
-发版：**release** skill（清单）· **ship** agent（自治）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git**。
+发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git**。
 
 ## 8 栈脚手架
 
