@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.22.0] - 2026-07-12
+
 ### Added
 
 - **learn**：建议约定（证据→条文→落点；默认 Growth / local；禁止擅自写 `.cursor/`）
