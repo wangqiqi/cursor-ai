@@ -40,6 +40,39 @@ disable-model-invocation: true
 | 大重构后 | 更新 `module-map` |
 | 发版后 | 更新 `release-rhythm` + `changelog-insights` |
 | 重复劳动审计 | 用户要求或 Sprint 密集 patch 后 → §CHANGELOG 重复模式审计 |
+| 约定缺口 | 用户说「该加规则吗」或反复踩同一坑 → §建议约定 |
+
+## 建议约定（蒸馏自 suggesting-cursor-rules）
+
+**用这个**：从本仓证据提出「该记哪条约定」。**不是那个**：新开 Sprint 拆 TASK → **plan**；学通用技术 → **study**。
+
+### 何时建议
+
+- Sprint 收尾 / `/learn` 吸收后，发现重复决策或口头约定未落盘
+- CHANGELOG / archive 同症状簇 ≥2（见上节重复模式审计）
+- 用户明确问「要不要加 rule / convention」
+
+### 证据 → 建议 → 落点
+
+| 证据来源 | 建议形态 | 默认落点 |
+|----------|----------|----------|
+| archive · plan Out of scope | 一行「本仓不做什么」 | `learn/plan-conventions.md` 或 `dev-conventions.md` |
+| 命名/目录/verify 命令 | 可执行约定 | `learn/dev-conventions.md` |
+| 模块边界 | 依赖方向一句 | `learn/module-map.md` |
+| 团队特化门禁（仍属本仓） | 短 rule | `.cursorGrowth/rules/local/`（链 `.cursor/rules/local`） |
+| 母版 SOP 缺口 | **仅建议 + 等授权** | **禁止**日常写入 `.cursor/` |
+
+### 输出格式（写给用户确认）
+
+```
+建议约定：
+- 证据：…（CHANGELOG 版本 / archive 名 / file:line）
+- 建议条文：…
+- 落点：learn/… 或 rules/local/…
+- 不写入：.cursor/ 母版（除非用户明确授权 + plan TASK）
+```
+
+**禁止**：无证据空建议；擅自改 `.cursor/rules|skills|config`；把通用技术笔记塞进 learn（去 **study**）。
 
 ## CHANGELOG 重复模式审计（可选）
 
