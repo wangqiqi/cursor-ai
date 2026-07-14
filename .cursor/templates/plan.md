@@ -15,7 +15,7 @@
 
 # Plan
 
-无 Active Sprint / 未完成任务。新开 → `/plan`。已完成 → `.cursorGrowth/archive/` · `CHANGELOG.md`。
+无 Active Sprint / 未完成任务。新开 → `/plan`。Sprint 闭合后：**`CHANGELOG.md`**（git）为可移植记录；Sprint 笔记仅**写入**本地 `.cursorGrowth/archive/`（母版/培训文档**不得**链具体 archive 文件名）。
 
 ---
 
