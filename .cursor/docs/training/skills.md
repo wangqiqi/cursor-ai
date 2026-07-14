@@ -61,9 +61,9 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | 浏览器走查（探索） | **delivery** §10 |
 | 网络抓取选型 | **debug** §网络与抓取 |
 
-### SkillsMP 协议吸收（SPRINT-skillsmp-absorb）
+### 外网协议吸收（SkillsMP · 已并进母版）
 
-来源：[SkillsMP](https://skillsmp.com/zh/search) 高引通用 skill · **协议并入母版，不装外网包**。详 archive → `.cursorGrowth/archive/SPRINT-skillsmp-absorb.md`。
+来源：[SkillsMP](https://skillsmp.com/zh/search) · **协议并入下列 skill，不装外网包**。版本记录 → 仓库根 **`CHANGELOG.md`** `[Unreleased]`（**勿**在母版链 `.cursorGrowth/archive/` 具体文件名）。
 
 | 外网 skill（参考名） | 母版落点 |
 |---------------------|----------|
@@ -73,16 +73,16 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | `autoreview` | **run** — closeout review（可选第二模型） |
 | `testing-patterns` | **test** — factory · mock · stub |
 
-上一轮 SkillHub 吸收见 **learn** · **security** · **delivery** §10（`SPRINT-skillhub-absorb` / `SPIKE-skillhub-absorb.md`）。
+更早一轮（SkillHub 风格吸收）→ **learn** §经验捕获 · **security** §外部 Agent Skill · **delivery** §10；见 **CHANGELOG** 对应条目。
 
-### Git · Security 补丁（SPRINT-git-security-ops）
+### Git · Security 增补（已并进母版）
 
-详 archive → `.cursorGrowth/archive/SPRINT-git-security-ops.md`。
+见 **CHANGELOG** · skill：**git** §GitHub 运维 · **security** §触发 · §支付/webhook。
 
 | 母版 | 增补 |
 |------|------|
 | **git** | **github-ops** — issue triage · stale · PR/CI · release（`gh` 有则用） |
-| **security** | **支付** · **webhook** · 敏感交易触发词与清单（ECC `security-review` diff） |
+| **security** | **支付** · **webhook** · 敏感交易触发词与清单 |
 
 ## 8 栈 scaffold
 
