@@ -63,10 +63,19 @@ bump_version() {
   local bump="${1:-patch}"
   local latest ver major minor patch tag_glob default_ver version_line plan_default
   version_line="$(plan_meta "VERSION_LINE")"
-  version_line="${version_line:-1.0}"
-  tag_glob="${JW_VERSION_TAG_GLOB:-v${version_line}.*}"
+  if [[ -n "${JW_VERSION_TAG_GLOB:-}" ]]; then
+    tag_glob="$JW_VERSION_TAG_GLOB"
+  elif [[ -n "$version_line" ]]; then
+    tag_glob="v${version_line}.*"
+  else
+    tag_glob="v*"
+  fi
   plan_default="$(plan_meta "VERSION_DEFAULT")"
-  default_ver="${JW_VERSION_DEFAULT:-${plan_default:-${version_line}.0}}"
+  if [[ -n "$version_line" ]]; then
+    default_ver="${JW_VERSION_DEFAULT:-${plan_default:-${version_line}.0}}"
+  else
+    default_ver="${JW_VERSION_DEFAULT:-${plan_default:-0.1.0}}"
+  fi
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ -z "$latest" ]]; then
     echo "$default_ver"
@@ -129,10 +138,21 @@ release_tag() {
 }
 
 release_check() {
-  local p0_open
+  local p0_open tag_glob version_line latest
   p0_open="$(grep -E '\| P0 \|' "$PLAN" 2>/dev/null | grep -cv '| ✅ |' || true)"
+  version_line="$(plan_meta "VERSION_LINE")"
+  if [[ -n "${JW_VERSION_TAG_GLOB:-}" ]]; then
+    tag_glob="$JW_VERSION_TAG_GLOB"
+  elif [[ -n "$version_line" ]]; then
+    tag_glob="v${version_line}.*"
+  else
+    tag_glob="v*"
+  fi
+  latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ "$p0_open" -eq 0 ]]; then
     echo "ready"
+    echo "latest_tag=${latest:-none}"
+    echo "tag_glob=$tag_glob"
     echo "next_version=$(next_version)"
     echo "tag=v$(next_version)"
     return 0
@@ -436,8 +456,8 @@ case "$cmd" in
   next_version  下一 patch 版本号
 
 环境变量（跨项目）:
-  JW_VERSION_TAG_GLOB   git tag 匹配（默认读 plan VERSION_LINE，如 v1.0.*）
-  JW_VERSION_DEFAULT    无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 {VERSION_LINE}.0）
+  JW_VERSION_TAG_GLOB   git tag 匹配（优先于 plan VERSION_LINE）
+  JW_VERSION_DEFAULT    无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 0.1.0）
   RELEASE_BUMP          patch（默认）| minor | major
   RELEASE_ALLOW_MINOR   minor 时须 true（除非 release.json bump.auto_minor）
   RELEASE_ALLOW_MAJOR   major 时须 true（除非 release.json bump.auto_major）

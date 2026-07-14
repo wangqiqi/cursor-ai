@@ -87,6 +87,7 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 
 ### patch-per-task 清单
 
+- [ ] `./.cursor/bin/runner.sh release-check` — 确认 `latest_tag` · `next_version`（见下节）
 - [ ] 版本已定 · plan 本版 ✅（若用）
 - [ ] verify 通过 · 无 WIP
 - [ ] **security**（auth/PII）
@@ -102,6 +103,25 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 - [ ] **构建脚本 / CI job** 覆盖矩阵中每一格（或文档标明刻意不做的格）
 - [ ] 原生依赖（若有）在矩阵内可解析、可复现
 - [ ] 发版说明或 CHANGELOG 注明支持的平台组合
+
+### 版本解析（打 tag 前必读）
+
+`release-tag` / `next_version` 在**最新 git tag** 上 bump，解析顺序：
+
+| 优先级 | 来源 | tag 匹配 |
+|--------|------|----------|
+| 1 | 环境变量 `JW_VERSION_TAG_GLOB` | 自定义 glob |
+| 2 | plan `<!-- VERSION_LINE: major.minor -->` | `v{line}.*`（例 `4.22` → `v4.22.*`） |
+| 3 | **（缺省）** | `v*` — **仓库最新 semver tag** |
+
+无匹配 tag 时起始版本：`VERSION_DEFAULT` / `JW_VERSION_DEFAULT` / `0.1.0`（有 `VERSION_LINE` 时为 `{line}.0`）。
+
+```bash
+./.cursor/bin/runner.sh release-check
+# ready · latest_tag=v4.22.1 · tag_glob=v* · next_version=4.22.2 · tag=v4.22.2
+```
+
+**打版前**：核对 `latest_tag` 与 CHANGELOG 上一版一致；`next_version` 异常时不要打 tag。
 
 ### 命令
 

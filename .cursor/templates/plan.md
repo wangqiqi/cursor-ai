@@ -10,6 +10,7 @@
 <!-- VERIFY: ./scripts/verify.sh -->
 <!-- 禁止写 runner.sh verify — CLI 入口会读本行；指回自身会无限递归 -->
 <!-- MAX_LOOPS: 15 -->
+<!-- VERSION_LINE: (optional · major.minor，如 4.22；省略则 release-tag 读最新 v* tag) -->
 <!-- VERSION_TARGET: (optional) -->
 
 # Plan

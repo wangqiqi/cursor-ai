@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.22.2] - 2026-07-14
+
 ### Added
 
 - **learn** §经验捕获：ERRORS/LEARNINGS 分类 · 晋升门禁 · 任务中触发
@@ -11,11 +13,13 @@ All notable changes to Super Cursor are documented here.
 - **master** `deps`：外网 skill 发现路由 · 关键词索引
 - **debug** §网络与抓取：WebFetch/WebSearch 选型与失败处理
 - **docs/training/skills.md** §可选能力（无新增 skill）
+- **release** §版本解析：`release-check` 输出 `latest_tag` · 无 `VERSION_LINE` 时读最新 `v*` tag
 
 ### Changed
 
 - **run**：用户纠正或 `⚠️` 时提议 `/learn` 记经验
 - **delivery** §10：可选 `agent-browser` CLI（检测到有则用）
+- **runner** `release-tag`：去掉 `VERSION_LINE` 默认 `1.0`；优先最新 semver tag
 
 ## [4.22.1] - 2026-07-12
 
