@@ -18,7 +18,7 @@
 |-------|------|--------|----------|
 | **master** | `/master` · 从哪开始 | AskQuestion 路由（≤7 项/轮） | 写代码 · apply |
 | **plan** | `/plan` · 拆任务 | Sprint · 先总后分 · plan 工作副本 | 写业务代码 |
-| **run** | `/run` · 继续 | 实现 · task-verify · commit | 无闸门硬编码 |
+| **run** | `/run` · 继续 | 实现 · task-verify · closeout review · commit | 无闸门硬编码 |
 | **learn** | `/learn` | Growth `learn/` | 改 `.cursor/` |
 | **scaffold** | `/scaffold` | 8 栈骨架 · audit | 未确认覆盖 |
 | **git** | commit/push | 提交前清单 · 规范 commit | force-push |
@@ -27,12 +27,12 @@
 | **api** | API 变更 | REST/OpenAPI 清单 | — |
 | **ux** | UX / 体验 · 分流 | IA⊂UX · 路由 ia/delivery/plan | 不写 checklist |
 | **ia** | 信息架构 · 导航 | R1–R4 · 角色入口 · `docs/design/` | 业务路由进母版 |
-| **debug** | 调试 | 隔离 · 模式聚类 | — |
-| **test** | 测试 | 单测/集成/E2E · TDD（L 层见 verify.mdc） | — |
+| **debug** | 调试 | 隔离 · Agent 内省 · 网络抓取 | — |
+| **test** | 测试 | TDD · factory/mock · L 层见 verify.mdc | — |
 | **mcp** | MCP | 建服四阶段 · `reference/` | — |
 | **refactor** | 重构 | 小步可验证 | — |
 | **perf** | 性能 | 测量优先 | — |
-| **review** | REV-* · PR 回顾 | 坏味道清单 · 委派 review agent | 写代码 |
+| **review** | REV-* · PR 回顾 | Standards/Spec 双轴 · 人类优先级 · review agent | 写代码 |
 | **delivery** | `/delivery` · 上线前 | 7 维交付验收 | 替代 task-verify |
 | **week** | 周报（关键词 / master） | CHANGELOG 汇总 → Growth | 打 tag |
 | **disk** | 磁盘快照（关键词 / master） | 占用 · diff → Growth | 删除文件 |
@@ -57,8 +57,23 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 |------|------|
 | 任务中经验沉淀 | **learn** §经验捕获 |
 | 外网 skill 安装前审计 | **security** §外部 Agent Skill · **master** → `deps` |
+| 安装后裁剪（DAILY/LIBRARY） | **master** `routes.md` §DAILY/LIBRARY · **scaffold** 收尾 |
 | 浏览器走查（探索） | **delivery** §10 |
 | 网络抓取选型 | **debug** §网络与抓取 |
+
+### SkillsMP 协议吸收（SPRINT-skillsmp-absorb）
+
+来源：[SkillsMP](https://skillsmp.com/zh/search) 高引通用 skill · **协议并入母版，不装外网包**。详 archive → `.cursorGrowth/archive/SPRINT-skillsmp-absorb.md`。
+
+| 外网 skill（参考名） | 母版落点 |
+|---------------------|----------|
+| `code-review` · `human-like-code-review` | **review** — Standards/Spec **双轴** · 人类 reviewer 优先级 |
+| `agent-sort` | **master** / **scaffold** — **DAILY** / **LIBRARY** 裁剪 |
+| `agent-introspection-debugging` | **debug** — Agent 内省调试 |
+| `autoreview` | **run** — closeout review（可选第二模型） |
+| `testing-patterns` | **test** — factory · mock · stub |
+
+上一轮 SkillHub 吸收见 **learn** · **security** · **delivery** §10（`SPRINT-skillhub-absorb` / `SPIKE-skillhub-absorb.md`）。
 
 ## 8 栈 scaffold
 

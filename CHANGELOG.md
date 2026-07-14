@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **docs/training/skills.md**：SkillsMP 吸收速查表 · 可选能力（DAILY/LIBRARY）
 - **test**：factory / mock / stub 策略短节（SkillsMP `testing-patterns`）
 - **run**：closeout review 协议（task-verify 后可选第二模型/**review**；SkillsMP `autoreview`）
 - **debug**：Agent 内省调试（工具误用 · 上下文污染 · 隐式修复环；SkillsMP `agent-introspection-debugging`）
