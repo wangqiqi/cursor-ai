@@ -70,6 +70,8 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 迷路:    /master（主菜单 7 项 → 子路由）
 ```
 
+**效果型效率** — 少拉扯才是真省：`/plan` 对齐方向 · `task-verify` 防假完成 · 一事一对话。≠ 压 token 省单次会话。→ [docs/effective-collaboration.md](docs/effective-collaboration.md)
+
 ### 技术栈细则（glob 自动加载）
 
 | 类别 | 规则 | 典型 glob |
@@ -119,5 +121,5 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 
 ## 更多文档
 
-- [Naming](docs/naming.md) · [plan/run](docs/plan-run.md) · [Quickstart](docs/quickstart.md)
+- [Naming](docs/naming.md) · [plan/run](docs/plan-run.md) · [效果型效率](docs/effective-collaboration.md) · [Quickstart](docs/quickstart.md)
 - [Skills 速查](docs/training/skills.md) · [跨平台](docs/platforms.md)

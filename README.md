@@ -160,6 +160,25 @@ flowchart LR
 
 完整 walkthrough → [端到端示例](.cursor/docs/walkthrough.md)
 
+## 效果型效率（少拉扯才是真省）
+
+Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次少、方向对、一次可验证**。
+
+```text
+总成本 ≈ 固定开销 + 轮次 × token + 返工
+```
+
+压短回复或盲目压缩 rules，常带来更多纠偏与返工 —— **合计更贵，还可能降智**。Super Cursor 用 **闸门 + 验收 + 沉淀** 把成本花在「第一轮就对」上：
+
+| 机制 | 作用 |
+|------|------|
+| `/plan` · `gate-check` | 先对齐 Goal，避免想到哪改到哪 |
+| `task-verify` · Acceptance | 可验证才 commit，防假完成 |
+| glob 按需 rules | 固定开销可控（仅 `core` + `workflow` 常驻） |
+| `/learn` · `.cursorGrowth/` | 新会话少重复讲项目结构 |
+
+日常习惯：**一事一对话** · 模糊先 `/plan` · 关键决策用强模型 · `@文件` 精准投喂。详述 → [效果型效率](.cursor/docs/effective-collaboration.md)
+
 ## 设计原则
 
 1. **Universal only** — 母版不含公司路径，任何仓库都能装
@@ -167,6 +186,7 @@ flowchart LR
 3. **Growth boundary** — 项目认知只进 `.cursorGrowth/`，模板保持干净
 4. **Immutable after install** — Agent 默认不改 `.cursor/`，除非你明确要求
 5. **Protocol-agnostic** — `.cursor/` 用业界**开放的 skills/rules 协议**，整体复制到 `.roo/` 即可被 Roo Code 加载，详见下节
+6. **Effectiveness over verbosity** — 结构防拉扯优先于压 token；见上节与 [effective-collaboration](.cursor/docs/effective-collaboration.md)
 
 ## 兼容 Roo Code
 
@@ -201,6 +221,7 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 | 文档 | 说明 |
 |------|------|
 | [5 分钟上手](.cursor/docs/quickstart.md) | 最短闭环 |
+| [效果型效率](.cursor/docs/effective-collaboration.md) | 少拉扯才是真省 · 与 skills 市场 token skill 的取舍 |
 | [plan/run](.cursor/docs/plan-run.md) | 闸门、验收、hooks、先总后分 |
 | [rules-catalog](.cursor/docs/rules-catalog.md) | 社区 rules 索引 · `rules/local/` 引用 |
 | [使用场景（20+）](.cursor/README.md) | onboarding → 发版全场景 |
