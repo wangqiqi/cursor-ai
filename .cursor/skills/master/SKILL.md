@@ -110,7 +110,7 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 | `api` | REST / OpenAPI 设计审查 | **api** · `rules/execution/api.mdc` |
 | `delivery` | 交付验收 / 上线前走查 | **delivery** · `rules/execution/delivery.mdc` |
 | `docs` | 文档与代码同步更新 | **plan** `DOC-*` 或直述 · `rules/execution/docs.mdc` |
-| `deps` | submodule / vendor / 选型与授权 | `oss-first.mdc` · `submodule.mdc` · **security**（依赖节） |
+| `deps` | submodule / vendor / 选型与授权 / 外网 skill 裁剪 | `oss-first.mdc` · `submodule.mdc` · **security** · [routes.md §DAILY/LIBRARY](routes.md#外网-skill--daily--librarydeps) |
 | `config` | verify 配置 / 本地 rules / 模板自测 | 见 [routes.md § 扩展](routes.md#扩展场景) |
 | `style` | 人格 / 沟通语气 | `config/roles.json` · 见 [routes.md § 人格](routes.md#人格预设-style) |
 

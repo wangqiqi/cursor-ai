@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **master** `deps` · **scaffold**：DAILY/LIBRARY 裁剪协议（SkillsMP `agent-sort` 吸收）
 - **review**：Standards/Spec 双轴回顾 · 人类 reviewer 优先级（SkillsMP `code-review` · `human-like-code-review` 协议吸收）
 - **命名规范**：移除 `JW_`/`jw_` 人名前缀；发版 env 为 `VERSION_TAG_GLOB` · `RELEASE_*`；内部统一 `SC_`/`sc_`（见 `config/README.md`）
 
