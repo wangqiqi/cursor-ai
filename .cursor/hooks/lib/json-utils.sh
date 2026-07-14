@@ -7,7 +7,7 @@ _LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$_LIB_DIR/../../lib/platform.sh"
 
 _json_py() {
-  jw_python 2>/dev/null || true
+  sc_python 2>/dev/null || true
 }
 
 json_get() {

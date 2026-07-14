@@ -6,7 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
-- **命名规范**：移除 `JW_VERSION_*`；发版 env 统一为 `VERSION_TAG_GLOB` · `RELEASE_*`；hooks 运行时 `SC_*`（见 `config/README.md`）
+- **命名规范**：移除 `JW_`/`jw_` 人名前缀；发版 env 为 `VERSION_TAG_GLOB` · `RELEASE_*`；内部统一 `SC_`/`sc_`（见 `config/README.md`）
 
 ## [4.22.2] - 2026-07-14
 

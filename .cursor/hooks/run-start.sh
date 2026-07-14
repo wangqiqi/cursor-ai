@@ -31,7 +31,7 @@ sc_role_hint() {
   fi
   [[ -f "$roles_file" ]] || return 0
   local py
-  py="$(jw_python 2>/dev/null)" || return 0
+  py="$(sc_python 2>/dev/null)" || return 0
   "$py" - "$roles_file" "$role_id" <<'PY'
 import json, sys
 q = sys.argv[2].strip().lower()

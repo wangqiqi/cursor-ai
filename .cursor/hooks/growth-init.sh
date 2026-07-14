@@ -34,7 +34,7 @@ TEMPLATE_DIR="$CURSOR_DIR/templates/cursorGrowth"
 if [[ ! -d "$GROWTH_DIR" ]]; then
   mkdir -p "$GROWTH_DIR"
   if [[ -d "$TEMPLATE_DIR" ]]; then
-    jw_copy_tree "$TEMPLATE_DIR" "$GROWTH_DIR"
+    sc_copy_tree "$TEMPLATE_DIR" "$GROWTH_DIR"
   else
     mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \
       "$GROWTH_DIR/logs" "$GROWTH_DIR/perception" "$GROWTH_DIR/session"

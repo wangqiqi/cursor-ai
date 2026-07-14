@@ -81,7 +81,7 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   rm -rf "$TARGET/.cursor"
   echo "已删除旧 .cursor/（--replace 干净覆盖）"
 fi
-jw_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 
 if [[ -f "$TARGET/.gitignore" ]]; then
   grep -q '.cursorGrowth' "$TARGET/.gitignore" 2>/dev/null || echo '.cursorGrowth/' >> "$TARGET/.gitignore"
@@ -100,25 +100,25 @@ if [[ -f "$SOURCE/.cursorignore" ]]; then
 fi
 
 # Merge workflow profile into config
-if jw_has_json_tool; then
+if sc_has_json_tool; then
   profile_file="$TARGET/.cursor/config/profiles/${PROFILE}.json"
   if [[ -f "$profile_file" ]]; then
     tmp="$(mktemp)"
-    jw_json_merge_files "$TARGET/.cursor/config/workflow.json" "$profile_file" > "$tmp"
+    sc_json_merge_files "$TARGET/.cursor/config/workflow.json" "$profile_file" > "$tmp"
     mv "$tmp" "$TARGET/.cursor/config/workflow.json"
   fi
 else
   echo "WARN: jq/python 未安装，跳过 profile 合并（请手动编辑 workflow.json）" >&2
 fi
 
-jw_chmod_scripts "$TARGET/.cursor"
+sc_chmod_scripts "$TARGET/.cursor"
 
 # Bootstrap .cursorGrowth (plan · archive · learn · rules — gitignored on target)
 GROWTH_TEMPLATE="$SOURCE/.cursor/templates/cursorGrowth"
 GROWTH_DIR="$TARGET/.cursorGrowth"
 if [[ -d "$GROWTH_TEMPLATE" ]]; then
   if [[ ! -d "$GROWTH_DIR" ]]; then
-    jw_copy_tree "$GROWTH_TEMPLATE" "$GROWTH_DIR"
+    sc_copy_tree "$GROWTH_TEMPLATE" "$GROWTH_DIR"
     echo "已引导 .cursorGrowth/（项目特化与产出，git 忽略）"
   else
     mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \

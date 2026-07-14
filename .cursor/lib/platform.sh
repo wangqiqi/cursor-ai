@@ -6,7 +6,7 @@ SC_PLATFORM_LOADED=1
 set -euo pipefail
 
 # Resolve python3 or python (Git Bash / Windows may only expose `python`)
-jw_python() {
+sc_python() {
   if [[ -n "${SC_PYTHON_CMD:-}" ]]; then
     echo "$SC_PYTHON_CMD"
     return 0
@@ -23,13 +23,13 @@ jw_python() {
 }
 
 # true when jq or python is available for JSON CLI
-jw_has_json_tool() {
+sc_has_json_tool() {
   command -v jq >/dev/null 2>&1 && return 0
-  jw_python >/dev/null 2>&1
+  sc_python >/dev/null 2>&1
 }
 
 # Dotted config path → jq filter (plan_file → .plan_file)
-jw_jq_path() {
+sc_jq_path() {
   local dotted="${1#.}"
   echo ".${dotted}"
 }
@@ -47,9 +47,9 @@ json_cfg() {
   [[ -f "$file" ]] || { echo "$default"; return 0; }
 
   if command -v jq >/dev/null 2>&1; then
-    jqpath="$(jw_jq_path "$dotted")"
+    jqpath="$(sc_jq_path "$dotted")"
     val="$(jq -r "${jqpath} // empty" "$file" 2>/dev/null || true)"
-  elif py="$(jw_python)"; then
+  elif py="$(sc_python)"; then
     val="$("$py" - "$file" "$dotted" <<'PY' 2>/dev/null || true
 import json, sys
 path, dotted = sys.argv[1], sys.argv[2].lstrip(".")
@@ -82,9 +82,9 @@ json_cfg_join() {
   [[ -f "$file" ]] || { echo "$default"; return 0; }
 
   if command -v jq >/dev/null 2>&1; then
-    jqpath="$(jw_jq_path "$dotted")"
+    jqpath="$(sc_jq_path "$dotted")"
     joined="$(jq -r "${jqpath} // [] | join(\" \")" "$file" 2>/dev/null || true)"
-  elif py="$(jw_python)"; then
+  elif py="$(sc_python)"; then
     joined="$("$py" - "$file" "$dotted" <<'PY' 2>/dev/null || true
 import json, sys
 path, dotted = sys.argv[1], sys.argv[2].lstrip(".")
@@ -103,13 +103,13 @@ PY
 }
 
 # Deep-merge two JSON files to stdout (profile install)
-jw_json_merge_files() {
+sc_json_merge_files() {
   local base="$1" overlay="$2" py
   if command -v jq >/dev/null 2>&1; then
     jq -s '.[0] * .[1]' "$base" "$overlay"
     return 0
   fi
-  if py="$(jw_python)"; then
+  if py="$(sc_python)"; then
     "$py" - "$base" "$overlay" <<'PY'
 import json, sys
 
@@ -132,8 +132,8 @@ PY
 }
 
 # Copy directory tree; prefers rsync, falls back to cp -a (Git Bash / minimal macOS)
-# Usage: jw_copy_tree <src_dir> <dest_dir> [exclude_glob ...]
-jw_copy_tree() {
+# Usage: sc_copy_tree <src_dir> <dest_dir> [exclude_glob ...]
+sc_copy_tree() {
   local src="$1" dest="$2"
   shift 2
   local excludes=("$@")
@@ -166,7 +166,7 @@ jw_copy_tree() {
 }
 
 # chmod +x for shipped scripts (install)
-jw_chmod_scripts() {
+sc_chmod_scripts() {
   local cursor_dir="$1"
   chmod +x "${cursor_dir}/bin/"*.sh 2>/dev/null || true
   find "${cursor_dir}/templates/scaffold" -name '*.sh' -exec chmod +x {} + 2>/dev/null || true
@@ -176,7 +176,7 @@ jw_chmod_scripts() {
 }
 
 # Tab-separated rows → aligned columns (column(1) optional)
-jw_print_columns() {
+sc_print_columns() {
   if command -v column >/dev/null 2>&1; then
     column -t -s $'\t'
   else
@@ -185,7 +185,7 @@ jw_print_columns() {
 }
 
 # Node stack hint from package.json (nextjs / react / vue / nodejs)
-jw_detect_node_stack() {
+sc_detect_node_stack() {
   local pkg="$1"
   [[ -f "$pkg" ]] || return 1
 
@@ -203,7 +203,7 @@ jw_detect_node_stack() {
   fi
 
   local py
-  py="$(jw_python)" || { echo "nodejs"; return 0; }
+  py="$(sc_python)" || { echo "nodejs"; return 0; }
   "$py" - "$pkg" <<'PY'
 import json, sys
 p = json.load(open(sys.argv[1]))
@@ -224,7 +224,7 @@ PY
 _manifest_py() {
   local manifest="$1" py
   shift
-  py="$(jw_python)" || return 1
+  py="$(sc_python)" || return 1
   "$py" - "$manifest" "$@" <<'PY'
 import json, sys
 
@@ -271,27 +271,27 @@ elif cmd == "ids":
 PY
 }
 
-jw_require_json_tool() {
-  if jw_has_json_tool; then
+sc_require_json_tool() {
+  if sc_has_json_tool; then
     return 0
   fi
   echo "FAIL: jq or python required" >&2
   return 1
 }
 
-jw_manifest_list() {
+sc_manifest_list() {
   local manifest="$1"
   if command -v jq >/dev/null 2>&1; then
     jq -r '.scaffolds[] | "\(.id)\t\(.category)\t\(.name)"' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" list
   else
-    jw_require_json_tool
+    sc_require_json_tool
     return 1
   fi
 }
 
-jw_manifest_scaffold_exists() {
+sc_manifest_scaffold_exists() {
   local manifest="$1" id="$2"
   if command -v jq >/dev/null 2>&1; then
     jq -e --arg id "$id" '.scaffolds[] | select(.id == $id)' "$manifest" >/dev/null 2>&1
@@ -302,7 +302,7 @@ jw_manifest_scaffold_exists() {
   fi
 }
 
-jw_manifest_scaffold_info() {
+sc_manifest_scaffold_info() {
   local manifest="$1" id="$2"
   if command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" '
@@ -316,43 +316,43 @@ jw_manifest_scaffold_info() {
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" info "$id"
   else
-    jw_require_json_tool
+    sc_require_json_tool
     return 1
   fi
 }
 
-jw_manifest_scaffold_field() {
+sc_manifest_scaffold_field() {
   local manifest="$1" id="$2" field="$3"
   if command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" --arg f "$field" '.scaffolds[] | select(.id == $id) | .[$f]' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" field "$id" "$field"
   else
-    jw_require_json_tool
+    sc_require_json_tool
     return 1
   fi
 }
 
-jw_manifest_scaffold_post_apply() {
+sc_manifest_scaffold_post_apply() {
   local manifest="$1" id="$2"
   if command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" '.scaffolds[] | select(.id == $id) | .post_apply[]' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" post_apply "$id"
   else
-    jw_require_json_tool
+    sc_require_json_tool
     return 1
   fi
 }
 
-jw_manifest_ids() {
+sc_manifest_ids() {
   local manifest="$1"
   if command -v jq >/dev/null 2>&1; then
     jq -r '.scaffolds[].id' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" ids
   else
-    jw_require_json_tool
+    sc_require_json_tool
     return 1
   fi
 }

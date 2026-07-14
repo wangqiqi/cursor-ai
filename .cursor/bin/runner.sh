@@ -8,7 +8,7 @@ CONFIG="$CURSOR_DIR/config/workflow.json"
 # shellcheck source=../lib/platform.sh
 source "$CURSOR_DIR/lib/platform.sh"
 
-jw_config() {
+sc_config() {
   local key="$1"
   local default="${2:-}"
   local dotted="${key#.}"
@@ -21,7 +21,7 @@ jw_config() {
   echo "$default"
 }
 
-jw_config_join() {
+sc_config_join() {
   local key="$1"
   local default="${2:-}"
   local dotted="${key#.}"
@@ -34,23 +34,23 @@ jw_config_join() {
   echo "$default"
 }
 
-PLAN_REL="$(jw_config '.plan_file' '.cursorGrowth/plan.md')"
+PLAN_REL="$(sc_config '.plan_file' '.cursorGrowth/plan.md')"
 PLAN="$ROOT/$PLAN_REL"
 # Legacy: root plan.md before .cursorGrowth migration
 if [[ ! -f "$PLAN" && -f "$ROOT/plan.md" ]]; then
   PLAN="$ROOT/plan.md"
   PLAN_REL="plan.md"
 fi
-FRONTEND_DIR="$(jw_config '.task_verify_heuristics.frontend_test_dir' '')"
-BACKEND_DIR="$(jw_config '.task_verify_heuristics.backend_test_dir' '')"
-FRONTEND_TEST_CMD="$(jw_config '.task_verify_heuristics.frontend_test_cmd' '')"
-BACKEND_TEST_CMD="$(jw_config '.task_verify_heuristics.backend_test_cmd' '')"
-HEURISTICS_ENABLED="$(jw_config '.task_verify_heuristics.enabled' 'false')"
-FALLBACK_TEST="$(jw_config '.task_verify_heuristics.fallback_test_script' './scripts/test.sh')"
-FALLBACK_VERIFY="$(jw_config '.task_verify_heuristics.fallback_verify_script' './scripts/verify.sh')"
-VERSION_TAG_GLOB_ENV="$(jw_config 'version_tag_glob_env' 'VERSION_TAG_GLOB')"
-VERSION_DEFAULT_ENV="$(jw_config 'version_default_env' 'RELEASE_VERSION_DEFAULT')"
-SC_SKIP_PREFIXES="$(jw_config_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
+FRONTEND_DIR="$(sc_config '.task_verify_heuristics.frontend_test_dir' '')"
+BACKEND_DIR="$(sc_config '.task_verify_heuristics.backend_test_dir' '')"
+FRONTEND_TEST_CMD="$(sc_config '.task_verify_heuristics.frontend_test_cmd' '')"
+BACKEND_TEST_CMD="$(sc_config '.task_verify_heuristics.backend_test_cmd' '')"
+HEURISTICS_ENABLED="$(sc_config '.task_verify_heuristics.enabled' 'false')"
+FALLBACK_TEST="$(sc_config '.task_verify_heuristics.fallback_test_script' './scripts/test.sh')"
+FALLBACK_VERIFY="$(sc_config '.task_verify_heuristics.fallback_verify_script' './scripts/verify.sh')"
+VERSION_TAG_GLOB_ENV="$(sc_config 'version_tag_glob_env' 'VERSION_TAG_GLOB')"
+VERSION_DEFAULT_ENV="$(sc_config 'version_default_env' 'RELEASE_VERSION_DEFAULT')"
+SC_SKIP_PREFIXES="$(sc_config_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
 export SC_SKIP_PREFIXES
 # shellcheck source=../hooks/lib/plan-parse.sh
 source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
@@ -408,7 +408,7 @@ run_verify() {
     echo "FAIL: plan VERIFY 不得指向 runner.sh verify（会无限递归）" >&2
     echo "      CLI 入口: ./.cursor/bin/runner.sh verify" >&2
     echo "      plan 应设: ./scripts/verify.sh" >&2
-    fallback="$(jw_config 'verify_default' './scripts/verify.sh')"
+    fallback="$(sc_config 'verify_default' './scripts/verify.sh')"
     if [[ -f "$ROOT/${fallback#./}" ]]; then
       echo "==> 回退执行: $fallback"
       verify_cmd="$fallback"

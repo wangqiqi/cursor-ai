@@ -77,7 +77,14 @@ Install profiles（`install-super-cursor.sh --profile`）:
 | `RELEASE_ALLOW_MINOR` / `RELEASE_ALLOW_MAJOR` | 非 patch bump 时须设 |
 | `RELEASE_TAG_MSG` | annotated tag message |
 
-Hooks 运行时内部变量使用 **`SC_`** 前缀（如 `SC_PROJECT_ROOT`）。**禁止**在文档或用户脚本中使用 `JW_` 等人名前缀。
+### 内部命名（`SC_` · Super Cursor）
+
+| 类别 | 前缀 | 示例 |
+|------|------|------|
+| Hooks 运行时环境变量 | `SC_` | `SC_PROJECT_ROOT` · `SC_HOOKS_ENABLED` |
+| Shell 库函数（`platform.sh` · `runner.sh`） | `sc_` | `sc_python` · `sc_copy_tree` · `sc_config` |
+
+公开文档与用户脚本**仅**使用上表发版环境变量；勿使用人名或旧 `JW_`/`jw_` 前缀。
 
 ## Templates
 
