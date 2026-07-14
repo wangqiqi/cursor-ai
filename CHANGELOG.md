@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **docs/building-super-cursor.md** · **learn**：Growth 产出边界 — 母版不得链 archive 文件名 · **CHANGELOG** 为可移植 SSOT
 - **docs/training/skills.md**：Growth 边界纠正 — 吸收表改指 skill + **CHANGELOG**，去掉 archive 文件名链
 - **docs/training/skills.md**：SPRINT-git-security-ops 摘要（github-ops · 支付/webhook）
 - **security**：支付/webhook/敏感交易触发词与清单（ECC `security-review` diff）

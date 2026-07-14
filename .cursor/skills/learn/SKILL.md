@@ -10,6 +10,15 @@ disable-model-invocation: true
 
 边界见 `rules/workflow.mdc` · **`core.mdc`「.cursor 不可变」**。来源：`workflow.json` → `growth.learn_sources`
 
+## Growth 边界（产出 · 非母版 SSOT）
+
+| 层 | 规则 |
+|----|------|
+| **写入** | 本 skill 只产出 `.cursorGrowth/learn/`（及 `/plan`·`/run` 写 plan · archive） |
+| **读取** | `/run` 可**按需**读已有 `learn/`；`/learn` 可吸收本地 `archive/` · `plan` — **仅本机项目上下文** |
+| **母版禁止** | `.cursor/` 文档**不得**链具体 `archive/<Sprint名>.md`；对外变更以 **`CHANGELOG.md`** 为准 |
+| **不是** | 把 archive 当安装包内容；把 Growth 路径写进母版业务代码 |
+
 ## 输出（仅 `.cursorGrowth/learn/`）
 
 **自动引导**（无需等用户说 `/learn`）：
