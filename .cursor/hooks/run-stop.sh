@@ -9,15 +9,15 @@ source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
 
-jw_resolve_project_root "$HOOKS_DIR"
-jw_init_config "$CURSOR_DIR"
+sc_resolve_project_root "$HOOKS_DIR"
+sc_init_config "$CURSOR_DIR"
 
-if [[ "$JW_HOOKS_ENABLED" != "true" || "$JW_WORKFLOW_ENABLED" != "true" ]]; then
+if [[ "$SC_HOOKS_ENABLED" != "true" || "$SC_WORKFLOW_ENABLED" != "true" ]]; then
   echo "{}"
   exit 0
 fi
 
-PLAN="$(jw_plan_path)"
+PLAN="$(sc_plan_path)"
 # shellcheck source=lib/plan-parse.sh
 source "$HOOKS_DIR/lib/plan-parse.sh" "$PLAN"
 

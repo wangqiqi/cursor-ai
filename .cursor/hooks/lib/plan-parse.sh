@@ -3,11 +3,11 @@
 set -euo pipefail
 
 PLAN_FILE="${1:-plan.md}"
-JW_SKIP_PREFIXES="${JW_SKIP_PREFIXES:-REV- SPIKE- DOC-}"
+SC_SKIP_PREFIXES="${SC_SKIP_PREFIXES:-REV- SPIKE- DOC-}"
 
 plan_id_should_skip() {
   local id="$1" prefix
-  for prefix in $JW_SKIP_PREFIXES; do
+  for prefix in $SC_SKIP_PREFIXES; do
     [[ "$id" == "$prefix"* ]] && return 0
   done
   return 1

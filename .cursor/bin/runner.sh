@@ -48,12 +48,44 @@ BACKEND_TEST_CMD="$(jw_config '.task_verify_heuristics.backend_test_cmd' '')"
 HEURISTICS_ENABLED="$(jw_config '.task_verify_heuristics.enabled' 'false')"
 FALLBACK_TEST="$(jw_config '.task_verify_heuristics.fallback_test_script' './scripts/test.sh')"
 FALLBACK_VERIFY="$(jw_config '.task_verify_heuristics.fallback_verify_script' './scripts/verify.sh')"
-JW_SKIP_PREFIXES="$(jw_config_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
-export JW_SKIP_PREFIXES
+VERSION_TAG_GLOB_ENV="$(jw_config 'version_tag_glob_env' 'VERSION_TAG_GLOB')"
+VERSION_DEFAULT_ENV="$(jw_config 'version_default_env' 'RELEASE_VERSION_DEFAULT')"
+SC_SKIP_PREFIXES="$(jw_config_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
+export SC_SKIP_PREFIXES
 # shellcheck source=../hooks/lib/plan-parse.sh
 source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
 
 cmd="${1:-status}"
+
+sc_env_get() {
+  local name="$1"
+  printf '%s' "${!name-}"
+}
+
+resolve_tag_glob() {
+  local version_line="$1"
+  local from_env
+  from_env="$(sc_env_get "$VERSION_TAG_GLOB_ENV")"
+  if [[ -n "$from_env" ]]; then
+    echo "$from_env"
+  elif [[ -n "$version_line" ]]; then
+    echo "v${version_line}.*"
+  else
+    echo "v*"
+  fi
+}
+
+resolve_version_default() {
+  local version_line="$1"
+  local plan_default env_default
+  plan_default="$(plan_meta "VERSION_DEFAULT")"
+  env_default="$(sc_env_get "$VERSION_DEFAULT_ENV")"
+  if [[ -n "$version_line" ]]; then
+    echo "${env_default:-${plan_default:-${version_line}.0}}"
+  else
+    echo "${env_default:-${plan_default:-0.1.0}}"
+  fi
+}
 
 next_version() {
   bump_version patch
@@ -61,21 +93,10 @@ next_version() {
 
 bump_version() {
   local bump="${1:-patch}"
-  local latest ver major minor patch tag_glob default_ver version_line plan_default
+  local latest ver major minor patch tag_glob default_ver version_line
   version_line="$(plan_meta "VERSION_LINE")"
-  if [[ -n "${JW_VERSION_TAG_GLOB:-}" ]]; then
-    tag_glob="$JW_VERSION_TAG_GLOB"
-  elif [[ -n "$version_line" ]]; then
-    tag_glob="v${version_line}.*"
-  else
-    tag_glob="v*"
-  fi
-  plan_default="$(plan_meta "VERSION_DEFAULT")"
-  if [[ -n "$version_line" ]]; then
-    default_ver="${JW_VERSION_DEFAULT:-${plan_default:-${version_line}.0}}"
-  else
-    default_ver="${JW_VERSION_DEFAULT:-${plan_default:-0.1.0}}"
-  fi
+  tag_glob="$(resolve_tag_glob "$version_line")"
+  default_ver="$(resolve_version_default "$version_line")"
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ -z "$latest" ]]; then
     echo "$default_ver"
@@ -141,13 +162,7 @@ release_check() {
   local p0_open tag_glob version_line latest
   p0_open="$(grep -E '\| P0 \|' "$PLAN" 2>/dev/null | grep -cv '| ✅ |' || true)"
   version_line="$(plan_meta "VERSION_LINE")"
-  if [[ -n "${JW_VERSION_TAG_GLOB:-}" ]]; then
-    tag_glob="$JW_VERSION_TAG_GLOB"
-  elif [[ -n "$version_line" ]]; then
-    tag_glob="v${version_line}.*"
-  else
-    tag_glob="v*"
-  fi
+  tag_glob="$(resolve_tag_glob "$version_line")"
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ "$p0_open" -eq 0 ]]; then
     echo "ready"
@@ -455,9 +470,9 @@ case "$cmd" in
   release-tag   在当前 HEAD 打 annotated tag（默认 patch bump）
   next_version  下一 patch 版本号
 
-环境变量（跨项目）:
-  JW_VERSION_TAG_GLOB   git tag 匹配（优先于 plan VERSION_LINE）
-  JW_VERSION_DEFAULT    无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 0.1.0）
+环境变量（跨项目 · 名称见 workflow.json `version_*_env`）:
+  VERSION_TAG_GLOB      git tag 匹配 glob（优先于 plan VERSION_LINE）
+  RELEASE_VERSION_DEFAULT  无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 0.1.0）
   RELEASE_BUMP          patch（默认）| minor | major
   RELEASE_ALLOW_MINOR   minor 时须 true（除非 release.json bump.auto_minor）
   RELEASE_ALLOW_MAJOR   major 时须 true（除非 release.json bump.auto_major）

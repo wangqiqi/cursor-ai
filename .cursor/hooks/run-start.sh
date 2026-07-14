@@ -9,15 +9,15 @@ source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
 
-jw_resolve_project_root "$HOOKS_DIR"
-jw_init_config "$CURSOR_DIR"
+sc_resolve_project_root "$HOOKS_DIR"
+sc_init_config "$CURSOR_DIR"
 
-jw_role_hint() {
+sc_role_hint() {
   local cursor_dir="$1"
   local roles_file="${cursor_dir}/config/roles.json"
   local role_id project_root session_file
-  role_id="$(jw_cfg '.role.default' 'professional')"
-  project_root="${JW_PROJECT_ROOT:-}"
+  role_id="$(sc_cfg '.role.default' 'professional')"
+  project_root="${SC_PROJECT_ROOT:-}"
   session_file="${project_root}/.cursorGrowth/session/persona.json"
   if [[ -n "$project_root" && -f "$session_file" ]]; then
     local sid
@@ -53,19 +53,19 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
 PY
 }
 
-if [[ "$JW_HOOKS_ENABLED" != "true" || "$JW_WORKFLOW_ENABLED" != "true" ]]; then
+if [[ "$SC_HOOKS_ENABLED" != "true" || "$SC_WORKFLOW_ENABLED" != "true" ]]; then
   echo "{}"
   exit 0
 fi
 
-PLAN="$(jw_plan_path)"
+PLAN="$(sc_plan_path)"
 # shellcheck source=lib/plan-parse.sh
 source "$HOOKS_DIR/lib/plan-parse.sh" "$PLAN"
 
 input="$(cat)"
 conversation_id="$(json_get "$input" conversation_id)"
 
-STATE_DIR="$JW_PROJECT_ROOT/.cursor/hooks/state"
+STATE_DIR="$SC_PROJECT_ROOT/.cursor/hooks/state"
 mkdir -p "$STATE_DIR"
 
 active="$(plan_active)"
@@ -126,14 +126,14 @@ if [[ "$autonomous" == "true" && -n "$active" ]]; then
 - **SPRINT**: \`${sprint:-unset}\` · **ACTIVE**: \`$active\` (${status:-unknown})
 - **Verify**: \`./.cursor/bin/runner.sh task-verify\`; release \`${verify}\`
 - Load \`run\`: gate-check → implement → task-verify → commit"
-  role_hint="$(jw_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
+  role_hint="$(sc_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     ctx="${ctx}
 - **Persona hint**: ${role_hint}"
   fi
   json_additional_context "$ctx"
 else
-  role_hint="$(jw_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
+  role_hint="$(sc_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     json_additional_context "## session
 - **Persona hint**: ${role_hint}"

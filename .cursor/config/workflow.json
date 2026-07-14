@@ -5,6 +5,7 @@
   "verify_default": "./scripts/verify.sh",
   "version_line_meta": "VERSION_LINE",
   "version_tag_glob_env": "VERSION_TAG_GLOB",
+  "version_default_env": "RELEASE_VERSION_DEFAULT",
   "workflow": {
     "enabled": true,
     "hooks_enabled": true

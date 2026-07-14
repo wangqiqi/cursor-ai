@@ -11,17 +11,17 @@ source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
 
-jw_resolve_project_root "$HOOKS_DIR"
-jw_init_config "$CURSOR_DIR"
+sc_resolve_project_root "$HOOKS_DIR"
+sc_init_config "$CURSOR_DIR"
 
-if [[ "$JW_GROWTH_ENABLED" != "true" ]]; then
+if [[ "$SC_GROWTH_ENABLED" != "true" ]]; then
   echo "$INPUT"
   exit 0
 fi
 
 PROJECT_ROOT="$(json_workspace_root "$INPUT")"
 if [[ -z "$PROJECT_ROOT" ]]; then
-  PROJECT_ROOT="$JW_PROJECT_ROOT"
+  PROJECT_ROOT="$SC_PROJECT_ROOT"
 fi
 
 if [[ "$PROJECT_ROOT" == *"/.cursor" || "$(basename "$PROJECT_ROOT")" == ".cursor" ]]; then

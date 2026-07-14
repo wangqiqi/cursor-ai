@@ -21,6 +21,9 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
 | `task_verify_heuristics.frontend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `task_verify_heuristics.backend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
+| `version_line_meta` | `VERSION_LINE` | plan HTML 注释 · 发版版本线 |
+| `version_tag_glob_env` | `VERSION_TAG_GLOB` | 环境变量名 · 覆盖 tag 匹配 glob |
+| `version_default_env` | `RELEASE_VERSION_DEFAULT` | 环境变量名 · 无 tag 时起始版本 |
 | `release.mode` | `patch-per-task` | 打版粒度：`patch-per-task`（Sprint 末 ship）· `tag-per-commit`（每 commit + `release-tag`） |
 | `role.default` | `professional` | 人格预设 id（见 `config/roles.json`） |
 | `role.config` | `.cursor/config/roles.json` | 人格列表；**仅语气，全能** |
@@ -63,6 +66,18 @@ Install profiles（`install-super-cursor.sh --profile`）:
 | `bump.auto_minor` / `auto_major` | `false` | minor/major 须 `RELEASE_ALLOW_*` |
 | `version_source` | plan meta + git tag | `VERSION_LINE` · `VERSION_DEFAULT` · `RELEASE_BUMP` |
 | `archive_dir` | `.cursorGrowth/archive` |
+
+### 发版环境变量（公开）
+
+| 变量 | 用途 |
+|------|------|
+| `VERSION_TAG_GLOB` | tag 匹配 glob（优先于 plan `VERSION_LINE`；键名见 `workflow.json` `version_tag_glob_env`） |
+| `RELEASE_VERSION_DEFAULT` | 无 git tag 时的起始 semver |
+| `RELEASE_BUMP` | `patch` · `minor` · `major` |
+| `RELEASE_ALLOW_MINOR` / `RELEASE_ALLOW_MAJOR` | 非 patch bump 时须设 |
+| `RELEASE_TAG_MSG` | annotated tag message |
+
+Hooks 运行时内部变量使用 **`SC_`** 前缀（如 `SC_PROJECT_ROOT`）。**禁止**在文档或用户脚本中使用 `JW_` 等人名前缀。
 
 ## Templates
 

@@ -110,11 +110,11 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 
 | 优先级 | 来源 | tag 匹配 |
 |--------|------|----------|
-| 1 | 环境变量 `JW_VERSION_TAG_GLOB` | 自定义 glob |
+| 1 | 环境变量 `VERSION_TAG_GLOB`（`workflow.json` → `version_tag_glob_env`） | 自定义 glob |
 | 2 | plan `<!-- VERSION_LINE: major.minor -->` | `v{line}.*`（例 `4.22` → `v4.22.*`） |
 | 3 | **（缺省）** | `v*` — **仓库最新 semver tag** |
 
-无匹配 tag 时起始版本：`VERSION_DEFAULT` / `JW_VERSION_DEFAULT` / `0.1.0`（有 `VERSION_LINE` 时为 `{line}.0`）。
+无匹配 tag 时起始版本：plan `VERSION_DEFAULT` · 环境变量 `RELEASE_VERSION_DEFAULT` · `0.1.0`（有 `VERSION_LINE` 时为 `{line}.0`）。
 
 ```bash
 ./.cursor/bin/runner.sh release-check

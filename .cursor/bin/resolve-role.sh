@@ -2,12 +2,12 @@
 # resolve-role.sh — resolve persona by id / role_name / nickname / given_name
 # Usage:
 #   resolve-role.sh <roles.json> <query> [project_root]
-#   JW_PROJECT_ROOT / 第 3 参：读 <root>/.cursorGrowth/session/aliases.json（优先）
+#   SC_PROJECT_ROOT / 第 3 参：读 <root>/.cursorGrowth/session/aliases.json（优先）
 # Exit 0 + JSON persona on unique match; exit 2 on ambiguous; exit 1 on miss
 set -euo pipefail
 roles_file="${1:?roles.json}"
 query="${2:?query}"
-project_root="${3:-${JW_PROJECT_ROOT:-}}"
+project_root="${3:-${SC_PROJECT_ROOT:-}}"
 aliases_file=""
 if [[ -n "$project_root" && -f "$project_root/.cursorGrowth/session/aliases.json" ]]; then
   aliases_file="$project_root/.cursorGrowth/session/aliases.json"

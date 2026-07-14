@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # Cross-platform helpers — Linux · macOS · Git Bash (Windows)
 # Source from hooks/, bin/, or install-super-cursor.sh at repo root.
-[[ -n "${JW_PLATFORM_LOADED:-}" ]] && return 0
-JW_PLATFORM_LOADED=1
+[[ -n "${SC_PLATFORM_LOADED:-}" ]] && return 0
+SC_PLATFORM_LOADED=1
 set -euo pipefail
 
 # Resolve python3 or python (Git Bash / Windows may only expose `python`)
 jw_python() {
-  if [[ -n "${JW_PYTHON_CMD:-}" ]]; then
-    echo "$JW_PYTHON_CMD"
+  if [[ -n "${SC_PYTHON_CMD:-}" ]]; then
+    echo "$SC_PYTHON_CMD"
     return 0
   fi
   local c
   for c in python3 python; do
     if command -v "$c" >/dev/null 2>&1; then
-      JW_PYTHON_CMD="$c"
-      echo "$JW_PYTHON_CMD"
+      SC_PYTHON_CMD="$c"
+      echo "$SC_PYTHON_CMD"
       return 0
     fi
   done

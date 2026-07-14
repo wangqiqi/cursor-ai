@@ -6,59 +6,59 @@ _LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../../lib/platform.sh
 source "$_LIB_DIR/../../lib/platform.sh"
 
-JW_CONFIG="${JW_CONFIG:-}"
-JW_PROJECT_ROOT="${JW_PROJECT_ROOT:-}"
-JW_PLAN_REL="${JW_PLAN_REL:-.cursorGrowth/plan.md}"
-JW_WORKFLOW_ENABLED="${JW_WORKFLOW_ENABLED:-true}"
-JW_HOOKS_ENABLED="${JW_HOOKS_ENABLED:-true}"
-JW_GROWTH_ENABLED="${JW_GROWTH_ENABLED:-false}"
-JW_SKIP_PREFIXES="${JW_SKIP_PREFIXES:-REV- SPIKE- DOC-}"
-JW_TASK_PREFIX="${JW_TASK_PREFIX:-TASK-}"
-JW_HEURISTICS_ENABLED="${JW_HEURISTICS_ENABLED:-false}"
+SC_CONFIG="${SC_CONFIG:-}"
+SC_PROJECT_ROOT="${SC_PROJECT_ROOT:-}"
+SC_PLAN_REL="${SC_PLAN_REL:-.cursorGrowth/plan.md}"
+SC_WORKFLOW_ENABLED="${SC_WORKFLOW_ENABLED:-true}"
+SC_HOOKS_ENABLED="${SC_HOOKS_ENABLED:-true}"
+SC_GROWTH_ENABLED="${SC_GROWTH_ENABLED:-false}"
+SC_SKIP_PREFIXES="${SC_SKIP_PREFIXES:-REV- SPIKE- DOC-}"
+SC_TASK_PREFIX="${SC_TASK_PREFIX:-TASK-}"
+SC_HEURISTICS_ENABLED="${SC_HEURISTICS_ENABLED:-false}"
 
-jw_resolve_project_root() {
+sc_resolve_project_root() {
   local hooks_dir="${1:-}"
   local root
   root="$(cd "${hooks_dir}/../.." && pwd)"
   if [[ -f "${root}/.cursor/config/workflow.json" ]]; then
-    JW_PROJECT_ROOT="$root"
+    SC_PROJECT_ROOT="$root"
     return 0
   fi
-  JW_PROJECT_ROOT="$(cd "${hooks_dir}/../../.." && pwd)"
+  SC_PROJECT_ROOT="$(cd "${hooks_dir}/../../.." && pwd)"
 }
 
-jw_init_config() {
+sc_init_config() {
   local cursor_dir="$1"
-  JW_CONFIG="${cursor_dir}/config/workflow.json"
-  JW_PLAN_REL="$(jw_cfg '.plan_file' '.cursorGrowth/plan.md')"
-  JW_WORKFLOW_ENABLED="$(jw_cfg '.workflow.enabled' 'true')"
-  JW_HOOKS_ENABLED="$(jw_cfg '.workflow.hooks_enabled' 'true')"
-  JW_GROWTH_ENABLED="$(jw_cfg '.growth.enabled' 'false')"
-  JW_SKIP_PREFIXES="$(jw_cfg_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
-  JW_TASK_PREFIX="$(jw_cfg_first '.task_id.prefixes_autonomous' 'TASK-')"
-  JW_HEURISTICS_ENABLED="$(jw_cfg '.task_verify_heuristics.enabled' 'false')"
+  SC_CONFIG="${cursor_dir}/config/workflow.json"
+  SC_PLAN_REL="$(sc_cfg '.plan_file' '.cursorGrowth/plan.md')"
+  SC_WORKFLOW_ENABLED="$(sc_cfg '.workflow.enabled' 'true')"
+  SC_HOOKS_ENABLED="$(sc_cfg '.workflow.hooks_enabled' 'true')"
+  SC_GROWTH_ENABLED="$(sc_cfg '.growth.enabled' 'false')"
+  SC_SKIP_PREFIXES="$(sc_cfg_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
+  SC_TASK_PREFIX="$(sc_cfg_first '.task_id.prefixes_autonomous' 'TASK-')"
+  SC_HEURISTICS_ENABLED="$(sc_cfg '.task_verify_heuristics.enabled' 'false')"
 }
 
-jw_plan_path() {
-  echo "${JW_PROJECT_ROOT}/${JW_PLAN_REL}"
+sc_plan_path() {
+  echo "${SC_PROJECT_ROOT}/${SC_PLAN_REL}"
 }
 
-jw_cfg() {
+sc_cfg() {
   local jqpath="$1"
   local default="$2"
-  json_cfg "$JW_CONFIG" "${jqpath#.}" "$default"
+  json_cfg "$SC_CONFIG" "${jqpath#.}" "$default"
 }
 
-jw_cfg_join() {
+sc_cfg_join() {
   local jqpath="$1"
   local default="$2"
-  json_cfg_join "$JW_CONFIG" "${jqpath#.}" "$default"
+  json_cfg_join "$SC_CONFIG" "${jqpath#.}" "$default"
 }
 
-jw_cfg_first() {
+sc_cfg_first() {
   local jqpath="$1"
   local default="$2"
   local val
-  val="$(jw_cfg_join "$jqpath" "$default")"
+  val="$(sc_cfg_join "$jqpath" "$default")"
   echo "${val%% *}"
 }
