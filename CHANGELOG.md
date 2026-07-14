@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **docs/training/skills.md**：SPRINT-git-security-ops 摘要（github-ops · 支付/webhook）
 - **security**：支付/webhook/敏感交易触发词与清单（ECC `security-review` diff）
 - **git**：GitHub 运维 `github-ops` 短节（issue triage · stale · release · CI；`gh` 有则用）
 - **docs/effective-collaboration.md**：效果型效率 — 少拉扯才是真省 · 与 token-compression skill 取舍

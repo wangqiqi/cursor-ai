@@ -21,9 +21,9 @@
 | **run** | `/run` · 继续 | 实现 · task-verify · closeout review · commit | 无闸门硬编码 |
 | **learn** | `/learn` | Growth `learn/` | 改 `.cursor/` |
 | **scaffold** | `/scaffold` | 8 栈骨架 · audit | 未确认覆盖 |
-| **git** | commit/push | 提交前清单 · 规范 commit | force-push |
+| **git** | commit/push · GitHub 运维 | 提交清单 · **github-ops**（`gh` 有则用） | force-push |
 | **release** | `/release` · merge/PR/打版 | §分支 · §semver/tag · CHANGELOG | 跳过 verify |
-| **security** | 审查 | 密钥 · auth · PII 清单 | — |
+| **security** | 审查 · 支付/webhook | 密钥 · auth · PII · 敏感交易触发 | — |
 | **api** | API 变更 | REST/OpenAPI 清单 | — |
 | **ux** | UX / 体验 · 分流 | IA⊂UX · 路由 ia/delivery/plan | 不写 checklist |
 | **ia** | 信息架构 · 导航 | R1–R4 · 角色入口 · `docs/design/` | 业务路由进母版 |
@@ -74,6 +74,15 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | `testing-patterns` | **test** — factory · mock · stub |
 
 上一轮 SkillHub 吸收见 **learn** · **security** · **delivery** §10（`SPRINT-skillhub-absorb` / `SPIKE-skillhub-absorb.md`）。
+
+### Git · Security 补丁（SPRINT-git-security-ops）
+
+详 archive → `.cursorGrowth/archive/SPRINT-git-security-ops.md`。
+
+| 母版 | 增补 |
+|------|------|
+| **git** | **github-ops** — issue triage · stale · PR/CI · release（`gh` 有则用） |
+| **security** | **支付** · **webhook** · 敏感交易触发词与清单（ECC `security-review` diff） |
 
 ## 8 栈 scaffold
 
