@@ -6,6 +6,9 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **git**：GitHub 运维 `github-ops` 短节（issue triage · stale · release · CI；`gh` 有则用）
+- **docs/effective-collaboration.md**：效果型效率 — 少拉扯才是真省 · 与 token-compression skill 取舍
+- **README** · **plan-run** · **quickstart** · **.cursor/README**：交叉引用效果型效率
 - **docs/training/skills.md**：SkillsMP 吸收速查表 · 可选能力（DAILY/LIBRARY）
 - **test**：factory / mock / stub 策略短节（SkillsMP `testing-patterns`）
 - **run**：closeout review 协议（task-verify 后可选第二模型/**review**；SkillsMP `autoreview`）

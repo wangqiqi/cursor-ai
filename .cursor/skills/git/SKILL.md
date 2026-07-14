@@ -29,6 +29,21 @@ description: Git — 分支、提交、合并。需要 git 操作时用。
 - UI/功能 PR：**建议**先 **`/delivery`**（见 **delivery** skill）；Blocker 须在 PR 描述中说明
 - 受保护分支（main/master）须 PR + review（见 `rules/communication/collaboration.mdc`）
 
+## GitHub 运维（`github-ops` · `gh` 有则用）
+
+**用这个**：超出本地 `git` 的仓库运维（issue · PR · CI · release）。**不是那个**：日常 commit/push → 上节；打版清单 → **release** skill。
+
+吸收自 SkillsMP `github-ops`（协议 only；`command -v gh` 不可用则口述步骤或跳过）。
+
+| 场景 | 典型 `gh` 动作 | 注意 |
+|------|----------------|------|
+| **Issue triage** | `gh issue list` · `gh issue view` · `gh issue edit` 标签/指派 | 先读描述与关联 PR；勿批量关未复现 issue |
+| **Stale 清理** | `gh issue list --search 'is:open sort:updated-asc'` · 评论后 close | 须团队政策；默认 **不**自动 close |
+| **PR 状态** | `gh pr checks` · `gh pr view` · `gh run list` / `gh run view` | CI 红先读 log，再改代码 |
+| **Release** | `gh release list` · `gh release create`（用户确认后） | 与 **release** skill · CHANGELOG 对齐；勿跳过 verify |
+
+**纪律**：运维命令不写进母版必选路径；MCP `gh` 工具可用时等价遵循上表意图。
+
 ## 禁止（除非用户明确）
 
 - `git push --force` 到共享/默认分支
