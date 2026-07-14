@@ -1,6 +1,6 @@
 ---
 name: security
-description: 合并前安全审查 — auth、密钥、PII。
+description: 合并前安全审查 — auth、密钥、PII、支付/webhook/敏感交易。
 ---
 
 # security · 审查清单
@@ -16,6 +16,21 @@ description: 合并前安全审查 — auth、密钥、PII。
 | **`security-sdlc.mdc`** | 合并/发版**习惯要点**（audit、deny-by-default、发版前跑清单） | 逐条 checklist（避免与本 skill 双份） |
 
 入口：**审查点本 skill**；习惯点 `security-sdlc`；Prompt 面点 `prompt-security`。
+
+## 触发（何时必须扫本清单）
+
+除合并前常规 diff 外，**强制叠加**本 skill（并视情况叠加 **api**）：
+
+| 信号 | 例 |
+|------|-----|
+| 鉴权 / 会话变更 | login、JWT、RBAC、OAuth |
+| 用户输入面扩大 | 新表单、上传、搜索、admin 工具 |
+| 密钥 / 配置 | `.env`、CI secret、连接串 |
+| **支付 / 结账 / 钱包** | Stripe、支付宝、订单、退款、余额 |
+| **Webhook / 回调** | 支付通知、第三方事件、签名校验 |
+| 对外 API / 开放端点 | 新 route、GraphQL、公开 webhook URL |
+
+吸收自 SkillsMP ECC `security-review` diff（协议 only）。
 
 ## 密钥与凭证
 
@@ -37,6 +52,18 @@ description: 合并前安全审查 — auth、密钥、PII。
 - [ ] **边界与默认**（见 `input-bounds.mdc`）：数值有上下限；枚举白名单；敏感能力未配置则拒绝；非法配置可回退
 - [ ] 文件上传：类型/大小限制；存储路径不可遍历
 - [ ] 响应不含多余 PII；错误信息不暴露栈/内部路径
+
+## 支付 · webhook · 敏感交易
+
+diff 含 **支付**、**webhook**、结账、退款、钱包、订单金额时扫本节：
+
+- [ ] 金额/币种/数量有上下限与类型校验；服务端以权威价为准，不信客户端金额
+- [ ] 支付与退款 **幂等**（idempotency key / 去重表）；防重复扣款
+- [ ] **Webhook** 验签（HMAC/公钥）· 拒绝未签名或过期时间戳；防重放（nonce / 事件 ID 去重）
+- [ ] Webhook 端点默认非公开或限 IP/密钥；生产与沙箱密钥分离
+- [ ] 不记录完整卡号/CVV；PCI 范围内数据不落日志
+- [ ] 异步回调失败有重试与对账/人工兜底路径
+- [ ] 敏感交易有 audit log（谁 · 何时 · 何订单）；日志不含完整 PAN/token
 
 ## Prompt / Agent（二级 · `prompt-security.mdc`）
 
