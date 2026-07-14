@@ -15,6 +15,24 @@ description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 
 
 与 **run** 一致：红测不 ✅ task · 须实际运行 `task-verify`。
 
+## Factory 与 mock（单测 · 集成）
+
+吸收自 SkillsMP `testing-patterns`（协议 only；栈细则仍看 `rules/execution/testing.mdc`）。
+
+| 手法 | 何时用 | 要点 |
+|------|--------|------|
+| **Factory** | 实体/DTO 构造重复、字段组合多 | 默认值 + 每测只覆盖差异字段；避免 20 行 arrange |
+| **Test double** | 外部 I/O、时钟、随机、网络 | 优先接口边界注入；单测不真连 DB/HTTP（除非集成层） |
+| **Mock（函数/模块）** | 断言「被调用方式」或隔离慢依赖 | mock **行为**而非实现细节；一个测试一个主要 mock 面 |
+| **Stub** | 只需固定返回值、不关心调用次数 | 比 mock 更简单时用 stub/fixture 数据 |
+
+**纪律**：
+
+- Arrange 用 factory · Act 一行 · Assert 聚焦一个行为
+- 不过度 mock 被测对象自身（测实现而非契约时换集成测）
+- 异步：await 断言 + 假定时器须 `vi.useFakeTimers` / jest fake timers 等栈等价物
+- 与 **debug** 配合：先红测复现，再 mock 缩小面，最后绿测锁回归
+
 ## 层级
 
 | 类型 | 何时 |
