@@ -4,23 +4,23 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.22.3] - 2026-07-14
+
 ### Changed
 
 - **templates/plan.md**：Sprint 闭合指引 — **CHANGELOG** 优先 · archive 仅本地写入
 - **docs/building-super-cursor.md** · **learn**：Growth 产出边界 — 母版不得链 archive 文件名 · **CHANGELOG** 为可移植 SSOT
-- **docs/training/skills.md**：Growth 边界纠正 — 吸收表改指 skill + **CHANGELOG**，去掉 archive 文件名链
-- **docs/training/skills.md**：SPRINT-git-security-ops 摘要（github-ops · 支付/webhook）
+- **docs/training/skills.md**：Growth 边界纠正 · SkillsMP/git-security 吸收速查（改指 skill + **CHANGELOG**）
 - **security**：支付/webhook/敏感交易触发词与清单（ECC `security-review` diff）
 - **git**：GitHub 运维 `github-ops` 短节（issue triage · stale · release · CI；`gh` 有则用）
-- **docs/effective-collaboration.md**：效果型效率 — 少拉扯才是真省 · 与 token-compression skill 取舍
+- **docs/effective-collaboration.md**：效果型效率 — 少拉扯才是真省
 - **README** · **plan-run** · **quickstart** · **.cursor/README**：交叉引用效果型效率
-- **docs/training/skills.md**：SkillsMP 吸收速查表 · 可选能力（DAILY/LIBRARY）
 - **test**：factory / mock / stub 策略短节（SkillsMP `testing-patterns`）
-- **run**：closeout review 协议（task-verify 后可选第二模型/**review**；SkillsMP `autoreview`）
-- **debug**：Agent 内省调试（工具误用 · 上下文污染 · 隐式修复环；SkillsMP `agent-introspection-debugging`）
-- **master** `deps` · **scaffold**：DAILY/LIBRARY 裁剪协议（SkillsMP `agent-sort` 吸收）
-- **review**：Standards/Spec 双轴回顾 · 人类 reviewer 优先级（SkillsMP `code-review` · `human-like-code-review` 协议吸收）
-- **命名规范**：移除 `JW_`/`jw_` 人名前缀；发版 env 为 `VERSION_TAG_GLOB` · `RELEASE_*`；内部统一 `SC_`/`sc_`（见 `config/README.md`）
+- **run**：closeout review 协议（SkillsMP `autoreview`）
+- **debug**：Agent 内省调试（SkillsMP `agent-introspection-debugging`）
+- **master** `deps` · **scaffold**：DAILY/LIBRARY 裁剪协议（SkillsMP `agent-sort`）
+- **review**：Standards/Spec 双轴回顾 · 人类 reviewer 优先级（SkillsMP `code-review`）
+- **命名规范**：移除 `JW_`/`jw_` 前缀；发版 env `VERSION_TAG_GLOB` · `RELEASE_*`；内部 `SC_`/`sc_`
 
 ## [4.22.2] - 2026-07-14
 
