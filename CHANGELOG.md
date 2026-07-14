@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.22.4] - 2026-07-14
+
+### Changed
+
+- **maintain**：Playwright 浏览器缓存（`~/.cache/ms-playwright*`）默认列入 `protected_dirs`，清理时保留
+- **maintain** `dev-maintain.sh`：支持 `MAINTAIN_BUILTIN_PROTECTED` 环境变量注入白名单（`ubuntu-ai-maintenance.sh` 薄封装）
+
 ## [4.22.3] - 2026-07-14
 
 ### Changed

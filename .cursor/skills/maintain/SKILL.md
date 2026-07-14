@@ -58,6 +58,8 @@ disable-model-invocation: true
 | `skills/maintain/config/default-protected.json` | 默认受保护目录与缓存列表 |
 | `.cursorGrowth/maintain-config.json` | 本机覆盖（模板 `templates/cursorGrowth/maintain-config.example.json`） |
 
+Playwright 浏览器缓存（`~/.cache/ms-playwright*`）默认在 `protected_dirs`，清理时保留。薄封装可通过环境变量 `MAINTAIN_BUILTIN_PROTECTED`（`|` 分隔路径）追加白名单。
+
 **禁止**在配置中写入个人信息；仅路径与标签。
 
 ## 与 disk 的分工
