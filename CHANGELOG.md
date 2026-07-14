@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **run**：closeout review 协议（task-verify 后可选第二模型/**review**；SkillsMP `autoreview`）
 - **debug**：Agent 内省调试（工具误用 · 上下文污染 · 隐式修复环；SkillsMP `agent-introspection-debugging`）
 - **master** `deps` · **scaffold**：DAILY/LIBRARY 裁剪协议（SkillsMP `agent-sort` 吸收）
 - **review**：Standards/Spec 双轴回顾 · 人类 reviewer 优先级（SkillsMP `code-review` · `human-like-code-review` 协议吸收）

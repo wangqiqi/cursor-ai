@@ -18,7 +18,7 @@ disable-model-invocation: true
 
 **禁止**在任务 ✅ 后仅更新 plan/CHANGELOG 却留给用户手动 commit。单轮顺序固定：
 
-ACTIVE → 🔧 → 实现 → `task-verify` → **审计复核** → CHANGELOG（若有用户可见变更）→ **README 同步（若触发）** → **更新 plan.md** → **`git commit`（必做）** → **`release-tag`（`tag-per-commit` 时必做）** → `next-task`
+ACTIVE → 🔧 → 实现 → `task-verify` → **closeout review（若触发）** → **审计复核** → CHANGELOG（若有用户可见变更）→ **README 同步（若触发）** → **更新 plan.md** → **`git commit`（必做）** → **`release-tag`（`tag-per-commit` 时必做）** → `next-task`
 
 ```bash
 ./.cursor/bin/runner.sh task-verify
@@ -99,6 +99,22 @@ bash .cursor/bin/cursor-coherence.sh   # README ↔ 磁盘 skills/agents 一致
 - [ ] 高风险面（auth、API、依赖）必要时扫 **security** · **api** skill
 
 复核不通过 → 继续修，勿标 ✅、勿 commit。
+
+## Closeout review（`task-verify` 后 · 可选）
+
+**用这个**：P0 任务 `task-verify` 绿后、**commit 前**再做一轮结构化回顾。**不是那个**：日常轻量审计（上节清单已覆盖）· 专项 `REV-*` 须委派 **review** agent。
+
+吸收自 SkillsMP `autoreview`（协议 only，不装 OpenClaw CLI）。
+
+| 触发 | 动作 |
+|------|------|
+| diff 非 trivial（多文件 / 行为变更 / auth·API） | 叠加 **review** skill（Standards/Spec 双轴）或委派 **review** agent（只读） |
+| 用户要求「再过一眼」「第二模型 review」 | 同上；可用另一模型会话，**禁止**无 diff 采证空评 |
+| 纯文案 / 单节 skill 补协议且无行为面 | 可跳过 closeout，仅走上节审计清单 |
+
+**顺序**（插入单轮流程）：`task-verify` ✅ → **closeout review（若触发）** → 审计复核 → CHANGELOG → commit。
+
+输出：Blocker/High 须修或向用户说明；仅 Medium/Low 可在回复中列出，用户确认后再 commit。
 
 ## plan 维护（单任务 · 不提交）
 
