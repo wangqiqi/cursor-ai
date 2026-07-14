@@ -1,7 +1,7 @@
 ---
 name: review
 description: >-
-  代码/PR 结构化回顾（/review · REV-*）— 范围·正确性·安全/API·可测性·可维护性。
+  代码/PR 结构化回顾（/review · REV-*）— Standards/Spec 双轴·人类 reviewer 优先级·范围·正确性·安全/API·可测性·可维护性。
   可委派 review agent（只读）。≠ 全局 skills-cursor/review（Bugbot/Security）；安全专项用 security。
 ---
 
@@ -11,9 +11,30 @@ description: >-
 
 可委派 **review** agent（只读）。本 skill 管清单与输出格式。
 
+## 双轴回顾（Standards · Spec）
+
+分支 / PR / 自某 commit 起的变更，按**两轴**扫读（可并行 subagent，结果并排汇报）：
+
+| 轴 | 问什么 | 证据来源 |
+|----|--------|----------|
+| **Standards** | 是否符合**本仓**已文档化规范？ | `rules/tech/*.mdc` · `.cursorGrowth/learn/dev-conventions.md` · 同目录既有代码风格 |
+| **Spec** | 是否满足** originating issue / PRD / plan Goal**？ | PR 描述 · linked issue · `plan.md` Target · 验收命令 |
+
+每轴输出：**通过 / 疑点 / Blocker** + `file:line` + 一句依据。两轴结论冲突时（规范过但偏离需求，或反之）标 **`Decision needed`**。
+
+## 人类 reviewer 优先级
+
+同一 diff 多问题时，**先报高影响、低噪声**（排序权重，非跳过清单）：
+
+1. **上下文与架构** — 方案是否契合模块边界与既有抽象；有无过度设计
+2. **正确性与 bug** — 边界、失败路径、回归风险
+3. **安全边角** — auth、注入、密钥、对外契约（触发时叠加 **security** · **api**）
+4. **缺测试** — 行为变更无对应测试或验收命令
+5. **风格与 nit** — 命名、格式、注释（最低优先，可合并为一条）
+
 ## 输出格式
 
-严重度（Blocker / High / Medium / Low）· `file:line` · 发现 · 建议
+严重度（Blocker / High / Medium / Low）· `file:line` · 发现 · 建议 · （可选）**轴**：Standards / Spec
 
 ## 结构化清单
 
