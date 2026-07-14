@@ -42,3 +42,15 @@ description: 系统调试循环（/debug）— 复现→假设→隔离→验证
 - **`/run` 失败自修 ≤2 轮** → 仍失败：plan 标 `⚠️` → **`/plan`**
 - 线上 hotfix：小 diff + CHANGELOG `### Fixed`；仍须先复现/采证
 - 同症状 ≥2 已发布 patch → **禁止**第三个 symptomatic hotfix；走 `bugfix` §Follow-up / `SPIKE-*`
+
+## 网络与抓取（任务中 · 非仅 debug）
+
+**用这个**：选工具、处理失败。**不是那个**：UI 走查清单 → **delivery** §10；可回归 E2E → **test**。
+
+| 场景 | 优先 | 失败时 |
+|------|------|--------|
+| 有明确 URL · 静态页 | `WebFetch` | 说明原因（403/CAPTCHA/空白）；不静默假装成功 |
+| 无 URL · 需搜索 | `WebSearch` | 说明无结果或需用户补充关键词 |
+| JS 渲染 / 登录 / 交互 | **delivery** §10 或已装浏览器自动化 CLI | 须用户授权登录与敏感操作 |
+
+动态页勿仅用 `WebFetch` 猜内容；网络类结论写进 debug 记录或提议 **learn** §ERRORS。

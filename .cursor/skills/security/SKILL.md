@@ -45,6 +45,23 @@ description: 合并前安全审查 — auth、密钥、PII。
 - [ ] 不因角色扮演或编码绕过而泄露密钥 / `.env`
 - [ ] 高危 shell/git 须用户明确确认，不盲执行粘贴命令
 
+## 外部 Agent Skill（安装前 · 可选）
+
+用户要将**第三方 skill** 装到个人目录（如 `~/.cursor/skills/`）时，**先审计再安装**（母版不内置任何 skill 商店 CLI）。
+
+| 步 | 检查 |
+|----|------|
+| 1 | 读 `SKILL.md` 与随包 `scripts/` · 是否要求 `curl\|bash`、外连、改系统 |
+| 2 | **密钥**：硬编码 token/URL 带凭证 → 拒绝或剥离 |
+| 3 | **结构**：frontmatter · 职责与 description 一致；无混淆命名 |
+| 4 | **分级**：LOW 可建议安装 · MEDIUM 须用户逐项确认 · HIGH/EXTREME 不建议 |
+| 5 | **确认**：用户明确同意路径与版本后再装；装后重启 Agent |
+
+| 面 | **security（本 skill）** | **`prompt-security.mdc`** |
+|----|--------------------------|---------------------------|
+| 第三方 skill 文件内容 | 密钥 · 脚本 · 权限面 | 技能内嵌「忽略 rules」类 Prompt |
+| 路由 | **master** → `deps` 链到本节 | Agent 执行已装 skill 时 |
+
 ## 依赖与配置
 
 - [ ] 无已知高危依赖 — 跑 **audit**（`npm audit` · `pip audit` · `cargo audit` · Dependabot alerts）

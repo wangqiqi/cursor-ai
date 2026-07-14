@@ -26,7 +26,7 @@
 **何时做**：UI/功能 Sprint、用户可见页面变更、**`/release`** 前建议。  
 **何时跳过（须在报告写明）**：纯后端/库、无本地可开 URL、当前会话无浏览器/自动化能力。
 
-**工具（有则用，无则跳过）**：Cursor 内置浏览器、或已配置且经用户批准的 browse 类 MCP（先 `GetMcpTools` 再调用；**禁止**擅自安装 MCP）。
+**工具（有则用，无则跳过）**：Cursor 内置浏览器、经用户批准的 browse 类 MCP（先 `GetMcpTools`）；或 `command -v agent-browser` 可用时用其 snapshot `@eN` 工作流（探索走查，**非**替代 **test** 的 Playwright 回归套件）。
 
 - [ ] **打开目标** — 读 `learn/acceptance.md` 默认 URL（若有）或 AskQuestion；页面可达（非连接拒绝）
 - [ ] **结构可见** — snapshot / 无障碍树或截图能辨认主 CTA、关键表单/列表（对照 §1 · §5）

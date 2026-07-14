@@ -55,6 +55,8 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 失败自修 ≤2 轮（须按 **debug** 循环：复现→假设→隔离→验证；**禁止无复现盲改**）· 仍失败 `⚠️` → `/plan` · 打版读 **release** skill
 
+**经验沉淀**：用户纠正或 `⚠️` 且根因已定位时，回复中**提议** `/learn` 记一条（**ERRORS** / **LEARNINGS**，见 **learn** §经验捕获）；不自动写 `.cursorGrowth/`。
+
 ## 对外文档同步（必做）
 
 **禁止**功能已交付、CHANGELOG 已写、README 仍滞后留给人手补。见 **plan** skill「对外门面 · README」。

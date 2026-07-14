@@ -4,6 +4,19 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **learn** §经验捕获：ERRORS/LEARNINGS 分类 · 晋升门禁 · 任务中触发
+- **security** §外部 Agent Skill：安装前审计 · LOW–EXTREME · 与 prompt-security 边界
+- **master** `deps`：外网 skill 发现路由 · 关键词索引
+- **debug** §网络与抓取：WebFetch/WebSearch 选型与失败处理
+- **docs/training/skills.md** §可选能力（无新增 skill）
+
+### Changed
+
+- **run**：用户纠正或 `⚠️` 时提议 `/learn` 记经验
+- **delivery** §10：可选 `agent-browser` CLI（检测到有则用）
+
 ## [4.22.1] - 2026-07-12
 
 ### Added

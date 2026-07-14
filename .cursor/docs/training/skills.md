@@ -51,6 +51,15 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 
 详表与关键词 → [`routes.md`](../skills/master/routes.md)。
 
+## 可选能力（无新增 skill）
+
+| 能力 | 入口 |
+|------|------|
+| 任务中经验沉淀 | **learn** §经验捕获 |
+| 外网 skill 安装前审计 | **security** §外部 Agent Skill · **master** → `deps` |
+| 浏览器走查（探索） | **delivery** §10 |
+| 网络抓取选型 | **debug** §网络与抓取 |
+
 ## 8 栈 scaffold
 
 `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `java-gradle` · `cpp-cmake`

@@ -41,6 +41,19 @@ disable-model-invocation: true
 | 发版后 | 更新 `release-rhythm` + `changelog-insights` |
 | 重复劳动审计 | 用户要求或 Sprint 密集 patch 后 → §CHANGELOG 重复模式审计 |
 | 约定缺口 | 用户说「该加规则吗」或反复踩同一坑 → §建议约定 |
+| 命令/验收意外失败 | 记 **ERRORS** 摘要 → §经验捕获 |
+| 用户纠正（「不对」「其实…」） | 记 **LEARNINGS** → §经验捕获 |
+
+## 经验捕获（任务中 · 可选）
+
+**用这个**：可复用教训写入 `.cursorGrowth/learn/`。**不是那个**：改母版 `.cursor/`（须 plan 授权 + TASK）。
+
+| 类型 | 写什么 | 默认落点 |
+|------|--------|----------|
+| **ERRORS** | 失败上下文 · 根因 · 已验证修复 | `dev-conventions.md` §建议约定 或 `changelog-insights.md` |
+| **LEARNINGS** | 偏好 · 纠正 · 可复用模式 | 同上；跨模块边界 → `module-map.md` 一句 |
+
+**晋升门禁**：重复 ≥2 或广泛适用 → 走 §建议约定 → **用户确认** → `learn/` 或 `rules/local/`；**禁止**自动改 `.cursor/skills|rules|config`。单会话草稿可留在回复中，不必每次落盘。
 
 ## 建议约定（蒸馏自 suggesting-cursor-rules）
 
