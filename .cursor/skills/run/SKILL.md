@@ -116,6 +116,31 @@ bash .cursor/bin/cursor-coherence.sh   # README ↔ 磁盘 skills/agents 一致
 
 输出：Blocker/High 须修或向用户说明；仅 Medium/Low 可在回复中列出，用户确认后再 commit。
 
+### Reader Testing（DOC / 协作文档 · 吸收自 doc-coauthoring）
+
+| 触发 | 动作 |
+|------|------|
+| `DOC-*` 或 plan 三阶段协作文档 **阶段 3** | 生成 5–10 个「读者会发现的问题」 |
+| 验证 | 委派 **review** agent（只读）或新会话：仅给文档全文 + 单题，检查答案与歧义 |
+| 失败 | 回到 plan 阶段 2 修订对应节；勿标 DOC ✅ |
+
+用户说「不用测读者」→ 记录跳过，仍须用户最终通读确认。
+
+## 文档与 Office 触发表（无感路由）
+
+用户自然语言命中下表时，**自动**选用右侧能力（**勿**要求用户说 skill 名）：
+
+| 用户意图 | Agent 动作 |
+|----------|------------|
+| 写 PRD/RFC/设计 doc | **plan** §协作文档 · AskQuestion 结构化 vs 自由 |
+| E2E / Playwright / 起 dev server | **test** §E2E · `with_server.py` |
+| PDF 表单/验收 | **delivery** §PDF 工具 |
+| 编辑 docx/pptx/xlsx 深度 | AskQuestion：**装 upstream** anthropics skill / 用 MCP / 跳过 |
+| 新 UI 交付走查 | **delivery** §1 反模板自检 |
+| MCP 建服 | **mcp** §Eval |
+
+Ambiguous 时 AskQuestion ≤4 项，禁止开放式「你想用哪个 skill」。
+
 ## plan 维护（单任务 · 不提交）
 
 `.cursorGrowth/plan.md` 在 **`.gitignore`** — 只更新本地，**禁止** `git add .cursorGrowth/`。

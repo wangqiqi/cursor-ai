@@ -56,6 +56,21 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 UX 分流不明时 → **ux** skill；结构问题回流 **ia**，非结构抛光留在本 skill。
 
+## PDF 交付工具（吸收自 anthropics/skills/pdf）
+
+**脚本**：`scripts/pdf/`（8 个轻量 `.py`）· **许可**：`scripts/pdf/LICENSE-anthropics.txt`（source-available）  
+**黑盒**：先 `python <script>.py --help` 或读 SKILL 指引，**勿**默认读源码进上下文。
+
+| 场景 | 脚本 |
+|------|------|
+| 检查可填字段 | `check_fillable_fields.py` |
+| 提取表单结构/字段 | `extract_form_structure.py` · `extract_form_field_info.py` |
+| 填写表单 | `fill_fillable_fields.py` · `fill_pdf_form_with_annotations.py` |
+| 转图验收 | `convert_pdf_to_images.py` · `create_validation_image.py` |
+| 边界框检查 | `check_bounding_boxes.py` |
+
+**Office 整包**（docx/pptx/xlsx 含 office/ 子树）本 Sprint **不纳入**；需深度编辑 → **master** deps 建议用户装 upstream 或 MCP。
+
 ## 禁止
 
 - 有 **Blocker** 仍建议 silent merge

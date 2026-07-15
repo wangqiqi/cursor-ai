@@ -4,6 +4,20 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **mcp**：Phase 4 Eval 协议 · tool annotations · `reference/evaluation.md`（anthropics/skills/mcp-builder）
+- **test**：E2E 协议 · `scripts/with_server.py` · `scripts/examples/`（anthropics/skills/webapp-testing）
+- **debug**：浏览器 E2E 调试短节（对齐 test）
+- **delivery**：§1 反 AI 模板自检 · `scripts/pdf/` 轻量工具（anthropics/skills/frontend-design · pdf）
+- **plan**：协作文档三阶段 · DOC-* Reader Testing（anthropics/skills/doc-coauthoring）
+- **run**：文档/Office 无感触发表 · Reader Testing closeout
+- **master** `routes.md`：anthropics/skills LIBRARY 速查
+
+### Changed
+
+- **ux**：交付分流含「新 UI 像 AI 模板」→ delivery §1
+- **learn**（Growth）：skill-creator 渐进披露 · 触发描述纪律 · `anthropics-skills-map.md`
 ## [4.22.4] - 2026-07-14
 
 ### Changed

@@ -36,9 +36,17 @@ description: >-
 - 工具描述写「何时用 / 勿用于」
 - 分页参数默认保守（如 limit≤50）
 - 外部 HTTP：timeout · 有限重试 · 不吞错误体
+- **Tool annotations**（SDK 支持时标注，助 Agent 选型）：
+  - `readOnlyHint` — 只读查询
+  - `destructiveHint` — 删改/不可逆
+  - `idempotentHint` — 重复调用安全
+  - `openWorldHint` — 开放域/外部实体
+- 现代 TS SDK：尽量定义 `outputSchema` / `structuredContent`，便于客户端解析
 
 精简模式见：`reference/typescript-patterns.md` · `reference/python-patterns.md`  
 （完整 SDK 以官方文档为准，勿在母版内嵌整份 upstream README。）
+
+吸收自 anthropics/skills/mcp-builder。
 
 ### 3 · 审查与测试
 
@@ -47,7 +55,20 @@ description: >-
 - [ ] `npx @modelcontextprotocol/inspector` 或 Cursor：`GetMcpTools` → 只读 `CallMcpTool` 冒烟
 - [ ] 写路径有确认/幂等说明
 
-### 4 · 接入 Cursor
+### 4 · Eval（LLM 可用性）
+
+吸收自 anthropics/skills/mcp-builder · 详 `reference/evaluation.md`。
+
+MCP 好坏看 **LLM 能否仅靠工具答真实难题**，不是工具数量。
+
+1. Inspector / `GetMcpTools` 清点工具
+2. 只读探查目标数据形态
+3. 写 **10 道**独立、只读、复杂、**单一可验证答案** 的题（答案须稳定）
+4. 自解或换会话验证；失败则改 schema/description/分页，而非堆万能工具
+
+可选 XML 格式见 `reference/evaluation.md`。upstream `evaluation.py` 可批跑，非母版必选。
+
+### 5 · 接入 Cursor
 
 - 在项目 MCP 配置注册 server（用户/团队批准后；勿擅自装 shadow MCP）
 - **调用顺序（Agent）**：先 **`GetMcpTools`**（按 `server` / `toolName` / `pattern`）取 schema → 再 **`CallMcpTool`**；未读 schema 勿盲调
@@ -79,3 +100,4 @@ npx @modelcontextprotocol/inspector
 | `reference/best-practices.md` | 命名 · 分页 · 传输 · 错误 |
 | `reference/typescript-patterns.md` | TS 最小骨架 |
 | `reference/python-patterns.md` | FastMCP 最小骨架 |
+| `reference/evaluation.md` | 10 题 eval 门禁 · XML 格式 |

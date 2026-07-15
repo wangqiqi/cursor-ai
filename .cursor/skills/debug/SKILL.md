@@ -76,3 +76,16 @@ description: 系统调试循环（/debug）— 复现→假设→隔离→验证
 | JS 渲染 / 登录 / 交互 | **delivery** §10 或已装浏览器自动化 CLI | 须用户授权登录与敏感操作 |
 
 动态页勿仅用 `WebFetch` 猜内容；网络类结论写进 debug 记录或提议 **learn** §ERRORS。
+
+## 浏览器 E2E 调试（吸收自 anthropics/skills/webapp-testing）
+
+**用这个**：本地 dev server + Playwright 脚本复现 UI 问题。**路由**：写测/起服 → **test** §E2E；上线走查 → **delivery** §10。
+
+| 症状 | 先查 |
+|------|------|
+| 元素找不到 | 是否 **networkidle 前** 就查 DOM？→ 先 `wait_for_load_state('networkidle')` |
+| 间歇失败 | server 未就绪 → **test** `with_server.py` |
+| JS 报错 | **test** `examples/console_logging.py` 抓 console |
+| selector 不稳 | 侦察：screenshot + `locator().all()`，再改 selector |
+
+脚本路径：`.cursor/skills/test/scripts/` · 先 `--help` 黑盒调用。

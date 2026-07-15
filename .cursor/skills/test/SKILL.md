@@ -55,6 +55,41 @@ description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 
 - 本地：`npx playwright test` 或项目 script
 - 先起 dev server 或使用 `webServer` 配置
 
+### 本地 Web 应用 E2E（吸收自 anthropics/skills/webapp-testing）
+
+**脚本**：`scripts/with_server.py`（起停 dev server）· `scripts/examples/`（Playwright 示例）  
+**许可**：`scripts/LICENSE-anthropics.txt`  
+**依赖**：`pip install playwright` · `playwright install chromium`
+
+**黑盒纪律**：先 `python .cursor/skills/test/scripts/with_server.py --help`，**勿**把脚本源码读入上下文。
+
+**决策树**：
+
+```
+任务 → 静态 HTML？
+  ├─ 是 → 直接读 HTML 找 selector → 写 Playwright（见 examples/static_html_automation.py）
+  └─ 否（动态）→ server 已起？
+        ├─ 否 → with_server.py 起服 + 你的 automation.py
+        └─ 是 → 侦察再行动：goto → networkidle → screenshot/DOM → 再操作
+```
+
+**侦察再行动**（动态 SPA）：
+
+1. `page.wait_for_load_state('networkidle')` — **必须先等**
+2. screenshot 或 `page.locator(...).all()` 探 selector
+3. 用发现的 selector 执行操作
+
+**多服**（前后端分离）：
+
+```bash
+python .cursor/skills/test/scripts/with_server.py \
+  --server "cd backend && python server.py" --port 3000 \
+  --server "cd frontend && npm run dev" --port 5173 \
+  -- python your_automation.py
+```
+
+与 **debug** 配合：UI 挂时抓 console（`examples/console_logging.py`）· 先 networkidle 再断言。
+
 ## 纪律
 
 - 红测不 ✅ task

@@ -7,6 +7,18 @@
 - [ ] 间距、圆角、阴影与组件库或现有页面一致
 - [ ] 响应式/暗色（若项目有）未遗漏
 
+#### 反「AI 默认模板」自检（吸收自 anthropics/skills/frontend-design）
+
+新 UI 或大改视觉时，**build 前**对照（不必单独记 skill；**ux** 分流到交付时自动适用）：
+
+- [ ] 是否落入无 brief 时的三套默认之一：暖奶油底+衬线大标题 / 纯黑+acid 强调色 / 报纸式细线零圆角？若 brief 未要求 → **改一轴**
+- [ ] 是否有一个 **signature** 元素（其余保持克制）？
+- [ ] 字体配对是否项目特有意图，而非「每次同一套 display+bold」？
+- [ ] 动效是否服务主题，而非 scattered 装饰？
+- [ ] 文案是否用户视角（「保存更改」非「提交」），错误/空态是否给下一步？
+
+**ux** 用户选「交付/抛光」→ 本小节 + §5 一并走查。
+
 ### 2. 国际化（i18n）
 
 > 项目路径/库名 → `.cursorGrowth/learn/acceptance.md`（模板见 `templates/cursorGrowth/learn/acceptance.md`）。
