@@ -4,6 +4,22 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.23.1] - 2026-07-15
+
+### Added
+
+- **cursor-standalone**：母版独立引用纪律 + 文风 SSOT（`rules/communication/cursor-standalone.mdc` · `alwaysApply`）
+- **library-index**：外网吸收母版内索引（`docs/library-index.md`）
+- **standalone-map**：引用审计矩阵（`plan/reference/standalone-map.md`）
+- **verify**：skills 禁止 `github.com` 作 SSOT 门禁
+
+### Changed
+
+- **core** · **workflow**：母版可演进 vs 安装后只读；Growth 坐标统一
+- **plan** · **templates** · **docs/training** · **building-super-cursor**：去根 CHANGELOG/README 叙事依赖
+- **source-map** · **mcp/evaluation** · **delivery/pdf**：外网链改指 library-index
+- **coherence**：允许 `cursor-standalone.mdc` `alwaysApply`；SDD twin 同步
+
 ## [4.23.0] - 2026-07-15
 
 ### Added

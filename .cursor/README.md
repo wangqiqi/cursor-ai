@@ -1,6 +1,6 @@
 # Super Cursor — `.cursor/`
 
-通用 SOP 目录。安装到目标项目后默认**只读**；项目认知 → `.cursorGrowth/learn/`（git 忽略）。
+通用 SOP 目录。**母版仓库**可自由演进；安装到目标项目后默认**只读**（见 **cursor-standalone**）。项目认知 → 运行时 `growth.learn_dir`（git 忽略）。
 
 ## 结构
 

@@ -5,7 +5,7 @@ description: "Task list template for feature implementation"
 
 # Tasks: [FEATURE NAME]
 
-> Super Cursor 母版模板（改编自 github/spec-kit tasks-template · MIT）。`[P]` = 可并行；导入 `.cursorGrowth/plan.md` TASK 表。
+> Super Cursor 母版模板（spec-kit SDD 吸收 · 见 `docs/library-index.md`）。`[P]` = 可并行；导入运行时 plan（`workflow.json` → `plan_file`）TASK 表。
 
 **Input**: Design documents from `/specs/[###-feature-name]/`
 

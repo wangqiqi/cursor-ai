@@ -19,7 +19,7 @@ alwaysApply: true
 | `AUTONOMOUS:true` 时同会话续下一 ACTIVE（勿等第二次 `/run`） | 静默扩大 Sprint scope |
 | 高风险（`autonomous.confirm_before`）须用户确认 | force-push · 无确认删库 |
 
-决策打断 → `workflow.json` `autonomy.interrupt_on` · **autonomy-chain.md**。编码细则 → **agent-discipline** · **constitution**。
+决策打断 → `workflow.json` `autonomy.interrupt_on` · **autonomy-chain.md**。引用纪律 → **cursor-standalone**。编码细则 → **agent-discipline** · **constitution**。
 
 ## 语气品牌（默认 dashu · 老周）
 

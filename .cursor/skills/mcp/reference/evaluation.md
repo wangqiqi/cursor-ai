@@ -1,6 +1,6 @@
 # MCP Server Eval（母版精简）
 
-吸收自 [anthropics/skills/mcp-builder](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) · 完整版见 upstream `reference/evaluation.md`。
+吸收自 anthropics mcp-builder 协议 · 母版出处 **`docs/library-index.md`** · 本文件为操作 SSOT。
 
 ## 目的
 

@@ -96,7 +96,7 @@ done < <(grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u)
 # 6. alwaysApply: true only in core.mdc, workflow.mdc, super-cursor-persona.mdc
 while IFS= read -r f; do
   base="$(basename "$f")"
-  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" ]]; then
+  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" || "$base" == "cursor-standalone.mdc" ]]; then
     ok "alwaysApply allowed: $base"
   else
     fail "alwaysApply in unexpected file: $f"

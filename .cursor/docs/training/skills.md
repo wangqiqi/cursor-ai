@@ -64,15 +64,13 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | Greenfield 功能 spec | **plan** §SDD · `docs/specs/`（`workflow.json` `sdd.specs_dir`） |
 | 网络抓取选型 | **debug** §网络与抓取 |
 
-### 外网协议吸收（索引 · 详表见 canonical）
+### 外网协议吸收（索引）
 
-| 来源 | SSOT | 本页 |
-|------|------|------|
-| anthropics/skills | [routes.md §LIBRARY](../skills/master/routes.md#anthropicsskills--library-速查sprit-anthropics-absorb) · Growth `learn/anthropics-skills-map.md` | 协议已并入 mcp/test/delivery/plan/run/learn |
-| github/spec-kit | [source-map.md](../skills/plan/reference/sdd/source-map.md) | 协议已并入 plan/run/review §SDD |
-| SkillsMP / 社区 | **CHANGELOG** `[Unreleased]` · **review** · **debug** · **run** closeout | 见 CHANGELOG 对应条目 |
+| 来源 | SSOT |
+|------|------|
+| anthropics/skills · spec-kit · SkillsMP | **`docs/library-index.md`** · `routes.md` §LIBRARY |
 
-**git** §GitHub 运维 · **security** §支付/webhook — 见 **CHANGELOG**。
+**git** §GitHub 运维 · **security** §支付/webhook — 见各 skill 正文。
 
 ## 8 栈 scaffold
 

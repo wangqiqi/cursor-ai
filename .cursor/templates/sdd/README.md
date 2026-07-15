@@ -1,6 +1,6 @@
 # SDD 模板（安装种子）
 
-改编自 [github/spec-kit](https://github.com/github/spec-kit)（MIT）。Super Cursor 母版真源在 `.cursor/skills/plan/reference/sdd/`。
+出处与许可见 **`.cursor/docs/library-index.md`**（§ github/spec-kit）。母版真源：`.cursor/skills/plan/reference/sdd/`。
 
 ## 用途
 

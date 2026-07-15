@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 闸门见 `rules/workflow.mdc`。配置：`config/workflow.json`
 
-**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）
+**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）· `reference/standalone-map.md`（母版独立 · 引用纪律）
 
 配置坐标：`config/workflow.json` → `sdd.specs_dir` · `sdd.principles_file`
 
@@ -48,7 +48,7 @@ disable-model-invocation: true
 | 不放 | 放哪里 |
 |------|--------|
 | 已闭合 Sprint 全文（Done when · TASK ✅） | `.cursorGrowth/archive/` 一篇摘要 |
-| ROADMAP 全表（含大量 `done` 行） | `archive/` · `CHANGELOG.md` · 项目 `docs/ROADMAP.md` |
+| ROADMAP 全表（含大量 `done` 行） | 运行时 `archive/` · 项目 `docs/ROADMAP.md` |
 | **历史 Sprint** 长链接列表 | `archive/` 目录即可 |
 | 设计拍板长文 · 多段 archive 互链 | `learn/` · `docs/` |
 

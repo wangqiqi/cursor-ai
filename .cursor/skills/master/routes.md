@@ -61,7 +61,7 @@ LIBRARY — 路径 + 何时手动选用
 
 ### anthropics/skills · LIBRARY 速查（SPRINT-anthropics-absorb）
 
-**不默认加载**；用户意图命中或 `deps` 路由时引用。详矩阵 → `.cursorGrowth/learn/anthropics-skills-map.md`。
+**不默认加载**；用户意图命中或 `deps` 路由时引用。详表 → **`docs/library-index.md`** · `routes.md` §LIBRARY。
 
 | 远端 skill | 何时建议（用户自然语言） | 母版已吸收 |
 |------------|--------------------------|------------|
@@ -84,7 +84,7 @@ LIBRARY — 路径 + 何时手动选用
 
 ### github/spec-kit · LIBRARY（SPRINT-spec-kit-absorb）
 
-**不默认加载** `specify-cli`；SDD 协议已并入 **plan · run · review**。详矩阵 → `.cursor/skills/plan/reference/sdd/source-map.md`。
+**不默认加载** `specify-cli`；SDD 协议已并入 **plan · run · review**。详表 → **`docs/library-index.md`** · `reference/sdd/source-map.md`。
 
 | spec-kit 能力 | 母版已吸收 | 何时用 LIBRARY |
 |---------------|------------|----------------|

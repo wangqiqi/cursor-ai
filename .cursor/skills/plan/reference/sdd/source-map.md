@@ -1,7 +1,7 @@
 # spec-kit → Super Cursor 落点矩阵
 
-> **SPIKE-001** · 来源 [github/spec-kit](https://github.com/github/spec-kit) @ `main`（MIT）  
-> 母版 Sprint：`SPRINT-spec-kit-absorb` · 真源仅在 **`.cursor/`**
+> 母版 Sprint：`SPRINT-spec-kit-absorb` · 出处与许可见 **`docs/library-index.md`**（§ github/spec-kit）  
+> 真源仅在 **`.cursor/`**
 
 ## 许可与边界
 

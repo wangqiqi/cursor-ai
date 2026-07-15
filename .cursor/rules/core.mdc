@@ -30,11 +30,22 @@ alwaysApply: true
 
 扩展路由（关键词命中）：**mcp** · **refactor** · **perf** · **spike** agent（`SPIKE-*`）→ **`/master`**
 
-配置：`config/workflow.json` · `config/release.json` · 协作三公理见 `rules/communication/constitution.mdc`
+配置：`config/workflow.json` · `config/release.json` · 协作三公理见 `rules/communication/constitution.mdc` · 母版独立见 **cursor-standalone**
 
-## .cursor 不可变（安装后）
+## 母版独立 vs 安装后只读
 
-`.cursor/` 自 `install-super-cursor.sh` 复制到目标项目后视为 **只读 SOP**，除非用户**明确**要求修改或完善 `.cursor/`：
+| 场景 | `.cursor/` |
+|------|------------|
+| **母版仓库**（cursor-ai 等） | **可自由演进** — 直接改 rules/skills/config/templates |
+| **安装到目标项目** | 默认 **只读** SOP；特化 → `.cursorGrowth/`（见下节） |
+
+引用纪律 · 文风 → **cursor-standalone** · `docs/library-index.md`。
+
+## .cursor 不可变（仅 · 安装到目标项目后）
+
+`.cursor/` 自 `install-super-cursor.sh` 复制到**目标项目**后视为 **只读 SOP**，除非用户**明确**要求修改或完善 `.cursor/`：
+
+**母版仓库**不受本条限制（见上节「母版独立」）。
 
 | 禁止（默认） | 允许去向 |
 |--------------|----------|
@@ -42,7 +53,7 @@ alwaysApply: true
 | 「顺便优化」模板、补 skill、改 config | 团队 rules → `.cursorGrowth/rules/local/`（链 `.cursor/rules/local`） |
 | 因业务任务顺带改 hooks 或 workflow | 行为开关 → 用户自行编辑 `config/*.json`，或明确授权后由 Agent 改 |
 
-发现缺口：**说明 + 建议**，等用户确认后再动 `.cursor/`。日常 `/master` `/plan` `/run` `/learn` **不得**触发对 `.cursor/` 的写入。
+发现缺口：**说明 + 建议**，等用户确认后再动 **目标项目**的 `.cursor/`。母版仓库日常 Sprint **可直接改**。目标项目 `/master` `/plan` `/run` `/learn` **不得**触发对 `.cursor/` 的写入。
 
 ## 沟通
 
