@@ -15,7 +15,7 @@
 
 在 `PLANNING:true` 完成后再进入阶段 2。用 **AskQuestion**（不可用 → 正文选项；见 **master**「AskQuestion 约定」）与用户确认：
 
-- [ ] **SDD 模式** — Sprint 增量 / Greenfield / Brownfield / 文档（见 **plan** skill §SDD）；Greenfield 须先 spec + clarify 再技术 plan
+- [ ] **SDD 模式** — Sprint 增量 / Greenfield / Brownfield / 文档（见 **plan** skill §SDD · `reference/sdd/source-map.md`）；Greenfield 须 spec + **clarify** 再技术 plan
 - [ ] **Goal** — 本 Sprint 要交付什么（一句话）
 - [ ] **Done when** — 怎样算 Sprint 完成（可执行 verify 命令 + P0 全 ✅）
 - [ ] **与候选表对齐** — 从 plan「下一 Sprint」立项则删对应候选行；新主题直接写 Active
@@ -24,8 +24,7 @@
 - [ ] **SPIKE 门禁** — 选型/方案/范围仍不确定 → 先列 `SPIKE-*`，结论归档后再拆 `TASK-*`（见 **scaffold** · **spike** agent）
 - [ ] **依赖 / 自研选型（可选）** — 新增重量级依赖、仓内 vendor、或「本可开源却自研」→ 对照 `oss-first.mdc` 四问；授权与溯源见 `submodule.mdc`
 - [ ] **Follow-up 立项闸门** — 见 §Follow-up（同症状重复 patch 时强制）
-- [ ] **PRD 输入（可选）** — 已有 ChatPRD 规格时：读 **implement-from-prd** / **write-prd** 提炼 Goal；交付前 **check-prd-alignment**（ChatPRD 插件 skills）
-- [ ] **SDD 模式（可选）** — Greenfield/Brownfield → 见 **plan** skill §SDD；路径读 `workflow.json` `sdd.*`；**clarify 门禁**见下
+- [ ] **PRD 输入（可选 · 外部）** — 若已用 **ChatPRD** 等 IDE 插件写 PRD：人工提炼 Goal 写入 Sprint；**勿**调用仓内不存在的插件 skill 名
 - [ ] **对外门面** — 本 Sprint 是否新增/改名 skill、command、agent、hooks 或安装路径？**是** → Done when **必须**含 `bash .cursor/bin/cursor-coherence.sh`（README 与磁盘一致）；**否** → 可省略
 - [ ] **交付验收（可选）** — UI/功能 Sprint → Done when 可加 **交付走查无 Blocker**（Agent 走 **delivery** skill）；纯内部可省略
 

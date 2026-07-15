@@ -12,29 +12,6 @@ disable-model-invocation: true
 
 配置坐标：`config/workflow.json` → `sdd.specs_dir` · `sdd.principles_file`
 
-## SDD 规划模式（吸收自 github/spec-kit）
-
-**用这个**：新功能从需求到 TASK 的结构化路径。**不是那个**：日常 Sprint 增量（默认）· 不记 `/speckit.*` slash。
-
-### 模式分流（阶段 1 · AskQuestion ≤4）
-
-| 选项 | 何时 | 流程 |
-|------|------|------|
-| **Sprint 增量** | 默认 · 已有 ACTIVE/迭代 | 现有先总后分 → TASK 表 |
-| **Greenfield** | 0→1 新功能 | principles → spec → **clarify** → tech plan → tasks → 导入 plan TASK |
-| **Brownfield** | 存量增强 | 读代码 + 增量 `spec.md` |
-| **仅调研** | 范围不清 | `SPIKE-*` |
-
-Greenfield 模板：`reference/sdd/` · 安装种子 `.cursor/templates/sdd/`
-
-### clarify 门禁
-
-技术 plan / TASK 表 **之前**：覆盖式 5–10 问 → `clarifications.md` 或 spec **Clarifications** 节（详 `reference/phases.md`）。用户可跳过并记录。
-
-### tasks → Sprint TASK
-
-`tasks.md` 的 `[P]` = 可并行；导入 `.cursorGrowth/plan.md` TASK 表；实现前可选 **review** §SDD analyze。
-
 ## 规模门禁 · plan≥5
 
 | 条件 | 动作 |

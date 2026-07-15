@@ -90,15 +90,30 @@ while IFS= read -r ref; do
   fi
 done < <(grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u)
 
-# 6. alwaysApply: true only in core.mdc and workflow.mdc
+# 6. alwaysApply: true only in core.mdc, workflow.mdc, super-cursor-persona.mdc
 while IFS= read -r f; do
   base="$(basename "$f")"
-  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" ]]; then
+  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" ]]; then
     ok "alwaysApply allowed: $base"
   else
     fail "alwaysApply in unexpected file: $f"
   fi
 done < <(grep -rl 'alwaysApply:\s*true' "$CUR/rules" 2>/dev/null || true)
+
+# 6b. SDD install seeds ↔ reference templates stay in sync
+for tpl in spec-template tasks-template tech-plan-template principles-template; do
+  ref="$CUR/skills/plan/reference/sdd/${tpl}.md"
+  seed="$CUR/templates/sdd/${tpl}.md"
+  if [[ -f "$ref" && -f "$seed" ]]; then
+    if diff -q "$ref" "$seed" >/dev/null 2>&1; then
+      ok "sdd twin $tpl"
+    else
+      fail "sdd twin drift: templates/sdd/${tpl}.md vs reference/sdd/${tpl}.md"
+    fi
+  else
+    fail "sdd twin missing: $tpl"
+  fi
+done
 
 # 7. tech/*.mdc have description and globs
 for mdc in "$CUR"/rules/tech/*.mdc; do

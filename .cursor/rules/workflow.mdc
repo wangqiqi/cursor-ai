@@ -16,7 +16,7 @@ CLI：`.cursor/bin/runner.sh` — `gate-check` · `task-verify` · `verify` · `
 - 每任务：`task-verify` 通过才 ✅/commit
 - Sprint/打版前：`verify`
 - 打版：`release.mode`（`patch-per-task` | `tag-per-commit`；见 `rules/feedback/release.mdc`）
-- `AUTONOMOUS:true` → **一次 `/run` Sprint 连跑**；仅决策点打断；高风险删除须确认；`⚠️` → `/plan`
+- `AUTONOMOUS:true` → **一次 `/run` Sprint 连跑**（详 `plan/reference/autonomy-chain.md`）；仅决策打断 · `⚠️` → `/plan`
 
 ## 规模门禁（plan≥5）
 

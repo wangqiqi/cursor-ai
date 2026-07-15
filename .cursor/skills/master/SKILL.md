@@ -34,7 +34,15 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 
 用于缩小选项（空仓库 / 无 plan / 有 ACTIVE / gate 阻塞等），**不向用户抛技术细节**。
 
-### 2. AskQuestion — 主路由（**≤7 项**）
+### 2. AskQuestion — 主路由与子路由
+
+**选项表 canonical** → [routes.md](routes.md)（主路由 · `more` 子路由 · 关键词索引 · 上下文捷径）。
+
+本 skill 只保留：
+
+- [routes.md](routes.md) 主路由与子路由选项表；**AskQuestion 工具约定**见本节下文
+- 主路由 **≤7 项**；子路由按需第 2 轮，仍 ≤7 项
+- 人格呼叫 → [routes.md §人格](routes.md#人格预设-style) · `resolve-role.sh`
 
 #### AskQuestion 约定（工具可用性 · SSOT）
 
@@ -43,80 +51,14 @@ ls plan.md .cursorGrowth/learn/ 2>/dev/null || true
 若当前会话**无**该工具（模型未注入时常见，例如部分 Grok 会话；官方亦写 *when unavailable, ask in prose*）：
 
 1. **勿空转、勿假装已弹出选择 UI**
-2. 用**同一选项表**写成正文编号列表，请用户回复 **id 或序号**
+2. 用 [routes.md](routes.md) **同一选项表**写成正文编号列表，请用户回复 **id 或序号**
 3. 收到选择后按表 handoff — 流程与选项不变
 
 下游 skill（plan · scaffold · ux · release …）凡写 AskQuestion，均遵循本约定。
 
-文案跟用户语言；中文示例：
+**不要**在第 1 轮超过 7 项；原 `review` / `other` 合并进 `fix` 与 `more`（见 routes）。
 
-| 选项 id | 用户看到 | 路由 |
-|---------|----------|------|
-| `scaffold` | 新建 / 空项目 / 搭脚手架 | **scaffold** |
-| `plan` | 规划、拆 Sprint、调研或文档任务 | **plan** |
-| `run` | 按 plan 继续开发、做 TASK | **run** |
-| `learn` | 让 Agent 了解本项目、沉淀约定 | **learn** |
-| `fix` | 修 bug、验收失败、闸门/verify 排查 | bugfix rules · **run**/**plan** |
-| `ship` | 发版、CHANGELOG、打 tag | **release** · **ship** |
-| `more` | 提交 / PR / 审查 / 文档 / 依赖 / 配置… | 见 § 子问题 · [routes.md](routes.md) |
-
-**不要**在第 1 轮超过 7 项；原 `review` / `other` 合并进 `fix` 与 `more`。
-
-### 3. 子问题（按需，每轮仍 ≤7 项）
-
-#### `scaffold`
-
-| 子选项 | 路由 |
-|--------|------|
-| 空目录 | **scaffold** → `apply` + `--dry-run` 预览 |
-| 已有代码 | **scaffold** → `audit` |
-
-#### `plan`
-
-| 子选项 | 路由 |
-|--------|------|
-| 功能 Sprint / 拆 TASK | **plan** `/plan` — 先 **Goal** · **Done when**，再拆 TASK |
-| 技术调研 SPIKE | **plan** · 任务 ID `SPIKE-*` |
-| 纯文档 DOC | **plan** · 任务 ID `DOC-*` · `rules/execution/docs.mdc` |
-| Sprint 收尾 / 归档 ROADMAP | **plan** · `archive/` · `rules/feedback/changelog.mdc` |
-
-#### `run`
-
-- `gate-check` ≠ OK → 建议 **plan**（补 `PLAN_APPROVED` 或 `PLANNING:false`）
-- `task-verify` / `verify` 失败 → 见 **`fix`** 子问「验收失败」
-- 否则 → **run** `/run`
-
-#### `fix`
-
-| 子选项 | 路由 |
-|--------|------|
-| 线上 bug / hotfix | `rules/execution/bugfix.mdc` · 小改 **git**；复杂 **plan** |
-| task-verify / verify 失败 | **run** 修代码；2 轮仍失败 → **plan** 标 `⚠️` · `rules/feedback/verify.mdc` |
-| gate-check 被挡 | **plan** · `./.cursor/bin/runner.sh gate-check` |
-
-#### `ship`
-
-| 子选项 | 路由 |
-|--------|------|
-| 发版清单（人主导） | **release** skill |
-| 自治打版（Agent 执行） | **ship** agent |
-
-#### `more`（第 2 轮 AskQuestion，≤7 项）
-
-| 子选项 id | 用户看到 | 路由 |
-|-----------|----------|------|
-| `git` | Git 提交 / PR / push / 收尾 | **git** · **release** · babysit · split-to-prs · `commit.mdc` · collaboration |
-| `security` | 安全审查（密钥 / PII / 鉴权） | **security** |
-| `api` | REST / OpenAPI 设计审查 | **api** · `rules/execution/api.mdc` |
-| `delivery` | 交付验收 / 上线前走查 | **delivery** · `rules/execution/delivery.mdc` |
-| `docs` | 文档与代码同步更新 | **plan** `DOC-*` 或直述 · `rules/execution/docs.mdc` |
-| `deps` | submodule / vendor / 选型与授权 / 外网 skill 裁剪 | `oss-first.mdc` · `submodule.mdc` · **security** · [routes.md §DAILY/LIBRARY](routes.md#外网-skill--daily--librarydeps) |
-| `config` | verify 配置 / 本地 rules / 模板自测 | 见 [routes.md § 扩展](routes.md#扩展场景) |
-| `style` | 人格 / 沟通语气 | `config/roles.json` · 见 [routes.md § 人格](routes.md#人格预设-style) |
-
-若 `more` 仍不匹配 → 请用户一句话描述 → 查 [routes.md 关键词](routes.md#关键词索引)。
-
-### 4. Handoff
+### 3. Handoff
 
 输出结构（简短）：
 

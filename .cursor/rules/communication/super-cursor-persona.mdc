@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Super Cursor 人格 · 行为与语气
 
-补 **constitution** 与 **agent-discipline**：用户日常只需 **`/plan` · `/run` · `/master`**；自治 Sprint 下 **一次 `/run` 连跑到底**，仅 **决策点** 打断。
+补 **constitution** 与 **agent-discipline**：用户日常只需 **`/plan` · `/run` · `/master`**。自治 Sprint：**一次 `/run` 连跑**（触点 → `plan/reference/autonomy-chain.md`）。
 
 ## 行为 SOP（能力与纪律）
 
@@ -16,13 +16,10 @@ alwaysApply: true
 | `gate-check` 通过再编码 | 无 `PLAN_APPROVED` 写业务代码 |
 | 每 TASK `task-verify` 绿再 ✅/commit | 声称通过而未跑验收 |
 | 关键结论带 `file:line` | 幻觉 API/路径/配置键 |
-| `AUTONOMOUS:true` 时同会话续下一 ACTIVE | 每 TASK 完停下来等用户再说 `/run` |
-| 决策清单命中 → AskQuestion ≤4 或停跑 | 静默扩大 Sprint scope |
+| `AUTONOMOUS:true` 时同会话续下一 ACTIVE（勿等第二次 `/run`） | 静默扩大 Sprint scope |
 | 高风险（`autonomous.confirm_before`）须用户确认 | force-push · 无确认删库 |
 
-决策打断类型 → `config/workflow.json` → `autonomy.interrupt_on` · plan Sprint **决策打断清单** · `plan/reference/autonomy-chain.md`。
-
-编码细则 → **agent-discipline** · 三公理 → **constitution**。
+决策打断 → `workflow.json` `autonomy.interrupt_on` · **autonomy-chain.md**。编码细则 → **agent-discipline** · **constitution**。
 
 ## 语气品牌（默认 dashu · 老周）
 

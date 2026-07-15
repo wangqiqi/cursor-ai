@@ -64,55 +64,15 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | Greenfield 功能 spec | **plan** §SDD · `docs/specs/`（`workflow.json` `sdd.specs_dir`） |
 | 网络抓取选型 | **debug** §网络与抓取 |
 
-### 外网协议吸收（anthropics/skills · SPRINT-anthropics-absorb）
+### 外网协议吸收（索引 · 详表见 canonical）
 
-来源：[anthropics/skills](https://github.com/anthropics/skills) · **协议 + 轻量脚本**并入下列 skill，**不**新增用户 slash。矩阵 → Growth `learn/anthropics-skills-map.md`。
+| 来源 | SSOT | 本页 |
+|------|------|------|
+| anthropics/skills | [routes.md §LIBRARY](../skills/master/routes.md#anthropicsskills--library-速查sprit-anthropics-absorb) · Growth `learn/anthropics-skills-map.md` | 协议已并入 mcp/test/delivery/plan/run/learn |
+| github/spec-kit | [source-map.md](../skills/plan/reference/sdd/source-map.md) | 协议已并入 plan/run/review §SDD |
+| SkillsMP / 社区 | **CHANGELOG** `[Unreleased]` · **review** · **debug** · **run** closeout | 见 CHANGELOG 对应条目 |
 
-| 远端 skill | 母版落点 |
-|------------|----------|
-| mcp-builder | **mcp** — Eval · annotations |
-| webapp-testing | **test** · **debug** — E2E · `with_server.py` |
-| frontend-design | **delivery** §1 · **ux** 分流 |
-| doc-coauthoring | **plan** · **run** — 三阶段 · Reader Testing |
-| pdf（轻量 scripts） | **delivery** `scripts/pdf/` |
-| skill-creator | **learn** — 写作纪律 |
-| 创意/企业类（algorithmic-art 等） | **master** deps LIBRARY 速查 |
-
-### 外网协议吸收（github/spec-kit · SPRINT-spec-kit-absorb）
-
-来源：[github/spec-kit](https://github.com/github/spec-kit)（MIT）· **协议并入 plan/run/review**，**不**新增 `/speckit.*`。矩阵 → `.cursor/skills/plan/reference/sdd/source-map.md`。
-
-| spec-kit | 母版落点 |
-|----------|----------|
-| specify · clarify · plan · tasks | **plan** §SDD · `reference/sdd/` 模板 |
-| analyze | **review** §SDD analyze |
-| implement | **run** |
-| converge | **run** §converge |
-| principles（constitution） | `principles-template.md` · `workflow.json` `sdd` |
-| specify-cli | **master** deps LIBRARY（用户自选） |
-
-### 外网协议吸收（SkillsMP · 已并进母版）
-
-来源：[SkillsMP](https://skillsmp.com/zh/search) · **协议并入下列 skill，不装外网包**。版本记录 → 仓库根 **`CHANGELOG.md`** `[Unreleased]`（**勿**在母版链 `.cursorGrowth/archive/` 具体文件名）。
-
-| 外网 skill（参考名） | 母版落点 |
-|---------------------|----------|
-| `code-review` · `human-like-code-review` | **review** — Standards/Spec **双轴** · 人类 reviewer 优先级 |
-| `agent-sort` | **master** / **scaffold** — **DAILY** / **LIBRARY** 裁剪 |
-| `agent-introspection-debugging` | **debug** — Agent 内省调试 |
-| `autoreview` | **run** — closeout review（可选第二模型） |
-| `testing-patterns` | **test** — factory · mock · stub |
-
-更早一轮（SkillHub 风格吸收）→ **learn** §经验捕获 · **security** §外部 Agent Skill · **delivery** §10；见 **CHANGELOG** 对应条目。
-
-### Git · Security 增补（已并进母版）
-
-见 **CHANGELOG** · skill：**git** §GitHub 运维 · **security** §触发 · §支付/webhook。
-
-| 母版 | 增补 |
-|------|------|
-| **git** | **github-ops** — issue triage · stale · PR/CI · release（`gh` 有则用） |
-| **security** | **支付** · **webhook** · 敏感交易触发词与清单 |
+**git** §GitHub 运维 · **security** §支付/webhook — 见 **CHANGELOG**。
 
 ## 8 栈 scaffold
 

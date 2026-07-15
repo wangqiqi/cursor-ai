@@ -6,6 +6,20 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **cursor-coherence.sh**：SDD 四模板 twin diff 门禁（`templates/sdd` ↔ `reference/sdd`）
+
+### Changed
+
+- **plan/SKILL**：合并重复 SDD 节为单节 canonical
+- **phases.md**：阶段 1 SDD checklist 去重；ChatPRD 标外部插件
+- **master/SKILL**：路由表外迁 `routes.md`（AskQuestion 约定仍留 master）
+- **training/skills.md**：外网吸收矩阵改为 SSOT 索引
+- **workflow** · **persona** · **plan-run**：AUTONOMOUS 叙事瘦身 → 链 `autonomy-chain.md`
+- **ux/SKILL**：Garrett 详表指向 `ux.mdc`
+- **cursor-coherence**：允许 `super-cursor-persona.mdc` alwaysApply
+
+### Added
+
 - **plan** `reference/autonomy-chain.md`：Sprint 连跑 · hooks/CLI 触点矩阵（SPIKE 参考）
 - **super-cursor-persona** rule：行为 SOP + 语气品牌（默认 dashu/老周）
 - **mcp**：Phase 4 Eval 协议 · tool annotations · `reference/evaluation.md`（anthropics/skills/mcp-builder）
