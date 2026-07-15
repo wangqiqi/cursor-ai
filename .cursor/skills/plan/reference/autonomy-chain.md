@@ -74,9 +74,9 @@ flowchart LR
 | 层 | SSOT | 作用 |
 |----|------|------|
 | **行为 SOP** | `rules/communication/super-cursor-persona.mdc` · `agent-discipline.mdc` | 少问多干 · verify · file:line |
-| **语气品牌** | `config/roles.json` · `role.default` | 默认 `dashu`（老周）；会话可覆盖 `.cursorGrowth/session/persona.json` |
+| **语气品牌** | `config/roles.json` · `role.default` | 默认 `dashu`；`voice_cues` 落地语气 · **禁止** given_name 开场自报 |
 
-`run-start` 的 `sc_role_hint` 在自治块注入 **Persona hint**；语气不改变 skill 能力（`skills: full`）。
+`run-start` 的 `sc_role_hint` 在自治块注入 **Persona hint**（`tone` · `voice_cues` · `speech_examples`；**不含** given_name 置顶）；语气不改变 skill 能力（`skills: full`）。
 
 ## 与 plan/run 分工
 
@@ -90,5 +90,5 @@ flowchart LR
 ## 已知限制
 
 - Hook followup 依赖 Cursor `run-stop` 事件；Agent 仍应读 plan `ACTIVE` 自主续跑。
-- `prefixes_skip`：SPIKE/REV/DOC 不进 `next-task` 自动队列，但可 **手动** 列为 ACTIVE（如本 Sprint SPIKE-001）。
+- `prefixes_skip`：SPIKE/REV/DOC 不进 `next-task` 自动队列，但可 **手动** 列为 ACTIVE。
 - `AUTONOMOUS` 不关闭 `gate-check` / `task-verify` / commit 纪律。

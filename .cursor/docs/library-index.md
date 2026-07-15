@@ -55,7 +55,7 @@
 | code-style · code-guidelines | **scope** `scope.mdc` § 命名与可读性 |
 | git-conventions | **git** skill § Conventional Commits |
 
-审计摘要 → `.cursorGrowth/archive/`（SPIKE-001）。
+审计摘要 → `.cursorGrowth/archive/`（项目本地，勿链具体文件名）。
 
 ## SpaceZephyr/pm-skills（协议已吸收 · MIT）
 

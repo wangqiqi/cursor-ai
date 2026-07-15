@@ -1,10 +1,6 @@
 {
   "version": 1,
   "protected_dirs": [
-    "~/workspace",
-    "~/projects",
-    "~/miniconda3",
-    "~/Downloads",
     ".cursorGrowth",
     "~/.cache/ms-playwright",
     "~/.cache/ms-playwright-go"

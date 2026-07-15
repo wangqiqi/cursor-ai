@@ -22,6 +22,7 @@ alwaysApply: true
 |------|------|
 | `config/*.json` · `workflow.json` 键名 | 外网 GitHub URL 作**操作** SSOT（skill 正文） |
 | Growth **目录类**路径（plan · learn · archive · session） | 链 `archive/<具体文件名>.md` |
+| 通用 SOP · 默认配置示例 | 本机绝对路径 · 用户名 · 具体仓库/项目名 · 维护者工作区审计表 |
 | skill ↔ skill · `master/routes.md` | `.cursor/docs` 叙事「去看根 README 某节」 |
 | 外网出处 | 仅 `docs/library-index.md` + `reference/standalone-map.md` |
 | **release** 打版时更新根发版文件 | rules/skills **正文**依赖根 CHANGELOG 讲故事 |

@@ -33,7 +33,7 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 | 通用缺口 → 蒸馏进**现有** skill/rule（过通用性门禁） | 为追星新建第 N 个平行入口 skill |
 | 本表外链仅作策展索引 | 把业务包名/产品路径写进母版 |
 
-## 母版已吸收（SPRINT-07）
+## 母版已吸收（通用蒸馏）
 
 | 社区主题 | 母版落点 |
 |----------|----------|
@@ -53,7 +53,7 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 | BDD / Gherkin | `rules/execution/testing.mdc` § BDD |
 | 评审清单 · Issue 模板 | `collaboration.mdc` · `bugfix.mdc` |
 | Conventional Commits 速查 | **git** skill |
-| awesome-cursorrules-zh 通用蒸馏 | 上四行（SPRINT-14）· 栈专用仅本表外链 |
+| awesome-cursorrules-zh 通用蒸馏 | 上四行 · 栈专用仅本表外链 |
 
 ## 引用到 local/
 

@@ -1,6 +1,6 @@
-# `.cursor` 独立 · 引用审计矩阵（SPIKE-002）
+# `.cursor` 独立 · 引用审计矩阵
 
-母版 Sprint：`SPRINT-cursor-standalone` · 纪律 SSOT → `rules/communication/cursor-standalone.mdc`
+纪律 SSOT → `rules/communication/cursor-standalone.mdc`
 
 ## 三层边界
 
@@ -33,7 +33,7 @@
 
 | 仓库 | Agent 改 `.cursor/` |
 |------|---------------------|
-| **母版** cursor-ai | ✅ 默认（本 Sprint） |
+| **母版仓库** | ✅ 默认（母版演进 Sprint） |
 | **目标项目**（install 后） | ❌ 除非用户明确授权 |
 
 ## 文风一致
@@ -44,14 +44,3 @@
 | 引用纪律 | `cursor-standalone.mdc` |
 | 外网吸收索引 | `docs/library-index.md` |
 | 术语 | 用 **principles**（≠ constitution 三公理）· **ACTIVE** · **Sprint** |
-
-## 触达文件（TASK 映射）
-
-| TASK | 主要文件 |
-|------|----------|
-| 051 | `core.mdc` · `workflow.mdc` |
-| 052 | `cursor-standalone.mdc` |
-| 053 | `library-index.md` · `source-map.md` · `evaluation.md` · `templates/sdd/*` |
-| 054 | `training/skills.md` · `building-super-cursor.md` · `templates/plan.md` · `learn/SKILL.md` |
-| 055 | `plan/SKILL.md` · `routes.md` · `run/SKILL.md` |
-| 056 | `verify-super-cursor.sh` |

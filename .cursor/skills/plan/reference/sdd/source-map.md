@@ -1,6 +1,6 @@
 # spec-kit → Super Cursor 落点矩阵
 
-> 母版 Sprint：`SPRINT-spec-kit-absorb` · 出处与许可见 **`docs/library-index.md`**（§ github/spec-kit）  
+> 出处与许可见 **`docs/library-index.md`**（§ github/spec-kit）  
 > 真源仅在 **`.cursor/`**
 
 ## 许可与边界

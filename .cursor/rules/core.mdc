@@ -36,7 +36,7 @@ alwaysApply: true
 
 | 场景 | `.cursor/` |
 |------|------------|
-| **母版仓库**（cursor-ai 等） | **可自由演进** — 直接改 rules/skills/config/templates |
+| **母版仓库**（Super Cursor 模板仓等） | **可自由演进** — 直接改 rules/skills/config/templates |
 | **安装到目标项目** | 默认 **只读** SOP；特化 → `.cursorGrowth/`（见下节） |
 
 引用纪律 · 文风 → **cursor-standalone** · `docs/library-index.md`。

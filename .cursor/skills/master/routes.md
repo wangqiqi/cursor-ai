@@ -59,7 +59,7 @@ LIBRARY — 路径 + 何时手动选用
 
 安装外网 skill 到 `~/.cursor/skills/` 前仍走 **security** §外部 Agent Skill；**禁止**引入第二套安装 CLI 作为母版必选路径。
 
-### anthropics/skills · LIBRARY 速查（SPRINT-anthropics-absorb）
+### anthropics/skills · LIBRARY 速查
 
 **不默认加载**；用户意图命中或 `deps` 路由时引用。详表 → **`docs/library-index.md`** · `routes.md` §LIBRARY。
 
@@ -82,7 +82,7 @@ LIBRARY — 路径 + 何时手动选用
 
 **Office 深度编辑** — AskQuestion（≤3 项）：`装 upstream anthropics skill` · `用 MCP/飞书等` · `本轮不做`
 
-### github/spec-kit · LIBRARY（SPRINT-spec-kit-absorb）
+### github/spec-kit · LIBRARY
 
 **不默认加载** `specify-cli`；SDD 协议已并入 **plan · run · review**。详表 → **`docs/library-index.md`** · `reference/sdd/source-map.md`。
 
@@ -98,7 +98,7 @@ LIBRARY — 路径 + 何时手动选用
 
 **路径**：默认 `docs/specs/`（`workflow.json` `sdd.specs_dir`）；与 spec-kit 原生 `specs/` 可配置兼容。
 
-### SpaceZephyr/pm-skills · LIBRARY（SPRINT-pm-skills-absorb）
+### SpaceZephyr/pm-skills · LIBRARY
 
 **不默认加载**整包；产品协议已蒸馏进 **plan · review · delivery**。详表 → **`docs/library-index.md`**。
 
@@ -129,9 +129,17 @@ LIBRARY — 路径 + 何时手动选用
 
 ## 人格预设 (`style`)
 
-> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `dashu`（老周）。12 项分两轮 AskQuestion（每轮 ≤7）。
+> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `dashu`。12 项分两轮 AskQuestion（每轮 ≤7）。
 
-每人字段：`id` · `role_name`（角色名）· `nicknames[]`（昵称）· `given_name`（具体名字）· `personality` · `tone` · `skills`。
+每人字段：`id` · `role_name` · `nicknames[]` · `given_name` · `voice_cues` · `personality` · `tone` · `attitude` · `intensity` · `speech_examples` · `skills`（全员 `full`）。
+
+| 字段 | 用途 | Agent 禁止 |
+|------|------|------------|
+| `given_name` | **用户点名**匹配（如「呼叫老周」） | 回复开场自报此人设名 |
+| `voice_cues` | 落地语气：称呼用户、句长、语气词 | 忽略 cues 只用名字装人设 |
+| `speech_examples` | 句式锚点（≥3 条） | 照抄 given_name 开场 |
+
+全局 `speech_rules.forbid_self_name_opener` → 见 **super-cursor-persona.mdc**。
 
 ### 呼叫（会话内）
 

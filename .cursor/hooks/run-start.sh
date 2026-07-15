@@ -40,15 +40,39 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
     for n in p.get("nicknames") or []:
         keys.add(str(n).lower())
     if q in keys or p.get("id") == sys.argv[2]:
-        role = p.get("role_name") or p.get("name") or p.get("id")
-        given = p.get("given_name") or ""
-        nicks = "、".join(p.get("nicknames") or [])
-        skills = p.get("skills") or "full"
+        pid = p.get("id") or ""
+        role = p.get("role_name") or p.get("name") or pid
+        tone = p.get("tone") or ""
+        attitude = p.get("attitude") or ""
+        intensity = p.get("intensity", "")
         hint = p.get("hint") or ""
         pers = p.get("personality") or ""
+        cues = p.get("voice_cues") or {}
+        cue_parts = []
+        if cues.get("address_user"):
+            cue_parts.append(f"addr={cues['address_user']}")
+        if cues.get("rhythm"):
+            cue_parts.append(f"rhythm={cues['rhythm']}")
+        if cues.get("flavor"):
+            cue_parts.append(f"flavor={cues['flavor']}")
+        if cues.get("never"):
+            cue_parts.append(f"never={cues['never']}")
+        cue_str = " · ".join(cue_parts)
         examples = p.get("speech_examples") or []
-        ex = (" · 例：" + " / ".join(examples[:2])) if examples else ""
-        print(f"{role}（{given}）· nick={nicks or '-'} · skills={skills} · {pers} · {hint}{ex}".strip(" ·"))
+        ex = (" · ex: " + " / ".join(examples[:3])) if examples else ""
+        parts = [
+            f"id={pid}",
+            f"role={role}",
+            f"tone={tone}",
+            f"attitude={attitude}",
+            f"intensity={intensity}",
+            f"skills=full",
+            pers,
+            hint,
+            cue_str,
+        ]
+        line = " · ".join(p for p in parts if p) + ex
+        print(line.strip(" ·"))
         break
 PY
 }

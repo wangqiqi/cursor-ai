@@ -4,8 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **roles.json** — `speech_rules` · 12 人格 `voice_cues` · `speech_examples` 扩至 ≥3
+
 ### Changed
 
+- **super-cursor-persona** — `given_name` 仅供用户点名；禁止开场自报；落地语气清单
+- **run-start** — Persona hint 注入 `tone`/`voice_cues`/examples，去掉 `（given_name）` 置顶
+- **master/routes** · **config/README** · **autonomy-chain** — 人格字段语义对齐
+- **cursor-coherence** · **verify-super-cursor** — 人格语气验收（voice_cues · 禁自报开场）
+- **母版洁净化** — migration-catalog · disk/week/maintain 默认路径等去除本机/用户专属痕迹
 - **migration-catalog** — SPIKE-003 工作区四项目升级刷新（2026-07）
 - **README** — 安装选项（`--replace` · `--copy-plan` · profile）· 任务 ID / `release.mode` / SDD · `/debug` `/review` 路径 · bin/hooks 树修正 · Roo/hooks 表述 · `babysit` 外置说明
 

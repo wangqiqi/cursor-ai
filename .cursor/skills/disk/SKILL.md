@@ -62,7 +62,7 @@ git status   # .cursorGrowth/ 不应出现在待提交列表
 | 分组 | 示例 key |
 |------|----------|
 | 根分区 | `disk.root` |
-| Home | `home.workspace` · `home.cache` · `home.downloads` … |
+| Home | `home.cache` · `home.downloads` · `home.config` … |
 | IDE | `ide.cursor` · `ide.cursor_state` · `ide.vscode` |
 | 当前项目 | `pkg.build` · `pkg.node_modules` · `pkg.target`（相对 `--project-dir`） |
 
