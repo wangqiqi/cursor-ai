@@ -34,13 +34,13 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 ### 人格切换（`role.default`）
 
 - 默认 id：`dashu`（见 `config/roles.json`）
-- **字段**：`role_name` · `nicknames[]` · `given_name`（**用户点名**，Agent 禁止开场自报）· `voice_cues` · `personality` · `tone` · `attitude` · `intensity` · `speech_examples`（≥3）· `skills`（全员 `full`）
-- **辨识度**：靠 `voice_cues` + `tone` + 例句；**不靠** Agent 喊 `given_name`
+- **字段**：`role_name` · `nicknames[]` · `given_name`（**用户点名**，Agent 禁止开场自报）· `voice_cues` · `emotion_cues`（成功/卡住/决策/长跑）· `personality` · `tone` · `attitude` · `intensity` · `speech_examples`（≥4）· `skills`（全员 `full`）
+- **辨识度**：靠 `voice_cues` + `emotion_cues` + `tone` + 例句；**不靠** Agent 喊 `given_name`
 - **呼叫**：会话内「呼叫 X」→ `resolve-role.sh` → 写 `.cursorGrowth/session/persona.json`；多命中须消歧
 - **Growth 覆盖**：可选 `.cursorGrowth/session/aliases.json`（`称呼 → persona_id`）优先于母版 nicknames
 - **会话态优先**：`run-start` 读 Growth `session/persona.json` 的 `persona_id`，覆盖 `role.default` 注入 hint
 - **持久切换**：编辑 `config/workflow.json` → `role.default` 为 persona `id`（可选）
-- **生效**：`run-start` 注入 `id`/`tone`/`voice_cues`/`speech_examples`；能力不减，只改语气
+- **生效**：`run-start` 注入 `id`/`tone`/`voice_cues`/`emotion_cues`/`speech_examples`；能力不减，只改语气
 - **选型**：`/master` → `more` → `style`（12 项分两轮 AskQuestion）
 
 Install profiles（`install-super-cursor.sh --profile`）:

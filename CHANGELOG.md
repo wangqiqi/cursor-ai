@@ -6,7 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **roles.json** — `speech_rules` · 12 人格 `voice_cues` · `speech_examples` 扩至 ≥3
+- **roles.json** — `speech_rules` · 12 人格 `voice_cues` · `emotion_cues`（成功/卡住/决策/长跑）· `speech_examples` ≥4
 
 ### Changed
 

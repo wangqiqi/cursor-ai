@@ -62,8 +62,11 @@ for p in personas:
     cues = p.get("voice_cues") or {}
     for ck in ("address_user", "rhythm", "flavor", "never"):
         assert cues.get(ck), f"{p.get('id')} voice_cues missing {ck}"
+    emo = p.get("emotion_cues") or {}
+    for ek in ("on_success", "on_blocker", "on_decision", "on_grind"):
+        assert emo.get(ek), f"{p.get('id')} emotion_cues missing {ek}"
     ex = p.get("speech_examples") or []
-    assert isinstance(ex, list) and len(ex) >= 3, f"{p.get('id')} needs >=3 speech_examples"
+    assert isinstance(ex, list) and len(ex) >= 4, f"{p.get('id')} needs >=4 speech_examples"
     gn = str(p.get("given_name") or "")
     for line in ex:
         s = str(line).strip()

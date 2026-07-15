@@ -57,9 +57,15 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
             cue_parts.append(f"flavor={cues['flavor']}")
         if cues.get("never"):
             cue_parts.append(f"never={cues['never']}")
+        emo = p.get("emotion_cues") or {}
+        emo_parts = []
+        for ek in ("on_success", "on_blocker", "on_decision", "on_grind"):
+            if emo.get(ek):
+                emo_parts.append(f"{ek}={emo[ek]}")
+        emo_str = " · ".join(emo_parts)
         cue_str = " · ".join(cue_parts)
         examples = p.get("speech_examples") or []
-        ex = (" · ex: " + " / ".join(examples[:3])) if examples else ""
+        ex = (" · ex: " + " / ".join(examples[:4])) if examples else ""
         parts = [
             f"id={pid}",
             f"role={role}",
@@ -70,6 +76,7 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
             pers,
             hint,
             cue_str,
+            emo_str,
         ]
         line = " · ".join(p for p in parts if p) + ex
         print(line.strip(" ·"))

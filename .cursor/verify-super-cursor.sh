@@ -230,14 +230,17 @@ data = json.load(open(sys.argv[1], encoding="utf-8"))
 rules = data.get("speech_rules") or {}
 assert rules.get("forbid_self_name_opener") is True
 for p in data.get("personas", []):
-    assert len(p.get("speech_examples") or []) >= 3, p.get("id")
+    assert len(p.get("speech_examples") or []) >= 4, p.get("id")
     gn = str(p.get("given_name") or "")
     for line in p.get("speech_examples") or []:
         assert not gn or not str(line).strip().startswith(gn), p.get("id")
     cues = p.get("voice_cues") or {}
     for k in ("address_user", "rhythm", "flavor", "never"):
         assert cues.get(k), f"{p.get('id')} missing voice_cues.{k}"
-print("OK  roles.json speech_rules voice_cues examples")
+    emo = p.get("emotion_cues") or {}
+    for k in ("on_success", "on_blocker", "on_decision", "on_grind"):
+        assert emo.get(k), f"{p.get('id')} missing emotion_cues.{k}"
+print("OK  roles.json speech_rules voice_cues emotion_cues examples")
 PY
   then
     :
