@@ -163,3 +163,13 @@ docs/specs/001-<slug>/
 3. **Reader Testing** — 用 **review** agent 或新会话「仅持文档」回答 5–10 个读者问题；失败 → 回阶段 2
 
 Sprint 表用 `DOC-*`；验收：Reader Testing 通过或用户明确跳过。
+
+### 需求体检与 PRD 补漏（吸收自 SpaceZephyr/pm-skills）
+
+结构化协作或自由撰写 PRD / 功能说明时，在 Context 之前或 Refine 之后套用 **`reference/doc-prd-enrich.md`**：
+
+1. **需求体检** — 来源 · 用户价值 · 成功指标（见该文件信号表）
+2. **自动补漏** — 异常/埋点/非功能/对接（补入对应节，不堆附录）
+3. **待确认项** — 交付时单独汇总；每条带默认建议与影响范围
+
+信息严重不足 → 需求梳理兜底，不硬写完整 PRD。预审 → **review** §文档预审。

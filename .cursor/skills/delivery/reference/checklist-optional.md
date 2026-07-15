@@ -1,5 +1,18 @@
 # delivery · 清单 §8–11（可选）
 
+### 埋点与指标（产品向 · 吸收自 SpaceZephyr/pm-skills）
+
+> PRD 统计章节起草 → **plan** `reference/doc-prd-enrich.md`。**用这个**：上线前核对埋点是否可验收。
+
+- [ ] 核心用户链路有事件覆盖（进入 → 关键操作 → 完成/放弃）
+- [ ] 事件名、属性、触发时机在 PRD 或 tracking spec 中**无歧义**
+- [ ] 漏斗关键步骤可串联分析（非仅页面 PV）
+- [ ] 异常/失败路径有事件或可归因日志（与 `error-context.mdc` 对齐）
+- [ ] 若有实验/灰度：实验 ID、分流、指标与 **plan** Goal 一致
+- [ ] QA 可验证：有校验方式（查询/SQL/调试面板之一，路径 → `learn/acceptance.md`）
+
+无埋点要求的纯内部工具 → 走查报告写明跳过。
+
 ### 8. 长任务闭环（可选 · 含上传/导入/向导）
 
 > 规则：`long-running-ui.mdc` · `async-progress.mdc` · `modal-layering.mdc`

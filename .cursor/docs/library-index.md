@@ -43,6 +43,32 @@
 
 版本记录：发版时写入仓库根发版日志（**release** skill；母版 skill 正文不链该文件）。
 
+## SpaceZephyr/pm-skills（协议已吸收 · MIT）
+
+上游：[SpaceZephyr/pm-skills](https://github.com/SpaceZephyr/pm-skills)（MIT）· 维护：SpaceZephyr /「空格的键盘」。**不**整包拷贝 `pm-*` 进母版；顾问团整包 → 用户自选安装 upstream。
+
+| 远端 skill | 母版落点 | 用户自然语言 |
+|------------|----------|--------------|
+| pm-prd-writer | **plan** §协作文档 · `reference/doc-prd-enrich.md` | 写 PRD · 需求体检 · 补漏 · 待确认项 |
+| pm-review-board | **review** §文档预审 · `reference/doc-review-checklist.md` | 过评审 · 模拟评审会 · PRD 预审 |
+| pm-tracking-spec-writer | **delivery** `reference/checklist-optional.md` §埋点 | 埋点 · 事件表 · 指标口径 |
+| pm-master（链路） | **master** `routes.md` §LIBRARY 产品工作流 | 产品全流程 · 从头到尾走一遍 |
+| pm-prioritization-engine | **未纳入**（backlog `prioritization.md`） | RICE/ICE/Kano 排序 |
+| pm-roadmap-planner | **未纳入** | 甘特路线图（与 plan Sprint 重叠） |
+| pm-experiment-designer | **未纳入** | A/B 实验方案 |
+| pm-advisory-suite（7 个） | **未纳入**整包 · LIBRARY 策展 | 该不该做 · 价值判断 · 访谈求真 |
+| pm-image2proto · pm-url2proto · pm-image2pencil | **未纳入** | 截图/网址原型（栈绑定重） |
+
+### 泛化命名纪律（母版正文）
+
+吸收 pm-skills 顾问团/方法论时：
+
+| 做 | 不做 |
+|----|------|
+| 功能/视角名：风险与可行性预审 · 发现与假设树 · 价值与替换成本 · 访谈求真 · 故事地图与 MVP 切片 · 成果 vs 功能堆叠 | **具体专家/作者人名**作母版节标题或路由名 |
+| README / 本索引致谢 **仓库** SpaceZephyr/pm-skills | 把方法论代表人物写成 pm-skills **作者** |
+| 用户装 upstream 整包时保留对方 `pm-advisor-*` 目录名 | 在 `.cursor/skills/` 新建平行 `pm-*` skill |
+
 ## 安装外网 skill 前
 
 **security** §外部 Agent Skill · **master** → `deps` · 用户确认后装 `~/.cursor/skills/`。

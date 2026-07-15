@@ -230,6 +230,22 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 | [端到端示例](.cursor/docs/walkthrough.md) | go-api 可跟练 |
 | [Building](.cursor/docs/building-super-cursor.md) | 扩展母版、贡献指南 |
 
+## 致谢与协议出处
+
+Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [`.cursor/docs/library-index.md`](.cursor/docs/library-index.md)）。**只链不拷**整包进母版 `.cursor/skills/`。
+
+| 上游项目 | 许可 | 维护方 | 母版落点（摘要） |
+|----------|------|--------|------------------|
+| [anthropics/skills](https://github.com/anthropics/skills) | 各 skill 自有（见 `LICENSE-anthropics.txt`） | Anthropic | **mcp** Eval · **test** E2E · **delivery** 反模板/PDF · **plan/run** 协作文档 |
+| [github/spec-kit](https://github.com/github/spec-kit) | MIT | GitHub | **plan** SDD · **review** analyze · **run** converge · `templates/sdd/` |
+| SkillsMP 社区协议 | protocol only | 见 CHANGELOG | **review** 双轴 · **run** closeout · **debug** 内省 · **test** factory · **master** LIBRARY · **security** · **git** |
+| [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 社区 | PatrickJS 等 | `rules/execution/scope.mdc` anti-overengineering |
+| [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
+| [spencerpauly/awesome-cursor-skills](https://github.com/spencerpauly/awesome-cursor-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
+| [SpaceZephyr/pm-skills](https://github.com/SpaceZephyr/pm-skills) | MIT | SpaceZephyr | **plan** PRD 体检/补漏 · **review** 文档预审 · **delivery** §埋点 · **master** 产品工作流 LIBRARY |
+
+安装外网 skill 前 → **security** §外部 Agent Skill · **master** → `deps`。
+
 ## 验证
 
 ```bash

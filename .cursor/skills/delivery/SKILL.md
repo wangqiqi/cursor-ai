@@ -11,7 +11,7 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 项目特化路径（design tokens、i18n 库、OpenAPI 位置）→ `.cursorGrowth/learn/acceptance.md`（若无则 **AskQuestion** 或 grep 惯例）。
 
-**详单**：`reference/checklist-core.md`（§1–7）· `reference/checklist-optional.md`（§8–11）
+**详单**：`reference/checklist-core.md`（§1–7）· `reference/checklist-optional.md`（§埋点 · §8–11）
 
 ## 何时进入
 

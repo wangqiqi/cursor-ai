@@ -98,6 +98,34 @@ LIBRARY — 路径 + 何时手动选用
 
 **路径**：默认 `docs/specs/`（`workflow.json` `sdd.specs_dir`）；与 spec-kit 原生 `specs/` 可配置兼容。
 
+### SpaceZephyr/pm-skills · LIBRARY（SPRINT-pm-skills-absorb）
+
+**不默认加载**整包；产品协议已蒸馏进 **plan · review · delivery**。详表 → **`docs/library-index.md`**。
+
+| 远端 skill | 母版已吸收 | 何时用 LIBRARY（装 `~/.cursor/skills/`） |
+|------------|------------|------------------------------------------|
+| pm-prd-writer | ✅ **plan** `doc-prd-enrich.md` | — |
+| pm-review-board | ✅ **review** §文档预审 | — |
+| pm-tracking-spec-writer | ✅ **delivery** §埋点 | — |
+| pm-master 链路 | ✅ 下表预置链路 | 要完整 20 skill 编排 |
+| pm-prioritization-engine · pm-roadmap-planner | ❌ backlog | RICE/甘特专精 |
+| pm-experiment-designer · pm-analytics · pm-survey-designer | ❌ | 实验/分析/问卷专精 |
+| pm-advisory-suite（产品判断顾问团） | ❌ 不蒸馏 | 「该不该做」· 价值判断 · 访谈求真 |
+| pm-image2proto · pm-url2proto · pm-image2pencil | ❌ | 截图/网址原型 |
+
+**母版命名纪律**：正文用功能/视角名（风险与可行性预审 · 发现与假设树 · 价值与替换成本 等），**禁止**专家人名作节标题。
+
+**预置产品链路**（每步产出是下一步输入；可让用户砍步）：
+
+```text
+[想法] →（可选）装 upstream 产品判断 skill
+      → plan §协作文档 + doc-prd-enrich（PRD + 待确认项）
+      → review §文档预审
+      → plan 修订 → delivery §埋点
+```
+
+用户只要一步 → 只 handoff 对应 skill，不强推链路。
+
 ## 人格预设 (`style`)
 
 > **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `dashu`（老周）。12 项分两轮 AskQuestion（每轮 ≤7）。

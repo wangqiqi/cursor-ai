@@ -68,6 +68,16 @@ description: >-
 
 - [ ] `REV-*` 含交付/上线 → 叠加 **delivery** 7 维（+ 可选 §8–§11）（只读）
 
+## 文档预审（PRD / 原型 · 吸收自 SpaceZephyr/pm-skills）
+
+**用这个**：PRD、原型、功能说明过评审会前。**不是那个**：代码 diff（上节双轴）· 上线走查（**delivery**）。
+
+1. 定严格度：快速过筛 / 标准（默认）/ 上线前终审
+2. 按 **`reference/doc-review-checklist.md`** 六视角 + 意见红线 + 三级风险
+3. 输出判定（通过/有条件/不通过）+ 复评清单
+
+用户说「帮我看看这个 PRD」「模拟评审会」→ 本节。写完 PRD 后预审 → 链 **plan** `doc-prd-enrich.md` 待确认项优先核对。
+
 ## SDD analyze（吸收自 github/spec-kit）
 
 **用这个**：Greenfield/Brownfield 在 **implement 前**或 **plan** 拆 TASK 后。**不是那个**：PR 代码回顾（上节清单仍适用）。
