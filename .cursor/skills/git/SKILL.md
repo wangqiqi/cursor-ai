@@ -8,6 +8,26 @@ description: Git — 分支、提交、合并。需要 git 操作时用。
 分支：`feat/*` · `fix/*` · `chore/*` · `docs/*`  
 格式：`type(scope): summary`（scope 可选）
 
+## Conventional Commits（吸收自 awesome-cursorrules-zh）
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+| type | 用途 | SemVer |
+|------|------|--------|
+| `feat` | 新功能 | MINOR |
+| `fix` | 缺陷修复 | PATCH |
+| `docs` · `style` · `refactor` · `perf` · `test` · `build` · `ci` · `chore` | 非功能面变更 | 通常无版本跃迁 |
+| `BREAKING CHANGE:` 页脚或 `type!:` | 破坏性 API/行为变更 | MAJOR |
+
+- 一提交一逻辑变更；正文解释 **why**，不只 what
+- scope 为受影响模块名（如 `feat(api): …`）
+
 ## 提交前
 
 - [ ] `git status` — 无 `.env`、密钥、意外大文件；**勿** stage `plan.md`（gitignore）

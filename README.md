@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.23.2-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.24.0-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -236,10 +236,12 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 
 | 上游项目 | 许可 | 维护方 | 母版落点（摘要） |
 |----------|------|--------|------------------|
+| [wangqiqi/cursor-ai-rules](https://github.com/wangqiqi/cursor-ai-rules) | MIT | wangqiqi | Super Cursor 前身：三公理 · `.cursorGrowth/` 双目录 · core skills · VIBE · [migration-catalog](.cursor/docs/migration-catalog.md) |
 | [anthropics/skills](https://github.com/anthropics/skills) | 各 skill 自有（见 `LICENSE-anthropics.txt`） | Anthropic | **mcp** Eval · **test** E2E · **delivery** 反模板/PDF · **plan/run** 协作文档 |
 | [github/spec-kit](https://github.com/github/spec-kit) | MIT | GitHub | **plan** SDD · **review** analyze · **run** converge · `templates/sdd/` |
 | SkillsMP 社区协议 | protocol only | 见 CHANGELOG | **review** 双轴 · **run** closeout · **debug** 内省 · **test** factory · **master** LIBRARY · **security** · **git** |
 | [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 社区 | PatrickJS 等 | `rules/execution/scope.mdc` anti-overengineering |
+| [LessUp/awesome-cursorrules-zh](https://github.com/LessUp/awesome-cursorrules-zh) | MIT | LessUp | PatrickJS 中文镜像 · BDD/评审/Issue 模板 · [rules-catalog](.cursor/docs/rules-catalog.md) |
 | [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
 | [spencerpauly/awesome-cursor-skills](https://github.com/spencerpauly/awesome-cursor-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
 | [SpaceZephyr/pm-skills](https://github.com/SpaceZephyr/pm-skills) | MIT | SpaceZephyr | **plan** PRD 体检/补漏 · **review** 文档预审 · **delivery** §埋点 · **master** 产品工作流 LIBRARY |

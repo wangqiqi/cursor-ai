@@ -43,6 +43,20 @@
 
 版本记录：发版时写入仓库根发版日志（**release** skill；母版 skill 正文不链该文件）。
 
+## LessUp/awesome-cursorrules-zh（通用蒸馏 · MIT 镜像）
+
+上游：[LessUp/awesome-cursorrules-zh](https://github.com/LessUp/awesome-cursorrules-zh)（PatrickJS 中文镜像）。**不**整包拷贝 132 条 `.cursorrules`；栈专用 → [rules-catalog](rules-catalog.md) · `.cursor/rules/local/`。
+
+| zh 来源（general/tools） | 母版落点 |
+|--------------------------|----------|
+| gherkin-testing | **testing** `testing.mdc` § BDD/Gherkin |
+| pair-interviews · github-quality | **collaboration** `collaboration.mdc` § 评审清单 |
+| ticket-template | **bugfix** `bugfix.mdc` § Issue 报告 |
+| code-style · code-guidelines | **scope** `scope.mdc` § 命名与可读性 |
+| git-conventions | **git** skill § Conventional Commits |
+
+审计摘要 → `.cursorGrowth/archive/`（SPIKE-001）。
+
 ## SpaceZephyr/pm-skills（协议已吸收 · MIT）
 
 上游：[SpaceZephyr/pm-skills](https://github.com/SpaceZephyr/pm-skills)（MIT）· 维护：SpaceZephyr /「空格的键盘」。**不**整包拷贝 `pm-*` 进母版；顾问团整包 → 用户自选安装 upstream。

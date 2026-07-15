@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.0] - 2026-07-15
+
+### Added
+
+- **awesome-cursorrules-zh**（LessUp · PatrickJS 中文镜像）通用蒸馏：**testing** BDD/Gherkin · **collaboration** 评审清单 · **bugfix** Issue 模板 · **scope** 命名常量 · **git** Conventional Commits 速查
+- **rules-catalog** · **README** 致谢 — zh 中文镜像策展 + `rules/local/` 引用示例
+- **README** 致谢 — [wangqiqi/cursor-ai-rules](https://github.com/wangqiqi/cursor-ai-rules) 前身项目
+
+### Changed
+
+- **library-index** § awesome-cursorrules-zh 落点映射
+
 ## [4.23.2] - 2026-07-15
 
 ### Added
