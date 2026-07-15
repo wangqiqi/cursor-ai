@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.3] - 2026-07-15
+
+### Changed
+
+- **release.mdc** · **tag.mdc** · **evolution.mdc** — frontmatter 补触发语义（REV P3）
+
 ## [4.24.2] - 2026-07-15
 
 ### Added
