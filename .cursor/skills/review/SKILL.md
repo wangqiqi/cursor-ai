@@ -68,6 +68,22 @@ description: >-
 
 - [ ] `REV-*` 含交付/上线 → 叠加 **delivery** 7 维（+ 可选 §8–§11）（只读）
 
+## SDD analyze（吸收自 github/spec-kit）
+
+**用这个**：Greenfield/Brownfield 在 **implement 前**或 **plan** 拆 TASK 后。**不是那个**：PR 代码回顾（上节清单仍适用）。
+
+对照三件套（路径见 `workflow.json` `sdd.specs_dir`）：
+
+| 检查 | 问什么 |
+|------|--------|
+| spec → plan | 每个用户故事/FR 在技术 plan 有落点？无孤儿需求？ |
+| plan → tasks | 每个技术决策有 task？无未覆盖的 contract/research 项？ |
+| tasks → spec | 每个 task 追溯到用户故事或 FR？无 scope 外 task？ |
+| 术语 | spec/plan/tasks 同一实体同名？ |
+| 验收 | TASK 验收列与 spec 验收场景、tasks checkpoint 一致？ |
+
+输出：Blocker / High / Medium · 工件路径 · 缺口 · 建议修复（回 **plan** 或 **run** 勿静默扩 scope）。
+
 ## 与 plan
 
 - 纯回顾不写代码 → `REV-*`；`next-task` 跳过但 gate 仍适用编码任务

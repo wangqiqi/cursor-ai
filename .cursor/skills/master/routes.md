@@ -82,6 +82,22 @@ LIBRARY — 路径 + 何时手动选用
 
 **Office 深度编辑** — AskQuestion（≤3 项）：`装 upstream anthropics skill` · `用 MCP/飞书等` · `本轮不做`
 
+### github/spec-kit · LIBRARY（SPRINT-spec-kit-absorb）
+
+**不默认加载** `specify-cli`；SDD 协议已并入 **plan · run · review**。详矩阵 → `.cursor/skills/plan/reference/sdd/source-map.md`。
+
+| spec-kit 能力 | 母版已吸收 | 何时用 LIBRARY |
+|---------------|------------|----------------|
+| specify · clarify · plan · tasks | ✅ **plan** §SDD + `reference/sdd/` 模板 | — |
+| analyze | ✅ **review** §SDD analyze | — |
+| implement | ✅ **run** | — |
+| converge | ✅ **run** §converge | — |
+| constitution | ✅ **principles-template** | — |
+| `specify-cli` · `specify init` | ❌ | 要完整 upstream 工作流 · `uv tool install specify-cli` |
+| extensions · presets · bundles | ❌ | 社区扩展 · `specify extension search` |
+
+**路径**：默认 `docs/specs/`（`workflow.json` `sdd.specs_dir`）；与 spec-kit 原生 `specs/` 可配置兼容。
+
 ## 人格预设 (`style`)
 
 > **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `professional`。12 项分两轮 AskQuestion（每轮 ≤7）。

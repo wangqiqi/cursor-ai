@@ -56,6 +56,7 @@ disable-model-invocation: true
 - 执行 manifest 中的 `post_apply`（`npm install`、`go mod tidy` 等）
 - 跑 `./scripts/verify.sh` 或更新 `config/workflow.json` → `verify_default`
 - `cp .cursor/templates/plan.md ./plan.md` → **`/plan`** 拆首个 Sprint（`plan.md` 已在 `.gitignore`，不提交）
+- 可选 Greenfield：创建 `docs/specs/`（或 `workflow.json` `sdd.specs_dir`）· 模板见 `.cursor/templates/sdd/` · **`/plan`** §SDD
 - **`/learn`** 写入栈与目录约定到 `.cursorGrowth/learn/`
 - **Super Cursor 已装时**：按 [master routes §DAILY/LIBRARY](../master/routes.md#外网-skill--daily--librarydeps) 列出本仓 **DAILY**（默认启用的 rules/skills）与 **LIBRARY**（离栈保留）；一句写入 `learn/dev-conventions.md` 可选
 

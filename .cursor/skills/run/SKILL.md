@@ -138,8 +138,23 @@ bash .cursor/bin/cursor-coherence.sh   # README ↔ 磁盘 skills/agents 一致
 | 编辑 docx/pptx/xlsx 深度 | AskQuestion：**装 upstream** anthropics skill / 用 MCP / 跳过 |
 | 新 UI 交付走查 | **delivery** §1 反模板自检 |
 | MCP 建服 | **mcp** §Eval |
+| 新功能 0→1 / 写 spec / SDD | **plan** §SDD · Greenfield 模式 |
+| 实现后仍有差距 | **run** §converge |
 
 Ambiguous 时 AskQuestion ≤4 项，禁止开放式「你想用哪个 skill」。
+
+### Converge（SDD · 吸收自 github/spec-kit）
+
+**触发**：Greenfield/Brownfield feature 一批 TASK ✅ 后 · 或用户说「对照 spec 看还差什么」。
+
+| 步 | 动作 |
+|----|------|
+| 1 | 读 `{specs_dir}/<id>/spec.md` + 当前实现（grep/Read） |
+| 2 | 列 **未覆盖** FR/用户故事/验收场景 |
+| 3 | 差距 → 新 `TASK-*` 写入 plan · 或 **下一 Sprint 候选** |
+| 4 | 无差距 → 可选 **review** §SDD analyze 终检 |
+
+勿 silent merge：Blocker 级差距须用户确认再标 feature 完成。
 
 ## plan 维护（单任务 · 不提交）
 

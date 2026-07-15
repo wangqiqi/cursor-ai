@@ -17,8 +17,8 @@
 | Skill | 触发 | 做什么 | 不做什么 |
 |-------|------|--------|----------|
 | **master** | `/master` · 从哪开始 | AskQuestion 路由（≤7 项/轮） | 写代码 · apply |
-| **plan** | `/plan` · 拆任务 | Sprint · 先总后分 · plan 工作副本 | 写业务代码 |
-| **run** | `/run` · 继续 | 实现 · task-verify · closeout review · commit | 无闸门硬编码 |
+| **plan** | `/plan` · 拆任务 | Sprint · SDD Greenfield · 先总后分 | 写业务代码 |
+| **review** | REV-* · PR 回顾 | Standards/Spec 双轴 · SDD analyze · review agent | 写代码 |
 | **learn** | `/learn` | Growth `learn/` | 改 `.cursor/` |
 | **scaffold** | `/scaffold` | 8 栈骨架 · audit | 未确认覆盖 |
 | **git** | commit/push · GitHub 运维 | 提交清单 · **github-ops**（`gh` 有则用） | force-push |
@@ -32,7 +32,7 @@
 | **mcp** | MCP | 建服五阶段（含 Eval）· `reference/` | — |
 | **refactor** | 重构 | 小步可验证 | — |
 | **perf** | 性能 | 测量优先 | — |
-| **review** | REV-* · PR 回顾 | Standards/Spec 双轴 · 人类优先级 · review agent | 写代码 |
+| **run** | `/run` · 继续 | 实现 · converge · task-verify · commit | 无闸门硬编码 |
 | **delivery** | `/delivery` · 上线前 | 7 维交付 · PDF 脚本 · 反模板自检 | 替代 task-verify |
 | **week** | 周报（关键词 / master） | CHANGELOG 汇总 → Growth | 打 tag |
 | **disk** | 磁盘快照（关键词 / master） | 占用 · diff → Growth | 删除文件 |
@@ -61,6 +61,7 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | 浏览器走查（探索） | **delivery** §10 |
 | E2E / Playwright 起服 | **test** `scripts/with_server.py` |
 | PDF 表单验收 | **delivery** `scripts/pdf/` |
+| Greenfield 功能 spec | **plan** §SDD · `docs/specs/`（`workflow.json` `sdd.specs_dir`） |
 | 网络抓取选型 | **debug** §网络与抓取 |
 
 ### 外网协议吸收（anthropics/skills · SPRINT-anthropics-absorb）
@@ -76,6 +77,19 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | pdf（轻量 scripts） | **delivery** `scripts/pdf/` |
 | skill-creator | **learn** — 写作纪律 |
 | 创意/企业类（algorithmic-art 等） | **master** deps LIBRARY 速查 |
+
+### 外网协议吸收（github/spec-kit · SPRINT-spec-kit-absorb）
+
+来源：[github/spec-kit](https://github.com/github/spec-kit)（MIT）· **协议并入 plan/run/review**，**不**新增 `/speckit.*`。矩阵 → `.cursor/skills/plan/reference/sdd/source-map.md`。
+
+| spec-kit | 母版落点 |
+|----------|----------|
+| specify · clarify · plan · tasks | **plan** §SDD · `reference/sdd/` 模板 |
+| analyze | **review** §SDD analyze |
+| implement | **run** |
+| converge | **run** §converge |
+| principles（constitution） | `principles-template.md` · `workflow.json` `sdd` |
+| specify-cli | **master** deps LIBRARY（用户自选） |
 
 ### 外网协议吸收（SkillsMP · 已并进母版）
 

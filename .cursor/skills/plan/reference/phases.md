@@ -15,6 +15,7 @@
 
 在 `PLANNING:true` 完成后再进入阶段 2。用 **AskQuestion**（不可用 → 正文选项；见 **master**「AskQuestion 约定」）与用户确认：
 
+- [ ] **SDD 模式** — Sprint 增量 / Greenfield / Brownfield / 文档（见 **plan** skill §SDD）；Greenfield 须先 spec + clarify 再技术 plan
 - [ ] **Goal** — 本 Sprint 要交付什么（一句话）
 - [ ] **Done when** — 怎样算 Sprint 完成（可执行 verify 命令 + P0 全 ✅）
 - [ ] **与候选表对齐** — 从 plan「下一 Sprint」立项则删对应候选行；新主题直接写 Active
@@ -24,6 +25,7 @@
 - [ ] **依赖 / 自研选型（可选）** — 新增重量级依赖、仓内 vendor、或「本可开源却自研」→ 对照 `oss-first.mdc` 四问；授权与溯源见 `submodule.mdc`
 - [ ] **Follow-up 立项闸门** — 见 §Follow-up（同症状重复 patch 时强制）
 - [ ] **PRD 输入（可选）** — 已有 ChatPRD 规格时：读 **implement-from-prd** / **write-prd** 提炼 Goal；交付前 **check-prd-alignment**（ChatPRD 插件 skills）
+- [ ] **SDD 模式（可选）** — Greenfield/Brownfield → 见 **plan** skill §SDD；路径读 `workflow.json` `sdd.*`；**clarify 门禁**见下
 - [ ] **对外门面** — 本 Sprint 是否新增/改名 skill、command、agent、hooks 或安装路径？**是** → Done when **必须**含 `bash .cursor/bin/cursor-coherence.sh`（README 与磁盘一致）；**否** → 可省略
 - [ ] **交付验收（可选）** — UI/功能 Sprint → Done when 可加 **交付走查无 Blocker**（Agent 走 **delivery** skill）；纯内部可省略
 
@@ -38,6 +40,19 @@
 | 母版门面 | `bash .cursor/bin/cursor-coherence.sh` |
 
 阶段 1 产出写入 Sprint 区块头部（**Goal** · **Done when** · 可选 **Out of scope**），**此时仍不写** TASK 表。
+
+#### clarify 门禁（SDD · Greenfield /  substantial 需求）
+
+吸收自 github/spec-kit `/speckit.clarify` · 在 **技术 plan / TASK 表之前**：
+
+| 步 | 动作 |
+|----|------|
+| 1 | 基于 `spec.md`（或用户叙述）列 **覆盖维度**：范围 · 角色 · 边界 · 非目标 · 验收 |
+| 2 | 生成 5–10 个**独立**澄清问题；用户可编号简答 |
+| 3 | 写入 `{specs_dir}/<id>/clarifications.md` 或 spec 内 **## Clarifications** |
+| 4 | 未澄清项标 `Decision needed` 或用户确认跳过 |
+
+**Brownfield** 可缩短为 3–5 题；**Sprint 增量**模式可跳过。
 
 ### 阶段 2 · 分（再写 TASK 表）
 

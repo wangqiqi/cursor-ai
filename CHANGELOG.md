@@ -11,13 +11,17 @@ All notable changes to Super Cursor are documented here.
 - **debug**：浏览器 E2E 调试短节（对齐 test）
 - **delivery**：§1 反 AI 模板自检 · `scripts/pdf/` 轻量工具（anthropics/skills/frontend-design · pdf）
 - **plan**：协作文档三阶段 · DOC-* Reader Testing（anthropics/skills/doc-coauthoring）
+- **plan** §SDD：Greenfield/Brownfield · clarify · `reference/sdd/` 四模板（github/spec-kit · MIT）
+- **workflow.json** `sdd` 段：`specs_dir` · `principles_file`
+- **review** §SDD analyze · **run** §converge
+- **scaffold** · **templates/sdd/**：SDD 安装种子
 - **run**：文档/Office 无感触发表 · Reader Testing closeout
-- **master** `routes.md`：anthropics/skills LIBRARY 速查
+- **master** `routes.md`：anthropics · spec-kit LIBRARY 速查
 
 ### Changed
 
 - **ux**：交付分流含「新 UI 像 AI 模板」→ delivery §1
-- **learn**（Growth）：skill-creator 渐进披露 · 触发描述纪律 · `anthropics-skills-map.md`
+- **learn**（Growth）：skill-creator 渐进披露 · 触发描述纪律
 ## [4.22.4] - 2026-07-14
 
 ### Changed

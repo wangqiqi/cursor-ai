@@ -33,7 +33,7 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     22 个：master · plan · run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· week · disk · maintain
+├── skills/     22 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· week · disk · maintain
 ├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia
 ├── agents/     ship · review · spike
 ├── hooks/      会话初始化 · run 循环控制

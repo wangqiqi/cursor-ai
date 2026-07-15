@@ -59,6 +59,11 @@
       "single-detector.mdc"
     ]
   },
+  "sdd": {
+    "specs_dir": "docs/specs",
+    "principles_file": "docs/principles.md",
+    "feature_id_width": 3
+  },
   "task_verify_heuristics": {
     "enabled": false,
     "fallback_test_script": "./scripts/test.sh",
