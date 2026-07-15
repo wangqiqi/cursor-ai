@@ -66,3 +66,14 @@
 | 旧版 parity | **不要求** 1:1 全量迁移；上表「刻意不迁移」为产品边界 |
 
 审计旧版时：对照本表 **已迁移** 列即可；未列项视为 intentional skip，非缺口。
+
+## 2026-07 工作区刷新（SPIKE-003）
+
+| 项目 | 2026-06 决策 | 2026-07 执行 |
+|------|--------------|--------------|
+| onekeytask | migrate | 已非 v6；`install --replace` 对齐母版 v4.24.3+ |
+| projects | migrate | 同上 |
+| sd-diary | migrate + `saida_documentation.md` local | 同上 · 升级后还原 local rules |
+| tools | parallel | 与母版 `--replace` 对齐；实验规则 → `rules/local` |
+
+**目标项目验收**：skills/agents 与母版 `diff` 空 · `rules/local` 符号链接有效 · `platform-check.sh` 绿。**勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README。
