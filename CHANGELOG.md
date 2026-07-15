@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.5] - 2026-07-15
+
+### Added
+
+- **pencil-design** — 收录 `@pencil.dev/cli@0.2.8` SKILL；`/pencil-design` slash · **library-index** · **routes** 关键词
+
 ## [4.24.4] - 2026-07-15
 
 ### Added

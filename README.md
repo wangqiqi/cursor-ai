@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.24.4-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.24.5-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -33,8 +33,8 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     22 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· week · disk · maintain
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · debug · review · 【运维】week · disk · maintain
+├── skills/     23 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· week · disk · maintain · pencil-design
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · debug · review · 【运维】week · disk · maintain · pencil-design
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
@@ -150,7 +150,7 @@ flowchart LR
 | **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
 | **【高级】** | `/debug` | 复现→根因→验证；小修可直接 `/run` |
 | **【高级】** | `/review` | PR/代码结构化回顾 · `REV-*` · 可委派 review agent |
-| **【运维】** | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护 |
+| **【运维】** | `/week` · `/disk` · `/maintain` · `/pencil-design` | 周报 · 磁盘快照 · 环境维护 · Pencil CLI 视觉设计 |
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
 
