@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.23.2] - 2026-07-15
+
 ### Added
 
 - **pm-skills**（SpaceZephyr/pm-skills · MIT）协议吸收：**plan** `doc-prd-enrich.md` · **review** §文档预审 · **delivery** §埋点 · **master** LIBRARY 产品工作流
