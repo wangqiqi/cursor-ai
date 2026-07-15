@@ -4,55 +4,23 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
-### Changed
-
-- **plan/SKILL** · **routes.md** · **run-start** · **.cursor/README**：dashu / AUTONOMOUS 文案与 `workflow.json` 对齐
-- **platform.sh**：UTF-8 读 JSON · `sc_python` 跳过 Windows Store `python3` 占位符
-- **cursor-coherence.sh**：`sc_python` 替代裸 `python3`；routes 修复误匹配 `principles-template`
-- **verify-super-cursor.sh**：CHANGELOG 检查用 `sc_python` · 登记 `super-cursor-persona.mdc`
-- **bootstrap-growth.sh**：修复误提交 plain-file `rules/local` · Windows symlink 回退目录
-- **.gitignore**：忽略 `.cursor/rules/local`（链到 Growth）
+## [4.23.0] - 2026-07-15
 
 ### Added
 
-- **cursor-coherence.sh**：SDD 四模板 twin diff 门禁（`templates/sdd` ↔ `reference/sdd`）
+- **SDD**（github/spec-kit）：Greenfield/Brownfield · `reference/sdd/` · `templates/sdd/` · **review** analyze · **run** converge
+- **anthropics/skills** 协议吸收：mcp Eval · test E2E/`with_server.py` · delivery 反模板/PDF · plan/run 协作文档与 Reader Testing
+- **autonomy**：Sprint 连跑（一次 `/plan` + 一次 `/run`）· `reference/autonomy-chain.md` · `autonomy.interrupt_on`
+- **super-cursor-persona**：行为 SOP + 语气品牌（默认 **dashu** / 老周）
+- **coherence**：SDD 安装种子 ↔ reference 四模板 twin diff 门禁
 
 ### Changed
 
-- **plan/SKILL**：合并重复 SDD 节为单节 canonical
-- **phases.md**：阶段 1 SDD checklist 去重；ChatPRD 标外部插件
-- **master/SKILL**：路由表外迁 `routes.md`（AskQuestion 约定仍留 master）
-- **training/skills.md**：外网吸收矩阵改为 SSOT 索引
-- **workflow** · **persona** · **plan-run**：AUTONOMOUS 叙事瘦身 → 链 `autonomy-chain.md`
-- **ux/SKILL**：Garrett 详表指向 `ux.mdc`
-- **cursor-coherence**：允许 `super-cursor-persona.mdc` alwaysApply
-
-### Added
-
-- **plan** `reference/autonomy-chain.md`：Sprint 连跑 · hooks/CLI 触点矩阵（SPIKE 参考）
-- **super-cursor-persona** rule：行为 SOP + 语气品牌（默认 dashu/老周）
-- **mcp**：Phase 4 Eval 协议 · tool annotations · `reference/evaluation.md`（anthropics/skills/mcp-builder）
-- **test**：E2E 协议 · `scripts/with_server.py` · `scripts/examples/`（anthropics/skills/webapp-testing）
-- **debug**：浏览器 E2E 调试短节（对齐 test）
-- **delivery**：§1 反 AI 模板自检 · `scripts/pdf/` 轻量工具（anthropics/skills/frontend-design · pdf）
-- **plan**：协作文档三阶段 · DOC-* Reader Testing（anthropics/skills/doc-coauthoring）
-- **plan** §SDD：Greenfield/Brownfield · clarify · `reference/sdd/` 四模板（github/spec-kit · MIT）
-- **workflow.json** `sdd` 段：`specs_dir` · `principles_file`
-- **review** §SDD analyze · **run** §converge
-- **scaffold** · **templates/sdd/**：SDD 安装种子
-- **run**：文档/Office 无感触发表 · Reader Testing closeout
-- **master** `routes.md`：anthropics · spec-kit LIBRARY 速查
-
-### Changed
-
-- **workflow.json**：`role.default` → `dashu` · `autonomous.default` → `true` · `autonomy.interrupt_on`
-- **plan** · **run**：§Sprint 连跑（一次 `/run` · 仅决策打断）
-- **hooks** `run-start` / `run-stop`：自治 followup 强化
+- **workflow.json**：`role.default` → `dashu` · `autonomous.default` → `true`
+- **plan** · **run** · **hooks** · **master** · **workflow** · **core**：自治协议与冗余合并（SSOT 索引）
+- **platform.sh** · **verify** · **bootstrap-growth**：Windows UTF-8 / `sc_python` · 本机验收绿 · `rules/local` 修复
 - **templates/plan.md**：默认 `AUTONOMOUS: true`
-- **profiles** `full` / `lite`：`autonomous.default: true`
-- **master** · **workflow** · **core**：自治口诀同步
-- **ux**：交付分流含「新 UI 像 AI 模板」→ delivery §1
-- **learn**（Growth）：skill-creator 渐进披露 · 触发描述纪律
+- **learn**（Growth）：skill-creator 渐进披露
 ## [4.22.4] - 2026-07-14
 
 ### Changed
