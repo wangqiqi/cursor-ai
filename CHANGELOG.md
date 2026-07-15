@@ -4,6 +4,11 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **migration-catalog** — SPIKE-003 工作区四项目升级刷新（2026-07）
+- **README** — 安装选项（`--replace` · `--copy-plan` · profile）· 任务 ID / `release.mode` / SDD · `/debug` `/review` 路径 · bin/hooks 树修正 · Roo/hooks 表述 · `babysit` 外置说明
+
 ## [4.24.3] - 2026-07-15
 
 ### Changed

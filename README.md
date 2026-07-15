@@ -26,7 +26,7 @@
 | 独立开发者 | 空仓库 5 分钟起盘，Agent 不再乱改一通 |
 | 技术负责人 | 统一 plan/run 闸门，任务可追溯、验收可脚本化 |
 | 新加入的成员 | `/master` 路由 + `/learn` 项目常识，少问重复问题 |
-| 开源维护者 | security/api/git 审查 skills，发版有 release/ship 清单 |
+| 开源维护者 | security/api/review/git 审查 skills，发版有 release/ship 清单 |
 
 ## 开箱即用
 
@@ -34,12 +34,12 @@
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
 ├── skills/     22 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· week · disk · maintain
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · debug · review
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · debug · review · 【运维】week · disk · maintain
 ├── agents/     ship · review · spike
-├── hooks/      会话初始化 · run 循环控制
+├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
-├── bin/        gate-check · task-verify · release-tag · scaffold · cursor-coherence
-└── templates/  plan.md · 8 栈脚手架
+├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
+└── templates/  plan.md · sdd/ · 8 栈脚手架
 ```
 
 **根目录（可直接 clone / 复制）：**
@@ -49,20 +49,29 @@
 # plan 工作副本：安装时从 templates/plan.md → workflow.json 的 plan_file（Growth，gitignore）
 ```
 
-**一条命令安装到其它项目：**
+**安装到其它项目：**
 
 ```bash
 git clone https://github.com/wangqiqi/cursor-ai.git
+cd cursor-ai
+bash .cursor/bin/bootstrap-growth.sh          # 母版 clone 后首次：补 .cursorGrowth/rules/local
+
 ./install-super-cursor.sh /path/to/your-project
 cd /path/to/your-project
-bash .cursor/bin/platform-check.sh   # 可选：环境自检
+bash .cursor/bin/platform-check.sh            # 可选：环境自检
 ```
+
+| 选项 | 作用 |
+|------|------|
+| `--profile full\|lite\|rules-only` | 工作流档位（默认 `full`） |
+| `--replace` | 先删目标 `.cursor/` 再拷贝（**升级/迁移推荐**） |
+| `--copy-plan` | 复制 `templates/plan.md` → `.cursorGrowth/plan.md` |
 
 | profile | 适合 |
 |---------|------|
-| `full`（默认） | 团队：plan/run + hooks |
+| `full`（默认） | 团队：plan/run + hooks（自治 Sprint 连跑） |
 | `lite` | 个人：plan/run，无 hooks |
-| `rules-only` | 只要 rules/skills |
+| `rules-only` | 只要 rules/skills，关闭 plan/run 闸门 |
 
 支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python3`。详见 [跨平台说明](.cursor/docs/platforms.md)。
 
@@ -92,6 +101,9 @@ flowchart LR
 - **闸门** — 无 `PLAN_APPROVED` 不写业务代码，避免 Agent「想到哪改到哪」
 - **自治 Sprint** — 默认 `AUTONOMOUS:true`：**`/plan` 批准一次 · `/run` 一次**连跑 TASK，仅决策点打断（见 `super-cursor-persona` · `autonomy-chain.md`）
 - **验收** — 每个 `TASK-*` 有可执行 Acceptance 列，`task-verify` 不过不 commit
+- **任务 ID** — `TASK-*` 实现（`/run` 主路径）· `REV-*` 回顾 · `SPIKE-*` 调研 · `DOC-*` 文档；`next-task` 自动跳过后三者
+- **发版节奏** — `release.mode`：`patch-per-task`（默认，Sprint 收尾打 tag）或 `tag-per-commit`（每 TASK 一 tag；见 `config/workflow.json`）
+- **SDD（可选）** — 大特性可走 **plan** §SDD + `templates/sdd/`（吸收 [spec-kit](https://github.com/github/spec-kit)）
 - **沉淀** — 项目路径、模块地图、发版节奏 → `/learn` 写入 `.cursorGrowth/learn/`
 - **边界** — 安装后 `.cursor/` 默认只读；团队差异用 `config/*.json` 或 `.cursor/rules/local/`（社区 rules → [rules-catalog](.cursor/docs/rules-catalog.md)）
 
@@ -102,8 +114,8 @@ flowchart LR
 | 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
-| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护用 `babysit` |
-| 合并前 | 靠人想起来查安全/API | **security** · **api** · **delivery** · **git** skills |
+| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `babysit`（见 **master** → `git`） |
+| 合并前 | 靠人想起来查安全/API | **review** · **security** · **api** · **delivery** · **git** skills |
 | 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
 
 ## 30 秒上手
@@ -122,6 +134,8 @@ flowchart LR
 新仓库     →  /scaffold  →  /learn  →  /plan  →  /run
 已有代码   →  /learn  →  /plan  →  /run
 小修小补   →  /run 或描述复现步骤（bugfix rules）
+根因不明   →  /debug（系统调试循环）
+合并前回顾 →  /review 或 REV-* 任务 · 可委派 review agent
 ```
 
 | 层 | Command | 作用 |
@@ -134,9 +148,13 @@ flowchart LR
 | **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
 | **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
 | **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
-| 工具（非主路径） | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护 |
+| **【高级】** | `/debug` | 复现→根因→验证；小修可直接 `/run` |
+| **【高级】** | `/review` | PR/代码结构化回顾 · `REV-*` · 可委派 review agent |
+| **【运维】** | `/week` · `/disk` · `/maintain` | 周报 · 磁盘快照 · 环境维护 |
 
-发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。审查：**security** · **api** · **ux** · **ia** · **delivery** · **git**。
+发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
+
+**无独立 slash、Agent 常自动选用**：**security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md` 或自然语言描述意图。
 
 ## 8 栈脚手架
 
@@ -211,7 +229,8 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 **设计要点**：
 
 - 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `commands/*.md` · `config/*.json`
-- **不**依赖 Cursor 私有特性（如 `.cursorrules` 单一文件、自定义 hooks 协议）
+- **不**依赖 `.cursorrules` 单文件等旧式约定；核心 plan/run 闸门靠 rules + skills + `config/*.json`，**不绑** Cursor 私有 API
+- **hooks**（`run-start` / `run-stop`）为 Cursor **自治 Sprint 增强**；Roo 或无需连跑时用 `--profile lite` / `rules-only` 即可降级
 - `.cursorGrowth/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移
 - 装一次、两端都用 —— 适合团队混用编辑器，或同时上 Cursor + Roo Code 的项目
 
