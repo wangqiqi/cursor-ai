@@ -1,11 +1,11 @@
 ---
 name: master
-description: 总入口（/master）：不确定用什么指令时用。AskQuestion 路由到 plan/run/learn/scaffold/release/git/security/api/ux/ia/debug/test/review/study 及 README 全场景。说「help」「不知道用什么」「从哪开始」时也触发。
+description: 总入口（/master）— 迷路时 AskQuestion 路由 plan/run/learn 等
 ---
 
 # master · 路由
 
-**日常只需 `/run` ↔ `/plan`；真迷路 `/master`。** 其余 skill（delivery · test · api …）由 Agent 按 plan 的 Goal/Done when **自动选用**，你不必记名字。
+**日常只需 `/run` ↔ `/plan`；真迷路 `/master`。** 说「help」「不知道用什么」「从哪开始」时也触发。其余 skill（delivery · test · api · debug · review …）由 Agent 按 plan 的 Goal/Done when **自动选用**，你不必记名字。
 
 **只做路由与说明，不代替下游 skill 执行具体工作。** 弄清意图后 handoff 到对应 skill / rules，并给出「接下来你可以说 `/xxx`」。
 

@@ -4,6 +4,21 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.1] - 2026-07-15
+
+### Added
+
+- **commands/debug.md** · **commands/review.md** — 薄 slash 入口，对齐 skill 与场景表
+
+### Changed
+
+- **core.mdc** — 横切 rule 路径统一 `.mdc` 后缀
+- **collaboration.mdc** — PR 评审单表（去重分角+清单）
+- **commit.mdc** · **verify.mdc** — frontmatter 补触发语义
+- **master** · **review** skill — description 压缩
+- **verify-super-cursor.sh** — 注册 week/disk/maintain SKILL · debug/review command
+- **rules-catalog.md** — `ia.mdc` 全路径
+
 ## [4.24.0] - 2026-07-15
 
 ### Added

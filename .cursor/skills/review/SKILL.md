@@ -1,8 +1,6 @@
 ---
 name: review
-description: >-
-  代码/PR 结构化回顾（/review · REV-*）— Standards/Spec 双轴·人类 reviewer 优先级·范围·正确性·安全/API·可测性·可维护性。
-  可委派 review agent（只读）。≠ 全局 skills-cursor/review（Bugbot/Security）；安全专项用 security。
+description: PR/代码结构化回顾（/review · REV-*）— 双轴清单；可委派 review agent（只读）
 ---
 
 # review
