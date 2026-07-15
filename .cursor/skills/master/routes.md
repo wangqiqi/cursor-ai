@@ -108,7 +108,8 @@ LIBRARY — 路径 + 何时手动选用
 | pm-review-board | ✅ **review** §文档预审 | — |
 | pm-tracking-spec-writer | ✅ **delivery** §埋点 | — |
 | pm-master 链路 | ✅ 下表预置链路 | 要完整 20 skill 编排 |
-| pm-prioritization-engine · pm-roadmap-planner | ❌ backlog | RICE/甘特专精 |
+| pm-prioritization-engine | ✅ **plan** `prioritization.md` | — |
+| pm-roadmap-planner | ❌ backlog | 甘特专精（与 Sprint 重叠） |
 | pm-experiment-designer · pm-analytics · pm-survey-designer | ❌ | 实验/分析/问卷专精 |
 | pm-advisory-suite（产品判断顾问团） | ❌ 不蒸馏 | 「该不该做」· 价值判断 · 访谈求真 |
 | pm-image2proto · pm-url2proto · pm-image2pencil | ❌ | 截图/网址原型 |

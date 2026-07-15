@@ -67,7 +67,7 @@
 | pm-review-board | **review** §文档预审 · `reference/doc-review-checklist.md` | 过评审 · 模拟评审会 · PRD 预审 |
 | pm-tracking-spec-writer | **delivery** `reference/checklist-optional.md` §埋点 | 埋点 · 事件表 · 指标口径 |
 | pm-master（链路） | **master** `routes.md` §LIBRARY 产品工作流 | 产品全流程 · 从头到尾走一遍 |
-| pm-prioritization-engine | **未纳入**（backlog `prioritization.md`） | RICE/ICE/Kano 排序 |
+| pm-prioritization-engine | **plan** `reference/prioritization.md` | RICE/ICE/Kano · backlog 排序 |
 | pm-roadmap-planner | **未纳入** | 甘特路线图（与 plan Sprint 重叠） |
 | pm-experiment-designer | **未纳入** | A/B 实验方案 |
 | pm-advisory-suite（7 个） | **未纳入**整包 · LIBRARY 策展 | 该不该做 · 价值判断 · 访谈求真 |

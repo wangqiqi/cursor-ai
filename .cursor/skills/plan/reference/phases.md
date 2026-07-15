@@ -18,7 +18,7 @@
 - [ ] **SDD 模式** — Sprint 增量 / Greenfield / Brownfield / 文档（见 **plan** skill §SDD · `reference/sdd/source-map.md`）；Greenfield 须 spec + **clarify** 再技术 plan
 - [ ] **Goal** — 本 Sprint 要交付什么（一句话）
 - [ ] **Done when** — 怎样算 Sprint 完成（可执行 verify 命令 + P0 全 ✅）
-- [ ] **与候选表对齐** — 从 plan「下一 Sprint」立项则删对应候选行；新主题直接写 Active
+- [ ] **与候选表对齐** — 从 plan「下一 Sprint」立项则删对应候选行；新主题直接写 Active；**候选 >1 行** → 可选 **`reference/prioritization.md`** 排序
 - [ ] **Scope / 非目标** — 本轮明确不做什么（防 scope creep）
 - [ ] **风险与依赖** — 跨模块顺序、需先定的契约或接口
 - [ ] **SPIKE 门禁** — 选型/方案/范围仍不确定 → 先列 `SPIKE-*`，结论归档后再拆 `TASK-*`（见 **scaffold** · **spike** agent）
@@ -61,6 +61,7 @@
 - **一次 commit 能讲完**（一逻辑一 commit · `rules/execution/commit.mdc`）
 - **Target 列框住落点**（防 drive-by；`/run` 审计对照）
 - **依赖显式出现在执行顺序**（B 依赖 A → 顺序里 A 在前）
+- **Priority 争议**（P0/P1 不清或多候选 TASK）→ **`reference/prioritization.md`**（RICE/ICE/Kano/MoSCoW 选一）
 
 **全栈 / 跨持久化+API+UI** Sprint：按 `rules/execution/vibe.mdc` §垂直切片拆 TASK；每条验收对齐 `rules/feedback/verify.mdc`（L1 默认 · L3 进 Done when 可选）。
 

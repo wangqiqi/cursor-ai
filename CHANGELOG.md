@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.2] - 2026-07-15
+
+### Added
+
+- **plan** `reference/prioritization.md` — RICE/ICE/Kano/MoSCoW backlog 排序（吸收 pm-prioritization-engine 协议）
+
+### Changed
+
+- **library-index** · **routes.md** — pm-prioritization-engine 落点更新
+
 ## [4.24.1] - 2026-07-15
 
 ### Added

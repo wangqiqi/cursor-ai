@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 闸门见 `rules/workflow.mdc`。配置：`config/workflow.json`
 
-**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）· `reference/standalone-map.md`（母版独立 · 引用纪律）
+**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/prioritization.md`（RICE/ICE/Kano · backlog 排序）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）· `reference/standalone-map.md`（母版独立 · 引用纪律）
 
 配置坐标：`config/workflow.json` → `sdd.specs_dir` · `sdd.principles_file`
 
@@ -173,3 +173,7 @@ Sprint 表用 `DOC-*`；验收：Reader Testing 通过或用户明确跳过。
 3. **待确认项** — 交付时单独汇总；每条带默认建议与影响范围
 
 信息严重不足 → 需求梳理兜底，不硬写完整 PRD。预审 → **review** §文档预审。
+
+### Backlog 优先级（吸收自 pm-skills）
+
+候选 Sprint · backlog · TASK 的 P0/P1 争议 → **`reference/prioritization.md`**（RICE · ICE · Kano · MoSCoW）。
