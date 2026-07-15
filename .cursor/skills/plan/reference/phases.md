@@ -7,7 +7,7 @@
 | 层 | 载体 | 作用 |
 |----|------|------|
 | **总** | Sprint **Goal** · **Done when** · 候选表对齐 | 主题边界、全局验收 |
-| **分** | 扁平 `TASK-*` 表 · **执行顺序** | `/run` 一次一个 `ACTIVE`；`next-task` 解析顺序 |
+| **分** | 扁平 `TASK-*` 表 · **执行顺序** | `/run`：`AUTONOMOUS:true` 时 **Sprint 连跑**；否则一次一个 `ACTIVE` |
 
 大改动 / 跨模块 / 前后端并行：额外读 `rules/execution/vibe.mdc`（API 契约、层序）· `rules/feedback/evolution.mdc`（小步可回滚）。
 

@@ -17,7 +17,7 @@
 | Skill | 触发 | 做什么 | 不做什么 |
 |-------|------|--------|----------|
 | **master** | `/master` · 从哪开始 | AskQuestion 路由（≤7 项/轮） | 写代码 · apply |
-| **plan** | `/plan` · 拆任务 | Sprint · SDD Greenfield · 先总后分 | 写业务代码 |
+| **plan** | `/plan` · 拆任务 | Sprint · SDD · **AUTONOMOUS 一次 `/run` 连跑** | 写业务代码 |
 | **review** | REV-* · PR 回顾 | Standards/Spec 双轴 · SDD analyze · review agent | 写代码 |
 | **learn** | `/learn` | Growth `learn/` | 改 `.cursor/` |
 | **scaffold** | `/scaffold` | 8 栈骨架 · audit | 未确认覆盖 |
@@ -32,7 +32,7 @@
 | **mcp** | MCP | 建服五阶段（含 Eval）· `reference/` | — |
 | **refactor** | 重构 | 小步可验证 | — |
 | **perf** | 性能 | 测量优先 | — |
-| **run** | `/run` · 继续 | 实现 · converge · task-verify · commit | 无闸门硬编码 |
+| **run** | `/run` · 继续 | 实现 · Sprint 连跑 · converge · task-verify · commit | 无闸门硬编码 |
 | **delivery** | `/delivery` · 上线前 | 7 维交付 · PDF 脚本 · 反模板自检 | 替代 task-verify |
 | **week** | 周报（关键词 / master） | CHANGELOG 汇总 → Growth | 打 tag |
 | **disk** | 磁盘快照（关键词 / master） | 占用 · diff → Growth | 删除文件 |
@@ -44,7 +44,7 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 ## 推荐路径
 
 ```
-迭代:     /plan → /run（循环）→ 可选 /delivery → /release
+迭代:     /plan（批准）→ /run **一次**（AUTONOMOUS 连跑 TASK）→ 可选 /delivery → /release
 空仓库:   /scaffold → /learn → /plan → /run → verify
 迷路:     /master → 主菜单 7 项 → 子问
 ```

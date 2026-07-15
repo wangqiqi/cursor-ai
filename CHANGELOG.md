@@ -6,6 +6,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **plan** `reference/autonomy-chain.md`：Sprint 连跑 · hooks/CLI 触点矩阵（SPIKE 参考）
+- **super-cursor-persona** rule：行为 SOP + 语气品牌（默认 dashu/老周）
 - **mcp**：Phase 4 Eval 协议 · tool annotations · `reference/evaluation.md`（anthropics/skills/mcp-builder）
 - **test**：E2E 协议 · `scripts/with_server.py` · `scripts/examples/`（anthropics/skills/webapp-testing）
 - **debug**：浏览器 E2E 调试短节（对齐 test）
@@ -20,6 +22,12 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **workflow.json**：`role.default` → `dashu` · `autonomous.default` → `true` · `autonomy.interrupt_on`
+- **plan** · **run**：§Sprint 连跑（一次 `/run` · 仅决策打断）
+- **hooks** `run-start` / `run-stop`：自治 followup 强化
+- **templates/plan.md**：默认 `AUTONOMOUS: true`
+- **profiles** `full` / `lite`：`autonomous.default: true`
+- **master** · **workflow** · **core**：自治口诀同步
 - **ux**：交付分流含「新 UI 像 AI 模板」→ delivery §1
 - **learn**（Growth）：skill-creator 渐进披露 · 触发描述纪律
 ## [4.22.4] - 2026-07-14

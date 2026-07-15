@@ -62,7 +62,7 @@ pending="$(plan_pending_count)"
 roadmap_open="$(plan_roadmap_open)"
 
 if [[ "$active_status" == "🔧" || "$active_status" == "⬜" ]]; then
-  json_followup "Continue run ACTIVE \`${active}\`: gate-check → implement → task-verify → commit."
+  json_followup "AUTONOMOUS: continue ACTIVE \`${active}\` in this session — gate-check → implement → task-verify → commit. **Do not wait for user /run**."
   exit 0
 fi
 
@@ -73,19 +73,19 @@ fi
 
 if [[ "$active_status" == "✅" && "$pending" -gt 0 ]]; then
   next="$(plan_next_task)"
-  json_followup "run chain: \`${active}\` done. Set ACTIVE/NEXT to \`${next}\`."
+  json_followup "AUTONOMOUS chain: \`${active}\` done → continue \`${next}\` immediately in this session. **No second /run** unless decision needed."
   exit 0
 fi
 
 last_done="$(plan_last_done)"
 if [[ -z "$active" && -n "$last_done" && "$pending" -gt 0 ]]; then
   next="$(plan_next_task)"
-  json_followup "run chain: after \`${last_done}\`, continue with \`${next}\`."
+  json_followup "AUTONOMOUS chain: after \`${last_done}\` → continue \`${next}\` immediately. **No second /run** unless decision needed."
   exit 0
 fi
 
 if [[ "$pending" -eq 0 ]]; then
-  msg="run: sprint complete. Run verify and archive."
+  msg="AUTONOMOUS: sprint complete — verify, archive, reconcile plan. Ask user about /release if needed."
   if [[ "$roadmap_open" -gt 0 ]]; then
     msg="${msg} ROADMAP open — plan next sprint with \`plan\`."
   fi

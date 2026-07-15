@@ -36,15 +36,22 @@
     ]
   },
   "autonomous": {
-    "default": false,
+    "default": true,
     "max_loops_default": 15,
     "confirm_before": [
       "high_risk_delete",
       "outside_repo"
+    ],
+    "interrupt_on": [
+      "decision_needed",
+      "blocker",
+      "high_risk",
+      "release",
+      "goal_drift"
     ]
   },
   "role": {
-    "default": "professional",
+    "default": "dashu",
     "config": ".cursor/config/roles.json"
   },
   "followup_gate": {

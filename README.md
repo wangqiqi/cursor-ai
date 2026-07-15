@@ -90,6 +90,7 @@ flowchart LR
 
 - **任务地图** — ROADMAP/Goal（总）→ TASK/ACTIVE（分）→ 验收/archive；详见 [plan/run](.cursor/docs/plan-run.md)
 - **闸门** — 无 `PLAN_APPROVED` 不写业务代码，避免 Agent「想到哪改到哪」
+- **自治 Sprint** — 默认 `AUTONOMOUS:true`：**`/plan` 批准一次 · `/run` 一次**连跑 TASK，仅决策点打断（见 `super-cursor-persona` · `autonomy-chain.md`）
 - **验收** — 每个 `TASK-*` 有可执行 Acceptance 列，`task-verify` 不过不 commit
 - **沉淀** — 项目路径、模块地图、发版节奏 → `/learn` 写入 `.cursorGrowth/learn/`
 - **边界** — 安装后 `.cursor/` 默认只读；团队差异用 `config/*.json` 或 `.cursor/rules/local/`（社区 rules → [rules-catalog](.cursor/docs/rules-catalog.md)）
@@ -99,7 +100,7 @@ flowchart LR
 | 场景 | 默认 Agent | Super Cursor |
 |------|-----------|--------------|
 | 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
-| 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → `/run` 逐条验收 |
+| 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
 | 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护用 `babysit` |
 | 合并前 | 靠人想起来查安全/API | **security** · **api** · **delivery** · **git** skills |
@@ -125,7 +126,7 @@ flowchart LR
 
 | 层 | Command | 作用 |
 |----|---------|------|
-| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit（**默认入口**） |
+| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit；**AUTONOMOUS** 时 Sprint 连跑（不必每 TASK 再 `/run`） |
 | **【日常】** | `/plan` | 先总后分：Goal · Done when → 拆 TASK |
 | **【日常】** | `/master` | 真迷路时 AskQuestion 路由 |
 | **【生命周期】** | `/scaffold` | 8 栈脚手架 / 已有项目 audit |

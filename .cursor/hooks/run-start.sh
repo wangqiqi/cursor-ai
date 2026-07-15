@@ -122,10 +122,12 @@ if [[ "$gate" != "OK" ]]; then
 fi
 
 if [[ "$autonomous" == "true" && -n "$active" ]]; then
-  ctx="## run autonomous
-- **SPRINT**: \`${sprint:-unset}\` · **ACTIVE**: \`$active\` (${status:-unknown})
+  ctx="## run autonomous (Sprint chain)
+- **SPRINT**: \`${sprint:-unset}\` · **ACTIVE**: \`$active\` (${status:-unknown}) · pending=${pending}
+- User authorized **one /run** — **continue all TASK in this session** until decision or sprint done; **do not wait** for another \`/run\`
+- **Interrupt only**: decision_needed · blocker · high_risk · release · goal_drift (workflow.json autonomy.interrupt_on)
 - **Verify**: \`./.cursor/bin/runner.sh task-verify\`; release \`${verify}\`
-- Load \`run\`: gate-check → implement → task-verify → commit"
+- Load \`run\`: gate-check → implement → task-verify → commit → next ACTIVE"
   role_hint="$(sc_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     ctx="${ctx}
