@@ -1,4 +1,5 @@
 .cursorGrowth/
+.cursor/rules/local
 archive/
 *.log
 .DS_Store

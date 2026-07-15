@@ -13,7 +13,7 @@ sc_python() {
   fi
   local c
   for c in python3 python; do
-    if command -v "$c" >/dev/null 2>&1; then
+    if command -v "$c" >/dev/null 2>&1 && "$c" -c "pass" >/dev/null 2>&1; then
       SC_PYTHON_CMD="$c"
       echo "$SC_PYTHON_CMD"
       return 0
@@ -53,7 +53,7 @@ json_cfg() {
     val="$("$py" - "$file" "$dotted" <<'PY' 2>/dev/null || true
 import json, sys
 path, dotted = sys.argv[1], sys.argv[2].lstrip(".")
-data = json.load(open(path))
+data = json.load(open(path, encoding="utf-8"))
 cur = data
 for part in dotted.split("."):
     if part not in cur:
@@ -88,7 +88,7 @@ json_cfg_join() {
     joined="$("$py" - "$file" "$dotted" <<'PY' 2>/dev/null || true
 import json, sys
 path, dotted = sys.argv[1], sys.argv[2].lstrip(".")
-data = json.load(open(path))
+data = json.load(open(path, encoding="utf-8"))
 cur = data
 for part in dotted.split("."):
     cur = cur[part]
@@ -121,8 +121,8 @@ def deep_merge(a, b):
             a[k] = v
     return a
 
-base = json.load(open(sys.argv[1]))
-overlay = json.load(open(sys.argv[2]))
+base = json.load(open(sys.argv[1], encoding="utf-8"))
+overlay = json.load(open(sys.argv[2], encoding="utf-8"))
 print(json.dumps(deep_merge(base, overlay), indent=2, ensure_ascii=False))
 PY
     return 0
@@ -206,7 +206,7 @@ sc_detect_node_stack() {
   py="$(sc_python)" || { echo "nodejs"; return 0; }
   "$py" - "$pkg" <<'PY'
 import json, sys
-p = json.load(open(sys.argv[1]))
+p = json.load(open(sys.argv[1], encoding="utf-8"))
 deps = {**(p.get("dependencies") or {}), **(p.get("devDependencies") or {})}
 if "next" in deps:
     print("nextjs")
@@ -230,7 +230,7 @@ import json, sys
 
 path = sys.argv[1]
 cmd = sys.argv[2]
-data = json.load(open(path))
+data = json.load(open(path, encoding="utf-8"))
 scaffolds = data.get("scaffolds", [])
 
 def by_id(sid):

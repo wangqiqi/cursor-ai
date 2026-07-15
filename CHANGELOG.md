@@ -4,6 +4,15 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **plan/SKILL** · **routes.md** · **run-start** · **.cursor/README**：dashu / AUTONOMOUS 文案与 `workflow.json` 对齐
+- **platform.sh**：UTF-8 读 JSON · `sc_python` 跳过 Windows Store `python3` 占位符
+- **cursor-coherence.sh**：`sc_python` 替代裸 `python3`；routes 修复误匹配 `principles-template`
+- **verify-super-cursor.sh**：CHANGELOG 检查用 `sc_python` · 登记 `super-cursor-persona.mdc`
+- **bootstrap-growth.sh**：修复误提交 plain-file `rules/local` · Windows symlink 回退目录
+- **.gitignore**：忽略 `.cursor/rules/local`（链到 Growth）
+
 ### Added
 
 - **cursor-coherence.sh**：SDD 四模板 twin diff 门禁（`templates/sdd` ↔ `reference/sdd`）

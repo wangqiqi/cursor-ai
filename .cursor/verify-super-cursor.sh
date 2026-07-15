@@ -92,6 +92,7 @@ check "$CUR/rules/execution/vibe.mdc"
 check "$CUR/rules/execution/scope.mdc"
 check "$CUR/rules/execution/testing.mdc"
 check "$CUR/rules/communication/agent-discipline.mdc"
+check "$CUR/rules/communication/super-cursor-persona.mdc"
 check "$CUR/config/roles.json"
 check "$CUR/skills/debug/SKILL.md"
 check "$CUR/skills/test/SKILL.md"
@@ -178,11 +179,11 @@ echo "--- changelog order (newest_first) ---"
 CL="$ROOT/CHANGELOG.md"
 if [[ ! -f "$CL" ]]; then
   echo "OK  no root CHANGELOG.md (skip order check)"
-elif ! command -v python3 >/dev/null 2>&1; then
-  echo "FAIL python3 required for CHANGELOG order check"
+elif ! py="$(sc_python 2>/dev/null)"; then
+  echo "FAIL python required for CHANGELOG order check"
   FAIL=$((FAIL+1))
 else
-  if python3 - "$CL" <<'PY'
+  if "$py" - "$CL" <<'PY'
 import re, sys
 from pathlib import Path
 text = Path(sys.argv[1]).read_text(encoding="utf-8")

@@ -16,7 +16,7 @@ sc_role_hint() {
   local cursor_dir="$1"
   local roles_file="${cursor_dir}/config/roles.json"
   local role_id project_root session_file
-  role_id="$(sc_cfg '.role.default' 'professional')"
+  role_id="$(sc_cfg '.role.default' 'dashu')"
   project_root="${SC_PROJECT_ROOT:-}"
   session_file="${project_root}/.cursorGrowth/session/persona.json"
   if [[ -n "$project_root" && -f "$session_file" ]]; then

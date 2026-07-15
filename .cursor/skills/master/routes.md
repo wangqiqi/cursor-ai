@@ -92,7 +92,7 @@ LIBRARY — 路径 + 何时手动选用
 | analyze | ✅ **review** §SDD analyze | — |
 | implement | ✅ **run** | — |
 | converge | ✅ **run** §converge | — |
-| constitution | ✅ **principles-template** | — |
+| constitution | ✅ `principles-template.md` | — |
 | `specify-cli` · `specify init` | ❌ | 要完整 upstream 工作流 · `uv tool install specify-cli` |
 | extensions · presets · bundles | ❌ | 社区扩展 · `specify extension search` |
 
@@ -100,7 +100,7 @@ LIBRARY — 路径 + 何时手动选用
 
 ## 人格预设 (`style`)
 
-> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `professional`。12 项分两轮 AskQuestion（每轮 ≤7）。
+> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `dashu`（老周）。12 项分两轮 AskQuestion（每轮 ≤7）。
 
 每人字段：`id` · `role_name`（角色名）· `nicknames[]`（昵称）· `given_name`（具体名字）· `personality` · `tone` · `skills`。
 

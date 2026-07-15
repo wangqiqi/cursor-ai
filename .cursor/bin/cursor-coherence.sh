@@ -8,6 +8,9 @@ FAIL=0
 fail() { echo "FAIL $1"; FAIL=$((FAIL+1)); }
 ok() { echo "OK  $1"; }
 
+# shellcheck source=../lib/platform.sh
+source "$CUR/lib/platform.sh"
+
 echo "=== cursor coherence ==="
 
 # 1. skills/*/ directory name = SKILL.md name: field
@@ -38,7 +41,7 @@ done
 # 4. roles.json — 12 personas, unique call aliases, skills=full
 roles_file="$CUR/config/roles.json"
 if [[ -f "$roles_file" ]]; then
-  py="$(command -v python3 || command -v python || true)"
+  py="$(sc_python 2>/dev/null || true)"
   if [[ -n "$py" ]]; then
     "$py" - "$roles_file" <<'PY'
 import json, sys

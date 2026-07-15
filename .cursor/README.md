@@ -65,7 +65,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 
 ```
 空仓库:  /master → /scaffold → /learn → /plan → /run → verify
-迭代:    /plan → /run（循环）
+迭代:    /plan（批准）→ /run **一次**（默认 AUTONOMOUS 连跑 TASK）
 卡住:    /master → fix → /run 或 /plan
 迷路:    /master（主菜单 7 项 → 子路由）
 ```
