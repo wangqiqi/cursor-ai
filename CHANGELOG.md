@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.7] - 2026-07-16
+
+### Changed
+
+- **verify-super-cursor** — 注册 `commands/manual.md` · `skills/user-manual/SKILL.md`；新增 standalone 门禁（本机绝对路径 · 用户名标识）
+
 ## [4.24.6] - 2026-07-16
 
 ### Added

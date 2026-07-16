@@ -85,6 +85,7 @@ check "$CUR/commands/week.md"
 check "$CUR/commands/disk.md"
 check "$CUR/commands/maintain.md"
 check "$CUR/commands/pencil-design.md"
+check "$CUR/commands/manual.md"
 check "$CUR/skills/week/SKILL.md"
 check "$CUR/skills/disk/SKILL.md"
 check "$CUR/skills/maintain/SKILL.md"
@@ -113,6 +114,7 @@ check "$CUR/rules/tech/javascript.mdc"
 check "$CUR/rules/execution/security-sdlc.mdc"
 check "$CUR/skills/review/SKILL.md"
 check "$CUR/skills/study/SKILL.md"
+check "$CUR/skills/user-manual/SKILL.md"
 check "$CUR/agents/review.md"
 check "$CUR/agents/spike.md"
 check "$CUR/docs/migration-catalog.md"
@@ -267,6 +269,33 @@ if [[ -n "$(echo "$violators" | sed '/^$/d')" ]]; then
   FAIL=$((FAIL+1))
 else
   echo "OK  skills no upstream github URLs"
+fi
+
+echo "--- standalone: no user/machine paths ---"
+path_violators=""
+while IFS= read -r f; do
+  case "$f" in
+    *verify-super-cursor.sh|*maintain/scripts/dev-maintain.sh|*skills/disk/*) continue ;;
+  esac
+  path_violators="${path_violators}${f}"$'\n'
+done < <(grep -rlE '/home/[a-zA-Z0-9._-]+/|/Users/[a-zA-Z0-9._-]+/|/data/workspace' "$CUR" 2>/dev/null || true)
+user_violators=""
+while IFS= read -r f; do
+  case "$f" in
+    *verify-super-cursor.sh) continue ;;
+  esac
+  user_violators="${user_violators}${f}"$'\n'
+done < <(grep -rlE 'saida|wangqiqi' "$CUR" 2>/dev/null || true)
+if [[ -n "$(echo "$path_violators" | sed '/^$/d')" ]]; then
+  echo "FAIL .cursor contains machine-specific absolute paths:"
+  echo "$path_violators" | sed '/^$/d'
+  FAIL=$((FAIL+1))
+elif [[ -n "$(echo "$user_violators" | sed '/^$/d')" ]]; then
+  echo "FAIL .cursor contains user-specific identifiers:"
+  echo "$user_violators" | sed '/^$/d'
+  FAIL=$((FAIL+1))
+else
+  echo "OK  no user/machine paths in SOP"
 fi
 
 echo "---"
