@@ -149,6 +149,7 @@ bash .cursor/bin/cursor-coherence.sh   # README ↔ 磁盘 skills/agents 一致
 | PDF 表单/验收 | **delivery** §PDF 工具 |
 | 编辑 docx/pptx/xlsx 深度 | AskQuestion：**装 upstream** anthropics skill / 用 MCP / 跳过 |
 | 新 UI 交付走查 | **delivery** §1 反模板自检 |
+| 使用说明书 / 配图 regen | **user-manual** `/manual` |
 | MCP 建服 | **mcp** §Eval |
 | 新功能 0→1 / 写 spec / SDD | **plan** §SDD · Greenfield 模式 |
 | 实现后仍有差距 | **run** §converge |

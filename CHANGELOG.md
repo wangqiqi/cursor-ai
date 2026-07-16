@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.6] - 2026-07-16
+
+### Added
+
+- **user-manual** skill（`/manual`）：可发布软件使用说明书 SOP — 五段流水线 · Manual Contract · 5 种 Capture Profile · regen 门禁 · Reader Test
+- **scaffold `apply-bundle user-manual`**：可选附加包 — Manual Contract · user-guide · sync/verify 脚本 · Playwright walkthrough 占位
+- **commands/manual.md** · **templates/manual-contract.example.yaml** · **user-manual-outline.md**
+
+### Changed
+
+- **README** · **.cursor/README** · **core** · **docs** · **plan/run/scaffold/test/delivery** · **routes** · **library-index** — 注册 `/manual` 与 user-manual 分流
+
 ## [4.24.5] - 2026-07-15
 
 ### Added

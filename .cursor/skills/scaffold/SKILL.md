@@ -35,6 +35,7 @@ disable-model-invocation: true
 | 技术栈 | `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `java-gradle` · `cpp-cmake` |
 | 模块路径（Go） | 默认 `example.com/app`，问用户是否替换 |
 | 包管理器 | npm / pnpm（前端）；venv（Python） |
+| **用户手册骨架（可选）** | 是 → `apply-bundle user-manual`；否 → 跳过（见 **user-manual** `reference/scaffold-bundle.md`） |
 
 3. **预览** — 用户确认前必须执行：
 
@@ -49,6 +50,13 @@ disable-model-invocation: true
 
 ```bash
 ./.cursor/bin/scaffold.sh apply <id>
+```
+
+可选附加包（**不**改默认 `apply` 文件集）：
+
+```bash
+./.cursor/bin/scaffold.sh apply-bundle user-manual --dry-run
+./.cursor/bin/scaffold.sh apply-bundle user-manual --stack react-vite-ts
 ```
 
 5. **收尾**（建议，非自动 commit）

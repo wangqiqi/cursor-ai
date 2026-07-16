@@ -19,6 +19,12 @@
 
 运行时可选矩阵副本 → `.cursorGrowth/learn/`（`/learn` 吸收，非母版必读）。
 
+## 母版原生（非外网吸收）
+
+| skill | 落点 | 用户自然语言 |
+|-------|------|--------------|
+| user-manual | **user-manual** `/manual` · `reference/` · `templates/manual-contract.example.yaml` | 使用说明书 · 用户手册 · 配图 regen · walkthrough 截图 |
+
 ## github/spec-kit（SDD · MIT）
 
 | 能力 | 母版落点 |

@@ -52,6 +52,22 @@ while IFS= read -r id; do
   ok "$id"
 done < <(sc_manifest_ids "$MANIFEST")
 
+bundle_root="$TEMPLATE_ROOT/_bundles/user-manual"
+if jq -e '.bundles[] | select(.id == "user-manual")' "$MANIFEST" >/dev/null 2>&1; then
+  echo ""
+  echo "=== bundle integrity ==="
+  for f in \
+    shared/config/manual.yaml \
+    shared/docs/user-guide.md \
+    shared/scripts/docs/sync_manual_screenshots.sh \
+    shared/scripts/verify/docs/verify_doc_manual.sh \
+    web/e2e/manual-walkthrough.spec.ts \
+    web/playwright.manual.config.ts
+  do
+    [[ -f "$bundle_root/$f" ]] && ok "bundle user-manual $f" || fail "bundle missing $f"
+  done
+fi
+
 [[ "$FAIL" -eq 0 ]] && exit 0
 echo "$FAIL scaffold check(s) failed." >&2
 exit 1

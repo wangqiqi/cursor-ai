@@ -1,7 +1,7 @@
 {
   "version": 2,
   "tier": "standard+",
-  "tier_notes": "lint+test+verify+CI+env · 8 stacks",
+  "tier_notes": "lint+test+verify+CI+env · 8 stacks · optional bundles",
   "categories": {
     "frontend": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
     "backend": ["go-api", "rust-axum", "python-fastapi", "java-gradle"],
@@ -97,6 +97,27 @@
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
       "post_apply": ["./scripts/verify.sh"]
+    }
+  ],
+  "bundles": [
+    {
+      "id": "user-manual",
+      "name": "User manual skeleton",
+      "category": "docs",
+      "description": "Manual Contract · user guide doc · sync/verify scripts; Playwright walkthrough for frontend stacks",
+      "path": "_bundles/user-manual",
+      "layers": {
+        "shared": "shared",
+        "web": "web"
+      },
+      "stacks_web": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
+      "post_apply": [
+        "Edit config/manual.yaml — roles, storylines, capture commands",
+        "Web stacks: npm i -D @playwright/test && npx playwright install chromium",
+        "Add script test:e2e:manual → playwright test -c playwright.manual.config.ts",
+        "Regen: MANUAL_WALKTHROUGH_ENABLED=1 npm run test:e2e:manual && bash scripts/docs/sync_manual_screenshots.sh",
+        "L1: SKIP_MANUAL_ASSETS=1 bash scripts/verify/docs/verify_doc_manual.sh (until PNGs exist)"
+      ]
     }
   ]
 }

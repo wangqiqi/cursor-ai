@@ -56,6 +56,8 @@ description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后
 
 UX 分流不明时 → **ux** skill；结构问题回流 **ia**，非结构抛光留在本 skill。
 
+可发布**操作手册**（故事线 + 配图 regen）→ **user-manual** `/manual`（**不**在本 skill regen 截图）。
+
 ## PDF 交付工具（吸收自 anthropics/skills/pdf）
 
 **脚本**：`scripts/pdf/`（8 个轻量 `.py`）· **许可**：`scripts/pdf/LICENSE-anthropics.txt`（source-available）  

@@ -14,7 +14,7 @@ commands/ 三层 slash（薄入口 → 加载 skill；见下表）
 agents/  ship review spike（子进程委派；日常不必记）
 hooks/   growth-init run-start run-stop
 config/  workflow.json release.json roles.json
-bin/     runner.sh scaffold.sh install-smoke.sh cursor-coherence.sh platform-check.sh template-verify.sh
+bin/     runner.sh scaffold.sh（含 apply-bundle）install-smoke.sh cursor-coherence.sh platform-check.sh template-verify.sh
 lib/     platform.sh（跨平台工具）
 templates/scaffold/   manifest + stack templates
 ```
@@ -55,6 +55,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | `/delivery` | UI/功能 Sprint 发版前 7 维走查（**不是**规划导航） | delivery |
 | `/ux` | 体验类型不明 → 分流 ia/delivery（**不是**直接改视觉） | ux |
 | `/ia` | 导航/角色/信息架构大改（**不是** token/i18n 抛光） | ia |
+| `/manual` | 可发布软件使用说明书 · 配图 regen（**不是** delivery 走查） | user-manual |
 | `/debug` | 根因不明 / 反复失败 / 系统调试循环（**不是**小修直接 run） | debug |
 | `/review` | REV-* / 合并前结构化回顾（**不是** Bugbot 全局 review） | review |
 
@@ -82,7 +83,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 后端 / 系统 | `python` · `go` · `rust` · `java` · `cpp` · `c` | `*.py` · `*.go` · `*.rs` · `*.java` · `*.{c,cc,cpp,h,hpp}` |
 
 治理：`constitution.mdc` · `evolution.mdc` · `config/roles.json`（12 人格 · 呼叫可解析 · Growth 会话态 · speech_examples；**skills 全员 full**）。  
-扩展 skills（主路径）：**ux** · **ia** · **debug** · **test** · **review** · **study** · **delivery** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。  
+扩展 skills（主路径）：**ux** · **ia** · **debug** · **test** · **review** · **study** · **delivery** · **user-manual** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。  
 **工具技能**（非日常主路径；`/week` · `/disk` · `/maintain` · `/pencil-design`）：**week** · **disk** · **maintain** · **pencil-design** — full 默认带；lite/rules-only 可不强调（见 `config/README`）。
 
 ### 重复劳动 SOP（rules · 通用）
@@ -95,7 +96,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | Prompt / Agent 安全 | `rules/execution/prompt-security.mdc` · **security** 清单 |
 | 分层验收 verify-layers | `rules/feedback/verify.mdc` · **test** skill |
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
-| 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill |
+| 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill · **user-manual** `/manual` |
 | 浏览器走查（可选） | **delivery** §10（`skills/delivery/reference/checklist-optional.md`）— UI Sprint 建议；可跳过；无强制 MCP |
 | 无障碍（可选） | **delivery** §11（同上 optional 清单）— 键盘·焦点·语义/label·对比度；可跳过；不强制 axe/MCP |
 | 系统调试循环 | **debug** skill — 复现→假设→隔离→验证→记录；无复现不盲改；`/run` 自修≤2 后 `⚠️`→`/plan` |
@@ -115,7 +116,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 做事 / 写代码 | **`/run`** |
 | 拆 Sprint | **`/plan`** |
 | 真迷路 | **`/master`** |
-| 空仓 / 发版 / 交付 / UX·IA | `/scaffold` · `/release` · `/delivery` · `/ux` · `/ia` |
+| 空仓 / 发版 / 交付 / UX·IA / 使用说明书 | `/scaffold` · `/release` · `/delivery` · `/ux` · `/ia` · `/manual` |
 | 修 bug / 测挂了 | **`/debug`**（系统循环）· `bugfix.mdc` |
 | 合并前回顾 / REV-* | **`/review`**（结构化清单）· 可委派 review agent |
 
