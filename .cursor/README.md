@@ -21,10 +21,12 @@ templates/scaffold/   manifest + stack templates
 
 ```bash
 bash .cursor/bin/template-verify.sh          # 母版全量（推荐）
-bash .cursor/verify-super-cursor.sh          # layout 存在性
+bash .cursor/verify-super-cursor.sh          # layout 存在性（混合仓自动 hybrid 模式）
 bash .cursor/bin/cursor-coherence.sh         # 交叉自洽
 bash .cursor/verify-system.sh                # 同上 layout（alias）
 ```
+
+混合仓（根目录有 `scripts/` · `backend/` · `frontend/` 等业务树）：`verify-super-cursor` 自动 **SKIP** 纯母版项（`install-super-cursor.sh` · 禁止 `scripts/` · `.github/workflows/verify.yml`），改验 `scripts/verify.sh`。强制空仓：`SC_VERIFY_LAYOUT=mother`。
 
 命名：[docs/naming.md](docs/naming.md)
 

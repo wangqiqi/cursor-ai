@@ -6,8 +6,46 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CUR="$ROOT/.cursor"
 FAIL=0
 
+# Mother-only layout: pure Super Cursor template repo (no co-located business tree).
+# Hybrid: .cursor/ + business code (e.g. sjudge). Auto-detect; override SC_VERIFY_LAYOUT=mother|hybrid.
+is_hybrid_repo() {
+  case "${SC_VERIFY_LAYOUT:-auto}" in
+    hybrid) return 0 ;;
+    mother) return 1 ;;
+  esac
+  [[ -d "$ROOT/scripts" || -d "$ROOT/backend" || -d "$ROOT/frontend" ]]
+}
+
 check() { [[ -e "$1" ]] && echo "OK  $1" || { echo "FAIL $1"; FAIL=$((FAIL+1)); }; }
+check_mother_only() {
+  local path="$1" label="${2:-$1}"
+  if is_hybrid_repo; then
+    echo "SKIP  hybrid (mother-only): $label"
+    return 0
+  fi
+  check "$path"
+}
 check_absent() { [[ -e "$1" ]] && { echo "FAIL must not exist: $1"; FAIL=$((FAIL+1)); } || echo "OK  absent $1"; }
+check_absent_mother_only() {
+  local path="$1" label="${2:-must not exist: $1}"
+  if is_hybrid_repo; then
+    echo "OK  hybrid (skip mother-only): $label"
+    return 0
+  fi
+  check_absent "$path"
+}
+check_verify_workflow() {
+  if is_hybrid_repo; then
+    if [[ -f "$ROOT/scripts/verify.sh" ]]; then
+      echo "OK  hybrid: scripts/verify.sh (skip .github/workflows/verify.yml)"
+    else
+      echo "FAIL hybrid: scripts/verify.sh missing"
+      FAIL=$((FAIL+1))
+    fi
+    return 0
+  fi
+  check "$ROOT/.github/workflows/verify.yml"
+}
 check_grep_absent() {
   local dir="$1" pattern="$2"
   if grep -rq --exclude="verify-super-cursor.sh" "$pattern" "$dir" 2>/dev/null; then
@@ -19,6 +57,11 @@ check_grep_absent() {
 }
 
 echo "=== Super Cursor verify (universal) ==="
+if is_hybrid_repo; then
+  echo "layout mode: hybrid (.cursor + business tree)"
+else
+  echo "layout mode: mother (pure template repo)"
+fi
 check "$CUR/rules/core.mdc"
 check "$CUR/rules/workflow.mdc"
 check "$CUR/rules/feedback/changelog.mdc"
@@ -54,7 +97,7 @@ check "$CUR/skills/master/routes.md"
 check "$CUR/bin/runner-smoke.sh"
 check "$CUR/bin/bootstrap-growth.sh"
 check "$CUR/bin/install-smoke.sh"
-check "$ROOT/install-super-cursor.sh"
+check_mother_only "$ROOT/install-super-cursor.sh"
 check "$CUR/config/profiles/full.json"
 check "$CUR/config/profiles/lite.json"
 check "$CUR/config/profiles/rules-only.json"
@@ -130,9 +173,9 @@ check "$CUR/docs/platforms.md"
 check "$ROOT/.cursorignore"
 check "$CUR/templates/scaffold/_shared.cursorignore"
 check "$CUR/bin/template-verify.sh"
-check_absent "$ROOT/scripts"
+check_absent_mother_only "$ROOT/scripts"
 check_absent "$ROOT/examples"
-check "$ROOT/.github/workflows/verify.yml"
+check_verify_workflow
 check "$CUR/skills/release/SKILL.md"
 check "$CUR/agents/ship.md"
 check "$CUR/AGENTS.md"

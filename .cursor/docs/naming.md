@@ -91,7 +91,13 @@ hooks/      会话：growth-init · plan 上下文注入
 ## 验证
 
 ```bash
-bash .cursor/verify-super-cursor.sh
+bash .cursor/verify-super-cursor.sh   # mother | hybrid（见下）
+bash .cursor/bin/cursor-coherence.sh
 ```
 
-检查含：无 `agents/release.md`、存在 `agents/ship.md`、无旧版 jw 前缀 skill 名。
+| 模式 | 何时 | 纯母版 layout 项 |
+|------|------|------------------|
+| **mother** | 纯母版空仓 | 必须满足（`install-super-cursor.sh` 等） |
+| **hybrid** | 根有 `scripts/` / `backend/` / `frontend/`（自动） | SKIP；改验 `scripts/verify.sh` |
+
+检查含：无 `agents/release.md`、存在 `agents/ship.md`、无旧版 jw 前缀 skill 名、CHANGELOG 版本序（若有根 `CHANGELOG.md`）。

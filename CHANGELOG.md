@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.9] - 2026-07-16
+
+### Changed
+
+- **verify-super-cursor**：混合仓自动 `hybrid` 模式 — 纯母版 layout 项改 **SKIP**（不再误 FAIL）；文档同步 `verify.mdc` · `platforms` · `naming` · `building-super-cursor` · `master/routes` · `quickstart` · `migration-catalog` · `template-verify.sh`
+
 ## [4.24.8] - 2026-07-16
 
 ### Added

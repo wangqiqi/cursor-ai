@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Super Cursor 母版仓库完整验收（layout + scaffold + runner）
+# verify-super-cursor.sh 自动 mother | hybrid；混合仓不 FAIL 纯母版 layout 项。
 set -euo pipefail
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"

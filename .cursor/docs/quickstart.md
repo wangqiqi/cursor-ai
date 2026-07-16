@@ -64,8 +64,12 @@ release / ship
 ## 母版自测
 
 ```bash
-bash .cursor/bin/template-verify.sh
+bash .cursor/verify-super-cursor.sh    # layout；混合仓 hybrid 自动
+bash .cursor/bin/cursor-coherence.sh
+bash .cursor/bin/template-verify.sh    # 纯母版全量
 ```
+
+混合仓见 [platforms.md](platforms.md) §自测 · `rules/feedback/verify.mdc`。
 
 ## 跨平台
 
