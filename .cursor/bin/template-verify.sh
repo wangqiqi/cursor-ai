@@ -21,6 +21,7 @@ echo "=== Scaffold CLI smoke ==="
 bash "$CUR/bin/scaffold.sh" list >/dev/null
 bash "$CUR/bin/scaffold.sh" detect >/dev/null
 bash "$CUR/bin/scaffold.sh" apply-bundle user-manual --dry-run --stack react-vite-ts >/dev/null
+bash "$CUR/bin/scaffold.sh" apply-bundle test-report --dry-run --stack go-api >/dev/null
 
 echo ""
 echo "=== Scaffold integrity ==="

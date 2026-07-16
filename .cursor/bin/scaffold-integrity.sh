@@ -68,6 +68,21 @@ if jq -e '.bundles[] | select(.id == "user-manual")' "$MANIFEST" >/dev/null 2>&1
   done
 fi
 
+bundle_root="$TEMPLATE_ROOT/_bundles/test-report"
+if jq -e '.bundles[] | select(.id == "test-report")' "$MANIFEST" >/dev/null 2>&1; then
+  echo ""
+  echo "=== bundle integrity (test-report) ==="
+  for f in \
+    shared/config/test-report.yaml \
+    shared/docs/test-report.md \
+    shared/scripts/docs/collect_test_report.sh \
+    shared/scripts/verify/docs/verify_test_report.sh \
+    shared/design/test-report/README.md
+  do
+    [[ -f "$bundle_root/$f" ]] && ok "bundle test-report $f" || fail "bundle missing $f"
+  done
+fi
+
 [[ "$FAIL" -eq 0 ]] && exit 0
 echo "$FAIL scaffold check(s) failed." >&2
 exit 1

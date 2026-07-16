@@ -20,7 +20,7 @@ usage() {
   info <id>         查看脚手架详情与文件列表
   detect            检测仓库状态（empty / partial / established）
   apply <id>        应用脚手架到仓库根目录
-  apply-bundle <id> 应用可选附加包（如 user-manual）
+  apply-bundle <id> 应用可选附加包（如 user-manual · test-report）
   audit             审计已有项目，输出改进建议
   files <id>        仅列出将创建的文件（等同 apply --dry-run）
 
@@ -35,6 +35,7 @@ usage() {
   $0 apply react-vite-ts --dry-run
   $0 apply go-api
   $0 apply-bundle user-manual --dry-run --stack react-vite-ts
+  $0 apply-bundle test-report --dry-run --stack go-api
   $0 audit
 EOF
 }

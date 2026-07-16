@@ -9,7 +9,8 @@
 3. **`/run`** — 按 `ACTIVE` 执行；默认 **`AUTONOMOUS:true`** → **一次 `/run`**（详 `plan/reference/autonomy-chain.md`）
 4. **`/ia`**（【高级】）— 导航/角色大改：先结构稿 `docs/design/*-ia*` · `ia.mdc` R1–R4
 5. **`/delivery`**（【高级】）— UI/功能 Sprint：**release** §分支前建议 7 维走查；Blocker 须先报告
-6. **`/release`** — merge / PR / 打 tag（Sprint 出口）
+6. **`/report`**（【高级】）— verify 绿后可选：全量/分层测试报告汇总（**test-report** · Report Contract）；非每 TASK 必做
+7. **`/release`** — merge / PR / 打 tag（Sprint 出口）
 
 **反例**：plan 里已有 ACTIVE → **`/run`** 不是 `/plan`。
 

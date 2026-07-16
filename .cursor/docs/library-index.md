@@ -24,6 +24,7 @@
 | skill | 落点 | 用户自然语言 |
 |-------|------|--------------|
 | user-manual | **user-manual** `/manual` · `reference/` · `templates/manual-contract.example.yaml` | 使用说明书 · 用户手册 · 配图 regen · walkthrough 截图 |
+| test-report | **test-report** `/report` · `reference/` · `templates/test-report-contract.example.yaml` | 测试报告 · 全量 verify · benchmark 文档 · QA 报告 |
 
 ## github/spec-kit（SDD · MIT）
 

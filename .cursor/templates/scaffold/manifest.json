@@ -118,6 +118,23 @@
         "Regen: MANUAL_WALKTHROUGH_ENABLED=1 npm run test:e2e:manual && bash scripts/docs/sync_manual_screenshots.sh",
         "L1: SKIP_MANUAL_ASSETS=1 bash scripts/verify/docs/verify_doc_manual.sh (until PNGs exist)"
       ]
+    },
+    {
+      "id": "test-report",
+      "name": "Test report skeleton",
+      "category": "docs",
+      "description": "Report Contract · test-report doc · collect/verify scripts for verify-after benchmark docs",
+      "path": "_bundles/test-report",
+      "layers": {
+        "shared": "shared"
+      },
+      "post_apply": [
+        "Edit config/test-report.yaml — run.suites[] and verify.anchors",
+        "Tune suite commands for your stack (default: scripts/verify.sh --l1, scripts/test.sh)",
+        "Collect: bash scripts/docs/collect_test_report.sh",
+        "Regen doc: /report (from-logs if logs fresh)",
+        "L1: bash scripts/verify/docs/verify_test_report.sh"
+      ]
     }
   ]
 }

@@ -156,6 +156,7 @@ docs/specs/001-<slug>/
 | **SPIKE 调研** | `SPIKE-*` 只读 |
 | **同步现有 doc** | `DOC-*` 对齐 `rules/execution/docs.mdc` |
 | **可发布操作手册** | **user-manual** `/manual` · Manual Contract · 配图 regen |
+| **可发布测试报告** | **test-report** `/report` · Report Contract · verify 后汇总 |
 
 ### 三阶段（结构化协作）
 

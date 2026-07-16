@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.24.7-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.24.8-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -28,19 +28,20 @@
 | 新加入的成员 | `/master` 路由 + `/learn` 项目常识，少问重复问题 |
 | 开源维护者 | security/api/review/git 审查 skills，发版有 release/ship 清单 |
 | 产品 / 文档 | `/manual` · Manual Contract — 可发布使用说明书与配图 regen |
+| QA / 测试 | `/report` · Report Contract — verify 后 benchmark 测试报告 |
 
 ## 开箱即用
 
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     24 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· user-manual · week · disk · maintain · pencil-design
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · manual · debug · review · 【运维】week · disk · maintain · pencil-design
+├── skills/     25 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· user-manual · test-report · week · disk · maintain · pencil-design
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · manual · report · debug · review · 【运维】week · disk · maintain · pencil-design
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
 ├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · 8 栈脚手架 · manual-contract · user-manual bundle
+└── templates/  plan.md · sdd/ · 8 栈脚手架 · manual-contract · user-manual bundle · test-report bundle
 ```
 
 **根目录（可直接 clone / 复制）：**
@@ -92,7 +93,8 @@ flowchart LR
   H --> F
   F --> U["/ux · /ia<br/>体验/导航（可选）"]
   H --> J["/delivery<br/>交付验收（可选）"]
-  J --> K["/release<br/>merge/PR/打 tag"]
+  J --> R["/report<br/>测试报告（可选）"]
+  R --> K["/release<br/>merge/PR/打 tag"]
   H --> I["verify + release/ship"]
 ```
 
@@ -119,6 +121,7 @@ flowchart LR
 | 合并前 | 靠人想起来查安全/API | **review** · **security** · **api** · **delivery** · **git** skills |
 | 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
 | 用户文档 | README 碎片 + 过期截图 | **`/manual`** · Manual Contract · 5 种 Capture Profile · Reader Test |
+| 测试报告 | 终端 log 碎片 · 口头「全绿」 | **`/report`** · Report Contract · full/from-logs · 发版 benchmark |
 
 ## 30 秒上手
 
@@ -151,6 +154,7 @@ flowchart LR
 | **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
 | **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
 | **【高级】** | `/manual` | 可发布使用说明书 · 配图 regen（Manual Contract） |
+| **【高级】** | `/report` | 全量/分层测试报告 · verify 后汇总（Report Contract） |
 | **【高级】** | `/debug` | 复现→根因→验证；小修可直接 `/run` |
 | **【高级】** | `/review` | PR/代码结构化回顾 · `REV-*` · 可委派 review agent |
 | **【运维】** | `/week` · `/disk` · `/maintain` · `/pencil-design` | 周报 · 磁盘快照 · 环境维护 · Pencil CLI 视觉设计 |

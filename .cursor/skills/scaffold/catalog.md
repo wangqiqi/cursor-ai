@@ -36,4 +36,4 @@
 
 ## 扩展
 
-manifest 现含 **8 栈** + **可选 bundles**（见上表 `apply-bundle user-manual`）。用户要 **Spring Boot / Django / 其他未列栈**：AskQuestion 后 Agent 参照 **standard+** 约定手写（README + verify.sh + lint/test），或用户明确要求时再向母版贡献新模板 id。
+manifest 现含 **8 栈** + **可选 bundles**（`apply-bundle user-manual` · `apply-bundle test-report`）。用户要 **Spring Boot / Django / 其他未列栈**：AskQuestion 后 Agent 参照 **standard+** 约定手写（README + verify.sh + lint/test），或用户明确要求时再向母版贡献新模板 id。

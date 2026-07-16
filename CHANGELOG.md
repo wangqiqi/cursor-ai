@@ -4,6 +4,22 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.24.8] - 2026-07-16
+
+### Added
+
+- **test-report** skill（`/report`）：可发布测试报告 SOP — verify 后汇总 · Report Contract · 日志解析 · benchmark 文档 · regen 门禁
+- **scaffold `apply-bundle test-report`**：可选附加包 — Report Contract · test-report doc · collect/verify 脚本
+- **commands/report.md** · **templates/test-report-contract.example.yaml** · **test-report-outline.md** · **reference/scaffold-bundle.md**
+
+### Changed
+
+- **verify-super-cursor** — 注册 `commands/report.md` · `skills/test-report/SKILL.md`
+- **README** · **.cursor/README** · **core** · **docs** · **plan/run/test/delivery/release** · **routes** · **library-index** — 注册 `/report` 与 test-report 分流
+- **ship** · **run** Sprint 收尾 — 发版/Sprint 档可选 **`/report`**（verify 绿后 · from-logs）
+- **plan-run** — 补 `/report` 链路说明 · mermaid 可选节点
+- **scaffold** — AskQuestion 可选 `apply-bundle test-report`
+
 ## [4.24.7] - 2026-07-16
 
 ### Changed
