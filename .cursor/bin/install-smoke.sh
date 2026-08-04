@@ -84,6 +84,16 @@ assert_grep "$EXISTING/.gitignore" 'cursorGrowth' "merge: adds .cursorGrowth/"
 # 5. .cursorGrowth not tracked after git init
 assert_git_ignored "$FULL" ".cursorGrowth/plan.md" "full: .cursorGrowth/plan.md gitignored"
 
+# 6. --here / auto git root from subdirectory
+HERE_ROOT="$TMP_ROOT/here-project"
+mkdir -p "$HERE_ROOT/src/pkg"
+git -C "$HERE_ROOT" init -q
+(
+  cd "$HERE_ROOT/src/pkg"
+  "$INSTALL" --replace >/dev/null
+) && ok "here: install from nested dir" || fail "here: install from nested dir"
+assert_file "$HERE_ROOT/.cursor/rules/core.mdc" "here: .cursor at git root"
+
 echo "---"
 if [[ "$FAIL" -eq 0 ]]; then
   echo "install smoke passed."

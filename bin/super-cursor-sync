@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# super-cursor-sync — PATH 入口：从 SUPER_CURSOR_HOME 同步 .cursor 到当前 Git 项目根
+set -euo pipefail
+
+ROOT="${SUPER_CURSOR_HOME:-${CURSOR_AI_HOME:-}}"
+if [[ -z "$ROOT" || ! -x "$ROOT/install-super-cursor.sh" ]]; then
+  cat <<EOT >&2
+错误: 请设置 SUPER_CURSOR_HOME（或 CURSOR_AI_HOME）为 cursor-ai 仓库根目录。
+
+示例（写入 ~/.bashrc）:
+  export SUPER_CURSOR_HOME="$HOME/workspace/cursor-ai"
+  export PATH="\$SUPER_CURSOR_HOME/bin:\$PATH"
+
+然后任意仓库子目录执行:
+  super-cursor-sync --replace
+EOT
+  exit 1
+fi
+
+exec "$ROOT/install-super-cursor.sh" "$@"

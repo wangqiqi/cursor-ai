@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.26.1] - 2026-08-04
+
+### Added
+
+- **install-super-cursor.sh** — 无目标路径时从当前目录向上解析 Git 项目根；`SUPER_CURSOR_HOME` / `CURSOR_AI_HOME` 指定母版路径；`--here` 显式选项
+- **bin/super-cursor-sync** — PATH 包装脚本，任意子目录一键同步母版 `.cursor/`
+
 ## [4.26.0] - 2026-08-04
 
 ### Added

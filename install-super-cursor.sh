@@ -4,32 +4,89 @@ set -euo pipefail
 
 usage() {
   cat <<EOF
-用法: $0 <目标项目路径> [选项]
+用法: $0 [目标项目路径] [选项]
+
+  未指定路径时：从当前目录向上查找 Git 项目根（.git），安装到该根目录。
+  也可显式使用 --here（同上）。
+
+环境变量:
+  SUPER_CURSOR_HOME   cursor-ai 母版仓库根（含 .cursor/）
+  CURSOR_AI_HOME      同上（别名）
+
+  配合 PATH 包装脚本: \$SUPER_CURSOR_HOME/bin/super-cursor-sync
 
 选项:
+  --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
 
 示例:
-  $0 /path/to/my-app
+  export SUPER_CURSOR_HOME=/path/to/cursor-ai
+  $0 --replace                     # 在仓库任意子目录执行
   $0 /path/to/my-app --profile lite --copy-plan
-  $0 /path/to/my-app --replace     # 干净覆盖，清除旧版残留
+  super-cursor-sync --replace      # 若已将 \$SUPER_CURSOR_HOME/bin 加入 PATH
 
 项目特化与产出 → .cursorGrowth/（plan · archive · learn · rules/local）
 EOF
 }
 
-SOURCE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+resolve_source_root() {
+  local script_dir dir candidate
+  for candidate in "${SUPER_CURSOR_HOME:-}" "${CURSOR_AI_HOME:-}"; do
+    if [[ -n "$candidate" && -d "$candidate/.cursor" ]]; then
+      echo "$candidate"
+      return 0
+    fi
+  done
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if [[ -d "$script_dir/.cursor" ]]; then
+    echo "$script_dir"
+    return 0
+  fi
+  echo "错误: 未找到母版 .cursor/；设置 SUPER_CURSOR_HOME 为 cursor-ai 仓库根" >&2
+  return 1
+}
+
+# 从 start 向上找含 .git 的目录（无 git 命令时的回退）
+find_git_root_by_walk() {
+  local dir
+  dir="$(cd "${1:-$PWD}" && pwd)"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
+
+find_project_root() {
+  local start="${1:-$PWD}"
+  local root
+  if root="$(git -C "$start" rev-parse --show-toplevel 2>/dev/null)"; then
+    echo "$root"
+    return 0
+  fi
+  find_git_root_by_walk "$start"
+}
+
+SOURCE="$(resolve_source_root)" || exit 1
 TARGET=""
 PROFILE="full"
 COPY_PLAN="false"
 REPLACE="false"
+USE_HERE="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help) usage; exit 0 ;;
+    --here)
+      USE_HERE="true"
+      shift
+      ;;
     --profile)
       PROFILE="${2:-}"
       shift 2
@@ -41,6 +98,15 @@ while [[ $# -gt 0 ]]; do
     --replace)
       REPLACE="true"
       shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "错误: 未知选项 $1" >&2
+      usage
+      exit 1
       ;;
     *)
       if [[ -z "$TARGET" ]]; then
@@ -56,8 +122,19 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$TARGET" ]]; then
-  usage
-  exit 1
+  if ! TARGET="$(find_project_root "$PWD")"; then
+    echo "错误: 未找到 Git 项目根（从 $(pwd) 向上无 .git）" >&2
+    echo "提示: 指定路径，或先 cd 到 Git 仓库内" >&2
+    usage
+    exit 1
+  fi
+  echo "检测到 Git 项目根: $TARGET"
+elif [[ "$USE_HERE" == "true" ]]; then
+  if ! TARGET="$(find_project_root "$PWD")"; then
+    echo "错误: --here 但未找到 Git 项目根" >&2
+    exit 1
+  fi
+  echo "检测到 Git 项目根: $TARGET"
 fi
 
 case "$PROFILE" in
@@ -179,6 +256,7 @@ echo "╔═══════════════════════�
 echo "║  Super Cursor 已安装 → $TARGET"
 echo "╚══════════════════════════════════════════════════╝"
 echo "  profile: $PROFILE"
+echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"
 echo "  1. 不确定从哪开始 → 对 Agent 说 /master"

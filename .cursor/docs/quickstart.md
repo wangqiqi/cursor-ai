@@ -3,7 +3,15 @@
 ## 1. 安装
 
 ```bash
+# 方式 A：指定目标路径
 ./install-super-cursor.sh /path/to/your-project --profile full
+
+# 方式 B：全局（~/.bashrc 设置 SUPER_CURSOR_HOME + PATH 后）
+export SUPER_CURSOR_HOME=/path/to/cursor-ai
+export PATH="$SUPER_CURSOR_HOME/bin:$PATH"
+cd /path/to/your-project/src/any/deep/dir
+super-cursor-sync --replace
+
 cd /path/to/your-project
 ```
 

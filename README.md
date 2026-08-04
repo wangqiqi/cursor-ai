@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.26.0-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.26.1-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -59,6 +59,8 @@ cd cursor-ai
 bash .cursor/bin/bootstrap-growth.sh          # 母版 clone 后首次：补 .cursorGrowth/rules/local
 
 ./install-super-cursor.sh /path/to/your-project
+# 或已配置 SUPER_CURSOR_HOME + PATH 后，在仓库任意子目录：
+# super-cursor-sync --replace
 cd /path/to/your-project
 bash .cursor/bin/platform-check.sh            # 可选：环境自检
 ```
@@ -76,6 +78,27 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | `rules-only` | 只要 rules/skills，关闭 plan/run 闸门 |
 
 支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python3`。详见 [跨平台说明](.cursor/docs/platforms.md)。
+
+### 全局同步（任意子目录 → Git 项目根）
+
+```bash
+# ~/.bashrc 或 ~/.zshrc
+export SUPER_CURSOR_HOME="$HOME/workspace/cursor-ai"   # 母版仓库路径
+export PATH="$SUPER_CURSOR_HOME/bin:$PATH"
+```
+
+在 `projectA/dir1/dir2` 等深层目录执行（自动向上找到含 `.git` 的项目根）：
+
+```bash
+super-cursor-sync --replace          # 推荐升级：干净覆盖 .cursor/
+super-cursor-sync --profile lite     # 或完整路径: $SUPER_CURSOR_HOME/install-super-cursor.sh --replace
+```
+
+未设置 `PATH` 时，在仓库内也可：
+
+```bash
+"$SUPER_CURSOR_HOME/install-super-cursor.sh" --replace
+```
 
 ## 工作流一览
 
