@@ -56,6 +56,30 @@ plan_sprint() {
   plan_meta "SPRINT"
 }
 
+# Active Sprint **Goal** 行正文（启发式 · 首条 **Goal**）
+plan_sprint_goal_text() {
+  if [[ ! -f "$PLAN_FILE" ]]; then
+    echo ""
+    return 0
+  fi
+  grep -E '^\*\*Goal\*\*' "$PLAN_FILE" 2>/dev/null | head -1 | sed -E 's/^\*\*Goal\*\*[:：][[:space:]]*//' | sed 's/[[:space:]]*$//' || true
+}
+
+# Goal 是否似「仪式/出口」而非能力交付（供 plan-check WARN）
+plan_sprint_goal_ritual_only() {
+  local goal lower
+  goal="$(plan_sprint_goal_text)"
+  [[ -z "$goal" ]] && return 1
+  lower="$(printf '%s' "$goal" | tr '[:upper:]' '[:lower:]')"
+  if ! printf '%s' "$lower" | grep -qiE '(打版|发版|release|打[[:space:]]*tag|打tag|merge|合并|开[[:space:]]*pr|changelog|归档|verify|验收|commit|提交|push|发版)'; then
+    return 1
+  fi
+  if printf '%s' "$lower" | grep -qiE '(实现|模块|功能|接入|引擎|插件|重构|迁移|交付|mvp|api|服务|client|skill|tts|long|架构|接口)'; then
+    return 1
+  fi
+  return 0
+}
+
 plan_plan_approved() {
   plan_meta "PLAN_APPROVED"
 }

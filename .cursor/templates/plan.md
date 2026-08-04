@@ -15,7 +15,7 @@
 
 # Plan
 
-无 Active Sprint / 未完成任务。新开 → `/plan`。Sprint 闭合：笔记写入运行时 `archive_dir`（见 `workflow.json`）；发版由 **`/release`** 处理（勿在母版正文链仓库根发版文件）。
+无 Active Sprint / 未完成任务。新开 → `/plan`（能力 Sprint）或 Epic → `/long`。Sprint 闭合：笔记写入运行时 `archive_dir`；**打 tag / merge** → **`/release`**（勿立项为 Sprint，见 plan `sprint-goal-gate.md`）。
 
 ---
 

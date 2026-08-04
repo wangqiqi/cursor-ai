@@ -48,6 +48,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 |---------|--------|-------|
 | `/scaffold` | 空仓库建栈 · 已有项目 audit | scaffold |
 | `/learn` | 让 Agent 了解本项目；可据证据**建议约定**（落 Growth / local，不擅自改 `.cursor/`） | learn |
+| `/long` | Epic 长程 · 多 Sprint plan/run 链 · checkpoint 续跑 | long |
 | `/release` | merge / PR / 打 tag（Sprint 出口） | release |
 
 ### 【高级】按需
@@ -70,6 +71,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 ```
 空仓库:  /master → /scaffold → /learn → /plan → /run → verify
 迭代:    /plan（先总后分、同层 MECE）→ /run **一次**（只沿 ACTIVE 分支连跑 TASK）
+长程:    /long <Epic> → 拆 Sprint → 每 Sprint plan+run → checkpoint；易断连可配系统 /loop
 卡住:    /master → fix → /run 或 /plan
 迷路:    /master（主菜单 7 项 → 子路由）
 ```

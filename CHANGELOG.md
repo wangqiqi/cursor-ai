@@ -4,6 +4,20 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.26.0] - 2026-08-04
+
+### Added
+
+- **long** skill（`/long`）：Epic 级长程调度 — Epic→Sprint→Task 三层收敛、Sprint 间 checkpoint、与 plan/run/系统 loop 分工；`reference/hierarchy.md` · `pacing-checkpoint.md`
+- **commands/long.md** — 生命周期 slash 薄入口
+- **plan** `reference/sprint-goal-gate.md` — Sprint Goal 合格性；禁止将打 tag/merge/专归档立项为 Sprint
+
+### Changed
+
+- **plan** — 阶段 1 Goal 类型门禁；Done when 与 Goal 分工澄清；`plan-check` 对仪式型 Goal 发出 WARN（`plan-parse.sh` · `runner.sh`）
+- **release** · **followup-facade** · **workflow** · **templates/plan.md** — 与 sprint-goal-gate 交叉引用
+- **master/routes** · **core** · **AGENTS** · **training/skills** · **.cursor/README** — 注册 `/long` 与 long skill；修复 routes 合并冲突残留
+
 ## [4.25.0] - 2026-08-04
 
 ### Changed

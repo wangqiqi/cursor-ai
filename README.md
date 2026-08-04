@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.25.0-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.26.0-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -35,8 +35,8 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     25 个：master · plan · run · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · pencil-design
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · manual · report（其余 skill-only）
+├── skills/     26 个：master · plan · run · **long** · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · pencil-design
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · **long** · release · 【高级】delivery · manual · report（其余 skill-only）
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
@@ -102,6 +102,7 @@ flowchart LR
 - **任务地图** — ROADMAP/Goal（总）→ TASK/ACTIVE（分）→ 验收/archive；详见 [plan/run](.cursor/docs/plan-run.md)
 - **闸门** — 无 `PLAN_APPROVED` 不写业务代码，避免 Agent「想到哪改到哪」
 - **自治 Sprint** — 默认 `AUTONOMOUS:true`：**`/plan` 批准一次 · `/run` 一次**连跑 TASK，仅决策点打断（见 `super-cursor-persona` · `autonomy-chain.md`）
+- **长程 Epic** — **`/long`**：Epic→Sprint→Task 三层收敛 · 多 Sprint plan/run 链 · checkpoint 续跑（单 Sprint 仍用 plan+run）
 - **验收** — 每个 `TASK-*` 有可执行 Acceptance 列，`task-verify` 不过不 commit
 - **任务 ID** — `TASK-*` 实现（`/run` 主路径）· `REV-*` 回顾 · `SPIKE-*` 调研 · `DOC-*` 文档；`next-task` 自动跳过后三者
 - **发版节奏** — `release.mode`：`patch-per-task`（默认，Sprint 收尾打 tag）或 `tag-per-commit`（每 TASK 一 tag；见 `config/workflow.json`）
@@ -136,6 +137,7 @@ flowchart LR
 
 ```text
 新仓库     →  /scaffold  →  /learn  →  /plan  →  /run
+长程 Epic  →  /long <目标>  →  每 Sprint plan+run  →  checkpoint
 已有代码   →  /learn  →  /plan  →  /run
 小修小补   →  /run 或描述复现步骤（bugfix rules）
 根因不明   →  skill **debug**（系统调试循环）
@@ -150,6 +152,7 @@ flowchart LR
 | **【日常】** | `/master` | 真迷路时 AskQuestion 路由 |
 | **【生命周期】** | `/scaffold` | 7 栈脚手架 / 已有项目 audit |
 | **【生命周期】** | `/learn` | 项目认知 → `.cursorGrowth/learn/` |
+| **【生命周期】** | `/long` | Epic 长程：拆 Sprint → 每 Sprint plan+run → checkpoint |
 | **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
 | **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
 | **【高级】** | `/manual` | 可发布使用说明书 · 配图 regen（Manual Contract） |
