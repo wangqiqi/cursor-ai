@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.26.2] - 2026-08-04
+
+### Added
+
+- **install-super-cursor.sh --setup-shell** — 母版目录执行一次，写入 `~/.bashrc` / `~/.zshrc`（`SUPER_CURSOR_HOME` · PATH · `install-super-cursor` 别名）；之后在任意项目目录用 `install-super-cursor --replace` 同步
+
 ## [4.26.1] - 2026-08-04
 
 ### Added

@@ -13,9 +13,10 @@ usage() {
   SUPER_CURSOR_HOME   cursor-ai 母版仓库根（含 .cursor/）
   CURSOR_AI_HOME      同上（别名）
 
-  配合 PATH 包装脚本: \$SUPER_CURSOR_HOME/bin/super-cursor-sync
+  配合 PATH: install-super-cursor · super-cursor-sync（依赖 SUPER_CURSOR_HOME）
 
 选项:
+  --setup-shell                    写入 ~/.bashrc / ~/.zshrc（母版目录执行一次）
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
@@ -23,8 +24,9 @@ usage() {
   -h, --help                       显示帮助
 
 示例:
-  export SUPER_CURSOR_HOME=/path/to/cursor-ai
-  $0 --replace                     # 在仓库任意子目录执行
+  $0 --setup-shell                 # 母版目录：只写 shell 环境变量（推荐首次）
+  source ~/.bashrc && install-super-cursor --replace   # 任意项目子目录同步
+  $0 --replace                     # 在仓库任意子目录执行（需已 setup-shell）
   $0 /path/to/my-app --profile lite --copy-plan
   super-cursor-sync --replace      # 若已将 \$SUPER_CURSOR_HOME/bin 加入 PATH
 
@@ -73,16 +75,72 @@ find_project_root() {
   find_git_root_by_walk "$start"
 }
 
+SC_SHELL_MARKER_BEGIN="# >>> super-cursor >>>"
+SC_SHELL_MARKER_END="# <<< super-cursor <<<"
+
+setup_super_cursor_shell() {
+  local mother_root="$1"
+  local rc_files=() rc block tmp updated=0
+
+  [[ -f "$HOME/.bashrc" ]] && rc_files+=("$HOME/.bashrc")
+  [[ -f "$HOME/.zshrc" ]] && rc_files+=("$HOME/.zshrc")
+  if [[ ${#rc_files[@]} -eq 0 ]]; then
+    rc_files+=("$HOME/.bashrc")
+  fi
+
+  block=$(
+    cat <<EOF
+
+$SC_SHELL_MARKER_BEGIN
+# Super Cursor 母版 — 任意 Git 项目目录: install-super-cursor --replace
+export SUPER_CURSOR_HOME="$mother_root"
+export PATH="\$SUPER_CURSOR_HOME/bin:\$PATH"
+alias install-super-cursor="\$SUPER_CURSOR_HOME/install-super-cursor.sh"
+$SC_SHELL_MARKER_END
+EOF
+  )
+
+  for rc in "${rc_files[@]}"; do
+    if grep -qF "$SC_SHELL_MARKER_BEGIN" "$rc" 2>/dev/null; then
+      tmp="$(mktemp)"
+      awk -v begin="$SC_SHELL_MARKER_BEGIN" -v end="$SC_SHELL_MARKER_END" '
+        BEGIN { skip=0 }
+        index($0, begin) { skip=1; next }
+        index($0, end) { skip=0; next }
+        skip==0 { print }
+      ' "$rc" > "$tmp"
+      mv "$tmp" "$rc"
+      echo "已更新 $rc 中的 super-cursor 块"
+    else
+      echo "已写入 $rc"
+    fi
+    printf '%s' "$block" >> "$rc"
+    updated=1
+  done
+
+  if [[ "$updated" -eq 1 ]]; then
+    echo ""
+    echo "Shell 环境已配置（SUPER_CURSOR_HOME=$mother_root）"
+    echo "  请执行: source ~/.bashrc   # 或 source ~/.zshrc · 重开终端"
+    echo "  然后在任意项目目录: install-super-cursor --replace"
+  fi
+}
+
 SOURCE="$(resolve_source_root)" || exit 1
 TARGET=""
 PROFILE="full"
 COPY_PLAN="false"
 REPLACE="false"
 USE_HERE="false"
+SETUP_SHELL="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help) usage; exit 0 ;;
+    --setup-shell)
+      SETUP_SHELL="true"
+      shift
+      ;;
     --here)
       USE_HERE="true"
       shift
@@ -120,6 +178,13 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ "$SETUP_SHELL" == "true" ]]; then
+  setup_super_cursor_shell "$SOURCE"
+  if [[ -z "$TARGET" && "$REPLACE" != "true" && "$COPY_PLAN" != "true" ]]; then
+    exit 0
+  fi
+fi
 
 if [[ -z "$TARGET" ]]; then
   if ! TARGET="$(find_project_root "$PWD")"; then

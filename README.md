@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.26.1-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.26.2-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -81,23 +81,28 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 
 ### 全局同步（任意子目录 → Git 项目根）
 
+**首次**在母版仓库执行（只写 shell 环境变量，不装项目）：
+
+```bash
+cd /path/to/cursor-ai
+./install-super-cursor.sh --setup-shell
+source ~/.bashrc   # 或重开终端
+```
+
+之后在 `projectA/dir1/dir2` 等深层目录：
+
+```bash
+install-super-cursor --replace          # 同步母版 .cursor/ 到 Git 项目根
+super-cursor-sync --replace             # 同上（PATH 包装）
+```
+
+手动配置（等价于 `--setup-shell`）：
+
 ```bash
 # ~/.bashrc 或 ~/.zshrc
 export SUPER_CURSOR_HOME="$HOME/workspace/cursor-ai"   # 母版仓库路径
 export PATH="$SUPER_CURSOR_HOME/bin:$PATH"
-```
-
-在 `projectA/dir1/dir2` 等深层目录执行（自动向上找到含 `.git` 的项目根）：
-
-```bash
-super-cursor-sync --replace          # 推荐升级：干净覆盖 .cursor/
-super-cursor-sync --profile lite     # 或完整路径: $SUPER_CURSOR_HOME/install-super-cursor.sh --replace
-```
-
-未设置 `PATH` 时，在仓库内也可：
-
-```bash
-"$SUPER_CURSOR_HOME/install-super-cursor.sh" --replace
+alias install-super-cursor="$SUPER_CURSOR_HOME/install-super-cursor.sh"
 ```
 
 ## 工作流一览

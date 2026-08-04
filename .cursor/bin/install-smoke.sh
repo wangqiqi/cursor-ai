@@ -94,6 +94,16 @@ git -C "$HERE_ROOT" init -q
 ) && ok "here: install from nested dir" || fail "here: install from nested dir"
 assert_file "$HERE_ROOT/.cursor/rules/core.mdc" "here: .cursor at git root"
 
+# 7. --setup-shell
+HOME_SAVE="$HOME"
+export HOME="$TMP_ROOT/home-setup"
+mkdir -p "$HOME"
+touch "$HOME/.bashrc"
+"$INSTALL" --setup-shell >/dev/null
+grep -qF 'SUPER_CURSOR_HOME=' "$HOME/.bashrc" && ok "setup-shell: SUPER_CURSOR_HOME" || fail "setup-shell: SUPER_CURSOR_HOME"
+grep -qF 'install-super-cursor' "$HOME/.bashrc" && ok "setup-shell: alias" || fail "setup-shell: alias"
+export HOME="$HOME_SAVE"
+
 echo "---"
 if [[ "$FAIL" -eq 0 ]]; then
   echo "install smoke passed."
