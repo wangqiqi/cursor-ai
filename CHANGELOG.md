@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.26.3] - 2026-08-04
+
+### Changed
+
+- **docs** — `naming` · `quickstart` · `plan-run` · `walkthrough` · `migration-catalog`：slash 三层与 `/long` `/manual` `/report` 对齐；skills 计数 26 · 10 commands
+- **verify-super-cursor.sh** — 注册 `skills/long` · `commands/long.md`
+
 ## [4.26.2] - 2026-08-04
 
 ### Added
