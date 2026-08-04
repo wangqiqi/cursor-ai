@@ -1,10 +1,10 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.24.9-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.25.0-blue?style=flat-square)](CHANGELOG.md)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
-[![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-brightgreen?style=flat-square)](.cursor/docs/scaffold.md)
+[![Scaffolds](https://img.shields.io/badge/scaffolds-7%20stacks-brightgreen?style=flat-square)](.cursor/docs/scaffold.md)
 [![Cursor](https://img.shields.io/badge/built%20for-Cursor-000000?style=flat-square)](https://cursor.com)
 
 让 Cursor Agent 像资深同事一样协作：先规划、再执行、可验收、能收尾、能发版。
@@ -35,13 +35,13 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · input-bounds · extensibility · data-batch · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     25 个：master · plan（含 reference/sdd · SDD）· run · learn · scaffold · git · release · security · api · ux · ia · debug · test（含 scripts/）· mcp（含 reference/evaluation）· refactor · perf · review · study · delivery（含 scripts/pdf）· user-manual · test-report · week · disk · maintain · pencil-design
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · ux · ia · manual · report · debug · review · 【运维】week · disk · maintain · pencil-design
+├── skills/     25 个：master · plan · run · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · pencil-design
+├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · release · 【高级】delivery · manual · report（其余 skill-only）
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
 ├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · 8 栈脚手架 · manual-contract · user-manual bundle · test-report bundle
+└── templates/  plan.md · sdd/ · 7 栈脚手架 · manual-contract · user-manual / test-report bundles
 ```
 
 **根目录（可直接 clone / 复制）：**
@@ -91,7 +91,6 @@ flowchart LR
   F --> G["task-verify"]
   G --> H["commit + next-task"]
   H --> F
-  F --> U["/ux · /ia<br/>体验/导航（可选）"]
   H --> J["/delivery<br/>交付验收（可选）"]
   J --> R["/report<br/>测试报告（可选）"]
   R --> K["/release<br/>merge/PR/打 tag"]
@@ -114,7 +113,7 @@ flowchart LR
 
 | 场景 | 默认 Agent | Super Cursor |
 |------|-----------|--------------|
-| 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
+| 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 7 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
 | 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `babysit`（见 **master** → `git`） |
@@ -139,31 +138,29 @@ flowchart LR
 新仓库     →  /scaffold  →  /learn  →  /plan  →  /run
 已有代码   →  /learn  →  /plan  →  /run
 小修小补   →  /run 或描述复现步骤（bugfix rules）
-根因不明   →  /debug（系统调试循环）
-合并前回顾 →  /review 或 REV-* 任务 · 可委派 review agent
+根因不明   →  skill **debug**（系统调试循环）
+合并前回顾 →  skill **review** 或 REV-* · 可委派 review agent
+体验/导航  →  skill **ux** / **ia**（无 slash）
 ```
 
 | 层 | Command | 作用 |
 |----|---------|------|
-| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit；**AUTONOMOUS** 时 Sprint 连跑（不必每 TASK 再 `/run`） |
+| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit；**AUTONOMOUS** 时 Sprint 连跑 |
 | **【日常】** | `/plan` | 先总后分：Goal · Done when → 拆 TASK |
 | **【日常】** | `/master` | 真迷路时 AskQuestion 路由 |
-| **【生命周期】** | `/scaffold` | 8 栈脚手架 / 已有项目 audit |
+| **【生命周期】** | `/scaffold` | 7 栈脚手架 / 已有项目 audit |
 | **【生命周期】** | `/learn` | 项目认知 → `.cursorGrowth/learn/` |
 | **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
 | **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
-| **【高级】** | `/ux` · `/ia` | 体验分流 · 信息架构 |
 | **【高级】** | `/manual` | 可发布使用说明书 · 配图 regen（Manual Contract） |
 | **【高级】** | `/report` | 全量/分层测试报告 · verify 后汇总（Report Contract） |
-| **【高级】** | `/debug` | 复现→根因→验证；小修可直接 `/run` |
-| **【高级】** | `/review` | PR/代码结构化回顾 · `REV-*` · 可委派 review agent |
-| **【运维】** | `/week` · `/disk` · `/maintain` · `/pencil-design` | 周报 · 磁盘快照 · 环境维护 · Pencil CLI 视觉设计 |
+
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
 
-**无独立 slash、Agent 常自动选用**：**security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md` 或自然语言描述意图。
+**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
 
-## 8 栈脚手架
+## 7 栈脚手架
 
 每个栈自带 `scripts/test.sh`（开发循环）+ `scripts/verify.sh`（全量验收），与 plan/run 验收列对齐。
 
@@ -175,7 +172,6 @@ flowchart LR
 | 后端 | `go-api` | Go HTTP API |
 | 后端 | `rust-axum` | Rust + Axum |
 | 后端 | `python-fastapi` | FastAPI + ruff + mypy + pytest |
-| 后端 | `java-gradle` | Java + Gradle Wrapper |
 | 系统 | `cpp-cmake` | C++ + CMake + ctest |
 
 ```bash

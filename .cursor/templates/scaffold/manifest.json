@@ -1,16 +1,16 @@
 {
   "version": 2,
   "tier": "standard+",
-  "tier_notes": "lint+test+verify+CI+env · 8 stacks · optional bundles",
+  "tier_notes": "lint+test+verify+CI+env · 7 stacks · optional bundles",
   "categories": {
     "frontend": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
-    "backend": ["go-api", "rust-axum", "python-fastapi", "java-gradle"],
+    "backend": ["go-api", "rust-axum", "python-fastapi"],
     "systems": ["cpp-cmake"]
   },
   "test_convention": {
     "dev_loop": "scripts/test.sh",
     "full_verify": "scripts/verify.sh",
-    "docs": "tests/README.md or src/test/README.md (java)"
+    "docs": "tests/README.md"
   },
   "scaffolds": [
     {
@@ -77,16 +77,6 @@
         "pip install -e '.[dev]'",
         "./scripts/verify.sh"
       ]
-    },
-    {
-      "id": "java-gradle",
-      "name": "Java + Gradle (Kotlin DSL)",
-      "category": "backend",
-      "tags": ["java", "gradle", "junit"],
-      "description": "内置 Gradle Wrapper · unit/integration · CI",
-      "verify": "scripts/verify.sh",
-      "test": "scripts/test.sh",
-      "post_apply": ["chmod +x gradlew", "./scripts/verify.sh"]
     },
     {
       "id": "cpp-cmake",

@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.25.0] - 2026-08-04
+
+### Changed
+
+- **slash 瘦身** — 保留 `/run` `/plan` `/master` `/scaffold` `/learn` `/release` `/delivery` `/manual` `/report`；ux · ia · debug · review · week · disk · maintain · pencil-design **退为 skill-only**
+- **scaffold** — 删除易坏的 `java-gradle`；现为 **7 栈** + 可选 bundles；保留 `rules/tech/java.mdc` 供 brownfield
+- **验收** — 继承 4.24.9 hybrid layout；slash/command 清单与瘦身后门面对齐
+- **naming / README / routes / core** — 五层关系与 slash 表对齐「slash = command 薄入口 · skill = SOP 正文」
+- **递归任务分解** — plan/run/workflow 同步先总后分 · ACTIVE 分支边界
+
 ## [4.24.9] - 2026-07-16
 
 ### Changed

@@ -34,7 +34,11 @@ bash "$CUR/bin/runner-smoke.sh"
 
 echo ""
 echo "=== Install smoke ==="
-bash "$CUR/bin/install-smoke.sh"
+if [[ -f "$ROOT/install-super-cursor.sh" ]]; then
+  bash "$CUR/bin/install-smoke.sh"
+else
+  echo "OK  skip install-smoke (target project — no install-super-cursor.sh)"
+fi
 
 echo ""
 echo "=== Platform check ==="

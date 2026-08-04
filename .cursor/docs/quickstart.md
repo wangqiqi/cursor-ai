@@ -13,7 +13,7 @@ cd /path/to/your-project
 |----|-------|
 | 【日常】 | `/run` · `/plan` · `/master` |
 | 【生命周期】 | `/scaffold` · `/learn` · `/release` |
-| 【高级】 | `/delivery` · `/ux` · `/ia`（Agent 也常自动选用） |
+| 【高级】 | `/delivery`（其余如 ux/ia/debug → skill-only） |
 
 | profile | 适合 |
 |---------|------|
@@ -21,7 +21,7 @@ cd /path/to/your-project
 | `lite` | 个人，无 hooks |
 | `rules-only` | 只要规范 |
 
-## 2. 空项目：脚手架（8 栈）
+## 2. 空项目：脚手架（7 栈）
 
 ```
 /master  或  /scaffold

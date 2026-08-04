@@ -171,8 +171,6 @@ sc_chmod_scripts() {
   chmod +x "${cursor_dir}/bin/"*.sh 2>/dev/null || true
   find "${cursor_dir}/templates/scaffold" -name '*.sh' -exec chmod +x {} + 2>/dev/null || true
   chmod +x "${cursor_dir}/hooks/"*.sh 2>/dev/null || true
-  [[ -f "${cursor_dir}/templates/scaffold/java-gradle/gradlew" ]] \
-    && chmod +x "${cursor_dir}/templates/scaffold/java-gradle/gradlew" || true
 }
 
 # Tab-separated rows → aligned columns (column(1) optional)

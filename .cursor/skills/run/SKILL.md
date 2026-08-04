@@ -26,6 +26,19 @@ plan handoff 默认自治时，用户 **只说一次 `/run`**；Agent **同会�
 
 触点矩阵 → **plan** `reference/autonomy-chain.md` · `workflow.json` → `autonomy.interrupt_on`。
 
+## 执行期递归边界
+
+`/run` 只实现当前 `ACTIVE` TASK 所属的 Theme/Slice：
+
+- TASK 内的文件、命令和实现步骤属于 L4 Steps，不自动升级为新的 TASK；
+- 发现仍在当前边界内的细节，继续完成并在同一验收中收敛；
+- 发现新的独立结果，先停在当前任务边界，记录为同层候选，不直接修改；
+- 发现不同 Theme、横向依赖或新的产品/架构决策，标记 `⚠️` 并回 `/plan`；
+- 不以“顺便统一”“顺便补齐”“顺便重构”为理由跨越 `Target` 或 `Out of scope`；
+- 自治只允许沿已批准的执行顺序前进，不允许自治扩展任务树。
+
+判断标准：如果改动不能用当前 TASK 的一个主验收命令证明完成，就不是当前 TASK 的内部步骤。
+
 ## 单轮（含必做 commit）
 
 **禁止**在任务 ✅ 后仅更新 plan/CHANGELOG 却留给用户手动 commit。单轮顺序固定：

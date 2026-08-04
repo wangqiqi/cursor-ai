@@ -42,11 +42,6 @@ while IFS= read -r id; do
     python-fastapi)
       [[ -d "$dir/tests/unit" && -d "$dir/tests/integration" ]] || fail "$id: missing tests/unit|integration"
       ;;
-    java-gradle)
-      [[ -f "$dir/src/test/README.md" ]] || fail "$id: missing src/test/README.md"
-      [[ -x "$dir/gradlew" ]] || fail "$id: missing executable gradlew"
-      [[ -f "$dir/gradle/wrapper/gradle-wrapper.jar" ]] || fail "$id: missing gradle-wrapper.jar"
-      ;;
   esac
 
   ok "$id"
