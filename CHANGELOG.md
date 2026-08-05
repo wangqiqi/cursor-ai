@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.26.4] - 2026-08-05
+
+### Added
+
+- **code-stats-viz** skill（无 slash）：Git 代码行数/语言分布/提交日历 → 交互式 HTML 仪表板；`scripts/code_stats_viz.py` · 产出 `.cursorGrowth/code-stats/`
+- **master/routes** · **AGENTS** · **training/skills** · **README** — 注册 code-stats-viz 工具技能（27 skills）
+
 ## [4.26.3] - 2026-08-04
 
 ### Changed

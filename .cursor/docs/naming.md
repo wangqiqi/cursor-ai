@@ -41,7 +41,7 @@ Cursor Task 体系有内置 subagent **`release`**。项目 `.cursor/agents/rele
 | `run` | 执行 skill + `/run` | Agent 一次 run（口语） |
 | `release` | Sprint 出口 **skill**（§分支 + §打版） | 内置 **release** subagent（我们用 `ship` 代替） |
 | `review` | 项目 **review** skill + **review** agent（REV-* · PR 清单） | 全局 `~/.cursor/skills-cursor/review`（路由 Bugbot / Security Review） |
-| `week` · `disk` · `maintain` · `ux` · `ia` · `debug` | **skill-only**（无 project command） | 关键词 / `@skill` / Agent 自动选用 |
+| `week` · `disk` · `maintain` · `code-stats-viz` · `ux` · `ia` · `debug` | **skill-only**（无 project command） | 关键词 / `@skill` / Agent 自动选用 |
 
 ## 官方工具与模型差异（Agent 须知）
 

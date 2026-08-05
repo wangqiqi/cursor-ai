@@ -21,7 +21,7 @@
 | epic / 多 Sprint 编排 | **long** | `/long` · Epic→Sprint→Task · checkpoint |
 | user docs / 操作手册 | **user-manual** | `/manual` · Manual Contract |
 | QA 报告 / verify 汇总 | **test-report** | `/report` · Report Contract |
-| UX / IA / 工具类 | **ux** · **ia** · **week** · **disk** · **maintain** · **pencil-design** | skill-only（无 slash） |
+| UX / IA / 工具类 | **ux** · **ia** · **week** · **disk** · **maintain** · **code-stats-viz** · **pencil-design** | skill-only（无 slash） |
 | spike / POC | **spike** agent + `SPIKE-*` | 只读调研 |
 | command-center 等编排 | **master** routes | 无伪 class 引擎 |
 
@@ -64,7 +64,7 @@
 
 | 范围 | 标准 |
 |------|------|
-| 结构 | 26 skills · 3 agents · 46 rules · 10 commands · config/hooks/bin 齐全 |
+| 结构 | 27 skills · 3 agents · 46 rules · 10 commands · config/hooks/bin 齐全 |
 | 注册 | 每个 `rules/**/*.mdc` 在 `verify-super-cursor.sh` 有 check |
 | layout | **mother** 纯空仓 · **hybrid** 业务树共存（自动 SKIP 纯母版项）— `rules/feedback/verify.mdc` |
 | 交叉引用 | AGENTS ↔ 磁盘 · routes ↔ skills/agents · roles=12 |
