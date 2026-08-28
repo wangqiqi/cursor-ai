@@ -28,6 +28,7 @@ alwaysApply: true
 | 开源选型 / vendor / 输入边界 | `oss-first.mdc` · `submodule.mdc` · `input-bounds.mdc`（二级；`/master` → deps） |
 | 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
 | Prompt / Agent 安全 | `prompt-security`（二级；**security** 清单） |
+| 部署 / compose / env / nginx | **ops-deploy** skill · `deploy-ops.mdc` |
 | ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
 | 文案/i18n/E2E 锚点 | `rules/execution/i18n-copy.mdc` |
 | 列表分页 / cursor pager | `rules/execution/data-list.mdc` |

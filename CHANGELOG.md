@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **ops-deploy** skill（无 slash）：docker-compose · `.env.example` · nginx · verify 注册 SOP；`reference/` 五篇
+- **rules/execution/deploy-ops.mdc** — compose/env/nginx 二级 rule
+
+### Changed
+
+- **scaffold** — `reference/ops-env-contract.md` · catalog 链 ops-deploy；修复 catalog 合并冲突残留
+- **learn** 模板 `dev-conventions.md` — §Deploy 字段
+- **scaffold/react-vite-ts** `.env.example` — exemplar 分段注释
+- **bugfix** · **core** · **AGENTS** · **rules-catalog** · **verify-super-cursor** · **.cursor/README** · **routes** · **training/skills** — 注册 ops-deploy · deploy-ops
+
 ## [4.27.0] - 2026-08-28
 
 ### Added

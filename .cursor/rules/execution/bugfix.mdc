@@ -54,3 +54,4 @@ alwaysApply: false
 - 改 progress / 长任务 UI / 弹窗 z-index / 错误 message / 格式检测 → 读对应 rule：`async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector`
 - 改用户可见文案 / i18n / E2E 文案锚点 → **`i18n-copy.mdc`**
 - 改列表分页 / filter 后空页 → **`data-list.mdc`**
+- 改 compose / `.env.example` / nginx → **`deploy-ops.mdc`** · **ops-deploy** skill

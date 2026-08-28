@@ -192,6 +192,7 @@ LIBRARY — 路径 + 何时手动选用
 | 周报、本周总结、weekly report | **week**（无 slash · 关键词） |
 | 磁盘快照、空间变动、disk snapshot | **disk**（无 slash · 关键词） |
 | 环境维护、清理缓存、系统维护 | **maintain**（无 slash · 关键词） |
+| docker compose、env 模板、nginx、部署运维 | **ops-deploy**（无 slash · 关键词） |
 | 代码统计、代码量、语言分布、提交热力图、code stats | **code-stats-viz**（无 slash · 关键词） |
 | 做设计、mockup、landing page 视觉、.pen、生成海报/App 屏 | **pencil-design**（无 slash · 关键词） |
 | 长程任务、Epic、多 Sprint 自治、全自动做到底 | **long** `/long` |
@@ -246,6 +247,7 @@ README 场景速查中无独立主菜单、经 `more` → `config` 或关键词�
 | 周报、本周总结、CHANGELOG 汇总 | **week**（无 slash · 关键词） |
 | 磁盘快照、空间占用、哪个目录变大 | **disk**（无 slash · 关键词） |
 | 环境维护、清理磁盘、dev maintenance | **maintain**（无 slash · 关键词） |
+| docker compose、env 模板、nginx、部署 | **ops-deploy**（无 slash · 关键词） |
 | 代码统计、代码量、语言分布、提交日历、仓库分析 | **code-stats-viz**（无 slash · 关键词） |
 | 做设计、mockup、视觉稿、.pen、海报、banner、App 屏 | **pencil-design**（无 slash · 关键词） |
 | submodule、vendor、依赖升级、开源选型、许可证、MIT、GPL | **more** → `deps`（`oss-first.mdc` · `submodule.mdc`） |

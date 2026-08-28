@@ -21,6 +21,18 @@
 |------|------|
 | （待填） | |
 
+## Deploy（/learn 可填 · 见 ops-deploy skill）
+
+| 项 | 本项目 |
+|----|--------|
+| compose 入口 | （待填，例 `docker-compose.yml`） |
+| env 模板 | （待填，例 `.env.example` → `.env`） |
+| nginx 示例 | （待填，或「无」） |
+| 默认 HTTP 端口 | （待填） |
+| 部署 verify | （待填，例 `scripts/verify.sh` 含 L0 deploy 段） |
+
+字段说明 → **ops-deploy** `reference/growth-deploy-fields.md`
+
 ## 建议约定（/learn 可填）
 
 > 来自 **learn** skill「建议约定」：有证据才写；默认本文件或 `rules/local`，**勿**擅自改母版 `.cursor/`。

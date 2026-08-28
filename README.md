@@ -35,7 +35,7 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · data-batch · i18n-copy · data-list · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     27 个：master · plan · run · **long** · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · **code-stats-viz** · pencil-design
+├── skills/     28 个：master · plan · run · **long** · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · **ops-deploy** · **code-stats-viz** · pencil-design
 ├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · **long** · release · 【高级】delivery · manual · report（其余 skill-only）
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
@@ -189,7 +189,7 @@ flowchart LR
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
 
-**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **code-stats-viz** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
+**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
 
 ## 7 栈脚手架
 

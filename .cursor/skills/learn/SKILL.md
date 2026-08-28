@@ -124,6 +124,7 @@ disable-model-invocation: true
 | 同断言多 verify 脚本 · verify 堆积 | 未复用/未抽 lib | `verify.mdc` §新增脚本门禁 |
 | 进度/上传/弹窗/错误 message 重复 patch | 横切 UX | `async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector` |
 | 大批量 IN / 列表超限 | 数据访问 | `data-batch.mdc` |
+| compose/env/nginx 重复对齐 | 部署真源漂移 | **ops-deploy** · `deploy-ops.mdc` |
 | 死代码 · 仅测试引用 | 清理 | **refactor** skill |
 
 模板：`.cursor/templates/cursorGrowth/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`

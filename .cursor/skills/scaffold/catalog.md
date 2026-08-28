@@ -19,6 +19,7 @@
 | **skill** | `skills/scaffold/SKILL.md` | `/scaffold` 流程：检测 → AskQuestion → dry-run → apply |
 | **模板** | `templates/scaffold/<id>/` | 项目骨架文件（非 skill） |
 | **rules** | `rules/tech/*.mdc` | 创建后日常编码最佳实践（按 glob 加载） |
+| **deploy** | **ops-deploy** skill · **deploy-ops** rule · `reference/ops-env-contract.md` | compose / `.env.example` / nginx 约定 |
 
 ## post_apply
 
@@ -34,8 +35,4 @@
 
 ## 扩展
 
-<<<<<<< HEAD
-manifest 现含 **8 栈** + **可选 bundles**（`apply-bundle user-manual` · `apply-bundle test-report`）。用户要 **Spring Boot / Django / 其他未列栈**：AskQuestion 后 Agent 参照 **standard+** 约定手写（README + verify.sh + lint/test），或用户明确要求时再向母版贡献新模板 id。
-=======
-manifest 现含 **7 栈**（见上表）。用户要 **Spring Boot / Django / Java / 其他未列栈**：AskQuestion 后 Agent 参照 **standard+** 约定手写（README + verify.sh + lint/test），或用户明确要求时再向母版贡献新模板 id。
->>>>>>> f3674bb (release: slash slim, drop java-gradle, portable verify (v4.25.0))
+manifest 现含 **7 栈**（见上表）+ **可选 bundles**（`apply-bundle user-manual` · `apply-bundle test-report`）。用户要 **Spring Boot / Django / Java / 其他未列栈**：AskQuestion 后 Agent 参照 **standard+** 约定手写（README + verify.sh + lint/test），或用户明确要求时再向母版贡献新模板 id。部署面见 **ops-deploy** skill。
