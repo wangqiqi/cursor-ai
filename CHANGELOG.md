@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.28.0] - 2026-08-28
+
 ### Added
 
 - **ops-deploy** skill（无 slash）：docker-compose · `.env.example` · nginx · verify 注册 SOP；`reference/` 五篇
