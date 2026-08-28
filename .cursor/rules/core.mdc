@@ -9,33 +9,17 @@ alwaysApply: true
 
 | 场景 | 入口 |
 |------|------|
-| **不确定 / 从哪开始** | **`/master`** → **master**（AskQuestion 路由；无工具则正文选项） |
-| 规划 | `/plan` → **plan** |
-| 长程 Epic | `/long` → **long**（多 Sprint plan/run 链；单 Sprint 仍用 plan+run） |
-| 执行 | `/run` → **run**（`AUTONOMOUS:true`：**一次 `/run` Sprint 连跑**；仅决策打断） |
-| 学习 | `/learn` → **learn**（本仓认知；≠ **study** 学技术） |
-| 脚手架 | `/scaffold` → **scaffold** |
-| 打版 | **`/release`**（人主导）· **ship** agent（自治执行同一 §打版；无 `/ship`） |
-| Git | **git** skill |
-| 安全审查 | **security** skill（清单）· `security-sdlc`（习惯）· `prompt-security`（Prompt 面） |
-| API 设计 | **api** skill |
-| UX / 体验（分流） | **ux** skill · `ux.mdc` — 类型不明先分流；明导航 → **ia**；明上线 → **`/delivery`**（无 `/ux` slash） |
-| 信息架构 / 导航 / 角色入口 | **ia** skill · `ia.mdc`（UX 结构层；≠ 视觉抛光；无 `/ia` slash） |
-| 调试 / 测试 / 回顾 / 交付 | **debug** · **test** · **review** · **`/delivery`**（上线走查；≠ 规划） |
-| 软件使用说明书 / 配图 regen | **`/manual`** · **user-manual** skill（项目无关 · Manual Contract） |
-| 测试报告 / 全量 verify 汇总 | **`/report`** · **test-report** skill（项目无关 · Report Contract） |
-| 长任务 / 异步进度 / 弹窗分层 | `rules/execution/async-progress.mdc` · `long-running-ui.mdc` · `modal-layering.mdc` · `error-context.mdc` · `single-detector.mdc` |
-| 开源选型 / vendor / 输入边界 | `oss-first.mdc` · `submodule.mdc` · `input-bounds.mdc`（二级；`/master` → deps） |
-| 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
-| Prompt / Agent 安全 | `prompt-security`（二级；**security** 清单） |
-| 部署 / compose / env / nginx | **ops-deploy** skill · `deploy-ops.mdc` |
-| ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
-| 文档卫生 / ROADMAP·archive·断链 | `rules/execution/doc-hygiene.mdc` |
-| 文案/i18n/E2E 锚点 | `rules/execution/i18n-copy.mdc` |
-| 列表分页 / cursor pager | `rules/execution/data-list.mdc` |
-| 学新技术 | **study** skill（学技术；≠ `/learn` 本仓认知） |
+| **不确定 / 从哪开始** | **`/master`** → **master**（AskQuestion；无工具则正文编号选项） |
+| **规划 / 长程 Epic** | `/plan` · `/long` |
+| **执行** | `/run`（`AUTONOMOUS:true`：**一次 `/run` Sprint 连跑**） |
+| **了解项目 / 脚手架 / 打版** | `/learn` · `/scaffold` · **`/release`**（**ship** agent） |
+| **审查 · Git · 安全 · API** | **git** · **security** · **api**（或 `/master` → more） |
+| **UX · 交付 · 说明书 · 测试报告** | **ux** · **ia** · `/delivery` · `/manual` · `/report` |
+| **调试 · 测试 · 代码回顾** | **debug** · **test** · **review** |
+| **部署 · 文档卫生 · 横切规则** | **ops-deploy** · `doc-hygiene.mdc` · 异步/分页/i18n/deps 等 → **`routes.md` §扩展** |
+| **详表（skills · 关键词 · LIBRARY）** | `skills/master/routes.md` · `docs/training/skills.md` |
 
-扩展路由（关键词命中）：**mcp** · **refactor** · **perf** · **spike** agent（`SPIKE-*`）→ **`/master`**
+关键词扩展（**mcp** · **refactor** · **perf** · **spike** · **study** 等）→ **`/master`**
 
 配置：`config/workflow.json` · `config/release.json` · 协作三公理见 `rules/communication/constitution.mdc` · 母版独立见 **cursor-standalone**
 

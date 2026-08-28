@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **core.mdc** — 入口表瘦身至 9 行 + 外链 `routes.md` · `training/skills.md`（SPRINT-RULE-SLIM）
+- **routes.md** — LIBRARY 大表外链 `library-index.md`；删「扩展 skill 路由」重复节；关键词索引 canonical；注册 **doc-hygiene**；~288→~180 行
+- **building-super-cursor.md** — alwaysApply 更正为四件（~244 行）及 token 说明
+- **ia.mdc** — 薄化：原则 SSOT 在 **ia** skill；rule 仅触发与分工
+
 ## [4.29.0] - 2026-08-28
 
 ### Added

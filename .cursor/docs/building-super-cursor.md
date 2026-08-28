@@ -6,7 +6,7 @@
 2. **Config over fork** — behavior toggles live in `.cursor/config/*.json`.
 3. **Three pillars** — `rules/communication/` · `rules/execution/` · `rules/feedback/`.
 4. **Growth boundary** — project learnings in `.cursorGrowth/` only; use `/learn`（见下节「产出 ≠ 母版引用」）。
-5. **Token** — 仅 `core.mdc` + `workflow.mdc` alwaysApply；细则在 skills。
+5. **Token** — **alwaysApply 四件**（~244 行）：`core.mdc` · `workflow.mdc` · `super-cursor-persona.mdc` · `cursor-standalone.mdc`；persona/standalone 为语气与引用纪律，刻意常驻。其余按 glob / skill 加载；细则在 skills。
 6. **Immutable after install（仅目标项目）** — 母版仓库可自由演进 `.cursor/`；安装到目标项目后 Agent 不得改 `.cursor/**` 除非用户明确授权（见 **cursor-standalone**）。
 7. **Cross-platform** — scripts target Linux · macOS · Git Bash; shared helpers in `.cursor/lib/platform.sh` (see `docs/platforms.md`).
 
