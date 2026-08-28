@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.0] - 2026-08-28
+
 ### Added
 
 - **rules/execution/doc-hygiene.mdc** — ROADMAP/archive/CHANGELOG 职责 · doc-coherence · 断链 · 门面计数（吸收自 workspace CHANGELOG 文档卫生审计）
