@@ -4,6 +4,20 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **rules/execution/doc-hygiene.mdc** — ROADMAP/archive/CHANGELOG 职责 · doc-coherence · 断链 · 门面计数（吸收自 workspace CHANGELOG 文档卫生审计）
+- **verify-doc-super-cursor.sh** — README skills 计数 · migration-catalog 计数 · `.cursor/docs` 相对链接；聚合于 `verify-super-cursor.sh`
+
+### Changed
+
+- **docs.mdc** — §doc-coherence 链 doc-hygiene · 母版 verify 指针
+- **learn** skill — 症状簇→doc-hygiene 映射 · changelog-insights 文档卫生示例
+- **delivery** checklist — doc-coherence 链 doc-hygiene
+- **training/skills.md** — 修复 routes 相对链接
+- **migration-catalog** — 28 skills · 52 rules
+- **bugfix** · **core** · **AGENTS** · **rules-catalog** · **verify-super-cursor** · **.cursor/README** · **README** — 注册 doc-hygiene
+
 ## [4.28.0] - 2026-08-28
 
 ### Added

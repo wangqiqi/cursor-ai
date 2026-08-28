@@ -34,7 +34,7 @@
 
 ```text
 .cursor/
-├── rules/      沟通 · 执行（含 oss-first · data-batch · i18n-copy · data-list · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
+├── rules/      沟通 · 执行（含 oss-first · data-batch · i18n-copy · data-list · doc-hygiene · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
 ├── skills/     28 个：master · plan · run · **long** · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · **ops-deploy** · **code-stats-viz** · pencil-design
 ├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · **long** · release · 【高级】delivery · manual · report（其余 skill-only）
 ├── agents/     ship · review · spike

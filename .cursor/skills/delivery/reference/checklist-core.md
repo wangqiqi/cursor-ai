@@ -42,7 +42,7 @@
 
 | 手段 | 用途 |
 |------|------|
-| **`docs/scripts/verify_doc_*.sh`**（见 `rules/execution/docs.mdc`） | 断链 · 版本锚点 · 防回退 grep — **可写进 plan 验收列** |
+| **`docs/scripts/verify_doc_*.sh`**（见 **`docs.mdc`** · **`doc-hygiene.mdc`**） | 断链 · 版本锚点 · 防回退 grep — **可写进 plan 验收列** |
 | **本 §3 清单** | 语义完整 · 读者可读 · 冲突上报 |
 
 DOC Sprint 的 Done when：**脚本绿** + delivery §3 **无 Blocker**（若用户可见）。

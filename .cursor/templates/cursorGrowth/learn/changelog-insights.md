@@ -20,6 +20,7 @@
 | 症状簇 | 出现版本 | 根因类型 | 状态 |
 |--------|----------|----------|------|
 | verify 脚本同断言重复（示例） | v1.2 · v1.3 | 未抽 `scripts/lib/` | open |
+| ROADMAP done 堆叠 · doc 断链（示例） | v2.1 · v2.2 follow-up | 无 doc-hygiene/verify_doc | open |
 | 改菜单文案 E2E 挂（示例） | v2.0 follow-up | i18n 与 aria 未同步 | closed |
 
 **填写提示**：

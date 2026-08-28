@@ -64,7 +64,7 @@
 
 | 范围 | 标准 |
 |------|------|
-| 结构 | 27 skills · 3 agents · 46 rules · 10 commands · config/hooks/bin 齐全 |
+| 结构 | 28 skills · 3 agents · 52 rules · 10 commands · config/hooks/bin 齐全 |
 | 注册 | 每个 `rules/**/*.mdc` 在 `verify-super-cursor.sh` 有 check |
 | layout | **mother** 纯空仓 · **hybrid** 业务树共存（自动 SKIP 纯母版项）— `rules/feedback/verify.mdc` |
 | 交叉引用 | AGENTS ↔ 磁盘 · routes ↔ skills/agents · roles=12 |

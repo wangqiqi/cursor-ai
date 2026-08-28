@@ -204,6 +204,7 @@ check "$CUR/rules/execution/data-batch.mdc"
 check "$CUR/rules/execution/i18n-copy.mdc"
 check "$CUR/rules/execution/data-list.mdc"
 check "$CUR/rules/execution/deploy-ops.mdc"
+check "$CUR/rules/execution/doc-hygiene.mdc"
 check "$CUR/skills/ops-deploy/SKILL.md"
 check "$CUR/rules/execution/oss-first.mdc"
 check "$CUR/rules/execution/input-bounds.mdc"
@@ -342,6 +343,11 @@ elif [[ -n "$(echo "$user_violators" | sed '/^$/d')" ]]; then
   FAIL=$((FAIL+1))
 else
   echo "OK  no user/machine paths in SOP"
+fi
+
+echo "--- doc-coherence (verify-doc-super-cursor) ---"
+if ! bash "$CUR/bin/verify-doc-super-cursor.sh"; then
+  FAIL=$((FAIL+1))
 fi
 
 echo "---"

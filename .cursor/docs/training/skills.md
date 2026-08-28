@@ -1,6 +1,6 @@
 # Skills 速查
 
-**路由详表（canonical）**：[`skills/master/routes.md`](../skills/master/routes.md)。本页为人读摘要，避免与 routes 双写长表。
+**路由详表（canonical）**：[`skills/master/routes.md`](../../skills/master/routes.md)。本页为人读摘要，避免与 routes 双写长表。
 
 入口均在 `core.mdc`。说 slash 或关键词触发。
 
@@ -56,7 +56,7 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 迷路:     /master → 主菜单 7 项 → 子问
 ```
 
-详表与关键词 → [`routes.md`](../skills/master/routes.md)。
+详表与关键词 → [`routes.md`](../../skills/master/routes.md)。
 
 ## 可选能力（无新增 skill）
 

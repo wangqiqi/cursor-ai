@@ -125,6 +125,8 @@ disable-model-invocation: true
 | 进度/上传/弹窗/错误 message 重复 patch | 横切 UX | `async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector` |
 | 大批量 IN / 列表超限 | 数据访问 | `data-batch.mdc` |
 | compose/env/nginx 重复对齐 | 部署真源漂移 | **ops-deploy** · `deploy-ops.mdc` |
+| ROADMAP 膨胀 · archive 混放 · doc 锚点漂移 | doc 职责/自洽缺失 | `doc-hygiene.mdc` · `verify_doc_*` |
+| README skills/rules 计数滞后 | 门面未同 Sprint 同步 | **doc-hygiene** · **followup-facade** · `verify-doc-super-cursor.sh` |
 | 死代码 · 仅测试引用 | 清理 | **refactor** skill |
 
 模板：`.cursor/templates/cursorGrowth/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`

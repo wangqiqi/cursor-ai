@@ -55,3 +55,4 @@ alwaysApply: false
 - 改用户可见文案 / i18n / E2E 文案锚点 → **`i18n-copy.mdc`**
 - 改列表分页 / filter 后空页 → **`data-list.mdc`**
 - 改 compose / `.env.example` / nginx → **`deploy-ops.mdc`** · **ops-deploy** skill
+- 改 ROADMAP/archive/doc 锚点 / README 计数 → **`doc-hygiene.mdc`**
