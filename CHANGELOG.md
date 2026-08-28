@@ -4,7 +4,19 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
-## [4.26.4] - 2026-08-05
+### Added
+
+- **rules/execution/i18n-copy.mdc** — 文案/i18n/禁词/E2E 锚点三联（吸收自 workspace CHANGELOG 重复劳动审计）
+- **rules/execution/data-list.mdc** — 分页/cursor pager/render reset/limit 与 API 对齐
+
+### Changed
+
+- **verify.mdc** — §新增 verify 脚本门禁（复用优先 · `scripts/lib/` 公因子 · 禁重复聚合）
+- **learn** skill — CHANGELOG 重复模式审计：增量/全量/workspace 扫描 · 症状簇→rule 映射
+- **test** skill — 引用 verify §新增脚本门禁
+- **changelog-insights** 模板 — 重复工作模式示例行（含 verify 冗余）
+- **bugfix** · **core** · **AGENTS** · **rules-catalog** · **verify-super-cursor** · **.cursor/README** — 注册 i18n-copy · data-list · verify 复用 SOP
+
 
 ### Added
 

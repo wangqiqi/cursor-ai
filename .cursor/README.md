@@ -104,6 +104,9 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | 无障碍（可选） | **delivery** §11（同上 optional 清单）— 键盘·焦点·语义/label·对比度；可跳过；不强制 axe/MCP |
 | 系统调试循环 | **debug** skill — 复现→假设→隔离→验证→记录；无复现不盲改；`/run` 自修≤2 后 `⚠️`→`/plan` |
 | 数据批处理 IN/分块 | `rules/execution/data-batch.mdc` |
+| 文案/i18n/E2E 锚点 | `rules/execution/i18n-copy.mdc` |
+| 列表分页 / cursor pager | `rules/execution/data-list.mdc` |
+| verify 脚本复用 / 防冗余 | `rules/feedback/verify.mdc` §新增 verify 脚本门禁 · **learn** §重复模式审计 |
 | MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
 | delivery / plan 详单 | **delivery** / **plan** · 各自 `skills/*/reference/`（SKILL 为薄索引） |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |

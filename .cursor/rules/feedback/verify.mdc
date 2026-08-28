@@ -50,6 +50,21 @@ alwaysApply: false
 - **`--full`**：跑到 **L3**
 - **聚合脚本**（示例 `scripts/verify_all.sh`）：顺序调用各域脚本；新域交付时 **注册一行**，勿复制整套逻辑进每个域脚本
 
+## 新增 verify 脚本门禁（复用优先）
+
+持续开发易堆积 `verify_*.sh` 冗余。**新增前必做**：
+
+| 步 | 动作 |
+|----|------|
+| 1 | `grep -r` / 读 `scripts/verify*.sh` · `scripts/lib/` · 聚合入口（`verify.sh` / `verify_all.sh`） |
+| 2 | **优先**扩已有脚本或抽公因子到 `scripts/lib/_*.sh`（断言函数 · env 加载 · curl 封装） |
+| 3 | 必须新建时：只写**域差分**；L0–L3 与 `--full` 语义跟 §分层验收；聚合 **+1 行**注册 |
+| 4 | 禁止复制粘贴整段断言进第二个脚本；同断言 ≥2 处 → **refactor** 合并或抽 lib |
+
+**Sprint / learn 审计**：CHANGELOG 或 learn 症状簇「verify 冗余」→ 合并脚本，非第三个 copy-paste patch。
+
+详 **test** skill §验收脚本分层 · **refactor** skill 死代码/重复删除协议。
+
 plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）；Sprint 全量走 `plan VERIFY` 或 `./scripts/verify.sh`。
 
 ## Super Cursor layout 验收（`verify-super-cursor.sh`）

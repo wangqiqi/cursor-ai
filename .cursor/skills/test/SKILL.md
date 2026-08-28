@@ -50,6 +50,7 @@ Walkthrough 若用于**说明书配图**（非仅冒烟）→ 与 **user-manual*
 **层定义真源**：`rules/feedback/verify.mdc` §分层验收（L0–L3）。本 skill **不重复**该表。
 
 - 新功能域：**优先** L1 进 `task-verify`；L3 进 Sprint Done when 或 nightly
+- **新增 `verify_*.sh` 前**：读 `rules/feedback/verify.mdc` §新增 verify 脚本门禁 — grep 已有脚本 · 优先 `scripts/lib/` 公因子 · 聚合 +1 行注册
 - 红测停在 L1 即可标 🔧；**勿**为 ✅ 跳过 L1 直接跑 L3
 - 项目路径坐标 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进 `.cursor/`；聚合脚本仅编排（见 verify.mdc）
 

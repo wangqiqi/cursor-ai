@@ -29,6 +29,8 @@ alwaysApply: true
 | 扩展宿主（可选） | `extensibility`（三级 · glob；无独立 slash） |
 | Prompt / Agent 安全 | `prompt-security`（二级；**security** 清单） |
 | ORM/SQL 大批量 IN / 分块查询 | `rules/execution/data-batch` |
+| 文案/i18n/E2E 锚点 | `rules/execution/i18n-copy.mdc` |
+| 列表分页 / cursor pager | `rules/execution/data-list.mdc` |
 | 学新技术 | **study** skill（学技术；≠ `/learn` 本仓认知） |
 
 扩展路由（关键词命中）：**mcp** · **refactor** · **perf** · **spike** agent（`SPIKE-*`）→ **`/master`**
