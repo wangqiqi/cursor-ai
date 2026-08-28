@@ -25,6 +25,7 @@ git status && git diff --stat
 
 - [ ] 当前 ACTIVE 或 Sprint P0 已 ✅（或用户明确只做分支收尾）
 - [ ] 验收命令已实际执行
+- [ ] **FE 栈**（若有）：静态检查见 `rules/tech/eslint.mdc` §Pre-release FE gate
 - [ ] 无意外脏文件 · 无密钥
 - [ ] **UI/功能 Sprint**：**建议**先 **`/delivery`**；有 **Blocker** 须在 AskQuestion 前报告
 
@@ -90,6 +91,7 @@ PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**mast
 - [ ] `./.cursor/bin/runner.sh release-check` — 确认 `latest_tag` · `next_version`（见下节）
 - [ ] 版本已定 · plan 本版 ✅（若用）
 - [ ] verify 通过 · 无 WIP
+- [ ] **FE 栈**（若有）：lint/tsc 见 `rules/tech/eslint.mdc` §Pre-release FE gate
 - [ ] **security**（auth/PII）
 - [ ] UI/功能：**建议** **`/delivery`** 无 Blocker
 - [ ] 发版 benchmark：**可选** **`/report`** full regen（**test-report** · verify 绿后）

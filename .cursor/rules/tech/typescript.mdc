@@ -15,6 +15,6 @@ alwaysApply: false
 - Utility types (`Pick`, `Omit`, `Partial`) for API evolution; avoid deep nested generics without aliases.
 - Prefer `async/await`; handle errors at boundaries; no floating promises in app code.
 - No secrets in source; validate env at startup with schema (zod/valibot) when the repo uses it.
-- Match eslint/prettier; run `type-check` / `lint` before marking tasks done.
+- Lint/tsc 收口清单 → `rules/tech/eslint.mdc` §Pre-release FE gate（类型纪律见上文条目）。
 - Tests: colocate `*.test.ts` / `__tests__`; mock at I/O boundaries, not internals.
 - Imports: prefer type-only imports; avoid barrel files that hurt tree-shaking unless repo convention.

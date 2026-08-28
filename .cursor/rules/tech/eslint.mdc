@@ -19,3 +19,16 @@ alwaysApply: false
 - Prefer consistent quote/semi rules already in config — no style wars in mixed PRs.
 - Type-aware rules: use `@typescript-eslint` when TS project already does.
 - CI must mirror local lint command when scaffold provides `.github/workflows`.
+
+## Pre-release FE gate
+
+与 **task-verify** / **verify.mdc** L1 分工：单 TASK 收尾跑项目 `test.sh` 或域 L1；Sprint/merge 前跑完整静态检查（通常 `./scripts/verify.sh` 或 README 列命令）。
+
+| 步 | 检查 | 典型命令（跟项目 README） |
+|----|------|---------------------------|
+| 1 | TypeScript 无类型错误 | `npm run type-check` · `vue-tsc` · `tsc --noEmit` |
+| 2 | ESLint 绿 | `npm run lint` · `next lint` |
+| 3 | CI 与本地一致 | workflow 镜像同一 lint/type-check 命令 |
+| 4 | Suppressions 有注释 | eslint-disable 须 reason + issue ref |
+
+**交叉引用**：**release** §分支/打版前置 · **delivery** 走查前须 task-verify 绿 · **typescript.mdc** 类型纪律。

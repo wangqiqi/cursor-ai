@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **eslint.mdc** — §Pre-release FE gate（tsc · lint · CI 镜像 · suppressions）；与 task-verify/verify L1 分工（SPRINT-LINT-TSC）
+- **release** skill — §分支/打版 checklist 链 eslint §Pre-release FE gate
+- **delivery** skill · **typescript.mdc** — lint/tsc 交叉引用（详单 SSOT 在 eslint.mdc）
+
 ## [4.29.1] - 2026-08-28
 
 ### Changed
