@@ -1,8 +1,6 @@
 ---
 name: disk
-description: >-
-  磁盘快照（无 slash · 关键词）：结构化采集 HOME 与可配置路径占用，写入 .cursorGrowth/disk-snapshots/，
-  并与上次快照对比变动。说「磁盘快照」「空间变动」「disk snapshot」时触发。
+description: 磁盘快照（关键词）— 占用对比→Growth。说「磁盘快照」「空间变动」时用。
 disable-model-invocation: true
 ---
 

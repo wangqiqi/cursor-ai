@@ -1,8 +1,6 @@
 ---
 name: pencil-design
-description: >-
-  Pencil CLI 视觉设计（无 slash · 关键词）：用自然语言生成 .pen 设计与 PNG 导出。
-  说「做设计」「生成 mockup」「landing page 视觉」「.pen」时触发。
+description: Pencil 视觉设计 — .pen + PNG。说「做设计」「mockup」「.pen」时用。
 ---
 
 # pencil-design · Pencil CLI 视觉设计

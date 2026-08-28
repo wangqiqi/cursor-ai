@@ -1,8 +1,6 @@
 ---
 name: release
-description: >-
-  Sprint 出口（/release）：分支 merge/PR/保留/丢弃 4 选 1 · semver · CHANGELOG · tag。
-  说「收尾」「merge」「开 PR」「发版」「打 tag」「分支怎么办」时用。自治发版→ship agent。
+description: Sprint 出口（/release）— merge/PR/tag·CHANGELOG。说「发版」「打 tag」时用。
 disable-model-invocation: true
 ---
 

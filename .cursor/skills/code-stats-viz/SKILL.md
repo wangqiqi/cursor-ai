@@ -1,8 +1,6 @@
 ---
 name: code-stats-viz
-description: >-
-  代码统计可视化（无 slash · 关键词）：Git 跟踪文件行数/语言分布/提交日历，生成交互式 HTML 仪表板，
-  写入 .cursorGrowth/code-stats/。说「代码统计」「代码量」「语言分布」「提交热力图」「code stats」时触发。
+description: 代码统计（关键词）— 语言/提交热力图 HTML。说「code stats」时用。
 disable-model-invocation: true
 ---
 

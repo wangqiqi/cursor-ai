@@ -1,6 +1,6 @@
 ---
 name: user-manual
-description: 可发布软件使用说明书（/manual）— 故事线 · 配图 regen · Manual Contract · 多 Capture Profile。项目无关 · 操作者无关。说「使用说明书」「用户手册」「配图 regen」「walkthrough 截图」时用。
+description: 使用说明书（/manual）— Manual Contract · 配图 regen。说「用户手册」时用。
 ---
 
 # user-manual · 软件使用说明书

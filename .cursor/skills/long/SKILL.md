@@ -1,8 +1,6 @@
 ---
 name: long
-description: >-
-  长程调度（/long）：Epic→Sprint→Task 三层收敛，跨 Sprint plan/run 链与 checkpoint。
-  说「长程任务」「全自动做到底」「Epic」「多 Sprint」「long resume」时触发。
+description: 长程（/long）— Epic 多 Sprint plan/run·checkpoint。说「Epic」「long」时用。
 disable-model-invocation: true
 ---
 

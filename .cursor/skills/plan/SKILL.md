@@ -1,6 +1,6 @@
 ---
 name: plan
-description: 规划（/plan）：需求→先总后分→Sprint→plan.md→/run。说「规划」「拆任务」时用。禁止写业务代码。≠ IDE Plan 模式。
+description: 规划（/plan）— 先总后分·Sprint·plan.md。说「规划」「拆任务」时用。
 disable-model-invocation: true
 ---
 

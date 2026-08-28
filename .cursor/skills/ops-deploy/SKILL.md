@@ -1,8 +1,6 @@
 ---
 name: ops-deploy
-description: >-
-  部署与运维约定（无 slash · 关键词）：docker-compose · .env.example · nginx · systemd。
-  说「部署」「docker compose」「env 模板」「nginx 配置」「上线运维」时用。
+description: 部署约定（关键词）— compose/env/nginx。说「部署」「docker compose」时用。
 disable-model-invocation: true
 ---
 

@@ -81,6 +81,15 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 
 **git** §GitHub 运维 · **security** §支付/webhook — 见各 skill 正文。
 
+## disable-model-invocation 策略
+
+| 桶 | 字段 | skill |
+|----|------|-------|
+| **主路径 / 工具** | `disable-model-invocation: true` | plan · run · learn · scaffold · release · long · week · disk · maintain · code-stats-viz · ops-deploy |
+| **分流 / 按需** | 不写（默认 false） | master · delivery · debug · test · ux · ia · review · security · api · git · mcp · refactor · perf · study · user-manual · test-report · pencil-design |
+
+`description` frontmatter **≤85 字**（用途 + 一句触发）；详触发词 → 各 skill「何时进入」· [`routes.md`](../../skills/master/routes.md)。
+
 ## 7 栈 scaffold
 
 `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `cpp-cmake`

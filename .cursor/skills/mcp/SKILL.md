@@ -1,8 +1,6 @@
 ---
 name: mcp
-description: >-
-  MCP 服务器设计与实现要点：工具边界、命名、分页、错误、传输选型；
-  建服四阶段流程。参考 reference/ 精简指南。
+description: MCP 建服 — 工具边界/分页/Eval。说「建 MCP server」时用。
 ---
 
 # mcp

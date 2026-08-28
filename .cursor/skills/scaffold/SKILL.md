@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: 脚手架（/scaffold）：空项目创建栈模板，已有项目审计与建议。说「初始化」「创建项目」「脚手架」时用。须用户确认后再创建。
+description: 脚手架（/scaffold）— 空项目/audit。说「初始化」「脚手架」时用。
 disable-model-invocation: true
 ---
 

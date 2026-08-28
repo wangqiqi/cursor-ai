@@ -1,8 +1,6 @@
 ---
 name: week
-description: >-
-  周报（无 slash · 关键词）：扫描工作区下 CHANGELOG.md，按年内第 N 周归纳进展，写入 .cursorGrowth/week-report/。
-  说「周报」「本周总结」「weekly report」「总结最近一周」时触发。
+description: 周报（关键词）— CHANGELOG 汇总→Growth。说「周报」「本周总结」时用。
 disable-model-invocation: true
 ---
 

@@ -1,8 +1,6 @@
 ---
 name: maintain
-description: >-
-  开发环境维护（无 slash · 关键词）：Ubuntu/Linux 诊断与安全清理，委托 disk 快照对比。
-  说「清理环境」「磁盘清理」「dev maintenance」「系统维护」时触发。
+description: 环境维护（关键词）— Linux 诊断清理。说「清理环境」「dev maintenance」时用。
 disable-model-invocation: true
 ---
 

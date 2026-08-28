@@ -1,6 +1,6 @@
 ---
 name: test
-description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 verify。说「写测试」「TDD」「Playwright」时用。
+description: 测试清单 — 单测/E2E/TDD；衔接 verify。说「写测试」「Playwright」时用。
 ---
 
 # test

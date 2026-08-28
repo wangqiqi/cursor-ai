@@ -1,6 +1,6 @@
 ---
 name: run
-description: 执行（/run）：gate-check→ACTIVE→验收→审计→CHANGELOG→README（门面）→plan→必 commit。每任务/Sprint 收尾自动提交。
+description: 执行（/run）— ACTIVE·task-verify·commit；Sprint 连跑。
 disable-model-invocation: true
 ---
 

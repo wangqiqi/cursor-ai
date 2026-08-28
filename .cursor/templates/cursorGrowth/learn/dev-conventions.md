@@ -33,6 +33,10 @@
 
 字段说明 → **ops-deploy** `reference/growth-deploy-fields.md`
 
+## Skill 元数据（母版）
+
+母版 `SKILL.md` 的 `description`（≤85 字）与 `disable-model-invocation` 分桶 → **`.cursor/docs/training/skills.md`** §disable-model-invocation 策略。
+
 ## 建议约定（/learn 可填）
 
 > 来自 **learn** skill「建议约定」：有证据才写；默认本文件或 `rules/local`，**勿**擅自改母版 `.cursor/`。

@@ -1,6 +1,6 @@
 ---
 name: test-report
-description: 可发布测试报告（/report）— 全量/分层 verify 后汇总 · Report Contract · 日志解析 · benchmark 文档。项目无关 · 操作者无关。说「测试报告」「全量测试报告」「verify 报告」「benchmark 报告」时用。
+description: 测试报告（/report）— verify 汇总 · Report Contract。说「测试报告」时用。
 ---
 
 # test-report · 测试报告
