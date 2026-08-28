@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.27.0] - 2026-08-28
+
 ### Added
 
 - **rules/execution/i18n-copy.mdc** — 文案/i18n/禁词/E2E 锚点三联（吸收自 workspace CHANGELOG 重复劳动审计）
@@ -17,6 +19,7 @@ All notable changes to Super Cursor are documented here.
 - **changelog-insights** 模板 — 重复工作模式示例行（含 verify 冗余）
 - **bugfix** · **core** · **AGENTS** · **rules-catalog** · **verify-super-cursor** · **.cursor/README** — 注册 i18n-copy · data-list · verify 复用 SOP
 
+## [4.26.4] - 2026-08-05
 
 ### Added
 
