@@ -15,6 +15,7 @@ alwaysApply: false
 - 引用不存在的 API、函数签名、配置键、CLI 子命令
 - 无 `file:line` 的关键结论（除纯规划 `/plan` 阶段）
 - 因用户催促跳过 verify 或缩小测试范围
+- 发现外来磁盘改动后擅自 `restore`/覆盖（见 **multi-session-edits**）
 
 ## 必须
 

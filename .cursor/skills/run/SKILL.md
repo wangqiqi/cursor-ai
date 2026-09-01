@@ -47,7 +47,7 @@ ACTIVE → 🔧 → 实现 → `task-verify` → **closeout review（若触发�
 
 ```bash
 ./.cursor/bin/runner.sh task-verify
-git status && git diff --stat    # commit 前：无密钥、无意外文件
+git status && git diff --stat    # commit 前：无密钥、无意外文件；含外来块 → **multi-session-edits** 停手 AskQuestion
 ./.cursor/bin/runner.sh next-task
 ./.cursor/bin/runner.sh verify   # Sprint / 打版前全量
 ```

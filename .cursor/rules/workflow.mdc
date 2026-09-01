@@ -26,6 +26,7 @@ CLI：`.cursor/bin/runner.sh` — `gate-check` · `task-verify` · `verify` · `
 
 - `/plan` 必须先冻结 L0 Goal、Done when、Out of scope，再划分 L1 Theme 和后续 TASK；
 - 同层 TASK 必须互斥且完备；`Target`、`Owns` 和主验收不得跨多个 Theme；
+- 多 Cursor 会话并行改同一仓库 → **multi-session-edits**（外来 diff 停手 · 禁止擅自 restore）；
 - `/run` 只执行当前 `ACTIVE` 分支；发现新 Theme 或横向扩张时标记 `⚠️` 并回 `/plan`，不得把它追加到当前 TASK；
 - 实现步骤留在 TASK 内部，不为单文件、字段或命令单独创建任务；
 - 仍需方案决策的内容使用 `SPIKE-*` / `Decision needed`，不得和实现 TASK 混合；

@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **multi-session-edits.mdc** — 多 Cursor 会话并行时禁止覆盖/restore 外来磁盘改动；外来 diff 停手 AskQuestion（`alwaysApply`）
+
+### Changed
+
+- **plan** skill · **phases.md** · **templates/plan.md** — TASK 表 `Owns` 列与多会话独占路径
+- **git** skill · **run** skill — worktree / commit 前交叉引用 multi-session-edits
+- **workflow.mdc** · **agent-discipline.mdc** · **cursor-coherence.sh** — 并行编辑主权指针与白名单
+
 ## [4.29.2] - 2026-08-28
 
 ### Changed

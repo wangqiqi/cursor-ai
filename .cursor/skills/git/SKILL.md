@@ -87,3 +87,8 @@ git worktree remove <path>   # 须无未提交改动 · 用户确认
 
 - 主 worktree 保持可发布基线
 - 清理前 verify 绿 · 与 **release** §分支 4 选 1 一致
+
+### 多 Cursor 会话（同仓库）
+
+- 优先 **一会话一 worktree**，避免多对话框共抢同一工作区
+- 若必须共用同一 worktree：遵守 **multi-session-edits** — 改前再读；遇外来 `git diff` **停手** AskQuestion；**禁止** `git restore` / checkout 清掉他会话未提交改动

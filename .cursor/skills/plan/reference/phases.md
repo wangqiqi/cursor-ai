@@ -103,7 +103,7 @@ Sprint 表 + **执行顺序** 行：`TASK-001` → `TASK-002` → …
 
 ```text
 Parent：所属父节点
-Owns：本节点唯一负责的结果
+Owns：本节点唯一负责的结果（多会话并行时填独占路径；两 ACTIVE 的 Owns 不得重叠 — 见 **multi-session-edits** · **plan** skill）
 In scope：包含什么
 Out of scope：明确不包含什么
 Inputs：依赖哪些已冻结输入

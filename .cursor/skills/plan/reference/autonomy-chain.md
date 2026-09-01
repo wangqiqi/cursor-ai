@@ -73,7 +73,7 @@ flowchart LR
 
 | 层 | SSOT | 作用 |
 |----|------|------|
-| **行为 SOP** | `rules/communication/super-cursor-persona.mdc` · `agent-discipline.mdc` | 少问多干 · verify · file:line |
+| **行为 SOP** | `rules/communication/super-cursor-persona.mdc` · `agent-discipline.mdc` · `multi-session-edits.mdc` | 少问多干 · verify · file:line · 并行勿覆盖 |
 | **语气品牌** | `config/roles.json` · `role.default` | 默认 `dashu`；`voice_cues` 落地语气 · **禁止** given_name 开场自报 |
 
 `run-start` 的 `sc_role_hint` 在自治块注入 **Persona hint**（`tone` · `voice_cues` · `speech_examples`；**不含** given_name 置顶）；语气不改变 skill 能力（`skills: full`）。

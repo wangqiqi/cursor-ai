@@ -33,9 +33,9 @@
 
 **Out of scope**（可选）: …
 
-| ID | Task | Priority | Status | Acceptance | Target |
-|----|------|----------|--------|------------|--------|
-| TASK-001 | Example feature | P0 | ⬜ | `./scripts/test.sh` | `src/` |
+| ID | Task | Priority | Status | Acceptance | Target | Owns |
+|----|------|----------|--------|------------|--------|------|
+| TASK-001 | Example feature | P0 | ⬜ | `./scripts/test.sh` | `src/` | `src/feature/` |
 
 **执行顺序**: `TASK-001` → …
 

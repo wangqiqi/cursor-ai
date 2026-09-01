@@ -105,10 +105,10 @@ while IFS= read -r ref; do
   fi
 done < <(grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u)
 
-# 6. alwaysApply: true only in core.mdc, workflow.mdc, super-cursor-persona.mdc
+# 6. alwaysApply: true only in core.mdc, workflow.mdc, super-cursor-persona.mdc, cursor-standalone.mdc, multi-session-edits.mdc
 while IFS= read -r f; do
   base="$(basename "$f")"
-  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" || "$base" == "cursor-standalone.mdc" ]]; then
+  if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" || "$base" == "cursor-standalone.mdc" || "$base" == "multi-session-edits.mdc" ]]; then
     ok "alwaysApply allowed: $base"
   else
     fail "alwaysApply in unexpected file: $f"

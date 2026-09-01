@@ -6,7 +6,7 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 
 | 模式 | frontmatter | 用途 |
 |------|-------------|------|
-| Always | `alwaysApply: true` | 母版仅 `core` + `workflow` |
+| Always | `alwaysApply: true` | 母版：`core` · `workflow` · `super-cursor-persona` · `cursor-standalone` · `multi-session-edits` |
 | Auto | `globs: [...]` | `tech/*` · `testing.mdc` 等 |
 | Agent | `description` 清晰 | Agent 按任务 relevance 加载 |
 | Manual | `@ruleName` | 显式引用 |
@@ -39,6 +39,7 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 |----------|----------|
 | anti-overengineering | `rules/execution/scope.mdc` |
 | anti-sycophancy（精选） | `rules/communication/agent-discipline.mdc` |
+| 多会话并行 / 勿覆盖他会话改动 | `rules/communication/multi-session-edits.mdc` |
 | Vitest/Playwright testing | `rules/execution/testing.mdc` |
 | PR review 分角 | `rules/communication/collaboration.mdc` |
 | Svelte 5 | `rules/tech/svelte.mdc` |
