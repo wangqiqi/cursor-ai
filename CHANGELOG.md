@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.3] - 2026-09-01
+
 ### Added
 
 - **multi-session-edits.mdc** — 多 Cursor 会话并行时禁止覆盖/restore 外来磁盘改动；外来 diff 停手 AskQuestion（`alwaysApply`）
