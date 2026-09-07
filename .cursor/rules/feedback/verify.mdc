@@ -26,10 +26,23 @@ alwaysApply: false
 
 | 阶段 | 推荐 |
 |------|------|
-| 开发任务 | `./scripts/test.sh` |
-| 任务收尾 / P0 | `./scripts/verify.sh` |
+| 开发 / 单 TASK | `./scripts/test.sh` · `runner.sh task-verify` · L1 域脚本 |
+| Sprint Done when / PR 前 | `verify_default`（**须用户确认** · 见下节） |
+| 发版前 | 项目 nightly/全量脚本（**须用户确认**） |
 
 `task_verify_heuristics.enabled` 默认 **false**（`config/workflow.json`）。设为 `true` 时，描述性验收列回退 `fallback_test_script` / `fallback_verify_script`。
+
+## 重任务触发门禁（`confirm_before`）
+
+| 键 | 典型命令 | 允许触发 | 禁止触发 |
+|----|----------|----------|----------|
+| `verify_l2` | `workflow.json` → `verify_default`（如 `./scripts/verify.sh`） | plan Done when · 用户明示跑全量 · PR 前 | 问答 · 单 TASK 收尾 · 未确认的后台 |
+| `verify_l3` | 项目 nightly / `--full` 聚合脚本 | 发版 · 用户明示 | 日常开发 |
+| `background_heavy_job` | 预估 **>10 min** 的 shell（含 L2/L3 · 全量 integration/e2e） | 用户同意后台 | 静默 `run_in_background` |
+
+执行前：`pgrep` 查是否已有同类 verify / 全量测试进程 — 已有 → **停手** AskQuestion（杀旧 / 跳过 / 等完）。
+
+项目分层矩阵与耗时 → `.cursorGrowth/learn/dev-conventions.md` 或项目 `scripts/README.md`（安装后由 `/learn` 填写）。
 
 用户可见修复 → CHANGELOG `### Fixed`。
 

@@ -51,9 +51,9 @@ flowchart LR
 | ACTIVE `🔧`/`⬜` | 继续当前 TASK |
 | plan 含 `\| ⚠️ \|` | 阻塞，回 plan |
 | ACTIVE `✅` 且仍有 pending | 链下一 ID |
-| pending = 0 | Sprint 收尾 verify/archive |
+| pending = 0 | Sprint 收尾：**AskQuestion 确认 L2** → verify/archive（`confirm_before: verify_l2`） |
 
-**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。
+**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。**L2/L3 全量验收不算「非决策」** — 须用户确认后再跑，禁止自治链静默后台起全量 verify。
 
 ## 决策打断矩阵
 
@@ -64,6 +64,7 @@ flowchart LR
 | `decision_needed` | 文档↔实现冲突 · 架构选型 · scope 扩大 | AskQuestion ≤4 · 可标 `⚠️` |
 | `blocker` | verify 红且 2 轮自修失败 | 停跑 · `/plan` |
 | `high_risk` | `confirm_before` 删除 · 库外写 | 必须用户确认 |
+| `heavy_verify` | L2 `verify_default` · L3 nightly · 后台长任务 | AskQuestion · 用户确认后执行 |
 | `release` | merge · tag · push | **`/release`** 或用户明示 |
 | `goal_drift` | 偏离 Sprint Goal / Out of scope | 停跑说明 |
 

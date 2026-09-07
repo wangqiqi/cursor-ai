@@ -49,7 +49,7 @@ ACTIVE → 🔧 → 实现 → `task-verify` → **closeout review（若触发�
 ./.cursor/bin/runner.sh task-verify
 git status && git diff --stat    # commit 前：无密钥、无意外文件；含外来块 → **multi-session-edits** 停手 AskQuestion
 ./.cursor/bin/runner.sh next-task
-./.cursor/bin/runner.sh verify   # Sprint / 打版前全量
+# L2 全量仅 Sprint Done when / 用户确认后（见 verify.mdc · confirm_before: verify_l2）
 ```
 
 `task-verify` 非 OK 不得标 ✅、不得 commit（见 `rules/communication/constitution.mdc`）。
@@ -71,8 +71,9 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 | 阶段 | 推荐命令 |
 |------|----------|
-| 开发任务 | `./scripts/test.sh` 或域脚本 **L1**（`bash scripts/verify_<feature>.sh`） |
-| 任务收尾 / P0 闭合 | `./scripts/verify.sh` 或域脚本 **`--full`（L3）** |
+| 开发 / 单 TASK | `./scripts/test.sh` · `runner.sh task-verify` · L1 域脚本 |
+| Sprint Done when / PR 前 | `verify_default`（**用户确认** · `confirm_before: verify_l2`） |
+| 发版前 | 项目 nightly/全量脚本（**用户确认** · `verify_l3`） |
 
 分层定义 → `rules/feedback/verify.mdc` · 测试侧重 → **test** skill。
 

@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.4] - 2026-09-07
+
+### Added
+
+- **`workflow.json`** — `confirm_before`: `verify_l2` · `verify_l3` · `background_heavy_job`；`interrupt_on`: `heavy_verify`
+
+### Changed
+
+- **verify.mdc** — 重任务触发门禁：单 TASK 用 `task-verify`；L2/L3 须用户确认；禁止叠跑 verify
+- **agent-discipline.mdc** — 禁止静默后台起重任务 / 重复起全量验收
+- **run** skill · **autonomy-chain.md** — Sprint 收尾 L2 须 AskQuestion；移除单轮默认 `runner.sh verify`
+
 ## [4.29.3] - 2026-09-01
 
 ### Added

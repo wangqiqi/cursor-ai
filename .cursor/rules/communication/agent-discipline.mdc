@@ -16,6 +16,8 @@ alwaysApply: false
 - 无 `file:line` 的关键结论（除纯规划 `/plan` 阶段）
 - 因用户催促跳过 verify 或缩小测试范围
 - 发现外来磁盘改动后擅自 `restore`/覆盖（见 **multi-session-edits**）
+- **静默起重任务**：`verify_default` · nightly/全量验收 · plan `VERIFY` 脚本 · 全量 integration/e2e · 预估 **>10 min** 命令 — 须用户确认；禁止未确认后台跑（见 **verify.mdc** · `confirm_before`）
+- 已有 verify / 全量测试进程时 **再起一条**（先 `pgrep` 或 AskQuestion）
 
 ## 必须
 
