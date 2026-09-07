@@ -351,6 +351,11 @@ if ! bash "$CUR/bin/verify-doc-super-cursor.sh"; then
   FAIL=$((FAIL+1))
 fi
 
+echo "--- growth-layout (verify-growth-layout) ---"
+if ! bash "$CUR/bin/verify-growth-layout.sh"; then
+  FAIL=$((FAIL+1))
+fi
+
 echo "---"
 [[ "$FAIL" -eq 0 ]] && echo "All checks passed." && exit 0
 echo "$FAIL check(s) failed." && exit 1

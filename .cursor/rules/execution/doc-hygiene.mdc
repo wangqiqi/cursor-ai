@@ -20,10 +20,10 @@ alwaysApply: false
 | 内容 | 放哪里 | 禁止 |
 |------|--------|------|
 | 未完成计划、候选能力 | `docs/` ROADMAP（或等价） | 大量 `done` 行长期冒充待办 |
-| 已交付长叙事 / 里程碑 | `archive/` 时间戳文件 | 与 ROADMAP 双份维护同一故事 |
+| 已交付长叙事 / 里程碑 | `{archive_dir}/{domain}/` 时间戳文件 | 根目录 flat 堆积 · 与 ROADMAP 双份维护同一故事 |
 | 用户可见版本差异 | `CHANGELOG.md` | 在 ROADMAP 写已发布细节 |
 
-Sprint 闭合：**archive 一篇摘要** · plan **删 Active 正文** · CHANGELOG `[Unreleased]` — 见 **plan** · **run** skill。
+Sprint 闭合：**archive 一篇摘要**（**至少一级域子目录**，SSOT → **plan** `reference/growth-layout.md`）· plan **删 Active 正文** · CHANGELOG `[Unreleased]` — 见 **run** skill。
 
 ## doc-coherence 三联
 

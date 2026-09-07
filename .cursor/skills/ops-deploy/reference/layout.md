@@ -11,8 +11,15 @@ repo/
 │   ├── nginx.conf.example
 │   └── README.md           # 索引：哪些文件上线时用
 ├── scripts/
-│   ├── verify.sh           # 聚合入口
-│   └── lib/                # 公因子（env 加载 · curl 封装）
+│   ├── README.md           # 矩阵 SSOT
+│   ├── test.sh             # 开发入口
+│   ├── verify.sh           # L2 聚合入口（可转发 verify/tier/）
+│   ├── lib/                # 公因子（env 加载 · curl 封装）
+│   ├── verify/
+│   │   ├── tier/           # L0/L2/L3 orchestrator
+│   │   └── domain/         # L1 verify_*.sh
+│   ├── ops/                # bootstrap · seed · 运维工具
+│   └── dev/                # stub · SPIKE · fixture
 └── docs/deploy/            # 运维叙事（可选，与 deploy/ 互链）
 ```
 
@@ -32,3 +39,4 @@ repo/
 | 怎么跑起来 | 根 `README.md` |
 | 调参 / 生产注意 | `docs/deploy/` 或 `deploy/README.md` |
 | 版本差异 | `CHANGELOG.md` |
+| scripts 分级纪律 | **plan** `reference/growth-layout.md` |

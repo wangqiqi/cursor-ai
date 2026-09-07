@@ -48,7 +48,7 @@ alwaysApply: false
 
 ## 分层验收（verify-layers）
 
-大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（命名示例 `scripts/verify_<feature>.sh`，路径由项目自定）。
+大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（默认 `scripts/verify/domain/verify_<feature>.sh`；根目录仅聚合入口与兼容转发 — SSOT → **plan** `reference/growth-layout.md`）。
 
 | 层 | 典型内容 | 外部依赖 | 默认 CI |
 |----|----------|----------|---------|
@@ -69,7 +69,7 @@ alwaysApply: false
 
 | 步 | 动作 |
 |----|------|
-| 1 | `grep -r` / 读 `scripts/verify*.sh` · `scripts/lib/` · 聚合入口（`verify.sh` / `verify_all.sh`） |
+| 1 | `grep -r` / 读 `scripts/verify/domain/` · `scripts/lib/` · `verify/tier/` · 聚合入口（`verify.sh` / `verify_all.sh`） |
 | 2 | **优先**扩已有脚本或抽公因子到 `scripts/lib/_*.sh`（断言函数 · env 加载 · curl 封装） |
 | 3 | 必须新建时：只写**域差分**；L0–L3 与 `--full` 语义跟 §分层验收；聚合 **+1 行**注册 |
 | 4 | 禁止复制粘贴整段断言进第二个脚本；同断言 ≥2 处 → **refactor** 合并或抽 lib |

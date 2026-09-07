@@ -30,7 +30,7 @@ disable-model-invocation: true
 
 | 文件 | 内容 |
 |------|------|
-| `plan-conventions.md` | archive 命名 · 可选 plan 段落 · Sprint 标题用语 — 供 **plan** / **run** / `plan-check` |
+| `plan-conventions.md` | archive **域目录** + 命名 · 可选 plan 段落 · Sprint 标题用语 — SSOT 桶见 **plan** `reference/growth-layout.md` |
 | `dev-conventions.md` | 命名、目录、测试/verify 命令、分支策略 |
 | `module-map.md` | 模块边界、入口、依赖方向 |
 | `release-rhythm.md` | 发版频率、谁打 tag、CHANGELOG 习惯 |

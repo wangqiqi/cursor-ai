@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **plan** `reference/growth-layout.md` — `.cursorGrowth/archive/{domain}/` 与 `scripts/` 一级功能分级 SSOT（archive 域表 · verify/domain · lib · ops · dev）
+- **verify-growth-layout.sh** — 母版 SOP 引用与布局文档自检（纳入 `verify-super-cursor.sh`）
+
+### Changed
+
+- **doc-hygiene.mdc** · **verify.mdc** · **docs.mdc** — archive 禁 flat 膨胀；域脚本默认 `scripts/verify/domain/`
+- **run** · **scaffold** · **test** · **learn** · **ops-deploy** `layout.md` — 链 growth-layout；plan-conventions 模板含 `{domain}/`
+
 ## [4.29.4] - 2026-09-07
 
 ### Added

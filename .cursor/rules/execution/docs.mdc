@@ -28,7 +28,7 @@ alwaysApply: false
 | 内容 | 放哪里 |
 |------|--------|
 | 未完成计划、候选能力 | `docs/` ROADMAP（或等价） |
-| 已交付长叙事 / 验收里程碑 | `archive/` 时间戳文件 |
+| 已交付长叙事 / 验收里程碑 | `{archive_dir}/{domain}/` 时间戳文件 |
 | 用户可见版本差异 | `CHANGELOG.md`（对外 SSOT） |
 
 禁止：把大量已完成项长期堆在现行 ROADMAP 冒充待办。
