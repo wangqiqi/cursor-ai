@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.5] - 2026-09-07
+
 ### Added
 
 - **plan** `reference/growth-layout.md` — `.cursorGrowth/archive/{domain}/` 与 `scripts/` 一级功能分级 SSOT（archive 域表 · verify/domain · lib · ops · dev）
