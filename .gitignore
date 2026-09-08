@@ -5,3 +5,9 @@ archive/
 .DS_Store
 /plan.md
 /learn/
+node_modules/
+docs/.vitepress/cache
+docs/.vitepress/dist
+docs/guide/
+docs/reference/
+docs/training/
