@@ -1,3 +1,5 @@
+# First-time: repo Settings → Pages → Build and deployment → Source: GitHub Actions
+# (or: gh api --method POST repos/OWNER/REPO/pages -f build_type=workflow)
 name: Deploy VitePress to GitHub Pages
 
 on:
@@ -28,7 +30,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
