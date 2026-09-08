@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **VitePress 文档站** — `docs/` · `npm run docs:dev|build` · 镜像 `.cursor/docs/` 12 篇（guide · reference · training）
+- **GitHub Pages** — `.github/workflows/pages.yml` · `https://wangqiqi.github.io/cursor-ai/`
+
+### Changed
+
+- **README.md** — 在线文档入口 · 版本 badge 4.29.5
+- **verify.yml** — `docs/**` · `package.json` 变更时跑 `npm run docs:build`
+
 ## [4.29.5] - 2026-09-07
 
 ### Added

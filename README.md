@@ -1,6 +1,7 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-4.29.3-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.29.5-blue?style=flat-square)](CHANGELOG.md)
+[![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
@@ -272,16 +273,23 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 
 ## 文档
 
+**在线文档（VitePress）**：<https://wangqiqi.github.io/cursor-ai/> — 镜像 `.cursor/docs/` 全量侧栏；本地预览：
+
+```bash
+npm install
+npm run docs:dev
+```
+
 | 文档 | 说明 |
 |------|------|
-| [5 分钟上手](.cursor/docs/quickstart.md) | 最短闭环 |
-| [效果型效率](.cursor/docs/effective-collaboration.md) | 少拉扯才是真省 · 与 skills 市场 token skill 的取舍 |
-| [plan/run](.cursor/docs/plan-run.md) | 闸门、验收、hooks、先总后分 |
-| [rules-catalog](.cursor/docs/rules-catalog.md) | 社区 rules 索引 · `rules/local/` 引用 |
+| [5 分钟上手](https://wangqiqi.github.io/cursor-ai/guide/quickstart) · [源文件](.cursor/docs/quickstart.md) | 最短闭环 |
+| [效果型效率](https://wangqiqi.github.io/cursor-ai/guide/effective-collaboration) · [源文件](.cursor/docs/effective-collaboration.md) | 少拉扯才是真省 · 与 skills 市场 token skill 的取舍 |
+| [plan/run](https://wangqiqi.github.io/cursor-ai/guide/plan-run) · [源文件](.cursor/docs/plan-run.md) | 闸门、验收、hooks、先总后分 |
+| [rules-catalog](https://wangqiqi.github.io/cursor-ai/reference/rules-catalog) · [源文件](.cursor/docs/rules-catalog.md) | 社区 rules 索引 · `rules/local/` 引用 |
 | [使用场景（20+）](.cursor/README.md) | onboarding → 发版全场景 |
-| [scaffold](.cursor/docs/scaffold.md) | 脚手架与 audit |
-| [端到端示例](.cursor/docs/walkthrough.md) | go-api 可跟练 |
-| [Building](.cursor/docs/building-super-cursor.md) | 扩展母版、贡献指南 |
+| [scaffold](https://wangqiqi.github.io/cursor-ai/guide/scaffold) · [源文件](.cursor/docs/scaffold.md) | 脚手架与 audit |
+| [端到端示例](https://wangqiqi.github.io/cursor-ai/guide/walkthrough) · [源文件](.cursor/docs/walkthrough.md) | go-api 可跟练 |
+| [Building](https://wangqiqi.github.io/cursor-ai/guide/building-super-cursor) · [源文件](.cursor/docs/building-super-cursor.md) | 扩展母版、贡献指南 |
 
 ## 致谢与协议出处
 

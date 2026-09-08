@@ -6,11 +6,17 @@ on:
     paths:
       - '.cursor/**'
       - 'config/**'
+      - 'docs/**'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/verify.yml'
   pull_request:
     paths:
       - '.cursor/**'
       - 'config/**'
+      - 'docs/**'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/verify.yml'
   workflow_dispatch:
 
@@ -29,3 +35,11 @@ jobs:
 
       - name: Template layout + scaffold + runner smoke
         run: bash .cursor/bin/template-verify.sh
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: VitePress build
+        run: npm ci && npm run docs:build
