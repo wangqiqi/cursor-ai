@@ -26,57 +26,39 @@ alwaysApply: false
 
 | 阶段 | 推荐 |
 |------|------|
-| 开发 / 单 TASK | `./scripts/test.sh` · `runner.sh task-verify` · L1 域脚本 |
-| Sprint Done when / PR 前 | `verify_default`（**须用户确认** · 见下节） |
-| 发版前 | 项目 nightly/全量脚本（**须用户确认**） |
+| 每个 TASK · `task-verify` | `./scripts/verify.sh`（**L1**，~20s） |
+| merge / 高频 patch 前 | `npm run verify:core`（**L2-core**，~2–4min） |
+| Sprint 收尾 · 打 tag 前 | `npm run verify:standard`（**L2**，优先 CI） |
+| CI / nightly | `./scripts/verify.sh --full`（**L3**） |
+
+**禁止**把 `--standard` 或 `--full` 当每个 TASK 的默认门禁。plan `<!-- VERIFY: ... -->` 写 Sprint 出口层（通常 `verify:core` 或 `verify:standard`），TASK 验收列写 L1 或域脚本。
+
+| 阶段（简表） | 推荐 |
+|------|------|
+| 开发任务 | `./scripts/test.sh`（= L1 子集） |
+| 任务收尾 / P0 | `./scripts/verify.sh` |
 
 `task_verify_heuristics.enabled` 默认 **false**（`config/workflow.json`）。设为 `true` 时，描述性验收列回退 `fallback_test_script` / `fallback_verify_script`。
-
-## 重任务触发门禁（`confirm_before`）
-
-| 键 | 典型命令 | 允许触发 | 禁止触发 |
-|----|----------|----------|----------|
-| `verify_l2` | `workflow.json` → `verify_default`（如 `./scripts/verify.sh`） | plan Done when · 用户明示跑全量 · PR 前 | 问答 · 单 TASK 收尾 · 未确认的后台 |
-| `verify_l3` | 项目 nightly / `--full` 聚合脚本 | 发版 · 用户明示 | 日常开发 |
-| `background_heavy_job` | 预估 **>10 min** 的 shell（含 L2/L3 · 全量 integration/e2e） | 用户同意后台 | 静默 `run_in_background` |
-
-执行前：`pgrep` 查是否已有同类 verify / 全量测试进程 — 已有 → **停手** AskQuestion（杀旧 / 跳过 / 等完）。
-
-项目分层矩阵与耗时 → `.cursorGrowth/learn/dev-conventions.md` 或项目 `scripts/README.md`（安装后由 `/learn` 填写）。
 
 用户可见修复 → CHANGELOG `### Fixed`。
 
 ## 分层验收（verify-layers）
 
-大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（默认 `scripts/verify/domain/verify_<feature>.sh`；根目录仅聚合入口与兼容转发 — SSOT → **plan** `reference/growth-layout.md`）。
+大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（命名示例 `scripts/verify_<feature>.sh`，路径由项目自定）。
 
 | 层 | 典型内容 | 外部依赖 | 默认 CI |
 |----|----------|----------|---------|
 | **L0** | 关键文件 / 配置存在 | 无 | ✅ |
 | **L1** | import · 单元测试 · 静态检查 | 无 | ✅ |
-| **L2** | schema / migration head / 契约快照断言 | 可选本地工具 | 视项目 |
-| **L3** | `--full`：真实 DB · 服务 · HTTP 冒烟 | 基础设施 | 本地 / nightly |
+| **L2-core** | P0 切片并行（例：`verify-core.sh`） | 无 · 无 Docker 默认可 SKIP | merge 前 |
+| **L2** | 全量切片（例：`--standard`） | 部分 slice 需 Playwright/Docker | Sprint / 打版 |
+| **L3** | `--full`：L2 + HEAVY + build + perf | 基础设施 | CI / nightly |
 
 约定：
 
 - **默认**（无参）：跑到 **L1**（或项目文档约定的最快绿层）
 - **`--full`**：跑到 **L3**
 - **聚合脚本**（示例 `scripts/verify_all.sh`）：顺序调用各域脚本；新域交付时 **注册一行**，勿复制整套逻辑进每个域脚本
-
-## 新增 verify 脚本门禁（复用优先）
-
-持续开发易堆积 `verify_*.sh` 冗余。**新增前必做**：
-
-| 步 | 动作 |
-|----|------|
-| 1 | `grep -r` / 读 `scripts/verify/domain/` · `scripts/lib/` · `verify/tier/` · 聚合入口（`verify.sh` / `verify_all.sh`） |
-| 2 | **优先**扩已有脚本或抽公因子到 `scripts/lib/_*.sh`（断言函数 · env 加载 · curl 封装） |
-| 3 | 必须新建时：只写**域差分**；L0–L3 与 `--full` 语义跟 §分层验收；聚合 **+1 行**注册 |
-| 4 | 禁止复制粘贴整段断言进第二个脚本；同断言 ≥2 处 → **refactor** 合并或抽 lib |
-
-**Sprint / learn 审计**：CHANGELOG 或 learn 症状簇「verify 冗余」→ 合并脚本，非第三个 copy-paste patch。
-
-详 **test** skill §验收脚本分层 · **refactor** skill 死代码/重复删除协议。
 
 plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）；Sprint 全量走 `plan VERIFY` 或 `./scripts/verify.sh`。
 

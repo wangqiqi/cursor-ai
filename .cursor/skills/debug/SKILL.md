@@ -1,6 +1,6 @@
 ---
 name: debug
-description: 调试循环 — 复现→隔离→验证；禁无复现盲改。说「修 bug」「测挂了」时用。
+description: 系统调试循环（无 slash · skill-only）— 复现→假设→隔离→验证→记录；禁止无复现盲改。说「修 bug」「测挂了」「不知道为啥挂」时用。
 ---
 
 # debug
@@ -36,6 +36,31 @@ description: 调试循环 — 复现→隔离→验证；禁无复现盲改。�
 
 - 同类报错一批修（同根因别打补丁）
 - 区分环境 vs 代码（config、版本、路径）
+
+### 路径型资源 · 健康三角验证
+
+**用这个**：Unix socket · PID 文件 · 锁文件 · 命名管道路径。**不是那个**：纯 HTTP `/health` 返回 200 即收工。
+
+| 视角 | 检查什么 |
+|------|----------|
+| **客户端路径** | `test -S path` / `stat` — 文件系统上是否存在 |
+| **系统层** | `ss -xl` / `lsof` — 内核是否仍有 listener |
+| **进程内** | 应用 `/health` 或内存 handle — 是否自认 healthy |
+
+**关键**：三者可**不一致**（路径已删而 fd 仍 listen → 客户端 `ENOENT` 但 `/health` 仍绿）。修复须同时校验路径可达 + 失效 stale 缓存（见下节），勿只信单一绿灯。
+
+### Stale 单例 / 连接缓存
+
+连接类全局缓存（模块级 singleton client · `globalThis` 句柄 · env 里旧 URL）在 **硬失败**（`ENOENT` · `ECONNREFUSED`）后须 **invalidate 并重试**，禁止无限复用 stale 句柄。优先读**指针文件/权威配置** over 进程启动时注入的旧 env。
+
+### Dev 反代 · 多传输路径
+
+Vite/webpack dev proxy 调试时须枚举 **所有** 出站路径：主线程 `fetch` shim · **XHR** · **Web Worker** · WebSocket。Worker 内请求**不经过** HTML 注入的 fetch 补丁是高频根因。
+
+| 纪律 | 说明 |
+|------|------|
+| **具体优先** | 专用 rewrite（如 `/api/uploads` · `/api/ws`）须排在泛 `/api` **之前** |
+| **同源壳** | iframe/子应用路径与主站 API 分流要分别验证 |
 
 ## Agent 内省调试（Agent 失败 / 越修越乱）
 

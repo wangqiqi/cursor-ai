@@ -6,7 +6,7 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 
 | 模式 | frontmatter | 用途 |
 |------|-------------|------|
-| Always | `alwaysApply: true` | 母版：`core` · `workflow` · `super-cursor-persona` · `cursor-standalone` · `multi-session-edits` |
+| Always | `alwaysApply: true` | 母版仅 `core` + `workflow` |
 | Auto | `globs: [...]` | `tech/*` · `testing.mdc` 等 |
 | Agent | `description` 清晰 | Agent 按任务 relevance 加载 |
 | Manual | `@ruleName` | 显式引用 |
@@ -39,7 +39,6 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 |----------|----------|
 | anti-overengineering | `rules/execution/scope.mdc` |
 | anti-sycophancy（精选） | `rules/communication/agent-discipline.mdc` |
-| 多会话并行 / 勿覆盖他会话改动 | `rules/communication/multi-session-edits.mdc` |
 | Vitest/Playwright testing | `rules/execution/testing.mdc` |
 | PR review 分角 | `rules/communication/collaboration.mdc` |
 | Svelte 5 | `rules/tech/svelte.mdc` |
@@ -47,11 +46,6 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 | IA / 导航迷路 / 角色入口 | `rules/execution/ux.mdc` · `rules/execution/ia.mdc` · **ux** / **ia** skills |
 | 交付 UX 验收 | `rules/execution/delivery.mdc` · **delivery** §5 导航与 IA |
 | 数据访问批处理（IN 分块） | `rules/execution/data-batch.mdc`（吸收自跨项目通用护栏） |
-| 文案/i18n/E2E 锚点三联 | `rules/execution/i18n-copy.mdc` |
-| 列表分页 / cursor pager | `rules/execution/data-list.mdc` |
-| verify 脚本复用 / 防冗余 | `rules/feedback/verify.mdc` §新增 verify 脚本门禁 |
-| compose / env / nginx 部署 | **ops-deploy** skill · `deploy-ops.mdc` |
-| ROADMAP/archive · doc-coherence · 断链 | `rules/execution/doc-hygiene.mdc` |
 | 开源优先 / vendor 溯源 | `rules/execution/oss-first.mdc` · `submodule.mdc`（吸收自跨项目通用护栏） |
 | 输入边界 / 安全默认 | `rules/execution/input-bounds.mdc` |
 | 扩展宿主（可选） | `rules/execution/extensibility.mdc`（三级 · glob） |

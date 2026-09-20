@@ -24,6 +24,7 @@ CACHE_DIRS=()
 EXTRA_CACHE_DIRS=()
 BUILD_ARTIFACT_DIRS=()
 BUILD_ARTIFACT_TMP_GLOBS=()
+TMP_DEV_GLOBS=()
 
 load_maintain_config() {
     eval "$(python3 "$SCRIPT_DIR/load-config.py" --default "$CONFIG_DEFAULT" --override "$CONFIG_OVERRIDE")"
@@ -249,7 +250,31 @@ print_protected_dirs_notice() {
 
 print_default_clean_notice() {
     info "--clean 默认会清理：APT 缓存/旧内核、系统日志、回收站、浏览器/npm/pip 缓存、"
-    info "  IDE 缓存、ccache、可选构建产物目录等（不触碰受保护目录）"
+    info "  IDE 缓存、ccache、/tmp 开发测试残留（rdm-* / cursor-sandbox-cache）等（不触碰受保护目录）"
+}
+
+clean_tmp_dev_globs() {
+    local pattern expanded dirs pre d
+    for pattern in "${TMP_DEV_GLOBS[@]}"; do
+        [[ -z "$pattern" ]] && continue
+        dirs=()
+        while IFS= read -r d; do
+            [[ -n "$d" ]] && dirs+=("$d")
+        done < <(compgen -G "$pattern" 2>/dev/null || true)
+        [ ${#dirs[@]} -eq 0 ] && continue
+        pre=0
+        for d in "${dirs[@]}"; do
+            pre=$((pre + $(du -sb "$d" 2>/dev/null | awk '{print $1}' || echo 0)))
+        done
+        if ! $DRY_RUN; then
+            rm -rf "${dirs[@]}" 2>/dev/null || true
+            if [ "$pre" -gt 0 ]; then
+                success "开发 /tmp 残留 ($pattern): 释放 $((pre / 1024 / 1024)) MB（${#dirs[@]} 项）"
+            fi
+        else
+            info "将清理 $pattern（${#dirs[@]} 项，约 $((pre / 1024 / 1024)) MB）"
+        fi
+    done
 }
 
 # =============================================================================
@@ -389,6 +414,29 @@ diagnose_system() {
         success "未发现显著用户缓存（或目录不存在）"
     fi
 
+    # 6b. /tmp 开发测试残留
+    echo -e "\n${GREEN}📌 6b. /tmp 开发测试残留${NC}"
+    if [ -d /tmp ]; then
+        tmp_total=$(du -sh /tmp 2>/dev/null | awk '{print $1}' || echo "?")
+        rdm_count=$(find /tmp -maxdepth 1 -name 'rdm-*' -user "$USER" 2>/dev/null | wc -l | tr -d ' ')
+        sandbox_size=$(du -sh /tmp/cursor-sandbox-cache 2>/dev/null | awk '{print $1}' || echo "0")
+        echo "  💾 /tmp 总计: $tmp_total"
+        echo "  🧪 ${USER} 的 rdm-* 目录: ${rdm_count} 个"
+        if [ -d /tmp/cursor-sandbox-cache ]; then
+            echo "  🤖 cursor-sandbox-cache: $sandbox_size"
+        fi
+        if [ "${rdm_count:-0}" -gt 100 ] || [[ "$tmp_total" =~ ^[0-9]+G$ ]]; then
+            warn "/tmp 测试残留偏多，运行 $0 --clean 可清理 rdm-* / cursor-sandbox-cache"
+            info "单测已启用 server/test/tempCleanupPreload.js 自动回收；遗留项用 maintain --clean"
+        elif [ "${rdm_count:-0}" -gt 0 ]; then
+            info "少量 rdm-* 残留属正常；--clean 会一并清理"
+        else
+            success "/tmp 开发残留正常"
+        fi
+    else
+        info "/tmp 不存在，跳过"
+    fi
+
     # 7. 大目录预警（>1GB in /home）
     echo -e "\n${GREEN}📌 7. 大目录预警（/home 下 >1GB）${NC}"
 
@@ -419,7 +467,7 @@ diagnose_system() {
     echo -e "\n${GREEN}📌 9. 长期维护建议${NC}"
     echo "✅ 运行 $0 --clean 将默认清理："
     echo "   • 系统：APT 缓存、旧内核、journal/旧日志"
-    echo "   • 用户：npm/pip/浏览器缩略图/IDE 缓存、回收站、ccache、可配置构建产物"
+    echo "   • 用户：npm/pip/浏览器缩略图/IDE 缓存、回收站、ccache、/tmp 开发测试残留"
     echo ""
     echo "🔒 受保护目录见 config/default-protected.json 与 .cursorGrowth/maintain-config.json"
     echo ""
@@ -544,6 +592,7 @@ clean_system() {
 
     # -------------------------- 1. 系统/用户临时文件 --------------------------
     log "清理系统/用户临时文件..."
+    clean_tmp_dev_globs
     if ! $DRY_RUN; then
         if [ -d /tmp ]; then
             find /tmp -user "$USER" -type f -mtime +7 -delete 2>/dev/null || true
@@ -559,6 +608,7 @@ clean_system() {
             fi
         done
     else
+        clean_tmp_dev_globs
         info "将清理 /tmp（7天前）及 ~/.tmp, ~/tmp, ~/temp"
     fi
 

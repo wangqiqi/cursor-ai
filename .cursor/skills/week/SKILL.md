@@ -1,12 +1,14 @@
 ---
 name: week
-description: 周报（关键词）— CHANGELOG 汇总→Growth。说「周报」「本周总结」时用。
+description: >-
+  周报（无 slash · 关键词）：扫描工作区下 CHANGELOG.md，按年内第 N 周归纳进展，写入 .cursorGrowth/week-report/。
+  说「周报」「本周总结」「weekly report」「总结最近一周」时触发。
 disable-model-invocation: true
 ---
 
 # week · 周报
 
-**工具技能**（无 slash · 非 plan/run 主路径）。**用这个**：汇总多仓 CHANGELOG 周报。**不是那个**：本仓约定沉淀 → **`/learn`**；打版 → **`/release`**。
+**工具技能**（无 slash · 非 plan/run 主路径）。**用这个**：汇总多仓 CHANGELOG 周报。**不是那个**：单项目任务/驾驶舱周报（目标项目自建 skill）；本仓约定沉淀 → **`/learn`**；打版 → **`/release`**。
 
 扫描工作区各仓库 **CHANGELOG.md**，归纳后写入 **`.cursorGrowth/week-report/第{N}周任务总结.md`**（本地、**不提交 git**）。
 

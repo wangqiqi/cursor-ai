@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: 脚手架（/scaffold）— 空项目/audit。说「初始化」「脚手架」时用。
+description: 脚手架（/scaffold）：空项目创建栈模板，已有项目审计与建议。说「初始化」「创建项目」「脚手架」时用。须用户确认后再创建。
 disable-model-invocation: true
 ---
 
@@ -92,10 +92,7 @@ disable-model-invocation: true
 |------|------|
 | `scripts/test.sh` | **开发中**快速回归（仅测试） |
 | `scripts/verify.sh` | **任务/Sprint**全量验收（lint+test+build 等） |
-| `scripts/README.md` | 脚本矩阵 · 分层说明（Growing 项目必填） |
 | `tests/README.md` | 测试目录说明 |
-
-**目录分级**（新仓默认）：根目录仅入口；域验收 → `scripts/verify/domain/`；公因子 → `scripts/lib/` — 详 **plan** `reference/growth-layout.md`。
 
 **plan.md 验收列建议**：
 

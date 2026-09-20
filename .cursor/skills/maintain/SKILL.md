@@ -1,6 +1,8 @@
 ---
 name: maintain
-description: 环境维护（关键词）— Linux 诊断清理。说「清理环境」「dev maintenance」时用。
+description: >-
+  开发环境维护（无 slash · 关键词）：Ubuntu/Linux 诊断与安全清理，委托 disk 快照对比。
+  说「清理环境」「磁盘清理」「dev maintenance」「系统维护」时触发。
 disable-model-invocation: true
 ---
 
@@ -55,6 +57,8 @@ disable-model-invocation: true
 |------|------|
 | `skills/maintain/config/default-protected.json` | 默认受保护目录与缓存列表 |
 | `.cursorGrowth/maintain-config.json` | 本机覆盖（模板 `templates/cursorGrowth/maintain-config.example.json`） |
+
+`tmp_dev_globs`（默认含 `/tmp/rdm-*`、`cursor-sandbox-cache`）在 `--clean` 时自动清扫开发测试残留；RDM 单测通过 `server/test/tempCleanupPreload.js` 进程退出时回收 `rdm-*` 临时目录。
 
 Playwright 浏览器缓存（`~/.cache/ms-playwright*`）默认在 `protected_dirs`，清理时保留。薄封装可通过环境变量 `MAINTAIN_BUILTIN_PROTECTED`（`|` 分隔路径）追加白名单。
 

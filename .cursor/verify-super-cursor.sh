@@ -141,7 +141,6 @@ check "$CUR/rules/execution/vibe.mdc"
 check "$CUR/rules/execution/scope.mdc"
 check "$CUR/rules/execution/testing.mdc"
 check "$CUR/rules/communication/agent-discipline.mdc"
-check "$CUR/rules/communication/multi-session-edits.mdc"
 check "$CUR/rules/communication/super-cursor-persona.mdc"
 check "$CUR/rules/communication/cursor-standalone.mdc"
 check "$CUR/docs/library-index.md"
@@ -202,10 +201,11 @@ check "$CUR/rules/execution/modal-layering.mdc"
 check "$CUR/rules/execution/error-context.mdc"
 check "$CUR/rules/execution/single-detector.mdc"
 check "$CUR/rules/execution/data-batch.mdc"
-check "$CUR/rules/execution/i18n-copy.mdc"
+check "$CUR/rules/communication/multi-session-edits.mdc"
 check "$CUR/rules/execution/data-list.mdc"
 check "$CUR/rules/execution/deploy-ops.mdc"
 check "$CUR/rules/execution/doc-hygiene.mdc"
+check "$CUR/rules/execution/i18n-copy.mdc"
 check "$CUR/skills/ops-deploy/SKILL.md"
 check "$CUR/rules/execution/oss-first.mdc"
 check "$CUR/rules/execution/input-bounds.mdc"
@@ -344,16 +344,6 @@ elif [[ -n "$(echo "$user_violators" | sed '/^$/d')" ]]; then
   FAIL=$((FAIL+1))
 else
   echo "OK  no user/machine paths in SOP"
-fi
-
-echo "--- doc-coherence (verify-doc-super-cursor) ---"
-if ! bash "$CUR/bin/verify-doc-super-cursor.sh"; then
-  FAIL=$((FAIL+1))
-fi
-
-echo "--- growth-layout (verify-growth-layout) ---"
-if ! bash "$CUR/bin/verify-growth-layout.sh"; then
-  FAIL=$((FAIL+1))
 fi
 
 echo "---"

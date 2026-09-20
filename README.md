@@ -42,7 +42,7 @@
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
 ├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · 7 栈脚手架 · manual-contract · user-manual / test-report bundles
+└── templates/  plan.md · sdd/ · 7 栈脚手架 · manual-contract · user-manual / test-report / verify-layers / design-system / doc-coherence bundles
 ```
 
 **根目录（可直接 clone / 复制）：**

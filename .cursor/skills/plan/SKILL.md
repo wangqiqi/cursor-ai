@@ -1,6 +1,6 @@
 ---
 name: plan
-description: 规划（/plan）— 先总后分·Sprint·plan.md。说「规划」「拆任务」时用。
+description: 规划（/plan）：需求→先总后分→Sprint→plan.md→/run。说「规划」「拆任务」时用。禁止写业务代码。≠ IDE Plan 模式。
 disable-model-invocation: true
 ---
 
@@ -97,18 +97,6 @@ Sprint **全部 TASK ✅** 后：**从 plan 删除整个 Active 区块**（不�
 4. **阶段 3 · handoff** — `PLANNING:false` · `PLAN_APPROVED` · `ACTIVE`/`NEXT` · 默认 `AUTONOMOUS:true` → `plan-check` && `gate-check` → 告知用户 **只说一次 `/run`**
 
 大改动 / 跨模块：读 `rules/execution/vibe.mdc` · `rules/feedback/evolution.mdc`。
-
-## 多会话并行
-
-用户可能同时开多个 Cursor 会话。磁盘共享、会话互盲 → **multi-session-edits**。
-
-| 规划时 | 动作 |
-|--------|------|
-| TASK 表 | 增 **`Owns`** 列：本 TASK 独占的文件/目录（与 `Target` 互补） |
-| 并行 ACTIVE | 两 TASK 的 `Owns` **不得重叠**；重叠 → 串行执行顺序或 **git worktree**（**git** skill） |
-| 发现抢文件 | 写入执行顺序或拆 Sprint；不得假设「只有本会话在改」 |
-
-阶段 2 拆 TASK 时，若用户明示多会话并行，须在 handoff 提醒 **Owns** 不重叠。
 
 ## Sprint 连跑（AUTONOMOUS）
 

@@ -30,7 +30,7 @@ disable-model-invocation: true
 
 | 文件 | 内容 |
 |------|------|
-| `plan-conventions.md` | archive **域目录** + 命名 · 可选 plan 段落 · Sprint 标题用语 — SSOT 桶见 **plan** `reference/growth-layout.md` |
+| `plan-conventions.md` | archive 命名 · 可选 plan 段落 · Sprint 标题用语 — 供 **plan** / **run** / `plan-check` |
 | `dev-conventions.md` | 命名、目录、测试/verify 命令、分支策略 |
 | `module-map.md` | 模块边界、入口、依赖方向 |
 | `release-rhythm.md` | 发版频率、谁打 tag、CHANGELOG 习惯 |
@@ -100,34 +100,11 @@ disable-model-invocation: true
 
 当用户说「重复工作」「follow-up 太多」或 `followup_gate` 触发时：
 
-### 增量（单项目 · 默认）
-
 1. 读 `CHANGELOG.md` 最近 7/30 天（或用户指定窗口）
-2. grep 症状关键词簇（见下表）
-3. 对照 `.cursor/rules/execution/` **通用根因 rule** 归类
+2. grep 症状关键词簇（进度/上传/弹窗/刷新/error_message/检测器/死代码…）
+3. 对照 `.cursor/rules/execution/async-progress.mdc` 等 **通用根因类型** 归类
 4. 更新 `.cursorGrowth/learn/changelog-insights.md` §重复工作模式（**只写项目符号与版本**）
 5. 建议 plan 候选：合并 Sprint · SPIKE · 关闭多余 follow-up
-
-### 全量（workspace · 用户明确要求时）
-
-1. 扫描 workspace 下各仓 `CHANGELOG.md`（`find … -name CHANGELOG.md`）
-2. 统计主题频率：verify · i18n/copy · 分页 · OpenAPI · 文档卫生 · docker · verify 冗余
-3. 输出 Canvas 或 archive 摘要；**晋升母版**须用户确认 + plan TASK（见 §建议约定）
-4. 已有调查示例：母版 Sprint `SPRINT-CHANGELOG-DEDUP`（2026-08）
-
-### 症状簇 → 母版 rule 映射（通用）
-
-| 症状簇 | 根因类型 | 母版落点 |
-|--------|----------|----------|
-| 文案/i18n/禁词/E2E 锚点漂移 | copy 非真源 | `i18n-copy.mdc` |
-| 分页空列表 · filter 后 stale page | pager 未 reset | `data-list.mdc` |
-| 同断言多 verify 脚本 · verify 堆积 | 未复用/未抽 lib | `verify.mdc` §新增脚本门禁 |
-| 进度/上传/弹窗/错误 message 重复 patch | 横切 UX | `async-progress` · `long-running-ui` · `modal-layering` · `error-context` · `single-detector` |
-| 大批量 IN / 列表超限 | 数据访问 | `data-batch.mdc` |
-| compose/env/nginx 重复对齐 | 部署真源漂移 | **ops-deploy** · `deploy-ops.mdc` |
-| ROADMAP 膨胀 · archive 混放 · doc 锚点漂移 | doc 职责/自洽缺失 | `doc-hygiene.mdc` · `verify_doc_*` |
-| README skills/rules 计数滞后 | 门面未同 Sprint 同步 | **doc-hygiene** · **followup-facade** · `verify-doc-super-cursor.sh` |
-| 死代码 · 仅测试引用 | 清理 | **refactor** skill |
 
 模板：`.cursor/templates/cursorGrowth/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`
 

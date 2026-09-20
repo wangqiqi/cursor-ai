@@ -1,6 +1,6 @@
 ---
 name: delivery
-description: 交付验收（/delivery）— 上线前 7 维走查。说「交付验收」「生产就绪」时用。
+description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后端对接 · 组件完整度 · 可维护性 · 生产就绪。Sprint 收尾或 /release 分支前走查。说「交付验收」「上线前检查」「生产就绪」时用。
 ---
 
 # delivery · 交付验收
@@ -8,8 +8,6 @@ description: 交付验收（/delivery）— 上线前 7 维走查。说「交付
 **用这个**：功能已绿、要上线前 7 维走查。**不是那个**：还在规划导航结构 → **ia** / **ux** skill；自动化脚本绿/红 → **verify** / **run**（本 skill 不替代）。
 
 功能已实现、**task-verify** 已绿之后，在 **`/release`**（merge/PR）或 Sprint **Done when** 要求时，做 **7 维度**走查。不替代 **run** 三公理审计或自动化 **verify**。
-
-FE 静态检查（lint/tsc）详单 → `rules/tech/eslint.mdc` §Pre-release FE gate（本 skill 不重复）。
 
 项目特化路径（design tokens、i18n 库、OpenAPI 位置）→ `.cursorGrowth/learn/acceptance.md`（若无则 **AskQuestion** 或 grep 惯例）。
 

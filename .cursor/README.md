@@ -59,7 +59,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | `/manual` | 可发布软件使用说明书 · 配图 regen（**不是** delivery 走查） | user-manual |
 | `/report` | 全量/分层测试报告 · verify 后汇总（**不是** 写测试） | test-report |
 
-**无 slash · skill-only**（Agent 按意图自动选用，或 `@` / 关键词）：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **code-stats-viz** · **ops-deploy** · **pencil-design**（以及 api/git/test/…）。
+**无 slash · skill-only**（Agent 按意图自动选用，或 `@` / 关键词）：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz** · **pencil-design**（以及 api/git/test/…）。
 
 ## 使用场景
 
@@ -87,7 +87,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 
 治理：`constitution.mdc` · `evolution.mdc` · `config/roles.json`（12 人格 · 呼叫可解析 · Growth 会话态 · speech_examples；**skills 全员 full**）。  
 扩展 skills（主路径）：**ux** · **ia** · **debug** · **test** · **review** · **study** · **delivery** · **user-manual** · **test-report** · **mcp** · **refactor** · **perf**（入口见 `core.mdc`）。  
-**工具技能**（无 slash · 关键词触发）：**week** · **disk** · **maintain** · **code-stats-viz** · **ops-deploy** · **pencil-design** — full 默认带；lite/rules-only 可不强调（见 `config/README`）。
+**工具技能**（无 slash · 关键词触发）：**week**（CHANGELOG 多仓）· **disk** · **maintain** · **ops-deploy** · **code-stats-viz** · **pencil-design** — full 默认带；lite/rules-only 可不强调（见 `config/README`）。
 
 ### 重复劳动 SOP（rules · 通用）
 
@@ -99,16 +99,11 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 | Prompt / Agent 安全 | `rules/execution/prompt-security.mdc` · **security** 清单 |
 | 分层验收 verify-layers | `rules/feedback/verify.mdc` · **test** skill |
 | 全栈垂直切片 | `rules/execution/vibe.mdc` · **api** skill |
-| 文档自洽 doc-coherence | **`doc-hygiene.mdc`** · `docs.mdc` · **delivery** · **user-manual** `/manual` · **test-report** `/report` |
+| 文档自洽 doc-coherence | `rules/execution/docs.mdc` · **delivery** skill · **user-manual** `/manual` · **test-report** `/report` |
 | 浏览器走查（可选） | **delivery** §10（`skills/delivery/reference/checklist-optional.md`）— UI Sprint 建议；可跳过；无强制 MCP |
 | 无障碍（可选） | **delivery** §11（同上 optional 清单）— 键盘·焦点·语义/label·对比度；可跳过；不强制 axe/MCP |
 | 系统调试循环 | **debug** skill — 复现→假设→隔离→验证→记录；无复现不盲改；`/run` 自修≤2 后 `⚠️`→`/plan` |
 | 数据批处理 IN/分块 | `rules/execution/data-batch.mdc` |
-| 文案/i18n/E2E 锚点 | `rules/execution/i18n-copy.mdc` |
-| 列表分页 / cursor pager | `rules/execution/data-list.mdc` |
-| verify 脚本复用 / 防冗余 | `rules/feedback/verify.mdc` §新增 verify 脚本门禁 · **learn** §重复模式审计 |
-| compose / env / nginx 部署 | **ops-deploy** skill · **deploy-ops.mdc** |
-| ROADMAP/archive · 断链 · 门面计数 | **`doc-hygiene.mdc`** · `verify-doc-super-cursor.sh` |
 | MCP 建服 | **mcp** skill · `skills/mcp/reference/` |
 | delivery / plan 详单 | **delivery** / **plan** · 各自 `skills/*/reference/`（SKILL 为薄索引） |
 | 实验闭环 experiment-loop | **spike** agent · **learn** skill |

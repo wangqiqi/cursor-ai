@@ -1,6 +1,6 @@
 # Skills 速查
 
-**路由详表（canonical）**：[`skills/master/routes.md`](../../skills/master/routes.md)。本页为人读摘要，避免与 routes 双写长表。
+**路由详表（canonical）**：[`skills/master/routes.md`](../skills/master/routes.md)。本页为人读摘要，避免与 routes 双写长表。
 
 入口均在 `core.mdc`。说 slash 或关键词触发。
 
@@ -37,10 +37,10 @@
 | **delivery** | `/delivery` · 上线前 | 7 维交付 · PDF 脚本 · 反模板自检 | 替代 task-verify |
 | **user-manual** | `/manual` · 使用说明书 | Manual Contract · 配图 regen · Capture Profile | 替代 delivery 走查 |
 | **test-report** | `/report` · 测试报告 | Report Contract · verify 汇总 · benchmark 文档 | 替代 test 写用例 |
-| **week** | 周报（关键词 / master） | CHANGELOG 汇总 → Growth | 打 tag |
+| **week** | 周报（关键词 / master） | CHANGELOG 多仓汇总 → Growth | 单项目任务周报（目标项目自建 skill） |
 | **disk** | 磁盘快照（关键词 / master） | 占用 · diff → Growth | 删除文件 |
 | **maintain** | 环境维护（关键词 / master） | 诊断与安全清理 · 委托 disk | 无配置乱删 |
-| **ops-deploy** | 部署运维（关键词 / master） | compose · env · nginx · verify 注册 | 业务功能实现 |
+| **ops-deploy** | 部署（关键词 / master） | compose · env · nginx · verify 注册 SOP | 业务功能实现 |
 | **code-stats-viz** | 代码统计（关键词 / master） | Git 行数/语言/提交日历 → HTML 仪表板 | 磁盘占用（用 disk） |
 | **pencil-design** | 视觉设计（关键词 · 无 slash） | Pencil CLI → `.pen` + PNG | IA/上线验收（用 ia/delivery） |
 | **study** | 学新技术 | 最小示例 · SPIKE 归档 | 项目认知（用 learn） |
@@ -56,7 +56,7 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 迷路:     /master → 主菜单 7 项 → 子问
 ```
 
-详表与关键词 → [`routes.md`](../../skills/master/routes.md)。
+详表与关键词 → [`routes.md`](../skills/master/routes.md)。
 
 ## 可选能力（无新增 skill）
 
@@ -80,15 +80,6 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | anthropics/skills · spec-kit · SkillsMP | **`docs/library-index.md`** · `routes.md` §LIBRARY |
 
 **git** §GitHub 运维 · **security** §支付/webhook — 见各 skill 正文。
-
-## disable-model-invocation 策略
-
-| 桶 | 字段 | skill |
-|----|------|-------|
-| **主路径 / 工具** | `disable-model-invocation: true` | plan · run · learn · scaffold · release · long · week · disk · maintain · code-stats-viz · ops-deploy |
-| **分流 / 按需** | 不写（默认 false） | master · delivery · debug · test · ux · ia · review · security · api · git · mcp · refactor · perf · study · user-manual · test-report · pencil-design |
-
-`description` frontmatter **≤85 字**（用途 + 一句触发）；详触发词 → 各 skill「何时进入」· [`routes.md`](../../skills/master/routes.md)。
 
 ## 7 栈 scaffold
 

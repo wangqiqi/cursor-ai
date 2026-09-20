@@ -40,6 +40,7 @@ def emit_bash(config: dict[str, Any]) -> None:
     extra_cache = config.get("extra_cache_dirs", [])
     build_dirs = config.get("build_artifact_dirs", [])
     tmp_globs = config.get("build_artifact_tmp_globs", [])
+    tmp_dev_globs = config.get("tmp_dev_globs", [])
     installer_dirs = config.get("installer_dirs", [])
 
     print("PROTECTED_DIRS=(")
@@ -64,6 +65,11 @@ def emit_bash(config: dict[str, Any]) -> None:
 
     print("BUILD_ARTIFACT_TMP_GLOBS=(")
     for item in tmp_globs:
+        print(f"  {shell_quote(str(item))}")
+    print(")")
+
+    print("TMP_DEV_GLOBS=(")
+    for item in tmp_dev_globs:
         print(f"  {shell_quote(str(item))}")
     print(")")
 

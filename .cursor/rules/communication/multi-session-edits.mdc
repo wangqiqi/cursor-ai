@@ -1,6 +1,8 @@
 ---
 description: 多会话并行 — 不得覆盖或恢复其他对话框的磁盘改动
-alwaysApply: true
+globs:
+  - "**/*"
+alwaysApply: false
 ---
 
 # 多会话编辑主权

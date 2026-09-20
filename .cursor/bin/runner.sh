@@ -421,7 +421,13 @@ run_verify() {
       exit 1
     fi
   fi
-  echo "==> Full VERIFY: $verify_cmd"
+  # runner.sh verify = Sprint/打版前 L3 全量
+  if [[ "$verify_cmd" =~ ^\./scripts/verify\.sh([[:space:]]|$) ]] \
+    && [[ "$verify_cmd" != *"--full"* ]] \
+    && [[ "$verify_cmd" != *"--l3"* ]]; then
+    verify_cmd="./scripts/verify.sh --full"
+  fi
+  echo "==> Full VERIFY (L3): $verify_cmd"
   cd "$ROOT"
   # shellcheck disable=SC2086
   eval "$verify_cmd"

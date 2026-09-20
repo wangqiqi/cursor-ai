@@ -51,9 +51,9 @@ flowchart LR
 | ACTIVE `🔧`/`⬜` | 继续当前 TASK |
 | plan 含 `\| ⚠️ \|` | 阻塞，回 plan |
 | ACTIVE `✅` 且仍有 pending | 链下一 ID |
-| pending = 0 | Sprint 收尾：**AskQuestion 确认 L2** → verify/archive（`confirm_before: verify_l2`） |
+| pending = 0 | Sprint 收尾 verify/archive |
 
-**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。**L2/L3 全量验收不算「非决策」** — 须用户确认后再跑，禁止自治链静默后台起全量 verify。
+**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。
 
 ## 决策打断矩阵
 
@@ -64,7 +64,6 @@ flowchart LR
 | `decision_needed` | 文档↔实现冲突 · 架构选型 · scope 扩大 | AskQuestion ≤4 · 可标 `⚠️` |
 | `blocker` | verify 红且 2 轮自修失败 | 停跑 · `/plan` |
 | `high_risk` | `confirm_before` 删除 · 库外写 | 必须用户确认 |
-| `heavy_verify` | L2 `verify_default` · L3 nightly · 后台长任务 | AskQuestion · 用户确认后执行 |
 | `release` | merge · tag · push | **`/release`** 或用户明示 |
 | `goal_drift` | 偏离 Sprint Goal / Out of scope | 停跑说明 |
 
@@ -74,7 +73,7 @@ flowchart LR
 
 | 层 | SSOT | 作用 |
 |----|------|------|
-| **行为 SOP** | `rules/communication/super-cursor-persona.mdc` · `agent-discipline.mdc` · `multi-session-edits.mdc` | 少问多干 · verify · file:line · 并行勿覆盖 |
+| **行为 SOP** | `rules/communication/super-cursor-persona.mdc` · `agent-discipline.mdc` | 少问多干 · verify · file:line |
 | **语气品牌** | `config/roles.json` · `role.default` | 默认 `dashu`；`voice_cues` 落地语气 · **禁止** given_name 开场自报 |
 
 `run-start` 的 `sc_role_hint` 在自治块注入 **Persona hint**（`tone` · `voice_cues` · `speech_examples`；**不含** given_name 置顶）；语气不改变 skill 能力（`skills: full`）。

@@ -4,6 +4,20 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.7] - 2026-09-20
+
+### Added
+
+- **scaffold bundles** — `apply-bundle verify-layers`（L1–L3 · slice 注册表 · flock）· `design-system`（中性 token · PageShell · ListLoadErrorAlert）· `doc-coherence`（doc-anchors · openapi sync 模板）
+- **templates/learn/skill-distillation-playbook.md** — 母版 Skill → 产品 bundled 蒸馏流程（通用 tier · 占位 verify）
+
+### Changed
+
+- **debug** skill — 路径型健康三角验证 · stale 单例失效 · dev 反代多传输路径
+- **test** skill — 有界长测 · 并行 verify flock · slice 注册表纪律 · `verify-layers` bundle 入口
+- **scaffold** `manifest.json` · `catalog.md` — 登记三 bundle
+- 多 skill/rules 文档与 hybrid 仓演进对齐；母版门面去除 `rdm-week` 引用
+
 ## [4.29.6] - 2026-09-08
 
 ### Added

@@ -1,6 +1,6 @@
 ---
 name: run
-description: 执行（/run）— ACTIVE·task-verify·commit；Sprint 连跑。
+description: 执行（/run）：gate-check→ACTIVE→验收→审计→CHANGELOG→README（门面）→plan→必 commit。每任务/Sprint 收尾自动提交。
 disable-model-invocation: true
 ---
 
@@ -47,9 +47,9 @@ ACTIVE → 🔧 → 实现 → `task-verify` → **closeout review（若触发�
 
 ```bash
 ./.cursor/bin/runner.sh task-verify
-git status && git diff --stat    # commit 前：无密钥、无意外文件；含外来块 → **multi-session-edits** 停手 AskQuestion
+git status && git diff --stat    # commit 前：无密钥、无意外文件
 ./.cursor/bin/runner.sh next-task
-# L2 全量仅 Sprint Done when / 用户确认后（见 verify.mdc · confirm_before: verify_l2）
+./.cursor/bin/runner.sh verify   # Sprint / 打版前全量
 ```
 
 `task-verify` 非 OK 不得标 ✅、不得 commit（见 `rules/communication/constitution.mdc`）。
@@ -59,7 +59,7 @@ git status && git diff --stat    # commit 前：无密钥、无意外文件；�
 | 时机 | 规则 |
 |------|------|
 | **每个 TASK / DOC / SPIKE 归档任务 ✅** | 同轮 **必须** `git commit`（**不含** `plan.md`）；`tag-per-commit` 时同轮 **`release-tag`** |
-| **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `{archive_dir}/{domain}/`（禁长期 flat 根堆积） |
+| **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `.cursorGrowth/archive/` |
 | **仅改 `.cursorGrowth/plan.md`** | **勿** commit（`.cursorGrowth/` gitignore） |
 | **push** | 默认 **不** push；用户说 push 或 **ship** / **release** §分支 再推 |
 
@@ -71,9 +71,8 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 | 阶段 | 推荐命令 |
 |------|----------|
-| 开发 / 单 TASK | `./scripts/test.sh` · `runner.sh task-verify` · L1 域脚本 |
-| Sprint Done when / PR 前 | `verify_default`（**用户确认** · `confirm_before: verify_l2`） |
-| 发版前 | 项目 nightly/全量脚本（**用户确认** · `verify_l3`） |
+| 开发任务 | `./scripts/test.sh` 或域脚本 **L1**（`bash scripts/verify_<feature>.sh`） |
+| 任务收尾 / P0 闭合 | `./scripts/verify.sh` 或域脚本 **`--full`（L3）** |
 
 分层定义 → `rules/feedback/verify.mdc` · 测试侧重 → **test** skill。
 
@@ -205,7 +204,7 @@ Ambiguous 时 AskQuestion ≤4 项，禁止开放式「你想用哪个 skill」�
 
 1. `./.cursor/bin/runner.sh verify` — **须满足 Sprint Done when**（母版含 `cursor-coherence.sh` · README 与 CHANGELOG 对齐）
    - **可选** — Done when 含「测试报告」/ QA benchmark / 持久化 `docs/test-report.md` → **`/report`**（**test-report**；步骤 1 刚跑完 verify 时优先 **from-logs**；见 `reference/regen-gates.md` §sprint）
-2. 将本 Sprint 笔记写入 **`{archive_dir}/{domain}/`**（域目录 + 命名见 **plan** `reference/growth-layout.md` · 团队增量见 `learn/plan-conventions.md`）
+2. 将本 Sprint 笔记写入 **`.cursorGrowth/archive/`**（命名见 `learn/plan-conventions.md`）
 3. **plan 正文 reconciliation**（与 archive 一致；**必做**，仅 `.cursorGrowth/plan.md`）：
    - [ ] `<!-- SPRINT_STATUS: closed -->` · `<!-- ACTIVE: (none) -->` · `<!-- NEXT: (none) -->`
    - [ ] **从 plan 删除整个已闭合 Active Sprint 区块**（Goal · Done when · TASK 表）— **勿**改标题留「已闭合」正文

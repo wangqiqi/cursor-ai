@@ -1,6 +1,6 @@
 ---
 name: test
-description: 测试清单 — 单测/E2E/TDD；衔接 verify。说「写测试」「Playwright」时用。
+description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 verify。说「写测试」「TDD」「Playwright」时用。
 ---
 
 # test
@@ -50,9 +50,27 @@ Walkthrough 若用于**说明书配图**（非仅冒烟）→ 与 **user-manual*
 **层定义真源**：`rules/feedback/verify.mdc` §分层验收（L0–L3）。本 skill **不重复**该表。
 
 - 新功能域：**优先** L1 进 `task-verify`；L3 进 Sprint Done when 或 nightly
-- **新增 `verify_*.sh` 前**：读 `rules/feedback/verify.mdc` §新增 verify 脚本门禁 — 默认落 `scripts/verify/domain/` · grep 已有脚本 · 优先 `scripts/lib/` 公因子 · 聚合 +1 行注册（布局 **plan** `reference/growth-layout.md`）
 - 红测停在 L1 即可标 🔧；**勿**为 ✅ 跳过 L1 直接跑 L3
 - 项目路径坐标 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进 `.cursor/`；聚合脚本仅编排（见 verify.mdc）
+- 新项目 Day-1 骨架 → **scaffold** `apply-bundle verify-layers`（注册表 · 示例 slice · `VERIFY_REGISTRY_STRICT`）
+
+### Agent 终端 · 长测有界运行
+
+**用这个**：Cursor Agent / CI 跑 `node --test` · 长 verify。**不是那个**：裸跑无超时后杀 shell 留孤儿。
+
+| 必须 | 说明 |
+|------|------|
+| **有界超时** | wall + per-case timeout（项目 bounded-test wrapper 或栈等价物） |
+| **杀进程组** | 取消长命令用 `kill -<pgid>`，勿只 `kill <pid>` |
+| **孤儿回收** | verify 入口或项目 reap 脚本清理 PPID=systemd 的陈旧测试进程 |
+
+### 并行 verify / 安装互斥
+
+| 场景 | 做法 |
+|------|------|
+| 并行 `verify:release` | 入口 `flock`（如 `.verify.lock`），禁止多实例抢锁 |
+| 共享 seed / `pnpm add` / 插件安装 | 共用安装锁 + 陈旧 lock 清理 + 命令 `timeout` |
+| slice 注册 | 新 `verify_*.sh` 须入 `verify-layers.sh` 注册表；CI 设 `VERIFY_REGISTRY_STRICT=1`（见 `verify.mdc`） |
 
 ## Playwright / E2E（若栈具备）
 

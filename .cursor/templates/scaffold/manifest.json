@@ -125,6 +125,55 @@
         "Regen doc: /report (from-logs if logs fresh)",
         "L1: bash scripts/verify/docs/verify_test_report.sh"
       ]
+    },
+    {
+      "id": "verify-layers",
+      "name": "Verify layers starter",
+      "category": "eng",
+      "description": "L1–L3 verify layering · slice registry · example slice · parallel runner · flock lock",
+      "path": "_bundles/verify-layers",
+      "layers": {
+        "shared": "shared"
+      },
+      "post_apply": [
+        "Read scripts/README-verify-layers.md",
+        "Register new slices in scripts/lib/verify-layers.sh (CORE · STANDARD · HEAVY · TASK)",
+        "L1: ./scripts/verify.sh",
+        "Registry: bash scripts/verify/slices/verify_layers_registry.sh",
+        "CI: VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_layers_registry.sh"
+      ]
+    },
+    {
+      "id": "design-system",
+      "name": "Design system starter",
+      "category": "frontend",
+      "description": "Neutral design-tokens.json · PageShell · ListLoadErrorAlert · color-audit.mjs",
+      "path": "_bundles/design-system",
+      "layers": {
+        "shared": "shared",
+        "web": "web"
+      },
+      "stacks_web": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
+      "post_apply": [
+        "Import client/src/styles/design-tokens.css in app entry",
+        "Register verify_design_tokens.sh in verify-layers (if bundle applied)",
+        "node scripts/color-audit.mjs"
+      ]
+    },
+    {
+      "id": "doc-coherence",
+      "name": "Doc coherence starter",
+      "category": "docs",
+      "description": "doc-anchors.js · verify_openapi_sync template · hygiene slice example",
+      "path": "_bundles/doc-coherence",
+      "layers": {
+        "shared": "shared"
+      },
+      "post_apply": [
+        "Add docs/openapi.yaml version anchor when API spec exists",
+        "bash scripts/docs/verify_openapi_sync.sh",
+        "bash scripts/verify/slices/verify_hygiene_example.sh"
+      ]
     }
   ]
 }
