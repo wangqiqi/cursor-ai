@@ -14,6 +14,10 @@ All notable changes to Super Cursor are documented here.
 - **archive 域分层骨架 + 门禁（F1/F2）** — `templates/cursorGrowth/archive/{sprint,spike,release,doc,ops}/` 骨架 + `archive/README.md` 域表；新增 `runner.sh archive-check`（根目录 flat 文件数 > `workflow.json` → `growth.archive_flat_max`（默认 5）即 FAIL，并列出应归入的域），已聚合进 `verify-growth-layout.sh`；`run` §Sprint 收尾 增一步。**本仓自己的 archive 同步分层**：23 个 flat 文件 → `sprint/`(12) · `doc/`(7) · `ops/`(5)，根目录 flat 归零
 - **域表 + docs 编号约定（F3）** — `templates/cursorGrowth/learn/plan-conventions.md` 成为**项目侧唯一登记表**（archive/scripts/docs 三处共用）：域表 · 归档命名与门禁 · **docs `NN_中文功能.md` 硬上限 10** · 序号纪律（不重用/留空/追加）· `ROADMAP.md` **例外不加序号** · 预留 **`07_用户手册.md`（`/manual` 自动生成）** 与 **`08_测试报告.md`（`/report` 自动生成）** + 生成标记 `<!-- generated: … · regenerate: … -->` · docs ↔ Growth 边界判定
 
+### Added
+
+- **测试框架选型（优先成熟开源）（G1–G4）** — `rules/execution/testing.mdc` 新增**§框架选型**表：TS/JS **Vitest** · React/Next/Vue/Svelte **Vitest + Testing Library** · E2E **Playwright** · Python **pytest**（+hypothesis 按需）· Go **go test** · Rust **cargo test** · C/C++ **CTest + Catch2/GoogleTest** · Java **JUnit 5** · BDD **Cucumber**；并给出"何时不引入"。纪律：优先宽松许可的活跃开源 · **一套到底**不混两套 runner · 跟随既有 lockfile 不迁移。`javascript`/`typescript`/`react`/`nextjs`/`svelte` 五条 tech rule 补默认框架指向（此前只有 react/java/python/go/rust/c/cpp/vue 写了）；`oss-first.mdc` 增「测试框架选型」段。`manifest.json` 7 栈新增 `test_framework` 声明，`scaffold-integrity.sh` **校验脚本/依赖里确实调用了它**（`platform.sh` 另加 `sc_manifest_scaffold_field_join` 以正确解析数组字段）
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行

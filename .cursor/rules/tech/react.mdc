@@ -20,4 +20,5 @@ alwaysApply: false
 - Error boundaries for route/feature shells; surface user-safe fallback messages.
 - Styles: CSS modules, Tailwind, or project convention — no one-off globals.
 - Tests: React Testing Library — behavior, roles, accessible queries; not implementation details.
+- **Runner**: Vitest + RTL as the default pair (`execution/testing.mdc` §框架选型).
 - Before done: `type-check`, `lint`, `build` (or project verify script).

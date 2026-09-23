@@ -100,7 +100,7 @@ disable-model-invocation: true
 - 合并/打版前：`./scripts/verify.sh`
 - 调试：前端 `npm run test:watch` · Go `go test -v ./tests/...` · Python `pytest -v tests/unit`
 
-manifest 字段 `test` / `verify` 见 `templates/scaffold/manifest.json`。
+manifest 字段 `test` / `verify` / `test_framework`（声明式测试栈，由 `scaffold-integrity.sh` 校验脚本确实调用）见 `templates/scaffold/manifest.json`。
 
 **共享层**：apply 会先铺 `templates/scaffold/_shared/**`（`scripts/README.md` 矩阵 · `scripts/lib/_common.sh` 公因子 · `verify/{domain,tier}` · `ops` · `dev` 骨架），栈内同名文件随后覆盖 → 新仓从第一天就是分层结构。
 

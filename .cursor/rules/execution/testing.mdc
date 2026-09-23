@@ -14,6 +14,28 @@ alwaysApply: false
 
 编辑测试路径时加载。流程细节见 **test** skill · `rules/feedback/verify.mdc`。
 
+## 框架选型（优先成熟开源）
+
+**默认用下表首选**（都是活跃开源、生态标准）；**不**同时引入同层两套（如 Vitest + Jest）；已有 lockfile 与生态时**跟随现有**，不迁移。
+
+| 语言 / 栈 | 首选 | 备选 | 何时不引入 |
+|-----------|------|------|-----------|
+| TypeScript / JS | **Vitest** | Jest（既有项目） | 纯类型包（`tsc --noEmit` 即验收） |
+| React / Next.js / Vue / Svelte | **Vitest + Testing Library** | 组件快照（谨慎） | 组件无逻辑（纯展示） |
+| E2E | **Playwright** | Cypress（既有） | 无关键用户路径 |
+| Python | **pytest**（+ `pytest-asyncio` · `hypothesis` 属性测试按需） | unittest（标准库，零依赖场景） | 一次性脚本 |
+| Go | **`go test`**（+ `testify` 按需） | — | — |
+| Rust | **`cargo test`**（+ `proptest` 按需） | — | — |
+| C / C++ | **CTest**（随 CMake）+ **Catch2** 或 **GoogleTest** | doctest（轻量） | 无构建系统的单文件 |
+| Java | **JUnit 5** + AssertJ | TestNG（既有） | — |
+| BDD / Gherkin | **Cucumber**（各语言实现） | Behave（Python）· SpecFlow（.NET） | 团队不用 Gherkin |
+
+纪律：
+
+- **优先开源且活跃**：许可宽松（MIT/BSD/Apache-2.0）→ 见 `rules/execution/oss-first.mdc`；**避免**把测试绑到闭源/私有 runner
+- **一套到底**：单测与 E2E 用各自生态标准件，不混搭两套断言库
+- **脚手架已按此表生成**：`scaffold.sh` 各栈的 `scripts/test.sh` / `scripts/verify.sh` 即首选组合；`manifest.json` → `test_framework` 为声明值，`scaffold-integrity.sh` 校验脚本确实调用了它
+
 ## 单元 / 集成
 
 - 测行为与契约，非实现细节（DOM 选择器、私有函数名）

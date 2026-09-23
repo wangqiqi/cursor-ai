@@ -7,6 +7,8 @@ description: 测试清单 — 单测、集成、E2E、TDD 红绿重构；衔接 
 
 验收优先 plan 列命令；无列则用项目 `./scripts/test.sh` 或 stack 默认。测试文件细则 → `rules/execution/testing.mdc`。
 
+**框架选型（优先成熟开源）** → `rules/execution/testing.mdc` §框架选型：Vitest/RTL · Playwright · pytest · go test · cargo test · CTest+Catch2/GTest · JUnit 5。一套到底，不同层混两套 runner。
+
 ## TDD 短环（功能 / bugfix）
 
 1. **红** — 写失败测试（或复现用例），运行确认失败

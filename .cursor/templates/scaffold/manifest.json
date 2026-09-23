@@ -3,9 +3,19 @@
   "tier": "standard+",
   "tier_notes": "lint+test+verify+CI+env · 7 stacks · optional bundles",
   "categories": {
-    "frontend": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
-    "backend": ["go-api", "rust-axum", "python-fastapi"],
-    "systems": ["cpp-cmake"]
+    "frontend": [
+      "react-vite-ts",
+      "vue-vite-ts",
+      "nextjs-ts"
+    ],
+    "backend": [
+      "go-api",
+      "rust-axum",
+      "python-fastapi"
+    ],
+    "systems": [
+      "cpp-cmake"
+    ]
   },
   "test_convention": {
     "dev_loop": "scripts/test.sh",
@@ -17,57 +27,120 @@
       "id": "react-vite-ts",
       "name": "React + Vite + TypeScript",
       "category": "frontend",
-      "tags": ["react", "typescript", "vite", "eslint", "vitest"],
+      "tags": [
+        "react",
+        "typescript",
+        "vite",
+        "eslint",
+        "vitest"
+      ],
       "description": "SPA · 独立 tests/ · Vitest+RTL · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["npm install", "./scripts/verify.sh"]
+      "post_apply": [
+        "npm install",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "vitest",
+        "@testing-library/react"
+      ]
     },
     {
       "id": "vue-vite-ts",
       "name": "Vue 3 + Vite + TypeScript",
       "category": "frontend",
-      "tags": ["vue", "typescript", "vite", "eslint", "vitest"],
+      "tags": [
+        "vue",
+        "typescript",
+        "vite",
+        "eslint",
+        "vitest"
+      ],
       "description": "SPA · Composition API · Vitest · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["npm install", "./scripts/verify.sh"]
+      "post_apply": [
+        "npm install",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "vitest",
+        "@vue/test-utils"
+      ]
     },
     {
       "id": "nextjs-ts",
       "name": "Next.js + TypeScript",
       "category": "frontend",
-      "tags": ["nextjs", "react", "typescript", "vitest"],
+      "tags": [
+        "nextjs",
+        "react",
+        "typescript",
+        "vitest"
+      ],
       "description": "App Router · next lint · Vitest · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["npm install", "./scripts/verify.sh"]
+      "post_apply": [
+        "npm install",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "vitest",
+        "@testing-library/react"
+      ]
     },
     {
       "id": "go-api",
       "name": "Go HTTP API",
       "category": "backend",
-      "tags": ["go", "http"],
+      "tags": [
+        "go",
+        "http"
+      ],
       "description": "cmd/ + internal/ + tests/integration · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["go mod tidy", "./scripts/verify.sh"]
+      "post_apply": [
+        "go mod tidy",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "go test"
+      ]
     },
     {
       "id": "rust-axum",
       "name": "Rust + Axum",
       "category": "backend",
-      "tags": ["rust", "axum", "tokio"],
+      "tags": [
+        "rust",
+        "axum",
+        "tokio"
+      ],
       "description": "lib app() 可测 · tests/ 集成 · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["cargo test", "./scripts/verify.sh"]
+      "post_apply": [
+        "cargo test",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "cargo test"
+      ]
     },
     {
       "id": "python-fastapi",
       "name": "Python FastAPI",
       "category": "backend",
-      "tags": ["python", "fastapi", "ruff", "mypy", "pytest"],
+      "tags": [
+        "python",
+        "fastapi",
+        "ruff",
+        "mypy",
+        "pytest"
+      ],
       "description": "tests/unit+integration · ruff+mypy · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
@@ -76,17 +149,29 @@
         "source .venv/bin/activate",
         "pip install -e '.[dev]'",
         "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "pytest"
       ]
     },
     {
       "id": "cpp-cmake",
       "name": "C++ + CMake",
       "category": "systems",
-      "tags": ["cpp", "cmake", "gtest"],
+      "tags": [
+        "cpp",
+        "cmake",
+        "gtest"
+      ],
       "description": "GoogleTest tests/ · -Wall · CI",
       "verify": "scripts/verify.sh",
       "test": "scripts/test.sh",
-      "post_apply": ["./scripts/verify.sh"]
+      "post_apply": [
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "ctest"
+      ]
     }
   ],
   "bundles": [
@@ -100,7 +185,11 @@
         "shared": "shared",
         "web": "web"
       },
-      "stacks_web": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
+      "stacks_web": [
+        "react-vite-ts",
+        "vue-vite-ts",
+        "nextjs-ts"
+      ],
       "post_apply": [
         "Edit config/manual.yaml — roles, storylines, capture commands",
         "Web stacks: npm i -D @playwright/test && npx playwright install chromium",
@@ -153,7 +242,11 @@
         "shared": "shared",
         "web": "web"
       },
-      "stacks_web": ["react-vite-ts", "vue-vite-ts", "nextjs-ts"],
+      "stacks_web": [
+        "react-vite-ts",
+        "vue-vite-ts",
+        "nextjs-ts"
+      ],
       "post_apply": [
         "Import client/src/styles/design-tokens.css in app entry",
         "Register verify_design_tokens.sh in verify-layers (if bundle applied)",

@@ -48,6 +48,7 @@ alwaysApply: false
 | 类别 | 可否依赖 / vendor | 说明 |
 |------|-------------------|------|
 | **MIT / BSD / ISC / Apache-2.0 / Unlicense** 等宽松许可 | ✅ 默认选用 | 允许修改适配 |
+
 | **MPL-2.0** | ⚠️ 慎用 | 改动文件开源义务；外挂另论 |
 | **LGPL** | ⚠️ 慎用 | 动态链接/子进程通常可接受；静态捆绑须合规审查 |
 | **GPL / AGPL** 作库依赖或 vendor 进产物 | ❌ 禁止 | 传染风险（除非产品本身同许可且用户确认） |
@@ -80,3 +81,8 @@ alwaysApply: false
 ## 禁止写进本 rule
 
 具体产品功能表、具体包名清单、某一仓库的债务队列 → 项目 `docs/` 或 `.cursorGrowth/learn/`。
+
+## 测试框架选型
+
+测试栈同样**优先成熟开源**（活跃维护 · 宽松许可 · 生态标准件），并**跟随既有 lockfile**、不为测试引入第二套 runner。
+按语言的首选/备选表 → `rules/execution/testing.mdc` §框架选型（脚手架各栈的 `manifest.json` → `test_framework` 即该表落地值）。

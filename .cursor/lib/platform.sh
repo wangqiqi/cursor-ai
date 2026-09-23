@@ -273,6 +273,17 @@ elif cmd == "field":
     if not s:
         sys.exit(1)
     print(s.get(sys.argv[4], ""))
+elif cmd == "field_join":
+    s = by_id(sys.argv[3])
+    if not s:
+        sys.exit(1)
+    v = s.get(sys.argv[4])
+    if isinstance(v, list):
+        print(" ".join(str(x) for x in v))
+    elif v is None:
+        print("")
+    else:
+        print(v)
 elif cmd == "post_apply":
     s = by_id(sys.argv[3])
     if not s:
@@ -382,6 +393,16 @@ sc_manifest_scaffold_post_apply() {
   else
     sc_require_json_tool
     return 1
+  fi
+}
+
+# 数组字段 → 空格分隔（jq -r 对数组会多行输出，不便 shell 循环）
+sc_manifest_scaffold_field_join() {
+  local manifest="$1" id="$2" key="$3"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r --arg id "$id" --arg k "$key" '.scaffolds[] | select(.id == $id) | (.[$k] // []) | if type == "array" then join(" ") else . end' "$manifest"
+  else
+    _manifest_py "$manifest" field_join "$id" "$key"
   fi
 }
 

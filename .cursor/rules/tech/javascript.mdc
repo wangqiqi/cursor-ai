@@ -16,4 +16,5 @@ alwaysApply: false
 - No secrets in source; validate env at startup.
 - Match eslint/prettier; run lint before commit.
 - Tests: colocate `*.test.js` or `__tests__/` per project convention.
+- **Framework**: Vitest preferred (see `execution/testing.mdc` §框架选型); keep one runner per repo.
 - Node scripts: shebang only when executable; use `cli-python.mdc` for argparse-heavy CLIs in `.py` — for Node use consistent commander/yargs per repo.

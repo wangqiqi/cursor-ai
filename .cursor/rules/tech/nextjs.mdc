@@ -40,3 +40,4 @@ alwaysApply: false
 
 - `npm run lint` · `type-check` · `test` · `build` before marking tasks done.
 - E2E optional Playwright when project has config.
+- **Runner**: Vitest + RTL for units; Playwright for E2E (`execution/testing.mdc` §框架选型).

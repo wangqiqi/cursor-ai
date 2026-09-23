@@ -17,4 +17,5 @@ alwaysApply: false
 - No secrets in source; validate env at startup with schema (zod/valibot) when the repo uses it.
 - Match eslint/prettier; run `type-check` / `lint` before marking tasks done.
 - Tests: colocate `*.test.ts` / `__tests__`; mock at I/O boundaries, not internals.
+- **Framework**: Vitest preferred; type-only packages may use `tsc --noEmit` as the gate (`execution/testing.mdc` §框架选型).
 - Imports: prefer type-only imports; avoid barrel files that hurt tree-shaking unless repo convention.

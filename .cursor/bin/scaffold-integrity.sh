@@ -52,6 +52,25 @@ while IFS= read -r id; do
   ok "$id"
 done < <(sc_manifest_ids "$MANIFEST")
 
+# 测试框架必须与声明一致（testing.mdc 选型表 · 优先成熟开源）
+while IFS= read -r id; do
+  declared="$(sc_manifest_scaffold_field_join "$MANIFEST" "$id" test_framework 2>/dev/null || true)"
+  [[ -z "$declared" || "$declared" == "null" ]] && continue
+  hits=0
+  for f in "$TEMPLATE_ROOT/$id/scripts/test.sh" "$TEMPLATE_ROOT/$id/scripts/verify.sh" "$TEMPLATE_ROOT/$id/package.json" "$TEMPLATE_ROOT/$id/pyproject.toml" "$TEMPLATE_ROOT/$id/Cargo.toml" "$TEMPLATE_ROOT/$id/CMakeLists.txt"; do
+    [[ -f "$f" ]] || continue
+    for kw in $declared; do
+      [[ -z "$kw" ]] && continue
+      grep -qF -- "$kw" "$f" 2>/dev/null && hits=$((hits + 1))
+    done
+  done
+  if [[ "$hits" -gt 0 ]]; then
+    ok "$id test framework declared+used: $declared"
+  else
+    fail "$id declares test_framework='$declared' but no script/config references it"
+  fi
+done < <(sc_manifest_ids "$MANIFEST")
+
 while IFS= read -r id; do
   src="$TEMPLATE_ROOT/$id/scripts/verify.sh"
   [[ -f "$src" ]] || continue

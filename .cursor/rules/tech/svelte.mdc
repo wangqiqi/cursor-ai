@@ -28,3 +28,4 @@ Svelte 5 runes 优先。复杂组件可配合 **svelte-file-editor** agent · Sv
 
 - `npm run check` / `svelte-check`（若配置）
 - 与 **test** skill · `testing.mdc` 衔接
+- **Runner**: Vitest + `@testing-library/svelte` 首选；`svelte-check` 只做类型/模板检查，不替代测试（`execution/testing.mdc` §框架选型）
