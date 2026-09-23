@@ -142,7 +142,7 @@ for md in sorted(docs_root.rglob("*.md")):
             continue
         resolved = (md.parent / path_part).resolve()
         if not resolved.exists():
-            broken.append(f"{md.relative_to(docs_root)} -> {target}")
+            broken.append(f"{md.relative_to(docs_root).as_posix()} -> {target}")
 
 if broken:
     for b in broken[:20]:

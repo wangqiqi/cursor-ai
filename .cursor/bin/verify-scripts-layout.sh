@@ -114,10 +114,10 @@ else:
 for f in files:
     first = f.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
     if not first or not first[0].startswith("#!/usr/bin/env bash"):
-        fails.append(f"{f.relative_to(root)}: shebang must be '#!/usr/bin/env bash'")
+        fails.append(f"{f.relative_to(root).as_posix()}: shebang must be '#!/usr/bin/env bash'")
 
 for owners, key in duplicate_blocks(files):
-    where = ", ".join(str(o.relative_to(root)) for o in owners)
+    where = ", ".join(o.relative_to(root).as_posix() for o in owners)
     fails.append(
         f"duplicate {dup_lines}-line block in {where} -> extract into scripts/lib/_*.sh :: {key[0][:60]!r}"
     )

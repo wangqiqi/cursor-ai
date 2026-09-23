@@ -334,8 +334,14 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]] || { [[ -d "$CURSOR_LOCAL" ]] && \
     [[ "$(find "$CURSOR_LOCAL" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')" -le 1 ]]; }; then
     rm -rf "$CURSOR_LOCAL"
-    ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL"
-    echo "已链接 .cursor/rules/local → .cursorGrowth/rules/local"
+    # Windows / Git Bash 可能无符号链接权限：失败必须降级为真实目录，不能让安装中断（set -e）
+    if ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+      echo "已链接 .cursor/rules/local → .cursorGrowth/rules/local"
+    else
+      mkdir -p "$CURSOR_LOCAL"
+      cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null || true
+      echo "OK  .cursor/rules/local 目录（符号链接不可用 · 已降级为目录副本）"
+    fi
   fi
 fi
 

@@ -49,11 +49,12 @@ GNU_ONLY = [
 ]
 NON_POSIX_RE = re.compile(r"(grep\s+(-\w+\s+)*'[^']*\\s|sed\s+(-\w+\s+)*'[^']*\\s)")
 READLINK_RE = re.compile(r"readlink\s+-f\b")
+LN_S_RE = re.compile(r"(^|[;&|(]\s*|\bthen\s+)ln\s+-s")
 PYTHON3_RE = re.compile(r"(^|[|(]\s*|\$\(\s*|\beval\s+\"\$\(\s*)python3\s")
 
 fails = []
 for path in files:
-    rel = path.relative_to(root)
+    rel = path.relative_to(root).as_posix()
     text = path.read_text(encoding="utf-8", errors="replace")
     lines = text.splitlines()
 
@@ -69,6 +70,11 @@ for path in files:
             continue
         # 去掉行尾注释里可能出现的示例（保守：只在 '#' 前是空白时截断）
         code = re.split(r"\s#\s", line)[0]
+        # Windows 路径分隔符：relative_to/relpath 的结果必须归一后才能与字面量比较
+        if re.search(r"(relative_to\(|os\.path\.relpath\()", code) and not re.search(
+            r"as_posix\(\)|replace\(os\.sep", line
+        ):
+            fails.append(f"{rel}:{i} relative_to/relpath without .as_posix() (Windows returns backslashes)")
 
         for pat, why in GNU_ONLY:
             if re.search(pat, code):
@@ -77,6 +83,8 @@ for path in files:
             fails.append(f"{rel}:{i} non-POSIX \\s in grep/sed pattern")
         if READLINK_RE.search(code) and "||" not in code:
             fails.append(f"{rel}:{i} readlink -f without same-line fallback")
+        if LN_S_RE.search(code) and not re.search(r"2>/dev/null|\|\||if\s+ln\b", line):
+            fails.append(f"{rel}:{i} bare 'ln -s' without fallback (Windows/Git Bash may lack symlink rights)")
         if PYTHON3_RE.search(code):
             fails.append(f"{rel}:{i} hardcoded python3 call (use $PYTHON_BIN / sc_python)")
 

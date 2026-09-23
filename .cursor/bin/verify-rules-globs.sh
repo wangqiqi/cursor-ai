@@ -90,7 +90,8 @@ def to_regex(pattern):
 
 rules = {}
 for path in sorted((cur / "rules").rglob("*.mdc")):
-    rel = str(path.relative_to(cur))
+    # Windows 会返回 `rules\x.mdc` → 必须归一为 POSIX，否则与字面量比较全部不中
+    rel = path.relative_to(cur).as_posix()
     text = path.read_text(encoding="utf-8")
     fm = parse_frontmatter(text)
     if fm is None:
@@ -106,10 +107,15 @@ for path in sorted((cur / "rules").rglob("*.mdc")):
     for g in fm.get("globs", []):
         if "{" in g or "}" in g:
             fail(f"{rel}: brace glob {g!r} is not documented by Cursor; enumerate extensions")
-    rules[rel] = fm.get("globs", [])
+    rules[rel] = [g.replace("\\", "/") for g in fm.get("globs", [])]
 
 if rules:
     ok(f"frontmatter + keys valid ({len(rules)} rules)")
+
+# 0. 路径分隔符回归：key 必须是 POSIX（Windows 下 str(relative_to) 会泄露反斜杠）
+non_posix = [k for k in rules if "\\" in k]
+if non_posix:
+    fail(f"non-POSIX rule keys (Windows separator leak): {non_posix[:3]} — 用 .as_posix()")
 
 # 1. plan 闸门规则必须能命中真实 plan 位置
 PLAN_GATE = [

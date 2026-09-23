@@ -42,6 +42,15 @@ All notable changes to Super Cursor are documented here.
 - **`consumer-smoke.sh` 增 docs 端到端腿** — install → `docs-init` → `verify-docs-layout` 必须绿，关闭"骨架存在但从没被真实消费"的盲区；消费方验证器列表补 `verify-docs-layout` · `verify-scripts-layout`
 - **`/learn` 增 docs bootstrap** — 首次学习时据仓库证据建议 profile（web 全栈 / API / 前端 / library / CLI）并 `docs-init` 铺骨架
 
+### Fixed
+
+- **Windows CI 抓到的 3 个真缺陷（跨平台）** — 这些在 Linux/macOS 下**永不出现**（Linux 用 `/`、符号链接把问题藏住），Windows 腿（非阻塞）把它们暴露出来：
+  1. **`verify-rules-globs.sh` 路径分隔符泄漏** — `str(path.relative_to(cur))` 在 Windows 返回 `rules\tech\nextjs.mdc`，与 `rules/tech/nextjs.mdc` 字面量比较**全部不中** → 5 条 rule 的 plan 闸门断言 + 12 条栈 fixture 断言误报 FAIL（17 个）。改为 `.as_posix()`，并新增**回归护栏**（rule key 含反斜杠即 FAIL）
+  2. **`verify-roo-compat.sh` 把项目私有 rules 当规则扫** — `.cursor/rules/local/` 是安装脚本链接到 gitignore Growth 的**项目私有**目录，按设计含 `README.md`（非规则）。Linux 下它是符号链接、`rglob` 不遍历（**假绿**），Windows 下实体化即 FAIL。现显式跳过 `rules/local/**`；用同一 fixture 对旧脚本复现出**与 CI 完全相同的报错**，新脚本 OK
+  3. **裸 `ln -s` 在 `set -e` 下中止安装/自检** — `install-super-cursor.sh` 与 `install-smoke.sh` 的自安装 fixture 都无守卫；Windows/Git Bash 无符号链接权限时**直接中止**（日志表现为"无 FAIL 行、秒退"）。现均加守卫：安装脚本**降级为目录副本**（`mkdir` + README）保证安装成功，smoke 无符号链接权限时显式 `SKIP` 而非静默中止
+- **`verify-portability.sh` 增两条静态护栏** — ① `relative_to(`/`os.path.relpath(` 必须同句 `.as_posix()`（防第 1 类复发）② 裸 `ln -s` 必须带 `2>/dev/null`/`||`/`if`（防第 3 类复发）。两者均有负向测试，且对现有守卫点**零误报**
+- 展示用路径统一 `.as_posix()`（`verify-doc-super-cursor` · `verify-scripts-layout`），消息里不再混入反斜杠
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行

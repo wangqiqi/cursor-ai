@@ -118,17 +118,22 @@ grep -qF 'install-super-cursor' "$HOME/.bashrc" && ok "setup-shell: alias" || fa
 export HOME="$HOME_SAVE"
 
 # 8. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
+# 需要符号链接来构造「source==target」；无符号链接权限的平台（Windows/Git Bash）显式 SKIP，
+# 而不是让裸 ln -s 在 set -e 下中止整个 smoke（曾导致 Windows 腿秒退且无 FAIL 行）
 SELF="$TMP_ROOT/self-replace"
 mkdir -p "$SELF"
 cp "$INSTALL" "$SELF/install-super-cursor.sh"
-ln -s "$ROOT/.cursor" "$SELF/.cursor"
-(
-  cd "$SELF"
-  env -u SUPER_CURSOR_HOME -u CURSOR_AI_HOME \
-    bash ./install-super-cursor.sh "$SELF" --replace >/dev/null 2>&1
-) && fail "self-replace: must refuse source==target" || ok "self-replace: refuses source==target"
-assert_file "$SELF/.cursor/hooks.json" "self-replace: .cursor intact"
-assert_file "$ROOT/.cursor/hooks.json" "self-replace: mother repo untouched"
+if ln -s "$ROOT/.cursor" "$SELF/.cursor" 2>/dev/null; then
+  (
+    cd "$SELF"
+    env -u SUPER_CURSOR_HOME -u CURSOR_AI_HOME \
+      bash ./install-super-cursor.sh "$SELF" --replace >/dev/null 2>&1
+  ) && fail "self-replace: must refuse source==target" || ok "self-replace: refuses source==target"
+  assert_file "$SELF/.cursor/hooks.json" "self-replace: .cursor intact"
+  assert_file "$ROOT/.cursor/hooks.json" "self-replace: mother repo untouched"
+else
+  echo "SKIP  self-replace guard（本平台无符号链接权限，无法构造 source==target）"
+fi
 
 echo "---"
 if [[ "$FAIL" -eq 0 ]]; then

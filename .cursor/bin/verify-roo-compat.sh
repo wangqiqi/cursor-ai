@@ -55,19 +55,32 @@ def check(kind, path, rel):
         fails.append(f"{rel}: editor-private frontmatter key(s) {sorted(extra)} — not portable")
 
 
+def rel_of(p):
+    return p.relative_to(cur).as_posix()
+
+
+def is_local(p):
+    """`.cursor/rules/local/` 是**项目私有**（安装脚本链接到 gitignore 的 Growth），
+    且按设计含 `README.md`（非规则）。本检查只针对母版随包分发的规则 → 跳过。
+    注意：Linux 下它是符号链接（rglob 不遍历 → 假绿），Windows 下可能实体化（曾漏报）。"""
+    r = rel_of(p)
+    return r == "rules/local" or r.startswith("rules/local/")
+
+
 for p in sorted((cur / "rules").rglob("*.mdc")):
-    check("rule", p, str(p.relative_to(cur)))
+    if not is_local(p):
+        check("rule", p, rel_of(p))
 for p in sorted((cur / "skills").glob("*/SKILL.md")):
-    check("skill", p, str(p.relative_to(cur)))
+    check("skill", p, rel_of(p))
 for p in sorted((cur / "agents").glob("*.md")):
-    check("agent", p, str(p.relative_to(cur)))
+    check("agent", p, rel_of(p))
 for p in sorted((cur / "commands").glob("*.md")):
-    check("command", p, str(p.relative_to(cur)))
+    check("command", p, rel_of(p))
 
 # rules 必须是 .mdc（Cursor/协议约定）；.cursor/rules 里的 .md 会被忽略
 for p in sorted((cur / "rules").rglob("*.md")):
-    if p.suffix == ".md":
-        fails.append(f"{p.relative_to(cur)}: rules must use .mdc (plain .md is ignored)")
+    if p.suffix == ".md" and not is_local(p):
+        fails.append(f"{rel_of(p)}: rules must use .mdc (plain .md is ignored)")
 
 if fails:
     for f in fails:
