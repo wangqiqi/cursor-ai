@@ -342,7 +342,7 @@ archive_check() {
   max="$(sc_config '.growth.archive_flat_max' '5')"
   [[ "$max" =~ ^[0-9]+$ ]] || max=5
   if [[ ! -d "$dir" ]]; then
-    echo "OK: archive 目录尚未创建（$rel）"
+    echo "OK: archive 目录尚未创建（${rel}）"
     return 0
   fi
   flat="$(find "$dir" -maxdepth 1 -type f | wc -l | tr -d ' ')"
@@ -439,7 +439,7 @@ docs_init() {
   local roadmap_dest="$ROOT/$dir/$roadmap"
   if [[ -f "$tpl/ROADMAP.md" ]]; then
     if [[ -e "$roadmap_dest" && "$force" != "true" ]]; then
-      echo "  skip  $dir/$roadmap（已存在）"
+      echo "  skip  $dir/${roadmap}（已存在）"
     elif [[ "$dry_run" == "true" ]]; then
       echo "  plan  $dir/$roadmap"
     else

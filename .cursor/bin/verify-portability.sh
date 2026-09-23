@@ -99,6 +99,13 @@ for path in files:
             fails.append(f"{rel}:{i} readlink -f without same-line fallback")
         if LN_S_RE.search(code) and not re.search(r"2>/dev/null|\|\||if\s+ln\b", line):
             fails.append(f"{rel}:{i} bare 'ln -s' without fallback (Windows/Git Bash may lack symlink rights)")
+        # bash 3.2 / C locale：`$VAR` 紧跟多字节字符时字节会被并入变量名 →
+        # `PROFILE）: unbound variable`，set -u 下直接中止（macOS 与 Git Bash 都中过）。
+        for _m in re.finditer(r"\$[A-Za-z_][A-Za-z0-9_]*(?=[^\x00-\x7F])", line):
+            fails.append(
+                f"{rel}:{i} '{_m.group(0)}' is immediately followed by a non-ASCII char; "
+                f"write '${{{_m.group(0)[1:]}}}' (bash 3.2 folds those bytes into the name)"
+            )
         for _name in splat_arrays:
             if f'"${{{_name}[@]}}"' in line and f"{_name}[@]+" not in line:
                 fails.append(

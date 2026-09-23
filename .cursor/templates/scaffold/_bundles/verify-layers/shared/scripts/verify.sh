@@ -7,7 +7,7 @@ VERIFY_LOCK="${SC_ROOT}/.verify.lock"
 if command -v flock >/dev/null 2>&1; then
   exec 9>"$VERIFY_LOCK"
   if ! flock -n 9; then
-    echo "[错误] 另一个 verify 正在运行（锁: $VERIFY_LOCK）" >&2
+    echo "[错误] 另一个 verify 正在运行（锁: ${VERIFY_LOCK}）" >&2
     echo "       若确认无 verify 进程，可删除该锁文件后重试。" >&2
     exit 1
   fi

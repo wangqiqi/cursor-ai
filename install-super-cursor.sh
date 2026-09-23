@@ -120,7 +120,7 @@ EOF
 
   if [[ "$updated" -eq 1 ]]; then
     echo ""
-    echo "Shell 环境已配置（SUPER_CURSOR_HOME=$mother_root）"
+    echo "Shell 环境已配置（SUPER_CURSOR_HOME=${mother_root}）"
     echo "  请执行: source ~/.bashrc   # 或 source ~/.zshrc · 重开终端"
     echo "  然后在任意项目目录: install-super-cursor --replace"
   fi
@@ -199,7 +199,7 @@ if [[ "$SETUP_SHELL" == "true" ]]; then
 fi
 
 if [[ "$USE_HERE" == "true" && -n "$TARGET" ]]; then
-  echo "错误: --here 与显式目标路径互斥（已给 $TARGET）；二选一。" >&2
+  echo "错误: --here 与显式目标路径互斥（已给 ${TARGET}）；二选一。" >&2
   usage
   exit 1
 fi
@@ -223,7 +223,7 @@ fi
 case "$PROFILE" in
   full|lite|rules-only) ;;
   *)
-    echo "错误: 无效 profile: $PROFILE（可选 full · lite · rules-only）" >&2
+    echo "错误: 无效 profile: ${PROFILE}（可选 full · lite · rules-only）" >&2
     exit 1
     ;;
 esac
@@ -242,7 +242,7 @@ if [[ "$REPLACE" == "true" ]]; then
   source_real="$(cd "$SOURCE" && pwd -P)"
   target_real="$(cd "$TARGET" 2>/dev/null && pwd -P || true)"
   if [[ -n "$target_real" && "$source_real" == "$target_real" ]]; then
-    echo "错误: 目标与母版为同一仓库（$target_real）。" >&2
+    echo "错误: 目标与母版为同一仓库（${target_real}）。" >&2
     echo "      --replace 会先删除 .cursor/ 再自拷空目录，导致模板被清空。已中止。" >&2
     echo "提示: 母版仓库无需安装自身；请在目标项目中执行，或先 git clone 到别处。" >&2
     exit 1
@@ -324,7 +324,7 @@ fi
 if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan.md" ) ]]; then
   if [[ -f "$TARGET/.cursor/templates/plan.md" ]]; then
     cp "$TARGET/.cursor/templates/plan.md" "$GROWTH_DIR/plan.md"
-    echo "已复制 .cursorGrowth/plan.md（profile=$PROFILE）"
+    echo "已复制 .cursorGrowth/plan.md（profile=${PROFILE}）"
   fi
 fi
 

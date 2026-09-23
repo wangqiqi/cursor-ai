@@ -21,7 +21,7 @@ require_linux() {
     local os
     os="$(uname -s 2>/dev/null || echo unknown)"
     [[ "$os" == "Linux" ]] && return 0
-    echo "SKIP: maintain 技能仅支持 Linux（Ubuntu/Debian）；当前系统为 $os。" >&2
+    echo "SKIP: maintain 技能仅支持 Linux（Ubuntu/Debian）；当前系统为 ${os}。" >&2
     echo "      macOS / Windows 请用 disk 快照 + 手工清理；平台矩阵见 .cursor/docs/platforms.md" >&2
     exit 3
 }
@@ -313,7 +313,7 @@ clean_tmp_dev_globs() {
                 success "开发 /tmp 残留 ($pattern): 释放 $((pre / 1024 / 1024)) MB（${#dirs[@]} 项）"
             fi
         else
-            info "将清理 $pattern（${#dirs[@]} 项，约 $((pre / 1024 / 1024)) MB）"
+            info "将清理 ${pattern}（${#dirs[@]} 项，约 $((pre / 1024 / 1024)) MB）"
         fi
     done
 }
