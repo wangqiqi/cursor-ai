@@ -51,7 +51,7 @@
     ]
   },
   "role": {
-    "default": "dashu",
+    "default": "professional",
     "config": ".cursor/config/roles.json"
   },
   "followup_gate": {

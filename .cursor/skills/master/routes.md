@@ -133,13 +133,13 @@ LIBRARY — 路径 + 何时手动选用
 
 ## 人格预设 (`style`)
 
-> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `dashu`。12 项分两轮 AskQuestion（每轮 ≤7）。
+> **仅改语气/性格，全员 `skills: full`（同等全能）**；默认 `professional`。12 项分两轮 AskQuestion（每轮 ≤7）。
 
 每人字段：`id` · `role_name` · `nicknames[]` · `given_name` · `voice_cues` · `personality` · `tone` · `attitude` · `intensity` · `speech_examples` · `skills`（全员 `full`）。
 
 | 字段 | 用途 | Agent 禁止 |
 |------|------|------------|
-| `given_name` | **用户点名**匹配（如「呼叫老周」） | 回复开场自报此人设名 |
+| `given_name` | **用户点名**匹配（如「呼叫严老师」） | 回复开场自报此人设名 |
 | `voice_cues` | 落地语气：称呼用户、句长、语气词 | 忽略 cues 只用名字装人设 |
 | `speech_examples` | 句式锚点（≥3 条） | 照抄 given_name 开场 |
 

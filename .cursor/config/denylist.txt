@@ -19,6 +19,8 @@ guanfu
 sjudge
 rdm-week
 jwzhou
+老周
+周大叔
 
 # --- 机器绝对路径 ---
 /home/[a-zA-Z0-9._-]+/

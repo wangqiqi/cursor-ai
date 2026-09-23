@@ -22,7 +22,7 @@ plan handoff 默认自治时，用户 **只说一次 `/run`**；Agent **同会�
 |------|------|
 | 每 TASK 收尾后 **立即**续下一 `ACTIVE`（`next-task` / 读 plan） | TASK ✅ 后停住等用户再说 `/run` |
 | 决策清单命中 → AskQuestion 或 `⚠️` → `/plan` | 静默扩 scope · 跳过 verify |
-| 人格/行为 → **super-cursor-persona** · `role.default`（dashu） | 因语气跳过高风险确认 |
+| 人格/行为 → **super-cursor-persona** · `role.default`（默认 professional） | 因语气跳过高风险确认 |
 
 触点矩阵 → **plan** `reference/autonomy-chain.md` · `workflow.json` → `autonomy.interrupt_on`。
 

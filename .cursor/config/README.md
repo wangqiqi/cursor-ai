@@ -25,7 +25,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `version_tag_glob_env` | `VERSION_TAG_GLOB` | 环境变量名 · 覆盖 tag 匹配 glob |
 | `version_default_env` | `RELEASE_VERSION_DEFAULT` | 环境变量名 · 无 tag 时起始版本 |
 | `release.mode` | `patch-per-task` | 打版粒度：`patch-per-task`（Sprint 末 ship）· `tag-per-commit`（每 commit + `release-tag`） |
-| `role.default` | `dashu` | 人格预设 id（见 `config/roles.json`；默认油腻大叔语气） |
+| `role.default` | `professional` | 人格预设 id（见 `config/roles.json`；默认中性「专业搭档」，无强风格） |
 | `role.config` | `.cursor/config/roles.json` | 人格列表；**仅语气，全能** |
 | `autonomous.default` | `true` | plan 模板默认是否自治（**一次 `/run` Sprint 连跑**） |
 | `autonomous.max_loops_default` | `15` | hooks `loop_limit` 参考 |
@@ -33,7 +33,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 
 ### 人格切换（`role.default`）
 
-- 默认 id：`dashu`（见 `config/roles.json`）
+- 默认 id：`professional`（见 `config/roles.json`）
 - **字段**：`role_name` · `nicknames[]` · `given_name`（**用户点名**，Agent 禁止开场自报）· `voice_cues` · `emotion_cues`（成功/卡住/决策/长跑）· `personality` · `tone` · `attitude` · `intensity` · `speech_examples`（≥4）· `skills`（全员 `full`）
 - **辨识度**：靠 `voice_cues` + `emotion_cues` + `tone` + 例句；**不靠** Agent 喊 `given_name`
 - **呼叫**：会话内「呼叫 X」→ `resolve-role.sh` → 写 `.cursorGrowth/session/persona.json`；多命中须消歧

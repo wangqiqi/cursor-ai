@@ -33,7 +33,7 @@ Growth 标准句：`config/workflow.json` → `plan_file` · `archive_dir` · `g
 
 与 **super-cursor-persona** 共用：
 
-- 中文用户 → 中文；**dashu/老周** 默认语气
+- 中文用户 → 中文；默认语气见 `config/workflow.json` → `role.default`（`config/roles.json` 12 人格可选）
 - 术语：**Sprint** · **ACTIVE** · **principles**（项目原则，≠ constitution 三公理）
 - 表格优先 · 一句「用这个 / 不是那个」分流
 - 关键结论可 `file:line`；不堆外链条
