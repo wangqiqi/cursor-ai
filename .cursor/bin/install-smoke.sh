@@ -56,7 +56,12 @@ assert_grep "$TMP_ROOT/full.out" '/learn' "full: output points at /learn first-r
 assert_grep "$FULL/.gitignore" 'cursorGrowth' "full: gitignore .cursorGrowth/"
 assert_absent "$FULL/plan.md" "full: no root plan.md"
 assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template 执行顺序"
-[[ -L "$FULL/.cursor/rules/local" ]] && ok "full: rules/local symlink" || fail "full: rules/local symlink"
+# Windows/Git Bash 的 ln -s 可能退化为复制 → 断言「可达」而非「必须是符号链接」
+if [[ -L "$FULL/.cursor/rules/local" ]] || [[ -e "$FULL/.cursor/rules/local/README.md" ]]; then
+  ok "full: rules/local resolvable"
+else
+  fail "full: rules/local not resolvable"
+fi
 (
   cd "$FULL"
   bash .cursor/bin/runner.sh plan-check >/dev/null 2>&1

@@ -12,6 +12,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **三平台 CI matrix（A6）** — `verify.yml` 由单 ubuntu job 扩为 `ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，先非阻塞）`；`fail-fast: false`，矩阵项未通过不影响其它项
+- **`SC_FORCE_PYTHON=1`（可测的 JSON 回退）** — `platform.sh` 新增该开关（`sc_has_json_tool` + 10 处 jq 分支），让「无 jq → python 回退」成为**可显式切换并验证**的路径。此前 CI 只在 ubuntu+jq 上跑，"回退"从未被覆盖（macOS runner 自带 jq，靠"恰好没装"不可行）
 - **`bin/verify-secrets.sh`（C4）** — 只扫 **已跟踪** 文件（`git ls-files`）：AWS key · 私钥材料 · GitHub/Slack token · 硬编码凭据赋值 · 被跟踪的 `.env`；示例占位（`example`/`your_`/`xxx`/`<...>`）与 `.env.example` 豁免。`.cursorignore`/`.gitignore` 只防「被读」，这道门禁防「被提交」；已纳入 `verify-super-cursor.sh`
 - **`bin/verify-roo-compat.sh`（C3）** — 把 README 的「Roo 兼容 / 协议无关」承诺变成可验证断言：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `commands/*.md` 的 frontmatter 键必须 ⊆ 开放协议白名单（出现编辑器私有键即 FAIL），且 `rules/` 下不得用会被忽略的 `.md`。已纳入 `verify-super-cursor.sh` 与接线自检
 - **根 `AGENTS.md`（C6）** — Cursor 官方支持项目根 `AGENTS.md`，此前只有 `.cursor/AGENTS.md`；新增母版根入口（指向 `.cursor/AGENTS.md` + 改仓纪律 + 验收命令），`verify-super-cursor.sh` 断言其存在且指向正确（母版专属，不随 `.cursor/` 复制）

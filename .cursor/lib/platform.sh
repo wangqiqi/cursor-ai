@@ -22,8 +22,17 @@ sc_python() {
   return 1
 }
 
+# 强制走 python JSON 回退（CI 验证无 jq 路径 · 排查 jq/python 行为差异）
+sc_force_python() {
+  [[ "${SC_FORCE_PYTHON:-}" == "1" ]]
+}
+
 # true when jq or python is available for JSON CLI
 sc_has_json_tool() {
+  if sc_force_python; then
+    sc_python >/dev/null 2>&1
+    return
+  fi
   command -v jq >/dev/null 2>&1 && return 0
   sc_python >/dev/null 2>&1
 }
@@ -46,7 +55,7 @@ json_cfg() {
 
   [[ -f "$file" ]] || { echo "$default"; return 0; }
 
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jqpath="$(sc_jq_path "$dotted")"
     val="$(jq -r "${jqpath} // empty" "$file" 2>/dev/null || true)"
   elif py="$(sc_python)"; then
@@ -81,7 +90,7 @@ json_cfg_join() {
 
   [[ -f "$file" ]] || { echo "$default"; return 0; }
 
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jqpath="$(sc_jq_path "$dotted")"
     joined="$(jq -r "${jqpath} // [] | join(\" \")" "$file" 2>/dev/null || true)"
   elif py="$(sc_python)"; then
@@ -105,7 +114,7 @@ PY
 # Deep-merge two JSON files to stdout (profile install)
 sc_json_merge_files() {
   local base="$1" overlay="$2" py
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -s '.[0] * .[1]' "$base" "$overlay"
     return 0
   fi
@@ -187,7 +196,7 @@ sc_detect_node_stack() {
   local pkg="$1"
   [[ -f "$pkg" ]] || return 1
 
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     if jq -e '.dependencies.next != null' "$pkg" >/dev/null 2>&1; then
       echo "nextjs"
     elif jq -e '(.dependencies.react // .devDependencies.react) != null' "$pkg" >/dev/null 2>&1; then
@@ -279,7 +288,7 @@ sc_require_json_tool() {
 
 sc_manifest_list() {
   local manifest="$1"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -r '.scaffolds[] | "\(.id)\t\(.category)\t\(.name)"' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" list
@@ -291,7 +300,7 @@ sc_manifest_list() {
 
 sc_manifest_scaffold_exists() {
   local manifest="$1" id="$2"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -e --arg id "$id" '.scaffolds[] | select(.id == $id)' "$manifest" >/dev/null 2>&1
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" exists "$id"
@@ -302,7 +311,7 @@ sc_manifest_scaffold_exists() {
 
 sc_manifest_scaffold_info() {
   local manifest="$1" id="$2"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" '
       .scaffolds[] | select(.id == $id) |
       "name: \(.name)",
@@ -321,7 +330,7 @@ sc_manifest_scaffold_info() {
 
 sc_manifest_scaffold_field() {
   local manifest="$1" id="$2" field="$3"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" --arg f "$field" '.scaffolds[] | select(.id == $id) | .[$f]' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" field "$id" "$field"
@@ -333,7 +342,7 @@ sc_manifest_scaffold_field() {
 
 sc_manifest_scaffold_post_apply() {
   local manifest="$1" id="$2"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -r --arg id "$id" '.scaffolds[] | select(.id == $id) | .post_apply[]' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" post_apply "$id"
@@ -345,7 +354,7 @@ sc_manifest_scaffold_post_apply() {
 
 sc_manifest_ids() {
   local manifest="$1"
-  if command -v jq >/dev/null 2>&1; then
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
     jq -r '.scaffolds[].id' "$manifest"
   elif command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then
     _manifest_py "$manifest" ids

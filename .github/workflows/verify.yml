@@ -7,6 +7,7 @@ on:
       - '.cursor/**'
       - 'docs/**'
       - 'install-super-cursor.sh'
+      - 'AGENTS.md'
       - 'README.md'
       - 'CHANGELOG.md'
       - 'package.json'
@@ -17,6 +18,7 @@ on:
       - '.cursor/**'
       - 'docs/**'
       - 'install-super-cursor.sh'
+      - 'AGENTS.md'
       - 'README.md'
       - 'CHANGELOG.md'
       - 'package.json'
@@ -30,20 +32,64 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    name: verify (${{ matrix.os }}${{ matrix.jq && ' +jq' || ' python-fallback' }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux + jq：母版主路径（同时也跑文档构建）
+          - os: ubuntu-latest
+            jq: true
+            docs: true
+            blocking: true
+          # macOS：验证 BSD 工具链 / bash 3.2（无 jq → python 回退）
+          - os: macos-latest
+            jq: false
+            docs: false
+            blocking: true
+          # Windows + Git Bash：验证路径/符号链接/行尾差异。
+          # 先以非阻塞方式接入：Git Bash 的 ln -s 与 hook 行为需真机观察后再转为阻塞。
+          - os: windows-latest
+            jq: false
+            docs: false
+            blocking: false
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ !matrix.blocking }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
 
       - name: Install jq
+        if: matrix.jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Template layout + scaffold + runner smoke
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 无 jq 的矩阵项：用 SC_FORCE_PYTHON=1 强制走 python JSON 回退。
+      # 不能靠"runner 上恰好没有 jq"来验证（macOS runner 自带 jq），所以要把回退做成可切换路径。
+      - name: Template verify (python JSON fallback)
+        if: ${{ !matrix.jq }}
+        env:
+          SC_FORCE_PYTHON: '1'
+        run: bash .cursor/bin/template-verify.sh
+
+      - name: Secret scan (tracked files)
+        run: bash .cursor/bin/verify-secrets.sh
+
+      - name: Template layout + scaffold + runner + install + consumer smoke
+        if: matrix.jq
         run: bash .cursor/bin/template-verify.sh
 
       - uses: actions/setup-node@v4
+        if: matrix.docs
         with:
           node-version: 24
           cache: npm
 
       - name: VitePress build
+        if: matrix.docs
         run: npm ci && npm run docs:build
