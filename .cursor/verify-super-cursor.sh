@@ -16,11 +16,22 @@ is_hybrid_repo() {
   [[ -d "$ROOT/scripts" || -d "$ROOT/backend" || -d "$ROOT/frontend" ]]
 }
 
+# 是否母版仓（含 install-super-cursor.sh）。安装到目标项目后为 false →
+# 跳过母版专属项，使本脚本在目标项目也能得到有意义的结果。
+is_mother_repo() {
+  [[ -f "$ROOT/install-super-cursor.sh" ]]
+}
+
+# 母版专属项：hybrid 仓或目标项目均跳过
+skip_mother_only() {
+  is_hybrid_repo || ! is_mother_repo
+}
+
 check() { [[ -e "$1" ]] && echo "OK  $1" || { echo "FAIL $1"; FAIL=$((FAIL+1)); }; }
 check_mother_only() {
   local path="$1" label="${2:-$1}"
-  if is_hybrid_repo; then
-    echo "SKIP  hybrid (mother-only): $label"
+  if skip_mother_only; then
+    echo "SKIP  non-mother (mother-only): $label"
     return 0
   fi
   check "$path"
@@ -28,8 +39,8 @@ check_mother_only() {
 check_absent() { [[ -e "$1" ]] && { echo "FAIL must not exist: $1"; FAIL=$((FAIL+1)); } || echo "OK  absent $1"; }
 check_absent_mother_only() {
   local path="$1" label="${2:-must not exist: $1}"
-  if is_hybrid_repo; then
-    echo "OK  hybrid (skip mother-only): $label"
+  if skip_mother_only; then
+    echo "OK  non-mother (skip mother-only): $label"
     return 0
   fi
   check_absent "$path"
@@ -42,6 +53,10 @@ check_verify_workflow() {
       echo "FAIL hybrid: scripts/verify.sh missing"
       FAIL=$((FAIL+1))
     fi
+    return 0
+  fi
+  if ! is_mother_repo; then
+    echo "SKIP  non-mother: .github/workflows/verify.yml"
     return 0
   fi
   check "$ROOT/.github/workflows/verify.yml"
@@ -167,7 +182,7 @@ check "$CUR/docs/training/skills.md"
 check "$CUR/docs/quickstart.md"
 check "$CUR/docs/effective-collaboration.md"
 check "$CUR/docs/platforms.md"
-check_mother_only "$ROOT/.cursorignore"
+check "$ROOT/.cursorignore"
 check "$CUR/templates/scaffold/_shared.cursorignore"
 check "$CUR/bin/template-verify.sh"
 check_absent_mother_only "$ROOT/scripts"
@@ -346,9 +361,13 @@ else
   echo "OK  no user/machine paths in SOP"
 fi
 
-echo "=== doc + growth-layout + rules-globs 子验证 ==="
-bash "$CUR/bin/verify-doc-super-cursor.sh" || FAIL=$((FAIL+1))
-bash "$CUR/bin/verify-growth-layout.sh" || FAIL=$((FAIL+1))
+echo "=== doc + growth-layout + rules-globs 子验证（母版专属）==="
+if is_mother_repo; then
+  bash "$CUR/bin/verify-doc-super-cursor.sh" || FAIL=$((FAIL+1))
+  bash "$CUR/bin/verify-growth-layout.sh" || FAIL=$((FAIL+1))
+else
+  echo "SKIP  non-mother: verify-doc / verify-growth-layout（母版门面计数检查）"
+fi
 bash "$CUR/bin/verify-rules-globs.sh" || FAIL=$((FAIL+1))
 
 echo "=== verify wiring 自检 ==="
