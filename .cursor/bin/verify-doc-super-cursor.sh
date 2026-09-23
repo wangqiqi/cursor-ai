@@ -84,6 +84,18 @@ for p in sorted((cur / "skills").glob("*/SKILL.md")):
     if has_dmi != (name in dmi_expected):
         fails.append(f"{name}: disable-model-invocation={has_dmi}, policy expects {name in dmi_expected}")
 
+# master 路由 payload：主路由须内联在 SKILL.md（routes.md 为按需二级索引）
+master = cur / "skills/master/SKILL.md"
+if not master.is_file():
+    fails.append("skills/master/SKILL.md missing")
+else:
+    mt = master.read_text(encoding="utf-8")
+    if len(mt) > 3000:
+        fails.append(f"master/SKILL.md {len(mt)} chars (>3000): routing payload must stay inline and small")
+    for rid in ("scaffold", "plan", "run", "learn", "fix", "ship", "more"):
+        if not re.search(r"\|\s*`?" + rid + r"`?\s*\|", mt):
+            fails.append(f"master/SKILL.md missing main route id '{rid}' (routing moved out of the default payload)")
+
 if fails:
     for f in fails:
         print("FAIL skill metadata:", f)
