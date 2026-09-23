@@ -48,11 +48,13 @@ jobs:
             docs: false
             blocking: true
           # Windows + Git Bash：验证路径/符号链接/行尾差异。
-          # 先以非阻塞方式接入：Git Bash 的 ln -s 与 hook 行为需真机观察后再转为阻塞。
+          # 已转阻塞（v4.29.9）：该腿先后抓出 5 个只在 Windows 出现的真缺陷
+          # （路径分隔符 · rules/local 扫描 · 裸 ln -s · cp1252 stdout · python CRLF 输出），
+          # 全平台一致性已由 verify-portability 的静态护栏 + 本腿共同守护。
           - os: windows-latest
             jq: false
             docs: false
-            blocking: false
+            blocking: true
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ !matrix.blocking }}
     defaults:
