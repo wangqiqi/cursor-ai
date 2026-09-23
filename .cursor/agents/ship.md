@@ -36,8 +36,11 @@ Rules：`rules/feedback/changelog.mdc` · `release.mdc` · `tag.mdc`
 ```bash
 ./.cursor/bin/runner.sh gate-check    # 可选；无 plan 时跳过
 ./.cursor/bin/runner.sh verify          # 必须绿
+./.cursor/bin/runner.sh release-check   # 必做：latest_tag / next_version（见 release §版本解析）
 git status                              # 无未提交 WIP
 ```
+
+- [ ] `release-check` 为 `ready` 且 `next_version` 合理（异常 → 停，勿打 tag）
 
 - [ ] plan 本版 P0 全部 ✅（若用 plan.md）
 - [ ] 跑 **security** 清单（auth/密钥/PII）— 无 Critical/High 未处理

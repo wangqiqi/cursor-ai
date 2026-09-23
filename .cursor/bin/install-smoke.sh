@@ -57,8 +57,9 @@ assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template �
 [[ -L "$FULL/.cursor/rules/local" ]] && ok "full: rules/local symlink" || fail "full: rules/local symlink"
 (
   cd "$FULL"
-  bash .cursor/bin/runner.sh plan-check >/dev/null
-) && ok "full: plan-check runs" || fail "full: plan-check runs"
+  bash .cursor/bin/runner.sh plan-check >/dev/null 2>&1
+) && fail "full: plan-check must report not-ready before approval" \
+  || ok "full: plan-check reports not-ready before approval"
 # 闸门必须 fail-closed：模板默认 PLAN_APPROVED:(none) 不得放行（P0-3 回归）
 (
   cd "$FULL"

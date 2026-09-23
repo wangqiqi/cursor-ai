@@ -28,6 +28,10 @@ All notable changes to Super Cursor are documented here.
 - **description 收敛** — 13/28 个 skill 的 `description` 超 85 字（最长 131）→ 全部收敛至 ≤85（最长 84）；常驻可见元数据合计 **2176 → 1702** 字符
 - **口径统一：关键词 ≠ 自动选用** — `README.md` · `.cursor/README.md` · `docs/naming.md` · `master/routes.md` 此前把 **week · disk · maintain · ops-deploy · code-stats-viz** 列为「Agent 按意图自动选用 / 关键词触发」，但这 5 个是 `disable-model-invocation: true`（只可 `/skill` 显式调用）；四处改为显式调用口径并在 `routes.md` 顶部加约束（Agent 不得据关键词自动加载）
 - **内置 slash 漂移** — 9 处路由 `babysit`（Cursor 已下线，现由 `autopilot` 承担 PR 跟进）→ 改指 `autopilot`；`naming.md` 的「勿占用」清单更新为官方当前内置名并注明会随版本增删
+- **ship agent 漂移** — `agents/ship.md` 的 §前置检查 漏了 **release** §打版 的强制 `release-check`（可打未校验版本）；已补并以 `next_version` 异常即停为断言
+- **`plan-check` 退出码** — 打印 `FAIL` 却 `return 0`，`plan-check && gate-check` 与 `install-smoke` 依赖退出码会误判；改为 `issues>0` 时 `return 1`，并在 Sprint 已闭合时不再报「缺 `**执行顺序**`」假告警
+- **install 参数校验** — `--profile` 缺值/吞掉 `--replace` 无提示 · `--here` 与显式路径同时给出时静默忽略路径 · 无母版时 `--help` 直接报错；均已改为明确报错
+- **`validate-commit-msg.sh`** — 拒绝 Conventional Commits breaking 形式（`feat!: x` / `feat(api)!: x`）→ 已支持
 
 ## [4.29.7] - 2026-09-20
 

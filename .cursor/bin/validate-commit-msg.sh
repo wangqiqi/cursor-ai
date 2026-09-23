@@ -8,7 +8,7 @@ if [[ -z "$msg" ]]; then
   exit 2
 fi
 
-pattern='^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([a-zA-Z0-9._-]+\))?: .{1,100}$'
+pattern='^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([a-zA-Z0-9._-]+\))?!?: .{1,100}$'
 
 if echo "$msg" | grep -qE "$pattern"; then
   echo "OK: conventional commit"

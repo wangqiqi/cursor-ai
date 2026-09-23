@@ -237,7 +237,7 @@ plan_check() {
     echo "FAIL: <!-- PLAN_APPROVED --> 未设置（run 硬闸门）"
     issues=$((issues + 1))
   fi
-  if ! grep -qE '^\*\*(执行顺序|Order)\*\*' "$PLAN" 2>/dev/null; then
+  if ! grep -qE '^\*\*(执行顺序|Order)\*\*' "$PLAN" 2>/dev/null && ! plan_sprint_appears_closed; then
     echo "WARN: 缺 **执行顺序** 行（兼容 **Order**；NEXT 回退靠表序）"
     issues=$((issues + 1))
   fi
@@ -293,7 +293,7 @@ plan_check() {
     return 0
   fi
   echo "CHECK: ${issues} 项待补齐"
-  return 0
+  return 1
 }
 
 task_verify() {

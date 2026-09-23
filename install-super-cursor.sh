@@ -126,6 +126,13 @@ EOF
   fi
 }
 
+# --help 须在解析母版路径之前生效（无母版时也应能看用法）
+for _arg in "$@"; do
+  case "$_arg" in
+    -h|--help) usage; exit 0 ;;
+  esac
+done
+
 SOURCE="$(resolve_source_root)" || exit 1
 TARGET=""
 PROFILE="full"
@@ -146,7 +153,12 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --profile)
-      PROFILE="${2:-}"
+      if [[ $# -lt 2 || "${2:-}" == -* ]]; then
+        echo "错误: --profile 需要取值（full|lite|rules-only）" >&2
+        usage
+        exit 1
+      fi
+      PROFILE="$2"
       shift 2
       ;;
     --copy-plan)
@@ -184,6 +196,12 @@ if [[ "$SETUP_SHELL" == "true" ]]; then
   if [[ -z "$TARGET" && "$REPLACE" != "true" && "$COPY_PLAN" != "true" ]]; then
     exit 0
   fi
+fi
+
+if [[ "$USE_HERE" == "true" && -n "$TARGET" ]]; then
+  echo "错误: --here 与显式目标路径互斥（已给 $TARGET）；二选一。" >&2
+  usage
+  exit 1
 fi
 
 if [[ -z "$TARGET" ]]; then
