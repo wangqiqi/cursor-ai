@@ -51,6 +51,8 @@ All notable changes to Super Cursor are documented here.
 - **`verify-portability.sh` 增两条静态护栏** — ① `relative_to(`/`os.path.relpath(` 必须同句 `.as_posix()`（防第 1 类复发）② 裸 `ln -s` 必须带 `2>/dev/null`/`||`/`if`（防第 3 类复发）。两者均有负向测试，且对现有守卫点**零误报**
 - 展示用路径统一 `.as_posix()`（`verify-doc-super-cursor` · `verify-scripts-layout`），消息里不再混入反斜杠
 
+- **`eol=lf` 行尾策略 + 门禁（Windows 第 4 个隐患）** — 仓库此前**没有 `.gitattributes`**：Git for Windows 默认 `core.autocrlf=true`，克隆会把 `*.sh` 检出为 CRLF，首行成 `#!/usr/bin/env bash\r` → 脚本**秒退且无报错**（与安装/自检"无 FAIL 行直接中止"的症状一致）。现新增仓库根 [`.gitattributes`](.gitattributes)：`* text=auto eol=lf` + 脚本/规则/配置显式 LF，`.bat`/`.cmd`/`.ps1` 反向 CRLF，二进制显式 `binary`；`verify-portability.sh` 断言其存在且真含 `eol=lf`（目标项目豁免）。`platforms.md` 增「Windows 的三个坑」对照表
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行

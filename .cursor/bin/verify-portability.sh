@@ -88,6 +88,21 @@ for path in files:
         if PYTHON3_RE.search(code):
             fails.append(f"{rel}:{i} hardcoded python3 call (use $PYTHON_BIN / sc_python)")
 
+# --- 行尾策略：Windows autocrlf=true 会把 *.sh 变 CRLF → 脚本秒退 ---
+if (root / "install-super-cursor.sh").is_file():
+    ga = root / ".gitattributes"
+    if not ga.is_file():
+        fails.append(
+            ".gitattributes missing — Git for Windows (autocrlf=true) checks out *.sh as CRLF, "
+            "which breaks the shebang; declare 'eol=lf'"
+        )
+    else:
+        gates = ga.read_text(encoding="utf-8", errors="replace")
+        if not re.search(r"^\*\.sh\s+text\s+eol=lf", gates, re.M) and not re.search(
+            r"^\*\s+text=auto\s+eol=lf", gates, re.M
+        ):
+            fails.append(".gitattributes must force LF for shell scripts (eol=lf)")
+
 # --- 技能平台作用域：文档声明 ⇔ 代码实际 ---
 platforms = cur / "docs/platforms.md"
 if not platforms.is_file():
