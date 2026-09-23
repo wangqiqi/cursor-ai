@@ -41,7 +41,7 @@ git status && git diff --stat
 
 Detached HEAD / 无名分支：仅呈现选项 2–4。
 
-PR 生命周期（评论、CI、拆 PR）：`babysit` · `split-to-prs`（**master** → `more` → `git`）。
+PR 生命周期（评论、CI、拆 PR）：`autopilot` · `split-to-prs`（**master** → `more` → `git`）。
 
 ### 与 run 分工
 

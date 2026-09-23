@@ -37,11 +37,11 @@
 | **delivery** | `/delivery` · 上线前 | 7 维交付 · PDF 脚本 · 反模板自检 | 替代 task-verify |
 | **user-manual** | `/manual` · 使用说明书 | Manual Contract · 配图 regen · Capture Profile | 替代 delivery 走查 |
 | **test-report** | `/report` · 测试报告 | Report Contract · verify 汇总 · benchmark 文档 | 替代 test 写用例 |
-| **week** | 周报（关键词 / master） | CHANGELOG 多仓汇总 → Growth | 单项目任务周报（目标项目自建 skill） |
-| **disk** | 磁盘快照（关键词 / master） | 占用 · diff → Growth | 删除文件 |
-| **maintain** | 环境维护（关键词 / master） | 诊断与安全清理 · 委托 disk | 无配置乱删 |
-| **ops-deploy** | 部署（关键词 / master） | compose · env · nginx · verify 注册 SOP | 业务功能实现 |
-| **code-stats-viz** | 代码统计（关键词 / master） | Git 行数/语言/提交日历 → HTML 仪表板 | 磁盘占用（用 disk） |
+| **week** | 周报（**`/week`**；dmi） | CHANGELOG 多仓汇总 → Growth | 单项目任务周报（目标项目自建 skill） |
+| **disk** | 磁盘快照（**`/disk`**；dmi） | 占用 · diff → Growth | 删除文件 |
+| **maintain** | 环境维护（**`/maintain`**；dmi） | 诊断与安全清理 · 委托 disk | 无配置乱删 |
+| **ops-deploy** | 部署（**`/ops-deploy`**；dmi） | compose · env · nginx · verify 注册 SOP | 业务功能实现 |
+| **code-stats-viz** | 代码统计（**`/code-stats-viz`**；dmi） | Git 行数/语言/提交日历 → HTML 仪表板 | 磁盘占用（用 disk） |
 | **pencil-design** | 视觉设计（关键词 · 无 slash） | Pencil CLI → `.pen` + PNG | IA/上线验收（用 ia/delivery） |
 | **study** | 学新技术 | 最小示例 · SPIKE 归档 | 项目认知（用 learn） |
 

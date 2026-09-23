@@ -4,6 +4,8 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 无 AskQuestion 工具时：同表**正文编号选项**（见 **master**「AskQuestion 约定」）。  
 与 `.cursor/README.md` **场景速查** 对齐；详表在本文件，README 为摘要链。
 
+> **关键词 ≠ 自动选用**：`disable-model-invocation: true` 的 skill（**week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz**）只能由用户 `/skill` 显式调用；下表「关键词」列表示该 skill 自身的触发词（供用户对照），Agent 不得据此自动加载。
+
 ## 主路由（第 1 轮 · ≤7 项）
 
 | 选项 id | 意图 | 入口 | 关键词（中英） |
@@ -20,8 +22,8 @@ AskQuestion 选项与关键词 → 下游 skill / agent / rules。
 
 | 子 id | 意图 | 入口 | rules / 命令 |
 |-------|------|------|----------------|
-| `git` | Git / PR / Review / 收尾 | **git** · **release** · **review** · `babysit` · `split-to-prs` | `commit.mdc` · collaboration |
-| `pr` | PR 描述 / Review / babysit | **git** · **review** · `babysit` | collaboration |
+| `git` | Git / PR / Review / 收尾 | **git** · **release** · **review** · `autopilot` · `split-to-prs` | `commit.mdc` · collaboration |
+| `pr` | PR 描述 / Review / autopilot | **git** · **review** · `autopilot` | collaboration |
 | `security` | 安全审查 | **security** | — |
 | `api` | API 设计 | **api** | `rules/execution/api.mdc` |
 | `delivery` | 交付验收 / 上线前 | **delivery** · `/delivery` | **用这个**上线走查；**不是** ia 规划 |
@@ -196,7 +198,7 @@ LIBRARY — 路径 + 何时手动选用
 | 做设计、mockup、landing page 视觉、.pen、生成海报/App 屏 | **pencil-design**（无 slash · 关键词） |
 | 长程任务、Epic、多 Sprint 自治、全自动做到底 | **long** `/long` |
 | 分支收尾、merge、开 PR、打 tag | **release** · **git** |
-| PR 评论、CI 循环 | `babysit`（`more` → `git`） |
+| PR 评论、CI 循环 | `autopilot`（`more` → `git`；旧 `babysit` 已下线） |
 | 拆 PR、大 diff | `split-to-prs`（`more` → `git`） |
 
 ## 扩展场景
@@ -237,7 +239,7 @@ README 场景速查中无独立主菜单、经 `more` → `config` 或关键词�
 | gate-check、PLAN_APPROVED、被挡 | **fix** → **plan** |
 | 发版、CHANGELOG、tag | **ship** → release / ship |
 | commit、push、分支 | **more** → **git** |
-| PR、Review、合并请求 | **more** → **git** · **review** · **release** · `babysit` |
+| PR、Review、合并请求 | **more** → **git** · **review** · **release** · `autopilot` |
 | 分支收尾、merge、发版 | **release** · **git** |
 | 拆 PR、split | `split-to-prs` · **more** → **git** |
 | 密钥、PII、鉴权、安全 | **more** → **security** |

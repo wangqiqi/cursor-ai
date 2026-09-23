@@ -26,6 +26,8 @@ All notable changes to Super Cursor are documented here.
 - **人格默认值** — `roles.json` 顶层 `default` 与 `workflow.json` `role.default` 互相矛盾（前者无人读取）；对齐为 `dashu` 并标注 SSOT
 - **skill metadata 契约恢复** — `ef5521b` 曾**静默删除** `training/skills.md` 的 `## disable-model-invocation 策略` 一节与 `description ≤85 字` 规则（4.29.1 SPRINT-SKILL-META 交付物），因验证器未接线而无人发现；现已恢复，并在 `verify-doc-super-cursor.sh` 增加断言：该节存在 · 28 个 `description` 全 ≤85 字 · `disable-model-invocation` 分桶与策略表一致
 - **description 收敛** — 13/28 个 skill 的 `description` 超 85 字（最长 131）→ 全部收敛至 ≤85（最长 84）；常驻可见元数据合计 **2176 → 1702** 字符
+- **口径统一：关键词 ≠ 自动选用** — `README.md` · `.cursor/README.md` · `docs/naming.md` · `master/routes.md` 此前把 **week · disk · maintain · ops-deploy · code-stats-viz** 列为「Agent 按意图自动选用 / 关键词触发」，但这 5 个是 `disable-model-invocation: true`（只可 `/skill` 显式调用）；四处改为显式调用口径并在 `routes.md` 顶部加约束（Agent 不得据关键词自动加载）
+- **内置 slash 漂移** — 9 处路由 `babysit`（Cursor 已下线，现由 `autopilot` 承担 PR 跟进）→ 改指 `autopilot`；`naming.md` 的「勿占用」清单更新为官方当前内置名并注明会随版本增删
 
 ## [4.29.7] - 2026-09-20
 

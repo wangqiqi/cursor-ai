@@ -146,7 +146,7 @@ flowchart LR
 | 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 7 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
-| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `babysit`（见 **master** → `git`） |
+| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `autopilot`（见 **master** → `git`） |
 | 合并前 | 靠人想起来查安全/API | **review** · **security** · **api** · **delivery** · **git** skills |
 | 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
 | 用户文档 | README 碎片 + 过期截图 | **`/manual`** · Manual Contract · 5 种 Capture Profile · Reader Test |
@@ -190,7 +190,9 @@ flowchart LR
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
 
-**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
+**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
+
+**需显式调用**（`disable-model-invocation: true`，Agent **不会**按关键词自动选用）：**`/week`** · **`/disk`** · **`/maintain`** · **`/ops-deploy`** · **`/code-stats-viz`**。
 
 ## 7 栈脚手架
 

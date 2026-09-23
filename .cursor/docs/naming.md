@@ -20,7 +20,9 @@ Super Cursor 命名：**短、见名知意、不与 Cursor 内置冲突**。
 
 ### 内置 skill 名（勿占用）
 
-`canvas` `loop` `shell` `sdk` `automate` `babysit` `create-skill` `create-hook` `create-rule` `create-subagent` `migrate-to-skills` `split-to-prs` `statusline` `update-cli-config` `update-cursor-settings` `onboard` `review-bugbot` `review-security`
+`automate` `autopilot` `canvas` `create-hook` `create-rule` `create-skill` `create-subagent` `cursor-blame` `loop` `migrate-to-skills` `review` `review-bugbot` `review-security` `sdk` `shell` `split-to-prs` `statusline` `update-cli-config` `update-cursor-settings`
+
+> 内置名随 Cursor 版本增删（曾存在 `babysit` / `onboard`，现由 `autopilot` 承担 PR 跟进）。引用内置 slash 前以官方 Skills 文档为准。
 
 ## Agents
 
@@ -41,7 +43,8 @@ Cursor Task 体系有内置 subagent **`release`**。项目 `.cursor/agents/rele
 | `run` | 执行 skill + `/run` | Agent 一次 run（口语） |
 | `release` | Sprint 出口 **skill**（§分支 + §打版） | 内置 **release** subagent（我们用 `ship` 代替） |
 | `review` | 项目 **review** skill + **review** agent（REV-* · PR 清单） | 全局 `~/.cursor/skills-cursor/review`（路由 Bugbot / Security Review） |
-| `week` · `disk` · `maintain` · `code-stats-viz` · `ux` · `ia` · `debug` | **skill-only**（无 project command） | 关键词 / `@skill` / Agent 自动选用 |
+| `ux` · `ia` · `debug` · `pencil-design` | **skill-only**（无 project command） | 关键词 / `@skill` / Agent 自动选用 |
+| `week` · `disk` · `maintain` · `ops-deploy` · `code-stats-viz` | **skill-only + `disable-model-invocation: true`** | **仅**显式 `/skill` 调用（Agent 不按关键词自动选用） |
 
 ## 官方工具与模型差异（Agent 须知）
 
