@@ -1,6 +1,6 @@
 # Rules catalog · 社区索引与 local 引用
 
-Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/*` · `tech/*` 等）。栈专用 rules 请放入目标项目 **`.cursor/rules/local/`**（见 [local/README](../rules/local/README.md)）。
+Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/*` · `tech/*` 等）。栈专用 rules 请放入目标项目 **`.cursor/rules/local/`**（安装后指向 `.cursorGrowth/rules/local/`；模板见 [rules/local README](../templates/cursorGrowth/rules/local/README.md)）。
 
 ## 四模式（Cursor / 社区最佳实践）
 

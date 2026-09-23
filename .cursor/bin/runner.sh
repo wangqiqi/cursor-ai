@@ -487,7 +487,7 @@ case "$cmd" in
   release-tag   在当前 HEAD 打 annotated tag（默认 patch bump）
   next_version  下一 patch 版本号
 
-环境变量（跨项目 · 名称见 workflow.json `version_*_env`）:
+环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:
   VERSION_TAG_GLOB      git tag 匹配 glob（优先于 plan VERSION_LINE）
   RELEASE_VERSION_DEFAULT  无 tag 时起始版本（默认 plan VERSION_DEFAULT 或 0.1.0）
   RELEASE_BUMP          patch（默认）| minor | major

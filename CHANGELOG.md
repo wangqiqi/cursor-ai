@@ -14,6 +14,9 @@ All notable changes to Super Cursor are documented here.
 - **install `--replace` 自毁** — 目标与母版为同一仓库时直接拒绝（此前先 `rm -rf` 源 `.cursor/`、再自拷空目录，实测母版 `.cursor/` 373 → 0 文件；README 推荐的 `super-cursor-sync --replace` 在母版仓库内执行即命中）；`install-smoke` 增加回归断言
 - **验证器接线** — `verify-doc-super-cursor.sh` 与 `verify-growth-layout.sh` 此前**从未被任何验证器或 CI 调用**（`doc-hygiene.mdc`、CHANGELOG 4.29.0/4.29.5 均声称已聚合），doc 坏链与计数漂移因此长期无人发现；现已接入 `verify-super-cursor.sh`，并新增**接线自检**：任何 `bin/verify-*.sh` 未被聚合即 FAIL
 - **文档** — `migration-catalog.md` 结构计数 `27 skills · 46 rules` → `28 skills · 53 rules`；补齐 4 处 `growth-layout` 交叉引用（`verify.mdc` · **run** · **scaffold** · `plan-conventions` 模板 `archive/{domain}/`）
+- **文档站链接** — `sync-cursor-docs.sh` 替换串多写一个 `(`（`]((/guide/x)`），markdown-it 判为非法链接并**渲染成纯文本**，且 VitePress 不报错：**12 处站内链接（5 个镜像页）**失效；同时改为「临时文件就地重写」以兼容 BSD/macOS `sed`（原 `sed -i` 无后缀为 GNU only）
+- **rules/local 链接** — `rules-catalog.md` 原链指向 gitignore 的符号链接，镜像后改写出的 GitHub URL **404**；改指已跟踪的 `templates/cursorGrowth/rules/local/README.md`
+- **runner.sh help** — heredoc 未转义反引号触发命令替换：stderr 输出 `version_*_env: 未找到命令`、帮助文本被污染；`runner-smoke` 增加 help 干净度与「模板闸门必须 BLOCK」回归
 
 ## [4.29.7] - 2026-09-20
 
