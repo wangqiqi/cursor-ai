@@ -2,7 +2,19 @@
 
 All notable changes to Super Cursor are documented here.
 
-## [Unreleased]
+## [4.29.7] - 2026-09-23
+
+### Added
+
+- **scaffold bundles** — `apply-bundle verify-layers`（L1–L3 · slice 注册表 · flock）· `design-system`（中性 token · PageShell · ListLoadErrorAlert）· `doc-coherence`（doc-anchors · openapi sync 模板）
+- **templates/learn/skill-distillation-playbook.md** — 母版 Skill → 产品 bundled 蒸馏流程（通用 tier · 占位 verify）
+
+### Changed
+
+- **debug** skill — 路径型健康三角验证 · stale 单例失效 · dev 反代多传输路径
+- **test** skill — 有界长测 · 并行 verify flock · slice 注册表纪律 · `verify-layers` bundle 入口
+- **scaffold** `manifest.json` · `catalog.md` — 登记三 bundle
+- 多 skill/rules 文档与 hybrid 仓演进对齐；母版门面去除 `rdm-week` 引用
 
 ### Fixed
 
@@ -34,20 +46,6 @@ All notable changes to Super Cursor are documented here.
 - **`validate-commit-msg.sh`** — 拒绝 Conventional Commits breaking 形式（`feat!: x` / `feat(api)!: x`）→ 已支持
 - **`verify-super-cursor.sh` 模式判定** — 母版专属项（`install-super-cursor.sh` · 禁止根 `scripts/` · `.github/workflows/verify.yml` · 母版门面 doc/layout 校验）此前只按「是否 hybrid」跳过，导致**安装到普通目标项目**时被误判为母版、报一堆无关 FAIL；现以「根目录是否有 `install-super-cursor.sh`」判定母版，目标项目也能得到有意义的全绿结果。`.cursorignore` 改为通用检查（安装后会随 `.cursor/` 复制）
 - **macOS/BSD 可移植性** — `cursor-coherence.sh` 的 `find -printf`（GNU only）与 `grep/sed '\s'`（非 POSIX ERE）→ 改为 `-exec basename` 与 `[[:space:]]`；此前声称支持的 macOS 上 `template-verify` 会直接中止
-
-## [4.29.7] - 2026-09-20
-
-### Added
-
-- **scaffold bundles** — `apply-bundle verify-layers`（L1–L3 · slice 注册表 · flock）· `design-system`（中性 token · PageShell · ListLoadErrorAlert）· `doc-coherence`（doc-anchors · openapi sync 模板）
-- **templates/learn/skill-distillation-playbook.md** — 母版 Skill → 产品 bundled 蒸馏流程（通用 tier · 占位 verify）
-
-### Changed
-
-- **debug** skill — 路径型健康三角验证 · stale 单例失效 · dev 反代多传输路径
-- **test** skill — 有界长测 · 并行 verify flock · slice 注册表纪律 · `verify-layers` bundle 入口
-- **scaffold** `manifest.json` · `catalog.md` — 登记三 bundle
-- 多 skill/rules 文档与 hybrid 仓演进对齐；母版门面去除 `rdm-week` 引用
 
 ## [4.29.6] - 2026-09-08
 
