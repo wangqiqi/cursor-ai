@@ -485,3 +485,88 @@ sc_manifest_bundle_post_apply() {
     _manifest_py "$manifest" bundle_post_apply "$id"
   fi
 }
+
+# --- docs-layout（项目文档体系：号位=瀑布阶段）---
+# 与 manifest 助手同策略：jq 快路径（未被 SC_FORCE_PYTHON 强制时）· 否则 python。
+
+_docs_layout_py() {
+  local cfg="$1" py
+  shift
+  py="$(sc_python)" || return 1
+  "$py" - "$cfg" "$@" <<'PY'
+import json, sys
+
+path, cmd = sys.argv[1], sys.argv[2]
+data = json.load(open(path, encoding="utf-8"))
+slots = data.get("slots") or {}
+
+
+def out_slot(num):
+    v = slots.get(num) or {}
+    names = v.get("names") or []
+    return v, names
+
+
+if cmd == "get":
+    key = sys.argv[3]
+    v = data.get(key)
+    print("" if v is None else v)
+elif cmd == "plan":
+    profile = sys.argv[3]
+    mapping = (data.get("profiles") or {}).get(profile)
+    if mapping is None:
+        sys.exit(3)
+    for num in sorted(slots):
+        v, names = out_slot(num)
+        name = mapping.get(num) or (names[0] if names else v.get("role", ""))
+        kind = "required" if v.get("required") else "optional"
+        print(f"{num}\t{name}\t{kind}\t{v.get('generated', '')}")
+elif cmd == "set_profile":
+    data["profile"] = sys.argv[3]
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+        fh.write("\n")
+PY
+}
+
+# 标量键（dir / profile / max_numbered / roadmap_file）
+sc_docs_get() {
+  local cfg="$1" key="$2"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r --arg k "$key" '.[$k] // empty' "$cfg"
+  else
+    _docs_layout_py "$cfg" get "$key"
+  fi
+}
+
+# 号位计划：`NN<TAB>名称<TAB>required|optional<TAB>generated`；未知 profile 返回 3
+sc_docs_plan() {
+  local cfg="$1" profile="$2" out
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    out="$(jq -r --arg p "$profile" '
+      (.profiles[$p]) as $m
+      | if $m == null then error("unknown profile") else . end
+      | .slots | to_entries | sort_by(.key)[]
+      | .key as $n | .value as $v
+      | [ $n,
+          ($m[$n] // ($v.names[0] // $v.role)),
+          (if $v.required then "required" else "optional" end),
+          ($v.generated // "") ]
+      | @tsv' "$cfg" 2>/dev/null)" || true
+    [[ -n "$out" ]] || return 3      # 未知 profile（jq error 的退出码归一为 3）
+    printf '%s\n' "$out"
+  else
+    _docs_layout_py "$cfg" plan "$profile"
+  fi
+}
+
+# 写回 profile（保持 2 空格缩进与中文原样）
+sc_docs_set_profile() {
+  local cfg="$1" profile="$2" tmp
+  tmp="$(mktemp)"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq --arg p "$profile" '.profile = $p' "$cfg" >"$tmp" && mv "$tmp" "$cfg"
+  else
+    _docs_layout_py "$cfg" set_profile "$profile" && rm -f "$tmp"
+  fi
+}

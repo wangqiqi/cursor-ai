@@ -10,6 +10,8 @@ disable-model-invocation: true
 
 边界见 **cursor-standalone** · `workflow.json` → `growth.learn_sources`
 
+**docs 体系**：首次 `/learn` 时据仓库证据建议 profile（web 全栈 / API / 前端 / **library**（纯库无数据库）/ CLI），然后 `runner.sh docs-init --profile <p>` 铺 `docs/` 号位骨架；号位与 profile 语义 → `rules/execution/project-docs.mdc`。
+
 ## Growth 边界（产出 · 非母版 SSOT）
 
 | 层 | 规则 |

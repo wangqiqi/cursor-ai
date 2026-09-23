@@ -73,7 +73,8 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | Greenfield 功能 spec | **plan** §SDD · `docs/specs/`（`workflow.json` `sdd.specs_dir`） |
 | 网络抓取选型 | **debug** §网络与抓取 |
 | 交付后摩擦记录 / 汇总 | `runner.sh friction-log` · `friction-report`（`.cursorGrowth/logs/friction.jsonl`） |
-| 目标项目端到端自检 | `bash .cursor/bin/consumer-smoke.sh`（install → 闸门 → hook → 全绿） |
+| 目标项目端到端自检 | `bash .cursor/bin/consumer-smoke.sh`（install → 闸门 → hook → docs-init → 全绿） |
+| docs 骨架一键搭建 | `runner.sh docs-init [--profile <p>] [--slots 03,04] [--all]`（号位=瀑布阶段） |
 | 母版门禁清单（8 道） | `rules/feedback/verify.mdc` §母版门禁清单 |
 
 ### 外网协议吸收（索引）

@@ -12,6 +12,9 @@ alwaysApply: false
 
 配置真源：`.cursor/config/docs-layout.json`（`enabled` · `profile` · `dir` · `max_numbered` · `slots` · `profiles`）
 门禁：`bash .cursor/bin/verify-docs-layout.sh`（聚合进 `verify-super-cursor.sh`）
+**一键 bootstrap**：`bash .cursor/bin/runner.sh docs-init [--profile <p>] [--slots 03,04] [--all]`
+默认只铺**必选号位** + `ROADMAP.md` + `docs/README.md` 索引；`--profile` 会写回 `config/docs-layout.json`；幂等（已存在默认 skip，`--force` 覆盖）；`--dry-run` 预演。
+
 项目侧登记：`.cursorGrowth/learn/plan-conventions.md`（本项目选了哪个 profile、哪些号位启用）
 
 ## 号位 = 瀑布阶段（不可变）

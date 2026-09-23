@@ -357,6 +357,150 @@ archive_check() {
   return 0
 }
 
+docs_init() {
+  local profile="" force="false" dry_run="false" all="false" slots=""
+  local arg
+  while [[ $# -gt 0 ]]; do
+    arg="$1"
+    case "$arg" in
+      --profile) profile="${2:-}"; shift 2 ;;
+      --slots) slots="${2:-}"; shift 2 ;;
+      --all) all="true"; shift ;;
+      --force) force="true"; shift ;;
+      --dry-run) dry_run="true"; shift ;;
+      -h|--help) docs_init_help; return 0 ;;
+      *) echo "FAIL: unknown option: $arg" >&2; docs_init_help >&2; return 1 ;;
+    esac
+  done
+
+  local cfg="$CURSOR_DIR/config/docs-layout.json"
+  local tpl="$CURSOR_DIR/templates/project-docs"
+  [[ -f "$cfg" ]] || { echo "FAIL: missing config/docs-layout.json" >&2; return 1; }
+  [[ -d "$tpl" ]] || { echo "FAIL: missing templates/project-docs" >&2; return 1; }
+
+  local dir chosen plan
+  dir="$(sc_docs_get "$cfg" dir || true)"; dir="${dir:-docs}"
+  if [[ -n "$profile" ]]; then
+    chosen="$profile"
+  else
+    chosen="$(sc_docs_get "$cfg" profile || true)"; chosen="${chosen:-web-fullstack}"
+  fi
+
+  if ! plan="$(sc_docs_plan "$cfg" "$chosen")"; then
+    echo "FAIL: unknown profile '$chosen'（见 config/docs-layout.json → profiles）" >&2
+    return 1
+  fi
+
+  echo "=== docs-init: profile=$chosen dir=$dir (all=$all force=$force dry_run=$dry_run) ==="
+  [[ -n "$slots" ]] && echo "  --slots=$slots"
+  [[ "$dry_run" == "true" ]] && echo "  (dry-run：不写入)"
+
+  local num name kind gen src dest created=0 skipped=0 missing=0 index=""
+  while IFS=$'\t' read -r num name kind gen; do
+    [[ -z "$num" ]] && continue
+    local use="false"
+    [[ "$kind" == "required" ]] && use="true"
+    [[ "$all" == "true" ]] && use="true"
+    case ",$slots," in *",$num,"*) use="true" ;; esac
+    [[ "$use" == "true" ]] || continue
+
+    src=""
+    local f
+    for f in "$tpl/$num"_*.md; do
+      [[ -f "$f" ]] && { src="$f"; break; }
+    done
+    if [[ -z "$src" ]]; then
+      echo "  WARN 无 $num 骨架（templates/project-docs 缺失）" >&2
+      missing=$((missing + 1))
+      continue
+    fi
+
+    dest="$ROOT/$dir/${num}_${name}.md"
+    local mark=""
+    [[ -n "$gen" ]] && mark=" ⚙$gen"
+    if [[ -e "$dest" && "$force" != "true" ]]; then
+      echo "  skip  $dir/${num}_${name}.md（已存在；--force 覆盖）"
+      skipped=$((skipped + 1))
+    elif [[ "$dry_run" == "true" ]]; then
+      echo "  plan  $dir/${num}_${name}.md$mark"
+    else
+      mkdir -p "$ROOT/$dir"
+      cp "$src" "$dest"
+      echo "  new   $dir/${num}_${name}.md$mark"
+      created=$((created + 1))
+    fi
+    index="${index}| [\`${num}_${name}.md\`](${num}_${name}.md) | ${kind}${mark} |
+"
+  done <<< "$plan"
+
+  # ROADMAP（例外 · 不加序号）
+  local roadmap
+  roadmap="$(sc_docs_get "$cfg" roadmap_file || true)"; roadmap="${roadmap:-ROADMAP.md}"
+  local roadmap_dest="$ROOT/$dir/$roadmap"
+  if [[ -f "$tpl/ROADMAP.md" ]]; then
+    if [[ -e "$roadmap_dest" && "$force" != "true" ]]; then
+      echo "  skip  $dir/$roadmap（已存在）"
+    elif [[ "$dry_run" == "true" ]]; then
+      echo "  plan  $dir/$roadmap"
+    else
+      mkdir -p "$ROOT/$dir"
+      cp "$tpl/ROADMAP.md" "$roadmap_dest"
+      echo "  new   $dir/$roadmap"
+      created=$((created + 1))
+    fi
+  fi
+
+  # 索引（docs/README.md · allow_unnumbered 内）
+  local index_dest="$ROOT/$dir/README.md"
+  if [[ "$dry_run" != "true" && -n "$index" ]]; then
+    if [[ ! -e "$index_dest" || "$force" == "true" ]]; then
+      mkdir -p "$ROOT/$dir"
+      {
+        printf '# 项目文档索引\n\n'
+        printf '> profile: `%s` · 号位=瀑布阶段 · 规则 → `.cursor/rules/execution/project-docs.mdc`\n\n' "$chosen"
+        printf '| 文档 | 类型 |\n|------|------|\n'
+        printf '%b' "$index"
+        printf '| [`%s`](%s) | roadmap（例外不加序号） |\n\n' "$roadmap" "$roadmap"
+        printf '门禁：`bash .cursor/bin/verify-docs-layout.sh`\n'
+      } > "$index_dest"
+      echo "  new   $dir/README.md（索引）"
+      created=$((created + 1))
+    else
+      echo "  skip  $dir/README.md（已存在）"
+    fi
+  fi
+
+  if [[ -n "$profile" && "$dry_run" != "true" ]]; then
+    sc_docs_set_profile "$cfg" "$profile"
+    echo "  set   config/docs-layout.json → profile=$profile"
+  fi
+
+  echo "---"
+  echo "created=$created skipped=$skipped missing=$missing"
+  if [[ "$dry_run" == "true" ]]; then
+    echo "dry-run 完成；去掉 --dry-run 落地"
+  else
+    echo "下一步：填 01/02/06/08/10 内容 · 07 用 /manual · 08 用 /report · 然后 bash .cursor/bin/verify-docs-layout.sh"
+  fi
+  [[ "$missing" -eq 0 ]] || return 1
+  return 0
+}
+
+docs_init_help() {
+  cat <<'EOF'
+docs-init — 按 profile 把 templates/project-docs 骨架铺到 docs/（号位=瀑布阶段）
+
+  runner.sh docs-init [--profile <p>] [--slots 03,04] [--all] [--force] [--dry-run]
+
+  默认：只铺**必选号位**（01 需求 · 02 架构 · 06 规范 · 08 测试报告 · 10 调优）+ ROADMAP.md + README.md 索引
+  --profile  覆盖 config/docs-layout.json 的 profile，并写回该文件
+  --slots    额外启用指定条件号位（逗号分隔，如 03,04,09）
+  --all      启用全部 10 个号位
+  --force    覆盖已存在文件（默认 skip，不破坏已有内容）
+  --dry-run  只打印计划
+EOF
+}
+
 friction_log() {
   shift || true
   local task="" rounds="0" rework="0" result="" note=""
@@ -596,6 +740,9 @@ case "$cmd" in
   archive-check)
     archive_check
     ;;
+  docs-init)
+    docs_init "${@:2}"
+    ;;
   help|-h|--help)
     cat <<EOF
 用法: $0 [status|gate-check|task-verify|verify|plan-check|next-task|...]
@@ -612,6 +759,7 @@ case "$cmd" in
   friction-log  记一行摩擦数据（--task --rounds --rework --verify --note）
   friction-report  汇总摩擦数据（tasks · verify 通过率 · 平均轮次/返工）
   archive-check archive 域分层检查（根目录 flat 文件超阈值即 FAIL）
+  docs-init     按 profile 铺 docs/ 文档骨架（号位=瀑布阶段；默认只铺必选号位）
 
 环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:
   VERSION_TAG_GLOB      git tag 匹配 glob（优先于 plan VERSION_LINE）

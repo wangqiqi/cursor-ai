@@ -91,8 +91,19 @@ case "$out" in
   *) fail "run-start did not inject autonomous context" ;;
 esac
 
+# 4b. docs 体系端到端：docs-init 铺骨架 → 门禁必须绿（关闭"骨架存在但从没被消费"的盲区）
+if run_in_proj bash .cursor/bin/runner.sh docs-init >/dev/null 2>&1; then
+  if run_in_proj bash .cursor/bin/verify-docs-layout.sh >/dev/null 2>&1; then
+    ok "docs-init bootstraps docs/ and verify-docs-layout passes"
+  else
+    fail "docs-init output fails verify-docs-layout"
+  fi
+else
+  fail "runner.sh docs-init failed in a target project"
+fi
+
 # 5. 消费方视角的验证器（universal 项在目标项目也必须过）
-for v in verify-super-cursor.sh bin/cursor-coherence.sh bin/verify-config.sh bin/verify-portability.sh bin/verify-rules-globs.sh; do
+for v in verify-super-cursor.sh bin/cursor-coherence.sh bin/verify-config.sh bin/verify-portability.sh bin/verify-rules-globs.sh bin/verify-docs-layout.sh bin/verify-scripts-layout.sh; do
   if run_in_proj bash ".cursor/$v" >/dev/null 2>&1; then
     ok "target $v exits 0"
   else

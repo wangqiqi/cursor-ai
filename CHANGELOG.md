@@ -31,6 +31,17 @@ All notable changes to Super Cursor are documented here.
   - 与 **SDD** 衔接：`01` ← `sdd/spec-template` · `02` ← `tech-plan-template` · `05` ← `tasks-template`，不另写一套
 - **`verify-config.sh` 支持 `_comment` 注释键**（schema 与 config 均可带说明）
 
+### Added
+
+- **`runner.sh docs-init`（D 后续）** — 按 profile 一键铺 `docs/` 号位骨架，把"文档体系"从规则变成可执行：
+  - 默认只铺**必选号位**（`01_需求规格` `02_架构设计` `06_开发规范` `08_测试报告` `10_调试调优`）+ `ROADMAP.md` + 自动生成的 `docs/README.md` 索引（避免一上来就 10 个空壳）
+  - `--profile <p>` 覆盖并**写回** `config/docs-layout.json`；`--slots 03,04` 追加条件号位；`--all` 全 10 个；`--force` 覆盖；`--dry-run` 预演
+  - **幂等**：已存在默认 skip，不破坏已有内容；未知 profile 报错退出 3
+  - 名称按 profile 替换：`library` → `03_ABI契约` `04_算法设计` `05_性能与基准` `07_集成指南` `09_发布与版本兼容`（纯库不写数据库设计）
+- **`platform.sh` docs-layout 助手（双路径）** — `sc_docs_get` · `sc_docs_plan` · `sc_docs_set_profile`，jq 快路径 + python 回退，输出经测试逐字节一致；未知 profile 退出码归一为 3
+- **`consumer-smoke.sh` 增 docs 端到端腿** — install → `docs-init` → `verify-docs-layout` 必须绿，关闭"骨架存在但从没被真实消费"的盲区；消费方验证器列表补 `verify-docs-layout` · `verify-scripts-layout`
+- **`/learn` 增 docs bootstrap** — 首次学习时据仓库证据建议 profile（web 全栈 / API / 前端 / library / CLI）并 `docs-init` 铺骨架
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行
