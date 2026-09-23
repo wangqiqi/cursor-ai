@@ -1,6 +1,6 @@
 ---
 name: ia
-description: 信息架构（IA）规划与审查（无 slash · skill-only）— 工作流正交、角色入口、分支点、反模式。说「信息架构」「导航迷路」「角色首页」「工作流分支」「Dashboard 太乱」时用。
+description: 信息架构（IA）规划与审查（skill-only）：工作流正交 · 角色入口 · 分支点 · 反模式。说「信息架构」「导航迷路」「Dashboard 太乱」时用。
 ---
 
 # ia · 信息架构（UX · 结构层）

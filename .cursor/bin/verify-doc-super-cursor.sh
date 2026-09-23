@@ -44,6 +44,58 @@ check_rule() {
 }
 check_rule "$CUR/rules/execution/doc-hygiene.mdc"
 
+# --- skill metadata 契约：description ≤85 字 + dmi 分桶（SPRINT-SKILL-META 回归）---
+# 该节曾在 ef5521b 被静默删除且无人发现；此处断言存在性 + 实际元数据
+training="$CUR/docs/training/skills.md"
+if grep -q 'disable-model-invocation' "$training" 2>/dev/null \
+  && grep -q '≤85' "$training" 2>/dev/null; then
+  ok "training/skills.md documents dmi policy + description cap"
+else
+  fail "training/skills.md missing disable-model-invocation policy section"
+fi
+
+py_meta="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
+if [[ -z "$py_meta" ]]; then
+  fail "python required for skill metadata check"
+elif "$py_meta" - "$CUR" <<'PY'
+import re, sys
+from pathlib import Path
+
+cur = Path(sys.argv[1])
+dmi_expected = {
+    "plan", "run", "learn", "scaffold", "release", "long",
+    "week", "disk", "maintain", "code-stats-viz", "ops-deploy",
+}
+fails = []
+
+for p in sorted((cur / "skills").glob("*/SKILL.md")):
+    name = p.parent.name
+    text = p.read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---", text, re.S)
+    if not m:
+        fails.append(f"{name}: missing frontmatter")
+        continue
+    fm = m.group(1)
+    dm = re.search(r"^description:\s*(.*?)(?=\n[A-Za-z_-]+:|\Z)", fm, re.S | re.M)
+    desc = re.sub(r"\s+", " ", (dm.group(1) if dm else "")).strip()
+    if len(desc) > 85:
+        fails.append(f"{name}: description {len(desc)} chars (>85)")
+    has_dmi = bool(re.search(r"^disable-model-invocation:\s*true\s*$", fm, re.M))
+    if has_dmi != (name in dmi_expected):
+        fails.append(f"{name}: disable-model-invocation={has_dmi}, policy expects {name in dmi_expected}")
+
+if fails:
+    for f in fails:
+        print("FAIL skill metadata:", f)
+    sys.exit(1)
+print(f"OK  skill metadata (28 files · description <=85 · dmi buckets)")
+PY
+then
+  :
+else
+  FAIL=$((FAIL+1))
+fi
+
 # --- relative markdown links under .cursor/docs ---
 py="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
 if [[ -z "$py" ]]; then

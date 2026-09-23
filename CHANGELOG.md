@@ -24,6 +24,8 @@ All notable changes to Super Cursor are documented here.
 - **alwaysApply 口径** — 常驻规则实为 **4** 条（`core` · `workflow` · `communication/cursor-standalone` · `communication/super-cursor-persona`），`AGENTS.md` 与 `.cursor/README.md` 此前写 2 条，常驻上下文被少算约 1.75×；`cursor-coherence.sh` 注释同步，`AGENTS.md` 补 `release.json` · `profiles/`
 - **CI 触发面** — `verify.yml` 的 `config/**` 在根目录不存在（真身 `.cursor/config/`），且漏 `install-super-cursor.sh` · `README.md` · `CHANGELOG.md` · `.github/workflows/**` → 改安装脚本或门面文档**不触发 CI**
 - **人格默认值** — `roles.json` 顶层 `default` 与 `workflow.json` `role.default` 互相矛盾（前者无人读取）；对齐为 `dashu` 并标注 SSOT
+- **skill metadata 契约恢复** — `ef5521b` 曾**静默删除** `training/skills.md` 的 `## disable-model-invocation 策略` 一节与 `description ≤85 字` 规则（4.29.1 SPRINT-SKILL-META 交付物），因验证器未接线而无人发现；现已恢复，并在 `verify-doc-super-cursor.sh` 增加断言：该节存在 · 28 个 `description` 全 ≤85 字 · `disable-model-invocation` 分桶与策略表一致
+- **description 收敛** — 13/28 个 skill 的 `description` 超 85 字（最长 131）→ 全部收敛至 ≤85（最长 84）；常驻可见元数据合计 **2176 → 1702** 字符
 
 ## [4.29.7] - 2026-09-20
 

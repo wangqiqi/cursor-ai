@@ -1,6 +1,6 @@
 ---
 name: delivery
-description: 交付验收（/delivery）：视觉 · i18n · 文档对齐 · 后端对接 · 组件完整度 · 可维护性 · 生产就绪。Sprint 收尾或 /release 分支前走查。说「交付验收」「上线前检查」「生产就绪」时用。
+description: 交付验收（/delivery）：视觉 · i18n · 文档 · API · 组件 · 可维护 · 生产就绪。Sprint 收尾或 /release 前走查。
 ---
 
 # delivery · 交付验收
