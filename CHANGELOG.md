@@ -33,6 +33,7 @@ All notable changes to Super Cursor are documented here.
 - **install 参数校验** — `--profile` 缺值/吞掉 `--replace` 无提示 · `--here` 与显式路径同时给出时静默忽略路径 · 无母版时 `--help` 直接报错；均已改为明确报错
 - **`validate-commit-msg.sh`** — 拒绝 Conventional Commits breaking 形式（`feat!: x` / `feat(api)!: x`）→ 已支持
 - **`verify-super-cursor.sh` 模式判定** — 母版专属项（`install-super-cursor.sh` · 禁止根 `scripts/` · `.github/workflows/verify.yml` · 母版门面 doc/layout 校验）此前只按「是否 hybrid」跳过，导致**安装到普通目标项目**时被误判为母版、报一堆无关 FAIL；现以「根目录是否有 `install-super-cursor.sh`」判定母版，目标项目也能得到有意义的全绿结果。`.cursorignore` 改为通用检查（安装后会随 `.cursor/` 复制）
+- **macOS/BSD 可移植性** — `cursor-coherence.sh` 的 `find -printf`（GNU only）与 `grep/sed '\s'`（非 POSIX ERE）→ 改为 `-exec basename` 与 `[[:space:]]`；此前声称支持的 macOS 上 `template-verify` 会直接中止
 
 ## [4.29.7] - 2026-09-20
 

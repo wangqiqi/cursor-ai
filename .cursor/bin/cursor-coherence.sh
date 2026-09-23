@@ -19,12 +19,12 @@ for skill_dir in "$CUR"/skills/*/; do
   dir_name="$(basename "$skill_dir")"
   skill_file="$skill_dir/SKILL.md"
   [[ -f "$skill_file" ]] || { fail "missing SKILL.md in $dir_name"; continue; }
-  yaml_name="$(grep -E '^name:\s*' "$skill_file" | head -1 | sed 's/^name:\s*//' | tr -d ' \r')"
+  yaml_name="$(grep -E '^name:[[:space:]]*' "$skill_file" | head -1 | sed 's/^name:[[:space:]]*//' | tr -d ' \r')"
   [[ "$dir_name" == "$yaml_name" ]] && ok "skill dir=$yaml_name" || fail "skill dir $dir_name != name:$yaml_name"
 done
 
 # 2. AGENTS.md Skills line lists every disk skill
-disk_skills="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)"
+disk_skills="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)"
 agents_block="$(sed -n '/^Skills:/p' "$CUR/AGENTS.md")"
 while IFS= read -r sk; do
   [[ -z "$sk" ]] && continue
@@ -34,7 +34,7 @@ done <<< "$disk_skills"
 # 3. agents/*.md name: matches AGENTS table
 for agent_file in "$CUR"/agents/*.md; do
   [[ -f "$agent_file" ]] || continue
-  agent_name="$(grep -E '^name:\s*' "$agent_file" | head -1 | sed 's/^name:\s*//' | tr -d ' \r')"
+  agent_name="$(grep -E '^name:[[:space:]]*' "$agent_file" | head -1 | sed 's/^name:[[:space:]]*//' | tr -d ' \r')"
   grep -qF "**$agent_name**" "$CUR/AGENTS.md" && ok "agent $agent_name in AGENTS.md" || fail "agent $agent_name not in AGENTS.md"
 done
 
@@ -113,7 +113,7 @@ while IFS= read -r f; do
   else
     fail "alwaysApply in unexpected file: $f"
   fi
-done < <(grep -rl 'alwaysApply:\s*true' "$CUR/rules" 2>/dev/null || true)
+done < <(grep -rl 'alwaysApply:[[:space:]]*true' "$CUR/rules" 2>/dev/null || true)
 
 # 6b. SDD install seeds ↔ reference templates stay in sync
 for tpl in spec-template tasks-template tech-plan-template principles-template; do
@@ -198,7 +198,7 @@ if [[ -n "$facade_readme" ]]; then
 
   for agent_file in "$CUR"/agents/*.md; do
     [[ -f "$agent_file" ]] || continue
-    agent_name="$(grep -E '^name:\s*' "$agent_file" | head -1 | sed 's/^name:\s*//' | tr -d ' \r')"
+    agent_name="$(grep -E '^name:[[:space:]]*' "$agent_file" | head -1 | sed 's/^name:[[:space:]]*//' | tr -d ' \r')"
     [[ -z "$agent_name" ]] && continue
     grep -qF "$agent_name" "$facade_readme" && ok "README mentions agent $agent_name" \
       || fail "README missing agent $agent_name"
