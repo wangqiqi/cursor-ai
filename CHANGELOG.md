@@ -4,20 +4,11 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
-### Changed
-
-- **`/master` 路由瘦身（B3）** — 主路由（7 项）与 `more` 子路由（7 项）此前只存在于 288 行的 `master/routes.md`，`/master` 实际 payload = SKILL + routes ≈ **6.5k token**，而 SKILL 内 6 处只写「见 routes.md」却不含选项表。现把两张表内联进 `master/SKILL.md`，`routes.md` 降为**按需二级索引**（关键词索引 · 上下文捷径 · 人格 · DAILY/LIBRARY · 上游对照）→ 默认路由 payload **≈1.0k token**。`verify-doc-super-cursor.sh` 新增断言：SKILL ≤3000 字符且含 7 个主路由 id（防再次把路由挪出默认 payload）
-- **`plan-check` 验收列门禁（B2）** — 活跃任务的验收列若为描述性文字（`task-verify` 必 FAIL），`plan-check` 现在当场 WARN 并计入 issues、**退出 1**（开工前就暴露，而非等 `task-verify` 才发现）；判定逻辑抽为共享 `acceptance_kind()`（exec / manual / prose），`task-verify` 与 `plan-check` 单一真源。`runner-smoke` 增 4 条 plan-check 回归
-- **`task-verify` fail-closed（B1）** — 描述性验收列此前打印 `SKIP` 却 `return 0`（"防假完成"形同虚设），现改为 **FAIL + 退出 1** 并给出两种修法；唯一合法豁免是显式 `manual: <步骤与证据要求>`。`task_verify_heuristics.enabled` 在 `full` profile 默认开启（`lite`/`rules-only` 关闭），兜底脚本仅在存在时才跑。plan 模板与 `config/README` 补「验收列规则」；`runner-smoke` 增 4 条回归（描述性 FAIL · manual PASS · 可执行 PASS · 可执行失败 FAIL）
-
-### Changed
-
-- **去重：巨型 SKILL 瘦身 + 事实族收敛（C5）** — `run/SKILL.md` **8806 → 4080 字符（-53%）**，细节移入 `run/reference/{sprint-closeout,doc-sync,audit}.md`；`plan/SKILL.md` **7305 → 4408 字符（-40%）**，`先总后分`/`SDD`/`协作文档`/`Sprint 立项门禁` 四节改为指向既有 `reference/`（`phases.md` · `sdd/` · `doc-prd-enrich.md` · `prioritization.md` · `sprint-goal-gate.md`）。README 的三层 slash 表与 7 栈依赖表收敛为「名字 + 指向唯一真源」。`verify-doc-super-cursor.sh` 断言 run/plan SKILL ≤5000 字符且 `reference/` 必须存在
+## [4.29.8] - 2026-09-23
 
 ### Added
 
 - **双语最低集（A5）** — 新增 `README.en.md` 与 `.cursor/docs/quickstart.en.md`（英文入门层：安装 · 三个日常指令 · 目录边界 · 自检 · 进阶表），主 `README.md` 顶部加入口；`quickstart.en.md` 同步进 VitePress 侧栏（`docs/guide/quickstart.en.md`，站点共 13 篇镜像），同步脚本与 `README.en.md` 一并镜像到 GitHub 绝对链接。`verify-doc-super-cursor.sh` 断言英文入口存在且被主 README 链接。**不**翻译 rules/skills 正文（成本高、收益低）
-
 - **三平台 CI matrix（A6）** — `verify.yml` 由单 ubuntu job 扩为 `ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，先非阻塞）`；`fail-fast: false`，矩阵项未通过不影响其它项
 - **`SC_FORCE_PYTHON=1`（可测的 JSON 回退）** — `platform.sh` 新增该开关（`sc_has_json_tool` + 10 处 jq 分支），让「无 jq → python 回退」成为**可显式切换并验证**的路径。此前 CI 只在 ubuntu+jq 上跑，"回退"从未被覆盖（macOS runner 自带 jq，靠"恰好没装"不可行）
 - **`bin/verify-secrets.sh`（C4）** — 只扫 **已跟踪** 文件（`git ls-files`）：AWS key · 私钥材料 · GitHub/Slack token · 硬编码凭据赋值 · 被跟踪的 `.env`；示例占位（`example`/`your_`/`xxx`/`<...>`）与 `.env.example` 豁免。`.cursorignore`/`.gitignore` 只防「被读」，这道门禁防「被提交」；已纳入 `verify-super-cursor.sh`
@@ -30,6 +21,13 @@ All notable changes to Super Cursor are documented here.
 - **平台作用域单一真源（A4）** — `docs/platforms.md` 新增「技能平台作用域」表（技能层 ≠ 母版脚本层，不可互相推断）；`verify-portability.sh` 双向断言 **文档声明 ⇔ 代码实际**：含 `require_linux` 的技能必须登记为 Linux-only，登记为 Linux-only 的必须确有 `require_linux`
 - **`bin/verify-portability.sh`（A3）** — 发布脚本可移植性静态门禁：GNU-only 构造（`sed -i` 无后缀 · `find -printf` · `stat -c` · `sort -h` · `du --max-depth` · `date -d/-Iseconds` · `grep -P` · `xargs -r` · `tac`）· 非 POSIX `\s` 正则 · `readlink -f` 缺回退 · 硬编码 `python3` · shebang 非 `env bash`；扫描 57 个脚本，已纳入 `verify-super-cursor.sh` 与接线自检（含 `portability-allow` 单行豁免机制）
 - **`config/denylist.txt`** — 「母版独立」单一禁用词表（作者/维护者标识 · 机器绝对路径 · 公司代号占位 · 凭据痕迹），由 `verify-super-cursor.sh` 逐行 ERE 扫描 `.cursor/` 全树；名单文件缺失即 FAIL，防止守卫被静默关闭（SPRINT-AGNOSTIC · A1）
+
+### Changed
+
+- **`/master` 路由瘦身（B3）** — 主路由（7 项）与 `more` 子路由（7 项）此前只存在于 288 行的 `master/routes.md`，`/master` 实际 payload = SKILL + routes ≈ **6.5k token**，而 SKILL 内 6 处只写「见 routes.md」却不含选项表。现把两张表内联进 `master/SKILL.md`，`routes.md` 降为**按需二级索引**（关键词索引 · 上下文捷径 · 人格 · DAILY/LIBRARY · 上游对照）→ 默认路由 payload **≈1.0k token**。`verify-doc-super-cursor.sh` 新增断言：SKILL ≤3000 字符且含 7 个主路由 id（防再次把路由挪出默认 payload）
+- **`plan-check` 验收列门禁（B2）** — 活跃任务的验收列若为描述性文字（`task-verify` 必 FAIL），`plan-check` 现在当场 WARN 并计入 issues、**退出 1**（开工前就暴露，而非等 `task-verify` 才发现）；判定逻辑抽为共享 `acceptance_kind()`（exec / manual / prose），`task-verify` 与 `plan-check` 单一真源。`runner-smoke` 增 4 条 plan-check 回归
+- **`task-verify` fail-closed（B1）** — 描述性验收列此前打印 `SKIP` 却 `return 0`（"防假完成"形同虚设），现改为 **FAIL + 退出 1** 并给出两种修法；唯一合法豁免是显式 `manual: <步骤与证据要求>`。`task_verify_heuristics.enabled` 在 `full` profile 默认开启（`lite`/`rules-only` 关闭），兜底脚本仅在存在时才跑。plan 模板与 `config/README` 补「验收列规则」；`runner-smoke` 增 4 条回归（描述性 FAIL · manual PASS · 可执行 PASS · 可执行失败 FAIL）
+- **去重：巨型 SKILL 瘦身 + 事实族收敛（C5）** — `run/SKILL.md` **8806 → 4080 字符（-53%）**，细节移入 `run/reference/{sprint-closeout,doc-sync,audit}.md`；`plan/SKILL.md` **7305 → 4408 字符（-40%）**，`先总后分`/`SDD`/`协作文档`/`Sprint 立项门禁` 四节改为指向既有 `reference/`（`phases.md` · `sdd/` · `doc-prd-enrich.md` · `prioritization.md` · `sprint-goal-gate.md`）。README 的三层 slash 表与 7 栈依赖表收敛为「名字 + 指向唯一真源」。`verify-doc-super-cursor.sh` 断言 run/plan SKILL ≤5000 字符且 `reference/` 必须存在
 
 ### Fixed
 
