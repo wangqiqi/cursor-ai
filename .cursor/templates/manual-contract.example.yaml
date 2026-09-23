@@ -4,8 +4,10 @@
 
 manual:
   id: user-guide
-  doc_path: docs/user-guide.md
-  assets_dir: docs/assets/user-guide
+  # 号位 07 = 使用文档（号位=瀑布阶段；名称按 profile 替换 → web-fullstack/frontend-app 用「用户手册」）
+  doc_path: docs/07_用户手册.md
+  # 同号子目录放配图（不计入 ≤10 上限）
+  assets_dir: docs/07_用户手册
   version: "1.0"
   audiences:
     - admin

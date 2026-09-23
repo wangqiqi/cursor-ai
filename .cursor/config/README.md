@@ -12,6 +12,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `profiles/{full,lite,rules-only}.json` | 安装 profile 的覆盖层（安装时深合并进 `workflow.json`） | `bin/verify-config.sh` |
 | **`schema.json`** | 允许的键与类型声明 —— **改 config 先改这里** | `bin/verify-config.sh` |
 | **`denylist.txt`** | 母版独立禁用词表（作者标识 · 机器路径 · 公司代号 · 凭据） | `verify-super-cursor.sh` |
+| **`docs-layout.json`** | 项目文档体系：`profile` · `slots`（号位=瀑布阶段）· `max_numbered` · 必选号位 | `bin/verify-config.sh` + `bin/verify-docs-layout.sh` |
 
 **为什么有 schema**：写错一个键（如把 `release.mode` 写成 `workflow.release.mode`）不会报错，只会**静默回退默认值**，行为与预期不符却毫无信号。`verify-config.sh` 让未知键/类型错误直接 FAIL。
 

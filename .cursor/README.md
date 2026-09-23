@@ -15,7 +15,7 @@ agents/  ship review spike（子进程委派；日常不必记）
 hooks/   growth-init run-start run-stop
 config/  workflow.json release.json roles.json + schema.json（config 校验）· denylist.txt（母版独立扫描）
 bin/     runner.sh scaffold.sh（含 apply-bundle）· 验证器：template-verify · verify-super-cursor · cursor-coherence
-         · verify-{doc-super-cursor,growth-layout,rules-globs,portability,config,roo-compat,secrets,scripts-layout}
+         · verify-{doc-super-cursor,growth-layout,rules-globs,portability,config,roo-compat,secrets,scripts-layout,docs-layout}
          · smoke：install-smoke · consumer-smoke（目标项目端到端）· runner-smoke · scaffold-integrity · platform-check
          · 其它：bootstrap-growth · resolve-role · validate-commit-msg
 lib/     platform.sh（跨平台工具 · JSON python 回退 · SC_FORCE_PYTHON）
@@ -24,7 +24,7 @@ templates/scaffold/   manifest + stack templates
 
 ```bash
 bash .cursor/bin/template-verify.sh          # 母版全量（推荐 · CI 入口）
-bash .cursor/verify-super-cursor.sh          # layout + 9 道门禁（混合仓自动 hybrid；目标项目亦可跑）
+bash .cursor/verify-super-cursor.sh          # layout + 10 道门禁（混合仓自动 hybrid；目标项目亦可跑）
 bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 → hook → 全绿
 bash .cursor/bin/cursor-coherence.sh         # 交叉自洽
 bash .cursor/verify-system.sh                # 同上 layout（alias）

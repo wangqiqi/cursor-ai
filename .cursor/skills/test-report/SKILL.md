@@ -11,6 +11,8 @@ description: 可发布测试报告（/report）：verify 后汇总 · Report Con
 
 **详文**：`reference/pipeline.md` · `reference/contract-schema.md` · `reference/report-template.md` · `reference/parse-sources.md` · `reference/tiers.md` · `reference/regen-gates.md` · `reference/scaffold-bundle.md`
 
+**产物路径**：来自 contract 的 `doc_path`（默认落在 `docs/07|08_…` 号位）——见 `rules/execution/project-docs.mdc`；**产物为自动生成，禁止手写**，文件头须保留 `<!-- generated: report · regenerate: /report -->`。
+
 ## 何时进入
 
 - 用户说 **`/report`** · 「测试报告」「全量测试」「verify 后出报告」「benchmark 报告」

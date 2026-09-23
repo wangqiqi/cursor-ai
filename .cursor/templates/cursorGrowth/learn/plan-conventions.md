@@ -29,6 +29,8 @@
 
 ## docs/ 编号与上限
 
+规则正文 → `.cursor/rules/execution/project-docs.mdc` · 配置 → `config/docs-layout.json`（本项目的 `profile` 与启用号位在此登记）。
+
 **规则**：对外持久文档一律 `NN_中文功能.md`；**带序号文档硬上限 10 个**（超限必须合并同类或下沉 Growth）。
 
 | 号 | 用途 | 生成方式 |

@@ -4,7 +4,8 @@
 
 report:
   id: full-stack-benchmark
-  doc_path: docs/test-report.md
+  # 号位 08 = 测试报告（必选 · 自动生成）
+  doc_path: docs/08_测试报告.md
   version: "1.0"
   title: Full-stack Test Report
   audiences:

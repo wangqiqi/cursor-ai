@@ -18,6 +18,19 @@ All notable changes to Super Cursor are documented here.
 
 - **测试框架选型（优先成熟开源）（G1–G4）** — `rules/execution/testing.mdc` 新增**§框架选型**表：TS/JS **Vitest** · React/Next/Vue/Svelte **Vitest + Testing Library** · E2E **Playwright** · Python **pytest**（+hypothesis 按需）· Go **go test** · Rust **cargo test** · C/C++ **CTest + Catch2/GoogleTest** · Java **JUnit 5** · BDD **Cucumber**；并给出"何时不引入"。纪律：优先宽松许可的活跃开源 · **一套到底**不混两套 runner · 跟随既有 lockfile 不迁移。`javascript`/`typescript`/`react`/`nextjs`/`svelte` 五条 tech rule 补默认框架指向（此前只有 react/java/python/go/rust/c/cpp/vue 写了）；`oss-first.mdc` 增「测试框架选型」段。`manifest.json` 7 栈新增 `test_framework` 声明，`scaffold-integrity.sh` **校验脚本/依赖里确实调用了它**（`platform.sh` 另加 `sc_manifest_scaffold_field_join` 以正确解析数组字段）
 
+### Added
+
+- **项目文档体系（D · 瀑布式号位）** — `config/docs-layout.json` + `rules/execution/project-docs.mdc` + `templates/project-docs/`（10 号位骨架 + `ROADMAP.md` + 名称映射索引）+ `bin/verify-docs-layout.sh`：
+  - **号位 = 瀑布阶段（不可变）**：`01` 需求 · `02` 架构 · `03` 数据/契约 · `04` 接口/算法 · `05` 详细设计 · `06` 工程规范 · `07` 使用⚙ · `08` 测试⚙ · `09` 发布 · `10` 调优；**名称按 profile 替换**，跨项目号位可对齐
+  - **必选号位** `01` `02` `06` `08` `10` + **`ROADMAP.md`（例外·不加序号）**；带序号文档 **硬上限 10**
+  - **5 个 profile**：`web-fullstack` · `api-service` · `frontend-app` · `library`（纯算法库/动态库：`03` 放 ABI 契约，**不写数据库设计**）· `cli-tool`
+  - **序号纪律**：号不重用（删除留空号）· 新增追加 · 细则放**同号子目录**（不计入上限）· `docs/` 根只允许 `NN_*.md` + `allow_unnumbered`
+  - **两份自动生成**（禁止手写）：`07` ← `/manual` · `08` ← `/report`，文件头须带 `<!-- generated: … · regenerate: … -->`；两份 contract 的 `doc_path` 已对齐到 `docs/07_用户手册.md` / `docs/08_测试报告.md`（配图落同号子目录）
+  - **生态约定名不进编号**：`README` · `CHANGELOG` · `LICENSE` · `CONTRIBUTING` · `SECURITY`（GitHub/npm/crates 惯例）；安全威胁模型并入 `02`、性能基准并入 `08`/`10`，不额外占号
+  - **渐进启用**：`docs/` 尚无编号文档时不 FAIL 只提示，并改验 `templates/project-docs` 骨架（母版与 CI 因此也被覆盖）；一旦有第 1 份编号文档，全部断言生效
+  - 与 **SDD** 衔接：`01` ← `sdd/spec-template` · `02` ← `tech-plan-template` · `05` ← `tasks-template`，不另写一套
+- **`verify-config.sh` 支持 `_comment` 注释键**（schema 与 config 均可带说明）
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行

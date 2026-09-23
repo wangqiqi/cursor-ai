@@ -228,6 +228,7 @@ check "$CUR/rules/communication/multi-session-edits.mdc"
 check "$CUR/rules/execution/data-list.mdc"
 check "$CUR/rules/execution/deploy-ops.mdc"
 check "$CUR/rules/execution/doc-hygiene.mdc"
+check "$CUR/rules/execution/project-docs.mdc"
 check "$CUR/rules/execution/i18n-copy.mdc"
 check "$CUR/skills/ops-deploy/SKILL.md"
 check "$CUR/rules/execution/oss-first.mdc"
@@ -383,6 +384,7 @@ bash "$CUR/bin/verify-config.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-roo-compat.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

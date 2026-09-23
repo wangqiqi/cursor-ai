@@ -47,6 +47,8 @@ def type_ok(value, expected):
 
 def validate(conf, spec, prefix, rel):
     for key, value in conf.items():
+        if key.startswith("_"):          # 注释键（_comment 等）不参与校验
+            continue
         dotted = f"{prefix}{key}"
         if key not in spec:
             fails.append(f"{rel}: unknown key '{dotted}' (typo? silently falls back to defaults)")

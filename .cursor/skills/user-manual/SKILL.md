@@ -11,6 +11,8 @@ description: 可发布使用说明书（/manual）：故事线 · 配图 regen �
 
 **详文**：`reference/pipeline.md` · `reference/manual-contract-schema.md` · `reference/extract-sources.md` · `reference/capture-profiles.md` · `reference/regen-gates.md` · `reference/reader-test.md` · `reference/storyline-template.md` · `reference/scaffold-bundle.md`
 
+**产物路径**：来自 contract 的 `doc_path`（默认落在 `docs/07|08_…` 号位）——见 `rules/execution/project-docs.mdc`；**产物为自动生成，禁止手写**，文件头须保留 `<!-- generated: manual · regenerate: /manual -->`。
+
 ## 何时进入
 
 - 用户说 **`/manual`** · 「使用说明书」「用户手册」「配图重新生成」「walkthrough 截图」
