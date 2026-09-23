@@ -253,6 +253,20 @@ plan_check() {
     echo "WARN: ${bad} 行活跃任务可能缺「验收」或「落点」"
     issues=$((issues + 1))
   fi
+  # 验收列必须可判定：task-verify 是 fail-closed，prose 验收开工前就该发现
+  local tid tacc prose_acc=0
+  while IFS= read -r tid; do
+    [[ -z "$tid" ]] && continue
+    tacc="$(plan_task_acceptance "$tid")"
+    if [[ "$(acceptance_kind "$tacc")" == "prose" ]]; then
+      echo "WARN: ${tid} 验收列不可执行 → task-verify 会 FAIL: ${tacc:-（空）}"
+      prose_acc=$((prose_acc + 1))
+    fi
+  done < <(grep -E '\| (⬜|🔧) \|' "$PLAN" 2>/dev/null | awk -F'|' '{gsub(/^[ \t*]+|[ \t*]+$/, "", $2); print $2}' || true)
+  if [[ "$prose_acc" -gt 0 ]]; then
+    echo "      → 改成可执行命令，或写 manual: <步骤与证据要求>（见 templates/plan.md）"
+    issues=$((issues + prose_acc))
+  fi
   # Sprint 已闭合但 plan 正文未 reconciliation
   if plan_sprint_appears_closed; then
     local unchecked pending_tasks
@@ -296,6 +310,19 @@ plan_check() {
   return 1
 }
 
+# 验收列形态：exec（可执行命令）· manual（显式人工）· prose（不可判定）
+# 单一真源 —— task_verify 与 plan_check 共用，避免两处漂移
+acceptance_kind() {
+  local acc="${1:-}"
+  if [[ "$acc" =~ ^(\./|cd |npm |pnpm |npx |pytest |grep |cargo |go test|make |bash ) ]]; then
+    echo "exec"
+  elif [[ "$acc" == manual:* || "$acc" == "manual" || "$acc" == *"人工验收"* ]]; then
+    echo "manual"
+  else
+    echo "prose"
+  fi
+}
+
 task_verify() {
   local id="${1:-$(plan_active)}"
   local acc loc pattern test_py
@@ -309,7 +336,7 @@ task_verify() {
   echo "验收: ${acc}"
   echo "落点: ${loc}"
 
-  if [[ "$acc" =~ ^(\./|cd |npm |pnpm |npx |pytest |grep |cargo |go test|make |bash ) ]]; then
+  if [[ "$(acceptance_kind "$acc")" == "exec" ]]; then
     echo "==> Running acceptance command"
     cd "$ROOT"
     # shellcheck disable=SC2086
@@ -318,7 +345,7 @@ task_verify() {
   fi
 
   # 显式人工验收 —— 唯一合法豁免（须在 plan / CHANGELOG 写清证据要求）
-  if [[ "$acc" == manual:* || "$acc" == "manual" || "$acc" == *"人工验收"* ]]; then
+  if [[ "$(acceptance_kind "$acc")" == "manual" ]]; then
     echo "MANUAL: 验收列声明为人工验收"
     echo "        请在 plan/CHANGELOG 留下证据（命令输出 · 截图路径 · 复核人）"
     return 0

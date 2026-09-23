@@ -57,34 +57,60 @@ echo "OK  runner help is clean"
   echo "OK  unapproved template blocks"
 ) || exit 1
 
-# task-verify fail-closed 回归（B1）：描述性验收必须 FAIL，manual: 必须 PASS
-tv_case() {
-  local acc="$1" expect="$2" label="$3"
-  local d rc=0
+# 造一个含 TASK-001 的临时项目；stdout 只回目录路径
+mk_plan_project() {
+  local acc="$1" d
   d="$(mktemp -d)"
   mkdir -p "$d/.cursor" "$d/.cursorGrowth"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  echo "# t" > "$d/README.md"
   {
     echo '<!-- PLANNING: false -->'
     echo '<!-- PLAN_APPROVED: 2026-09-23 -->'
     echo '<!-- SPRINT: SPRINT-TV -->'
     echo '<!-- ACTIVE: TASK-001 -->'
     echo '<!-- SPRINT_STATUS: active -->'
+    echo '<!-- VERIFY: ./README.md -->'
+    echo '**执行顺序**: `TASK-001`'
+    echo ''
     echo '| ID | Task | Priority | Status | Acceptance | Target |'
     echo '|----|------|----------|--------|------------|--------|'
     echo "| TASK-001 | t | P0 | ⬜ | ${acc} | src/ |"
   } > "$d/.cursorGrowth/plan.md"
-  ( cd "$d" && bash .cursor/bin/runner.sh task-verify TASK-001 ) >/dev/null 2>&1 || rc=$?
-  rm -rf "$d"
+  printf '%s' "$d"
+}
+
+# 断言某命令在某临时项目里的退出码类别
+smoke_assert() {
+  local d="$1" expect="$2" label="$3"
+  shift 3
+  local rc=0
+  ( cd "$d" && "$@" ) >/dev/null 2>&1 || rc=$?
   if { [[ "$expect" == "fail" && "$rc" -ne 0 ]] || [[ "$expect" == "pass" && "$rc" -eq 0 ]]; }; then
-    echo "OK  task-verify $label"
+    echo "OK  $label"
   else
-    echo "FAIL: task-verify $label (rc=$rc, expect=$expect)"; exit 1
+    echo "FAIL: $label (rc=$rc, expect=$expect)"; rm -rf "$d"; exit 1
   fi
 }
-tv_case "功能正常，界面没问题" fail "描述性验收 FAIL（防假完成）"
-tv_case "manual: 人工走查首页并截图留证" pass "manual 豁免 PASS"
-tv_case "bash -c 'exit 0'" pass "可执行命令 PASS"
-tv_case "bash -c 'exit 3'" fail "可执行命令失败时 FAIL"
+
+# task-verify fail-closed 回归（B1）
+D="$(mk_plan_project '功能正常，界面没问题')"
+smoke_assert "$D" fail "task-verify 描述性验收 FAIL（防假完成）" bash .cursor/bin/runner.sh task-verify TASK-001
+smoke_assert "$D" fail "plan-check prose 验收 FAIL（B2）" bash .cursor/bin/runner.sh plan-check
+rm -rf "$D"
+
+D="$(mk_plan_project 'manual: 人工走查首页并截图留证')"
+smoke_assert "$D" pass "task-verify manual 豁免 PASS" bash .cursor/bin/runner.sh task-verify TASK-001
+smoke_assert "$D" pass "plan-check manual 验收 PASS（B2）" bash .cursor/bin/runner.sh plan-check
+rm -rf "$D"
+
+D="$(mk_plan_project "bash -c 'exit 0'")"
+smoke_assert "$D" pass "task-verify 可执行命令 PASS" bash .cursor/bin/runner.sh task-verify TASK-001
+smoke_assert "$D" pass "plan-check 可执行验收 PASS（B2）" bash .cursor/bin/runner.sh plan-check
+rm -rf "$D"
+
+D="$(mk_plan_project "bash -c 'exit 3'")"
+smoke_assert "$D" fail "task-verify 可执行命令失败时 FAIL" bash .cursor/bin/runner.sh task-verify TASK-001
+rm -rf "$D"
 
 echo "runner smoke passed."
