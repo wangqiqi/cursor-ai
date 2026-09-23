@@ -41,9 +41,13 @@ Sprint 闭合：**archive 一篇摘要**（**至少一级域子目录**，SSOT �
 |------|----------------|
 | 新增/改名 skill | 根 `README.md` · `.cursor/AGENTS.md` · `docs/training/skills.md` · `docs/migration-catalog.md` 计数 |
 | 新增 rule | `verify-super-cursor.sh` · `docs/rules-catalog.md` · `AGENTS.md` execution 行 |
+| 新增 config 键 / 文件 | `config/schema.json`（否则 `verify-config.sh` FAIL）· `config/README.md` 键表 |
+| 新增 `bin/verify-*.sh` | 接入 `verify-super-cursor.sh` 或 `template-verify.sh`（**接线自检**会 FAIL）· `rules/feedback/verify.mdc` §母版门禁清单 · 根 `README.md` §验证 |
+| 改 `bin/` 目录内容 | `.cursor/README.md` §结构 的 `bin/` 清单 · 根 `README.md` §开箱即用 |
+| 新增对外文档 | `docs/scripts/sync-cursor-docs.sh` 镜像 + `docs/.vitepress/config.ts` 侧栏（否则站点看不到） |
 | 用户可见能力 | CHANGELOG `[Unreleased]` 与 README 摘要一致 |
 
-验收：`bash .cursor/bin/cursor-coherence.sh` · `verify-doc-super-cursor.sh`。
+验收：`bash .cursor/bin/cursor-coherence.sh` · `verify-doc-super-cursor.sh` · `verify-config.sh`（门禁清单 → `rules/feedback/verify.mdc`）。
 
 ## 禁止
 

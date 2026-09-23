@@ -13,7 +13,7 @@ alwaysApply: true
 
 CLI：`.cursor/bin/runner.sh` — `gate-check` · `task-verify` · `verify` · `plan-check` · `next-task`
 
-- 每任务：`task-verify` 通过才 ✅/commit
+- 每任务：`task-verify` 通过才 ✅/commit（**fail-closed**：描述性验收直接 FAIL；人工验收须写 `manual: <证据要求>`，见 `rules/feedback/verify.mdc`）
 - Sprint/打版前：`verify`
 - 打版：`release.mode`（`patch-per-task` | `tag-per-commit`；见 `rules/feedback/release.mdc`）
 - `AUTONOMOUS:true` → **一次 `/run` Sprint 连跑**（详 `plan/reference/autonomy-chain.md`）；仅决策打断 · `⚠️` → `/plan`

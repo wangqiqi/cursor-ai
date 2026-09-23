@@ -4,6 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **文档同步（v4.29.8 后）** — 把本次 Sprint 新增的 8 道门禁与 4 处行为变更写进相应 SSOT：
+  - `rules/feedback/verify.mdc`：新增 §task-verify 语义（fail-closed / `manual:` 豁免）、**§母版门禁清单**（8 道 · 各自守护什么 · 通用 vs 母版）、接线自检规则、跨平台与 CI 段
+  - `rules/workflow.mdc` · `skills/run/SKILL.md`：任务闸门补 fail-closed 与 `manual:` 说明
+  - `rules/execution/doc-hygiene.mdc` §门面计数：新增 config 键/文件、新增 `bin/verify-*.sh`、改 `bin/` 目录、新增对外文档四行同步义务
+  - `config/README.md`：新增「本目录文件」表，说明 `schema.json`（防错键静默回退）与 `denylist.txt`（母版独立扫描）
+  - `docs/building-super-cursor.md`：修正过期表述（alwaysApply 由"仅 2 个"改为**实际 4 个**）、补跨平台/配置守护、新增**贡献者门禁清单**（改什么 → 必须绿什么）；layout 模式说明补"已安装目标项目"第三种
+  - `.cursor/README.md`：`bin/` 清单由 7/20 补全为分组全量、`config/` 补 `schema.json`·`denylist.txt`、自测命令补 consumer-smoke 与门禁清单链接、路由说明改为「主路由在 master/SKILL.md · routes.md 为扩展索引」
+  - 根 `README.md`：§验证补 4 条命令 + 8 道门禁表；`.cursor/docs/quickstart.md` · `platforms.md`：自测补 consumer-smoke 与 `SC_FORCE_PYTHON=1`（含 CI 矩阵说明）；`skills/master/routes.md` 头部标注分层；`docs/training/skills.md` 可选能力补 3 行；`docs/index.md` 增「可守护」卡片 + 英文入口
+
 ## [4.29.8] - 2026-09-23
 
 ### Added

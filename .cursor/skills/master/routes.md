@@ -1,8 +1,8 @@
-# master · 路由表
+# master · 路由表（扩展索引）
 
-AskQuestion 选项与关键词 → 下游 skill / agent / rules。  
-无 AskQuestion 工具时：同表**正文编号选项**（见 **master**「AskQuestion 约定」）。  
-与 `.cursor/README.md` **场景速查** 对齐；详表在本文件，README 为摘要链。
+> **主路由（7 项）与 `more` 子路由已内联在 [`SKILL.md`](SKILL.md)** —— 日常路由不必读本文件。  
+> 本文件是**按需扩展索引**：关键词索引 · 上下文捷径 · 人格呼叫 · DAILY/LIBRARY 裁剪 · 上游对照。  
+> 无 AskQuestion 工具时：用 `SKILL.md` 同一张表写**正文编号选项**（见 **master**「AskQuestion 约定」）。
 
 > **关键词 ≠ 自动选用**：`disable-model-invocation: true` 的 skill（**week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz**）只能由用户 `/skill` 显式调用；下表「关键词」列表示该 skill 自身的触发词（供用户对照），Agent 不得据此自动加载。
 

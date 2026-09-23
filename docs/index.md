@@ -20,7 +20,9 @@ features:
   - title: 可安装
     details: install-super-cursor.sh 一次拷贝 rules · skills · hooks · config 到目标项目。
   - title: 可验收
-    details: gate-check · task-verify · verify 分层；plan/run 闸门减少 Agent 乱改。
+    details: gate-check · task-verify（fail-closed，描述性验收直接 FAIL）· verify 分层；plan/run 闸门减少 Agent 乱改。
+  - title: 可守护
+    details: 8 道门禁接入 CI —— 规则 glob · 可移植性 · config schema · 协议字段 · 密钥扫描 · 文档一致性 · 消费方端到端。
   - title: 可演进
     details: 项目特化进 .cursorGrowth/（gitignore），母版 .cursor/ 保持通用 SOP。
   - title: 三指令日常
@@ -37,4 +39,4 @@ cd cursor-ai
 ./install-super-cursor.sh /path/to/your-project --profile full
 ```
 
-文档正文镜像自 [`.cursor/docs/`](https://github.com/wangqiqi/cursor-ai/tree/master/.cursor/docs)；本地开发：`npm run docs:dev`。
+文档正文镜像自 [`.cursor/docs/`](https://github.com/wangqiqi/cursor-ai/tree/master/.cursor/docs)；English quickstart → [Quickstart (EN)](/guide/quickstart.en)；本地开发：`npm run docs:dev`。

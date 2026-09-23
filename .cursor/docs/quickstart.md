@@ -75,12 +75,14 @@ release / ship
 ## 母版自测
 
 ```bash
-bash .cursor/verify-super-cursor.sh    # layout；混合仓 hybrid 自动
-bash .cursor/bin/cursor-coherence.sh
-bash .cursor/bin/template-verify.sh    # 纯母版全量
+bash .cursor/bin/template-verify.sh     # 纯母版全量（CI 入口；含 consumer smoke）
+bash .cursor/verify-super-cursor.sh     # layout + 8 道门禁；混合仓 hybrid 自动
+bash .cursor/bin/consumer-smoke.sh      # 目标项目端到端：install → 闸门 BLOCK → hook → 放行 → 全绿
+bash .cursor/bin/cursor-coherence.sh    # 交叉自洽
 ```
 
-混合仓见 [platforms.md](platforms.md) §自测 · `rules/feedback/verify.mdc`。
+门禁清单 → `rules/feedback/verify.mdc` §母版门禁清单 · 混合仓见 [platforms.md](platforms.md) §自测。
+English quickstart → [quickstart.en.md](quickstart.en.md)。
 
 ## 跨平台
 

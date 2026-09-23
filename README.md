@@ -310,10 +310,24 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 
 ```bash
 bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .cursorGrowth/rules/local（template-verify 会自动调用）
-bash .cursor/verify-super-cursor.sh          # 布局检查
+bash .cursor/bin/template-verify.sh          # 母版完整自测（CI 入口：layout + 8 道门禁 + scaffold + runner + install + consumer smoke）
+bash .cursor/verify-super-cursor.sh          # layout + 聚合门禁（混合仓自动 hybrid；目标项目亦可跑）
+bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 BLOCK → hook → 批准放行 → 全绿
 bash .cursor/bin/cursor-coherence.sh         # 交叉自洽（skills/agents/rules 注册）
-bash .cursor/bin/template-verify.sh          # 母版完整自测（含 install/scaffold/runner/coherence）
 ```
+
+| 门禁 | 守护 |
+|------|------|
+| `verify-rules-globs.sh` | rule frontmatter/glob 与 7 栈真实文件命中（防"规则永不加载 / 误命中"） |
+| `verify-portability.sh` | GNU-only 构造 · 硬编码 `python3` · 技能平台作用域 ⇔ 文档 |
+| `verify-config.sh` | `config/schema.json`：未知键/类型错误即 FAIL（不再静默回退） |
+| `verify-roo-compat.sh` | frontmatter 仅用开放协议字段（`.roo/` 可复制） |
+| `verify-secrets.sh` | 已跟踪文件中的密钥/凭据/被跟踪 `.env` |
+| `verify-doc-super-cursor.sh` | 门面计数 · doc 链接 · `description ≤85` · run/plan SKILL 体积 · 双语入口 |
+| `verify-growth-layout.sh` | `archive/{domain}` 与 `scripts/` 分级 |
+| `consumer-smoke.sh` | 装进目标项目后的完整闭环 |
+
+清单与语义（含 `task-verify` fail-closed）→ [`.cursor/rules/feedback/verify.mdc`](.cursor/rules/feedback/verify.mdc)。
 
 ## 参与
 

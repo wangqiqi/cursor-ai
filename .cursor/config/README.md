@@ -2,6 +2,21 @@
 
 Project behavior here — not in rules/skills. Learned knowledge → `.cursorGrowth/` via `/learn`.
 
+## 本目录文件
+
+| 文件 | 作用 | 由谁校验 |
+|------|------|----------|
+| `workflow.json` | plan/run 闸门 · 任务 ID · 自治 · SDD · task-verify ·人格默认 | `bin/verify-config.sh`（schema） |
+| `release.json` | CHANGELOG 文件 · tag 格式/前缀 · bump 策略 · 版本来源 | `bin/verify-config.sh` |
+| `roles.json` | 12 人格预设（**仅语气**，全员 `skills: full`） | `bin/verify-config.sh` |
+| `profiles/{full,lite,rules-only}.json` | 安装 profile 的覆盖层（安装时深合并进 `workflow.json`） | `bin/verify-config.sh` |
+| **`schema.json`** | 允许的键与类型声明 —— **改 config 先改这里** | `bin/verify-config.sh` |
+| **`denylist.txt`** | 母版独立禁用词表（作者标识 · 机器路径 · 公司代号 · 凭据） | `verify-super-cursor.sh` |
+
+**为什么有 schema**：写错一个键（如把 `release.mode` 写成 `workflow.release.mode`）不会报错，只会**静默回退默认值**，行为与预期不符却毫无信号。`verify-config.sh` 让未知键/类型错误直接 FAIL。
+
+**为什么有 denylist**：「无关用户 · 无关项目 · 无关系统」必须可被门禁守护。新增团队/公司标识 → 追加一行（勿写进 rules/skills 正文）；`verify-super-cursor.sh` 逐行 ERE 扫描 `.cursor/` 全树，删掉该文件即 FAIL。
+
 ## workflow.json
 
 | Key | Default | Purpose |

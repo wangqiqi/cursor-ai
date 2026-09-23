@@ -78,8 +78,14 @@ Hooks 由 Cursor 调用 `.cursor/hooks/*.sh`。在 Windows 上请：
 ```bash
 bash .cursor/bin/platform-check.sh
 bash .cursor/verify-super-cursor.sh    # 混合仓自动 hybrid，纯母版空仓为 mother
-bash .cursor/bin/cursor-coherence.sh # 安装后项目优先
-bash .cursor/bin/template-verify.sh  # 纯母版全量（混合仓亦可用）
+bash .cursor/bin/cursor-coherence.sh   # 安装后项目优先
+bash .cursor/bin/template-verify.sh    # 纯母版全量（混合仓亦可用）
+bash .cursor/bin/consumer-smoke.sh     # 目标项目端到端（仅母版仓）
+SC_FORCE_PYTHON=1 bash .cursor/bin/template-verify.sh   # 强制 python JSON 回退（无 jq 路径）
 ```
+
+`verify-portability.sh` 静态守护上面的跨平台承诺（GNU-only 构造 · 非 POSIX 正则 · 硬编码 `python3` · shebang）。
+
+**CI 矩阵**（`.github/workflows/verify.yml`）：ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，**非阻塞观察中**）。无 jq 的分支用 `SC_FORCE_PYTHON=1` 覆盖——因为 macOS runner 自带 jq，"runner 上恰好没有 jq"不可靠。
 
 混合仓（业务树 + `.cursor/`）：`verify-super-cursor` 对纯母版 layout 项 **SKIP**，不 FAIL。强制空仓标准：`SC_VERIFY_LAYOUT=mother`。

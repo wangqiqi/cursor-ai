@@ -13,18 +13,24 @@ skills/  master plan run learn scaffold git release …（SOP 正文；日常只
 commands/ 三层 slash（薄入口 → 加载 skill；见下表）
 agents/  ship review spike（子进程委派；日常不必记）
 hooks/   growth-init run-start run-stop
-config/  workflow.json release.json roles.json
-bin/     runner.sh scaffold.sh（含 apply-bundle）install-smoke.sh cursor-coherence.sh platform-check.sh template-verify.sh
-lib/     platform.sh（跨平台工具）
+config/  workflow.json release.json roles.json + schema.json（config 校验）· denylist.txt（母版独立扫描）
+bin/     runner.sh scaffold.sh（含 apply-bundle）· 验证器：template-verify · verify-super-cursor · cursor-coherence
+         · verify-{doc-super-cursor,growth-layout,rules-globs,portability,config,roo-compat,secrets}
+         · smoke：install-smoke · consumer-smoke（目标项目端到端）· runner-smoke · scaffold-integrity · platform-check
+         · 其它：bootstrap-growth · resolve-role · validate-commit-msg
+lib/     platform.sh（跨平台工具 · JSON python 回退 · SC_FORCE_PYTHON）
 templates/scaffold/   manifest + stack templates
 ```
 
 ```bash
-bash .cursor/bin/template-verify.sh          # 母版全量（推荐）
-bash .cursor/verify-super-cursor.sh          # layout 存在性（混合仓自动 hybrid 模式）
+bash .cursor/bin/template-verify.sh          # 母版全量（推荐 · CI 入口）
+bash .cursor/verify-super-cursor.sh          # layout + 8 道门禁（混合仓自动 hybrid；目标项目亦可跑）
+bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 → hook → 全绿
 bash .cursor/bin/cursor-coherence.sh         # 交叉自洽
 bash .cursor/verify-system.sh                # 同上 layout（alias）
 ```
+
+门禁清单与语义 → [`rules/feedback/verify.mdc`](rules/feedback/verify.mdc) §母版门禁清单。
 
 混合仓（根目录有 `scripts/` · `backend/` · `frontend/` 等业务树）：`verify-super-cursor` 自动 **SKIP** 纯母版项（`install-super-cursor.sh` · 禁止 `scripts/` · `.github/workflows/verify.yml`），改验 `scripts/verify.sh`。强制空仓：`SC_VERIFY_LAYOUT=mother`。
 
@@ -65,7 +71,7 @@ slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Ag
 
 ## 使用场景
 
-完整路由与关键词索引 → **`skills/master/routes.md`**（master AskQuestion 的 canonical 源；无该工具时正文编号选项）。  
+**路由分两层**：主路由（7 项）+ `more` 子路由内联在 **`skills/master/SKILL.md`**（默认 payload，避免为了路由再读一个长文件）；关键词索引 · 上下文捷径 · 人格 · DAILY/LIBRARY → **`skills/master/routes.md`**（按需扩展索引）。  
 培训速查 → [docs/training/skills.md](docs/training/skills.md) · 端到端示例 → [walkthrough.md](docs/walkthrough.md)。
 
 ### 推荐路径

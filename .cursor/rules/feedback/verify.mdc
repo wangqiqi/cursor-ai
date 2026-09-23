@@ -76,3 +76,41 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 混合仓日常：**`cursor-coherence.sh`** + **`verify-super-cursor.sh`**；纯母版空仓：**`template-verify.sh`** 全量。详见 `.cursor/README.md` §自测。
 
 **L0–L3 真源在本文件**；**test** skill 只引用本表，勿另写一份层定义。测试文件细则 → `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。
+
+## task-verify 语义（fail-closed）
+
+`./.cursor/bin/runner.sh task-verify` 按 `acceptance_kind()` 判定，**描述性验收不再静默通过**：
+
+| 验收列形态 | 行为 |
+|------------|------|
+| 可执行命令（`./…` · `npm …` · `pytest …` · `bash …`） | 执行，按其退出码 |
+| `manual: <步骤与证据>` | **唯一豁免** → 0；证据须落 plan/CHANGELOG |
+| 描述性文字 + `fallback_test_script` 存在（heuristics 开） | 跑兜底脚本 |
+| 描述性文字（其余） | **FAIL + 退出 1**，并给出改写建议 |
+
+`plan-check` 会在**开工前**对 prose 验收列 WARN 并计入 issues。写法 → `.cursor/templates/plan.md`。
+
+## 母版门禁清单（8 道 · 全部接线）
+
+`verify-super-cursor.sh` 聚合以下子验证器；`template-verify.sh` 是母版完整入口：
+
+| 门禁 | 守护什么 | 触发 |
+|------|----------|------|
+| `verify-rules-globs.sh` | rule frontmatter/键 · 禁 brace glob · plan 闸门 glob 与 7 栈真实文件命中 | 通用 |
+| `verify-portability.sh` | GNU-only 构造 · 非 POSIX `\s` · 硬编码 `python3` · shebang · **技能平台作用域 ⇔ 文档** | 通用 |
+| `verify-config.sh` | `config/schema.json` 校验 6 个 config：未知键/类型错误 **即 FAIL**（不再静默回退） | 通用 |
+| `verify-roo-compat.sh` | frontmatter 键 ⊆ 开放协议白名单（编辑器私有键即 FAIL）· rules 用 `.mdc` | 通用 |
+| `verify-secrets.sh` | 已跟踪文件里的密钥/凭据/被跟踪 `.env` | 通用 |
+| `verify-doc-super-cursor.sh` | 门面计数 · doc 相对链接 · skill `description ≤85` · dmi 分桶 · run/plan SKILL 体积 · 双语入口 | 母版 |
+| `verify-growth-layout.sh` | `archive/{domain}` 与 `scripts/` 分级引用 | 母版 |
+| `consumer-smoke.sh` | **目标项目端到端**：install → 闸门 BLOCK → hook → 批准放行 → 目标仓库全绿 | 母版 |
+
+**接线自检**：`bin/verify-*.sh` 必须被 `verify-super-cursor.sh` 或 `template-verify.sh` 调用，否则 FAIL —— 防止"脚本存在但从未生效"（本项目曾有两个验证器长期未接线）。
+
+**新增一门禁的固定动作**：脚本 + 至少一个负向测试 + 接入聚合 + 更新本节清单 + 需要时同步 `.cursor/README.md` / 根 `README.md` §验证。
+
+## 跨平台与 CI
+
+- 无 `jq` 时走 python 回退；`SC_FORCE_PYTHON=1` 可**强制**该路径（CI 用它覆盖非 jq 分支）
+- CI 矩阵：ubuntu（+jq，含文档构建）· macos（BSD 工具链）· windows/Git Bash（非阻塞观察中）
+- 平台作用域与技能限制 → `docs/platforms.md` §技能平台作用域
