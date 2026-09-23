@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- **docs:build** — `training/skills.md` 的 `routes.md` 相对链接由 `../` 恢复为 `../../`；`ef5521b` 误改导致 VitePress dead-link 检查失败，CI 与 GitHub Pages 长期为红
+
 ## [4.29.7] - 2026-09-20
 
 ### Added
