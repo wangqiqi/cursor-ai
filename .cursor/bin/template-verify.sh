@@ -41,6 +41,10 @@ else
 fi
 
 echo ""
+echo "=== Consumer smoke（目标项目端到端）==="
+bash "$CUR/bin/consumer-smoke.sh"
+
+echo ""
 echo "=== Platform check ==="
 bash "$CUR/bin/platform-check.sh"
 

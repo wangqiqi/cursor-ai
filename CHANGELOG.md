@@ -12,6 +12,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **`bin/consumer-smoke.sh`（C2）** — 目标项目**端到端**回归，补齐 CI 只验母版自身的盲区：临时 git 项目 → `install --profile full` → 未批准时 `gate-check`/`plan-check` 必须 BLOCK → 3 个 hook 均 exit 0 且 stderr 干净 → 批准后闸门放行且 `run-start` 注入自治上下文 → 5 个 universal 验证器在消费方仓库全绿 → 母版门面项正确 SKIP。已纳入 `template-verify.sh`
 - **`config/schema.json` + `bin/verify-config.sh`（C1）** — 声明 6 个 config 文件的允许键与类型；未知键（如把 `release.mode` 误写成 `workflow.release.mode`）与类型错误现在**直接 FAIL**，不再静默回退默认值。已纳入 `verify-super-cursor.sh` 与接线自检
 - **摩擦可观测（B5）** — `runner.sh friction-log --task --rounds --rework --verify --note` 追加一行到 `.cursorGrowth/logs/friction.jsonl`（自实现 JSON 转义，不依赖 jq），`friction-report` 聚合 `tasks · verify_pass/fail · avg_rounds · avg_rework`；**run** skill 每任务收尾记一行、**learn** skill 把趋势写进 `dev-conventions.md`。这是"少拉扯"是否真的改善的**唯一**可回归证据
 - **首次闭环（B4）** — 安装输出把「首次必做 → `/learn`」提到第 0 步并说明"不做则闸门/验收会空转"；**learn** skill 新增「空模板最小采集」：`learn/` 全为待填时只问 3 个问题（开发/测试命令 · 代码分层与入口 · 发版节奏），其余按需补，**不通读全仓**
