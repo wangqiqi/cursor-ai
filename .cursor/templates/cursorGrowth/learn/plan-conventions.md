@@ -7,8 +7,9 @@
 
 | 项 | 本项目 |
 |----|--------|
-| 目录 | `.cursorGrowth/archive/` |
+| 目录 | `.cursorGrowth/archive/{domain}/` — **至少一级域目录**（推荐域表与 scripts 树 → **plan** `reference/growth-layout.md`） |
 | 格式 | `YYYYMMDD_HHMMSS_<topic>_<module>.md` |
+| 域表 | 团队在此登记本项目增量域；未列出的域默认取 Sprint Theme 或 TASK 主域 |
 | 说明 | `<topic>` / `<module>` 用英文或拼音缩写，避免空格 |
 
 ## Plan 可选段落（若有）

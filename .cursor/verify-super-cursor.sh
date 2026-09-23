@@ -346,6 +346,27 @@ else
   echo "OK  no user/machine paths in SOP"
 fi
 
+echo "=== doc + growth-layout 子验证 ==="
+bash "$CUR/bin/verify-doc-super-cursor.sh" || FAIL=$((FAIL+1))
+bash "$CUR/bin/verify-growth-layout.sh" || FAIL=$((FAIL+1))
+
+echo "=== verify wiring 自检 ==="
+# 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用
+orphans=""
+for _v in "$CUR"/bin/verify-*.sh; do
+  [[ -e "$_v" ]] || continue
+  _n="$(basename "$_v")"
+  if ! grep -qF "bin/$_n" "$CUR/verify-super-cursor.sh" "$CUR/bin/template-verify.sh" 2>/dev/null; then
+    orphans="${orphans} ${_n}"
+  fi
+done
+if [[ -n "$orphans" ]]; then
+  echo "FAIL orphaned verifier(s) not aggregated by verify-super-cursor.sh or template-verify.sh:$orphans"
+  FAIL=$((FAIL+1))
+else
+  echo "OK  all bin/verify-*.sh are aggregated"
+fi
+
 echo "---"
 [[ "$FAIL" -eq 0 ]] && echo "All checks passed." && exit 0
 echo "$FAIL check(s) failed." && exit 1

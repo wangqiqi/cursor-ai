@@ -102,6 +102,8 @@ disable-model-invocation: true
 
 manifest 字段 `test` / `verify` 见 `templates/scaffold/manifest.json`。
 
+**scripts 目录分级**：新仓脚本树落点纪律（`verify/tier/` · `verify/domain/` · `lib/` · `ops/` · `dev/`）见 **plan** `reference/growth-layout.md` §Scripts 布局；`growth-layout` 同源约定 Growth `archive/{domain}/`。
+
 ## 流程（已有项目）
 
 1. `detect` + `audit` — 不直接 apply

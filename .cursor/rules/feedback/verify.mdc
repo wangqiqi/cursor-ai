@@ -59,6 +59,7 @@ alwaysApply: false
 - **默认**（无参）：跑到 **L1**（或项目文档约定的最快绿层）
 - **`--full`**：跑到 **L3**
 - **聚合脚本**（示例 `scripts/verify_all.sh`）：顺序调用各域脚本；新域交付时 **注册一行**，勿复制整套逻辑进每个域脚本
+- **目录落点**：域脚本 `verify/domain/` · tier orchestrator `verify/tier/` · 公因子 `lib/_*.sh` · 工具 `ops/`/`dev/` → **plan** `reference/growth-layout.md`（Growth `archive/{domain}/` 同源）
 
 plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）；Sprint 全量走 `plan VERIFY` 或 `./scripts/verify.sh`。
 
