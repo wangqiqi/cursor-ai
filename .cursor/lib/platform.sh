@@ -239,11 +239,18 @@ path = sys.argv[1]
 cmd = sys.argv[2]
 data = json.load(open(path, encoding="utf-8"))
 scaffolds = data.get("scaffolds", [])
+bundles = data.get("bundles", [])
 
 def by_id(sid):
     for s in scaffolds:
         if s.get("id") == sid:
             return s
+    return None
+
+def bundle_by_id(sid):
+    for b in bundles:
+        if b.get("id") == sid:
+            return b
     return None
 
 if cmd == "list":
@@ -275,6 +282,32 @@ elif cmd == "post_apply":
 elif cmd == "ids":
     for s in scaffolds:
         print(s["id"])
+elif cmd == "bundles_list":
+    for b in bundles:
+        print(f"{b['id']}\t{b.get('category', '')}\t{b.get('name', '')}")
+elif cmd == "bundles_count":
+    print(len(bundles))
+elif cmd == "bundle_exists":
+    sys.exit(0 if bundle_by_id(sys.argv[3]) else 1)
+elif cmd == "bundle_web_stack":
+    b = bundle_by_id(sys.argv[3])
+    sys.exit(0 if b and sys.argv[4] in (b.get("stacks_web") or []) else 1)
+elif cmd == "bundle_field":
+    b = bundle_by_id(sys.argv[3])
+    if not b:
+        sys.exit(1)
+    print(b.get(sys.argv[4], ""))
+elif cmd == "bundle_layer":
+    b = bundle_by_id(sys.argv[3])
+    if not b:
+        sys.exit(1)
+    print((b.get("layers") or {}).get(sys.argv[4], ""))
+elif cmd == "bundle_post_apply":
+    b = bundle_by_id(sys.argv[3])
+    if not b:
+        sys.exit(1)
+    for p in b.get("post_apply") or []:
+        print(p)
 PY
 }
 
@@ -361,5 +394,73 @@ sc_manifest_ids() {
   else
     sc_require_json_tool
     return 1
+  fi
+}
+
+# --- bundles（scaffold apply-bundle）---
+# 与 scaffolds 同一策略：jq 快路径（未被 SC_FORCE_PYTHON 强制时）· 否则 python 回退。
+# 历史上 bundle 解析直连 jq，导致无 jq 环境 apply-bundle 直接失败。
+
+sc_manifest_bundles() {
+  local manifest="$1"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r '.bundles[] | "\(.id)\t\(.category)\t\(.name)"' "$manifest"
+  else
+    _manifest_py "$manifest" bundles_list
+  fi
+}
+
+sc_manifest_bundles_count() {
+  local manifest="$1"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r '.bundles | length' "$manifest"
+  else
+    _manifest_py "$manifest" bundles_count
+  fi
+}
+
+sc_manifest_bundle_exists() {
+  local manifest="$1" id="$2"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -e --arg id "$id" '.bundles[] | select(.id == $id)' "$manifest" >/dev/null 2>&1
+  else
+    _manifest_py "$manifest" bundle_exists "$id"
+  fi
+}
+
+sc_manifest_bundle_web_stack() {
+  local manifest="$1" id="$2" stack="$3"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -e --arg id "$id" --arg s "$stack" \
+      '.bundles[] | select(.id == $id) | .stacks_web[]? | select(. == $s)' "$manifest" >/dev/null 2>&1
+  else
+    _manifest_py "$manifest" bundle_web_stack "$id" "$stack"
+  fi
+}
+
+sc_manifest_bundle_field() {
+  local manifest="$1" id="$2" key="$3"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r --arg id "$id" --arg k "$key" '.bundles[] | select(.id == $id) | .[$k]' "$manifest"
+  else
+    _manifest_py "$manifest" bundle_field "$id" "$key"
+  fi
+}
+
+sc_manifest_bundle_layer() {
+  local manifest="$1" id="$2" key="$3"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r --arg id "$id" --arg k "$key" '.bundles[] | select(.id == $id) | .layers[$k]' "$manifest"
+  else
+    _manifest_py "$manifest" bundle_layer "$id" "$key"
+  fi
+}
+
+sc_manifest_bundle_post_apply() {
+  local manifest="$1" id="$2"
+  if ! sc_force_python && command -v jq >/dev/null 2>&1; then
+    jq -r --arg id "$id" '.bundles[] | select(.id == $id) | .post_apply[]' "$manifest"
+  else
+    _manifest_py "$manifest" bundle_post_apply "$id"
   fi
 }

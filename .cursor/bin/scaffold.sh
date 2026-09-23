@@ -61,10 +61,10 @@ cmd_list() {
   require_json_tool
   echo "=== Available scaffolds ==="
   sc_manifest_list "$MANIFEST" | sc_print_columns
-  if jq -e '.bundles | length > 0' "$MANIFEST" >/dev/null 2>&1; then
+  if [[ "$(sc_manifest_bundles_count "$MANIFEST")" -gt 0 ]] 2>/dev/null; then
     echo ""
     echo "=== Optional bundles (apply-bundle) ==="
-    jq -r '.bundles[] | "\(.id)\t\(.category)\t\(.name)"' "$MANIFEST" | sc_print_columns
+    sc_manifest_bundles "$MANIFEST" | sc_print_columns
   fi
 }
 
@@ -239,22 +239,20 @@ audit_check() {
 
 bundle_exists() {
   local id="$1"
-  jq -e --arg id "$id" '.bundles[] | select(.id == $id)' "$MANIFEST" >/dev/null 2>&1
+  sc_manifest_bundle_exists "$MANIFEST" "$id"
 }
 
 bundle_web_stack() {
   local bundle_id="$1" stack="$2"
-  jq -e --arg id "$bundle_id" --arg s "$stack" \
-    '.bundles[] | select(.id == $id) | .stacks_web[]? | select(. == $s)' "$MANIFEST" >/dev/null 2>&1
+  sc_manifest_bundle_web_stack "$MANIFEST" "$bundle_id" "$stack"
 }
 
 apply_bundle_layer() {
   local bundle_id="$1" layer_key="$2" force="$3" dry_run="$4"
   local bundle_path layer_sub src_dir rel src dest
 
-  bundle_path="$(jq -r --arg id "$bundle_id" '.bundles[] | select(.id == $id) | .path' "$MANIFEST")"
-  layer_sub="$(jq -r --arg id "$bundle_id" --arg k "$layer_key" \
-    '.bundles[] | select(.id == $id) | .layers[$k]' "$MANIFEST")"
+  bundle_path="$(sc_manifest_bundle_field "$MANIFEST" "$bundle_id" path)"
+  layer_sub="$(sc_manifest_bundle_layer "$MANIFEST" "$bundle_id" "$layer_key")"
   [[ -n "$bundle_path" && "$bundle_path" != "null" ]] || {
     echo "FAIL: bundle path missing for $bundle_id" >&2
     exit 1
@@ -352,7 +350,7 @@ cmd_apply_bundle() {
   if [[ "$dry_run" != "true" ]]; then
     echo ""
     echo "=== post_apply (run manually) ==="
-    jq -r --arg id "$bundle_id" '.bundles[] | select(.id == $id) | .post_apply[]' "$MANIFEST" | sed 's/^/  /'
+    sc_manifest_bundle_post_apply "$MANIFEST" "$bundle_id" | sed 's/^/  /'
   fi
 }
 

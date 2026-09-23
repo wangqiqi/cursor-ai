@@ -48,7 +48,7 @@ while IFS= read -r id; do
 done < <(sc_manifest_ids "$MANIFEST")
 
 bundle_root="$TEMPLATE_ROOT/_bundles/user-manual"
-if jq -e '.bundles[] | select(.id == "user-manual")' "$MANIFEST" >/dev/null 2>&1; then
+if sc_manifest_bundle_exists "$MANIFEST" "user-manual"; then
   echo ""
   echo "=== bundle integrity ==="
   for f in \
@@ -64,7 +64,7 @@ if jq -e '.bundles[] | select(.id == "user-manual")' "$MANIFEST" >/dev/null 2>&1
 fi
 
 bundle_root="$TEMPLATE_ROOT/_bundles/test-report"
-if jq -e '.bundles[] | select(.id == "test-report")' "$MANIFEST" >/dev/null 2>&1; then
+if sc_manifest_bundle_exists "$MANIFEST" "test-report"; then
   echo ""
   echo "=== bundle integrity (test-report) ==="
   for f in \
