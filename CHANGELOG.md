@@ -4,6 +4,15 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **`config/denylist.txt`** — 「母版独立」单一禁用词表（作者/维护者标识 · 机器绝对路径 · 公司代号占位 · 凭据痕迹），由 `verify-super-cursor.sh` 逐行 ERE 扫描 `.cursor/` 全树；名单文件缺失即 FAIL，防止守卫被静默关闭（SPRINT-AGNOSTIC · A1）
+
+### Fixed
+
+- **standalone 扫描过度豁免** — `maintain/scripts/dev-maintain.sh` 与 `skills/disk/*` 此前被排除在用户/机器路径扫描之外，实测两者**并不命中**该规则；豁免已删除，扫描面恢复完整（A1）
+- **A1 门禁落地时发现并修正一处过宽规则** — 凭据规则最初写成 `\.pem$`，会误命中 `templates/scaffold/_shared.cursorignore` 的合法 ignore 模式；改为只匹配密钥材料本体（`-----BEGIN … PRIVATE KEY-----` / AKIA key id）
+
 ## [4.29.7] - 2026-09-23
 
 ### Added

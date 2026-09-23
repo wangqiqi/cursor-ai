@@ -334,31 +334,32 @@ else
   echo "OK  skills no upstream github URLs"
 fi
 
-echo "--- standalone: no user/machine paths ---"
-path_violators=""
-while IFS= read -r f; do
-  case "$f" in
-    *verify-super-cursor.sh|*maintain/scripts/dev-maintain.sh|*skills/disk/*) continue ;;
-  esac
-  path_violators="${path_violators}${f}"$'\n'
-done < <(grep -rlE '/home/[a-zA-Z0-9._-]+/|/Users/[a-zA-Z0-9._-]+/|/data/workspace' "$CUR" 2>/dev/null || true)
-user_violators=""
-while IFS= read -r f; do
-  case "$f" in
-    *verify-super-cursor.sh) continue ;;
-  esac
-  user_violators="${user_violators}${f}"$'\n'
-done < <(grep -rliE 'saida|wangqiqi|guanfu|sjudge|rdm-week' "$CUR" 2>/dev/null || true)
-if [[ -n "$(echo "$path_violators" | sed '/^$/d')" ]]; then
-  echo "FAIL .cursor contains machine-specific absolute paths:"
-  echo "$path_violators" | sed '/^$/d'
-  FAIL=$((FAIL+1))
-elif [[ -n "$(echo "$user_violators" | sed '/^$/d')" ]]; then
-  echo "FAIL .cursor contains user-specific identifiers:"
-  echo "$user_violators" | sed '/^$/d'
+echo "--- standalone: denylist（用户 / 项目 / 机器 / 凭据）---"
+DENYLIST="$CUR/config/denylist.txt"
+if [[ ! -f "$DENYLIST" ]]; then
+  echo "FAIL missing $DENYLIST — standalone guard would be silently disabled"
   FAIL=$((FAIL+1))
 else
-  echo "OK  no user/machine paths in SOP"
+  deny_rules=0
+  deny_hits=""
+  while IFS= read -r pat || [[ -n "$pat" ]]; do
+    [[ -z "$pat" || "$pat" == \#* ]] && continue
+    deny_rules=$((deny_rules + 1))
+    while IFS= read -r f; do
+      [[ -z "$f" ]] && continue
+      case "$f" in
+        */verify-super-cursor.sh|*/config/denylist.txt) continue ;;
+      esac
+      deny_hits="${deny_hits}${f#*/}  <=  ${pat}"$'\n'
+    done < <(grep -rliE -- "$pat" "$CUR" 2>/dev/null || true)
+  done < "$DENYLIST"
+  if [[ -n "$(printf '%s' "$deny_hits" | sed '/^$/d')" ]]; then
+    echo "FAIL .cursor violates standalone denylist ($DENYLIST):"
+    printf '%s' "$deny_hits" | sed '/^$/d' | sort -u
+    FAIL=$((FAIL+1))
+  else
+    echo "OK  standalone denylist clean (${deny_rules} rules)"
+  fi
 fi
 
 echo "=== doc + growth-layout + rules-globs 子验证（母版专属）==="
