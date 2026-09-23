@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Bidirectional check: verify-layers registry ↔ scripts/verify/slices/*.sh
 set -euo pipefail
 source "$(dirname "$0")/../../lib/load.sh"

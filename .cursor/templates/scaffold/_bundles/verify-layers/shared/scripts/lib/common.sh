@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shared factors for layered verify (scaffold bundle verify-layers).
 # Layer L0–L3: see scripts/README-verify-layers.md
 

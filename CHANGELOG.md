@@ -6,10 +6,13 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **`bin/verify-portability.sh`（A3）** — 发布脚本可移植性静态门禁：GNU-only 构造（`sed -i` 无后缀 · `find -printf` · `stat -c` · `sort -h` · `du --max-depth` · `date -d/-Iseconds` · `grep -P` · `xargs -r` · `tac`）· 非 POSIX `\s` 正则 · `readlink -f` 缺回退 · 硬编码 `python3` · shebang 非 `env bash`；扫描 57 个脚本，已纳入 `verify-super-cursor.sh` 与接线自检（含 `portability-allow` 单行豁免机制）
 - **`config/denylist.txt`** — 「母版独立」单一禁用词表（作者/维护者标识 · 机器绝对路径 · 公司代号占位 · 凭据痕迹），由 `verify-super-cursor.sh` 逐行 ERE 扫描 `.cursor/` 全树；名单文件缺失即 FAIL，防止守卫被静默关闭（SPRINT-AGNOSTIC · A1）
 
 ### Fixed
 
+- **系统无关（A3）** — `maintain` 技能显式声明 Linux 作用域：新增 `require_linux`（非 Linux 退出 3 并给出替代路径）与 `--help`；`du --max-depth`/`sort -h` 改为 `du -m` + `awk` + `sort -rn`（POSIX）并保留 GNU 能力探测；`load-config`/`disk` 等 6 处 `python3` 调用改经 `PYTHON_BIN` 解析（Git Bash 可能只有 `python`）
+- **shebang 归一** — 12 个脚本由 `#!/bin/bash` 改为 `#!/usr/bin/env bash`（含 `verify-system.sh` 与 5 个 scaffold bundle 脚本），修复 Git Bash / 非 FHS 系统下的可移植性
 - **默认人格去作者化（A2）** — `role.default` 由 `dashu`（油腻大叔）改为 `professional`（中性「专业搭档」）；`dashu` 人设的 `given_name` / `nicknames` 由作者真人称呼（`老周`）改为虚构 `老哥` / `大叔`，两词已入 `denylist.txt`。12 人格全部保留，仅换默认；**已安装项目不受影响**（其 `config/workflow.json` 是自己的副本）
 - **standalone 扫描过度豁免** — `maintain/scripts/dev-maintain.sh` 与 `skills/disk/*` 此前被排除在用户/机器路径扫描之外，实测两者**并不命中**该规则；豁免已删除，扫描面恢复完整（A1）
 - **A1 门禁落地时发现并修正一处过宽规则** — 凭据规则最初写成 `\.pem$`，会误命中 `templates/scaffold/_shared.cursorignore` 的合法 ignore 模式；改为只匹配密钥材料本体（`-----BEGIN … PRIVATE KEY-----` / AKIA key id）

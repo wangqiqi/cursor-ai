@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # =============================================================================
 # Super Cursor · maintain skill — 开发环境诊断与安全清理
@@ -6,9 +6,46 @@
 #   .cursor/skills/maintain/scripts/dev-maintain.sh --diagnose
 #   .cursor/skills/maintain/scripts/dev-maintain.sh --clean [--dry-run] [--interactive]
 #   .cursor/skills/maintain/scripts/dev-maintain.sh --snapshot | --diff
+#
+# 平台作用域：**Linux（Ubuntu / Debian 系）**。依赖 apt / dpkg / journalctl / systemd。
+# 非 Linux 会显式拒绝（exit 3），不做"半可用"的静默降级 —— 见 README §平台支持。
 # =============================================================================
 
 set -euo pipefail
+
+require_linux() {
+    local os
+    os="$(uname -s 2>/dev/null || echo unknown)"
+    [[ "$os" == "Linux" ]] && return 0
+    echo "SKIP: maintain 技能仅支持 Linux（Ubuntu/Debian）；当前系统为 $os。" >&2
+    echo "      macOS / Windows 请用 disk 快照 + 手工清理；平台矩阵见 .cursor/docs/platforms.md" >&2
+    exit 3
+}
+
+case " $* " in
+    *" --help "*|*" -h "*)
+        cat <<'EOF'
+用法: dev-maintain.sh <模式> [选项]
+
+  --diagnose                     只读诊断（建议先跑，不改任何东西）
+  --clean [--dry-run] [--interactive]
+                                 安全清理（默认需确认；--dry-run 只打印）
+  --snapshot | --diff            disk 快照采集 / 与上次对比
+
+平台作用域: Linux（Ubuntu / Debian 系）；非 Linux 直接退出 3。
+细则: .cursor/skills/maintain/SKILL.md
+EOF
+        exit 0
+        ;;
+    *) require_linux ;;
+esac
+
+# Git Bash / Windows 可能只有 `python`；勿硬编码 python3
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [[ -z "$PYTHON_BIN" ]]; then
+    echo "FAIL: 需要 python3 或 python（load-config / disk 采集）" >&2
+    exit 1
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -27,7 +64,7 @@ BUILD_ARTIFACT_TMP_GLOBS=()
 TMP_DEV_GLOBS=()
 
 load_maintain_config() {
-    eval "$(python3 "$SCRIPT_DIR/load-config.py" --default "$CONFIG_DEFAULT" --override "$CONFIG_OVERRIDE")"
+    eval "$("$PYTHON_BIN" "$SCRIPT_DIR/load-config.py" --default "$CONFIG_DEFAULT" --override "$CONFIG_OVERRIDE")"
 }
 load_maintain_config
 
@@ -219,14 +256,14 @@ prompt_installer_dirs() {
     while IFS='|' read -r ipath ilabel iflag; do
         [[ -z "$ipath" ]] && continue
         ask_installer_cleanup "$ipath" "$ilabel" "$iflag"
-    done < <(python3 -c "import json,sys; from pathlib import Path
+    done < <("$PYTHON_BIN" -c "import json,sys; from pathlib import Path
 for i in json.loads(sys.argv[1]):
  p=Path(i['path']).expanduser()
  if p.is_dir(): print(f'{p}|{i[\"label\"]}|{i[\"flag\"]}')" "$INSTALLER_DIRS_JSON")
 }
 
 purge_enabled_installers() {
-    python3 -c "import json,sys,os; from pathlib import Path
+    "$PYTHON_BIN" -c "import json,sys,os; from pathlib import Path
 items=json.loads(sys.argv[1])
 flags={k:v for k,v in (x.split('=') for x in sys.argv[2].split(',') if '=' in x)}
 for i in items:
@@ -441,7 +478,13 @@ diagnose_system() {
     echo -e "\n${GREEN}📌 7. 大目录预警（/home 下 >1GB）${NC}"
 
     if command -v sudo &> /dev/null && [ -d /home ]; then
-        BIG_DIRS=$(sudo du -h --max-depth=1 /home/* 2>/dev/null | awk '$1 ~ /^[0-9.]+[G]/ {print}' | sort -hr | head -n 8)
+        # 可移植：`du --max-depth` 为 GNU-only（BSD/macOS 是 -d），`sort -h` 亦为 GNU-only。
+        # 统一用 `du -m` 取 MB 数值 + awk 换算 + `sort -rn`（POSIX）排序。
+        du_depth="--max-depth=1"
+        du --max-depth=1 /dev/null >/dev/null 2>&1 || du_depth="-d 1"  # portability-allow: GNU 能力探测
+        BIG_DIRS=$(sudo du -m "$du_depth" /home/* 2>/dev/null \
+            | awk '$1 >= 1024 {printf "%.1fG %s\n", $1/1024, $2}' \
+            | sort -rn | head -n 8)
         if [ -n "$BIG_DIRS" ]; then
             while IFS= read -r line; do
                 echo "  📁 $line"
@@ -768,7 +811,7 @@ clean_system() {
         if [[ "$CLEAN_CONDA_ENVS" == "true" ]] && command -v conda &> /dev/null; then
             log "检查可清理的 Conda 环境..."
             CURRENT_ENV=$(basename "$CONDA_DEFAULT_ENV" 2>/dev/null || echo "base")
-            ALL_ENVS=$(conda env list --json 2>/dev/null | python3 -c "import sys, json; print('\n'.join([e.split('/')[-1] for e in json.load(sys.stdin)['envs']]))" 2>/dev/null || echo "")
+            ALL_ENVS=$(conda env list --json 2>/dev/null | "$PYTHON_BIN" -c "import sys, json; print('\n'.join([e.split('/')[-1] for e in json.load(sys.stdin)['envs']]))" 2>/dev/null || echo "")
             TO_REMOVE=()
             for env in $ALL_ENVS; do
                 if [[ "$env" != "base" ]] && [[ "$env" != "$CURRENT_ENV" ]]; then
@@ -988,7 +1031,7 @@ run_disk_snapshot() {
         exit 1
     fi
     mkdir -p "$DISK_SNAPSHOT_DIR"
-    python3 "$DISK_COLLECT" snapshot --project-dir "$PROJECT_ROOT" --snapshot-dir "$DISK_SNAPSHOT_DIR"
+    "$PYTHON_BIN" "$DISK_COLLECT" snapshot --project-dir "$PROJECT_ROOT" --snapshot-dir "$DISK_SNAPSHOT_DIR"
 }
 
 run_disk_diff() {
@@ -996,7 +1039,7 @@ run_disk_diff() {
         bad "未找到 collect-disk.py: $DISK_COLLECT"
         exit 1
     fi
-    python3 "$DISK_COLLECT" diff --project-dir "$PROJECT_ROOT" --snapshot-dir "$DISK_SNAPSHOT_DIR" --format diff
+    "$PYTHON_BIN" "$DISK_COLLECT" diff --project-dir "$PROJECT_ROOT" --snapshot-dir "$DISK_SNAPSHOT_DIR" --format diff
 }
 
 # =============================================================================

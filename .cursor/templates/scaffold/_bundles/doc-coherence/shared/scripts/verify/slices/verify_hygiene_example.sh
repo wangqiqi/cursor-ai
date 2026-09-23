@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Example hygiene slice — extend with project-specific forbidden paths/strings.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"

@@ -3,6 +3,9 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Git Bash / Windows 可能只有 `python`；勿硬编码 python3
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+[[ -n "$PYTHON_BIN" ]] || { echo "FAIL: 需要 python3 或 python" >&2; exit 1; }
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -23,11 +26,11 @@ cat > "$TMP/emdash-repo/CHANGELOG.md" <<'EOF'
 EOF
 
 count="$(
-  python3 "$SCRIPT_DIR/collect-week.py" \
+  "$PYTHON_BIN" "$SCRIPT_DIR/collect-week.py" \
     --workspace "$TMP" \
     --today 2026-06-17 \
     --format json \
-    | python3 -c "import json,sys; print(len(json.load(sys.stdin)['entries']))"
+    | "$PYTHON_BIN" -c "import json,sys; print(len(json.load(sys.stdin)['entries']))"
 )"
 
 if [[ "$count" != "2" ]]; then

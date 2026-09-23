@@ -370,6 +370,7 @@ else
   echo "SKIP  non-mother: verify-doc / verify-growth-layout（母版门面计数检查）"
 fi
 bash "$CUR/bin/verify-rules-globs.sh" || FAIL=$((FAIL+1))
+bash "$CUR/bin/verify-portability.sh" || FAIL=$((FAIL+1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

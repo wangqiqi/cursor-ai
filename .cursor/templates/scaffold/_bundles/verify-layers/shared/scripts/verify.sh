@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 sc_cd_root

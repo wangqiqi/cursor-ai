@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Example L2 slice — copy pattern for new verify_<feature>.sh scripts.
 set -euo pipefail
 source "$(dirname "$0")/../../lib/load.sh"

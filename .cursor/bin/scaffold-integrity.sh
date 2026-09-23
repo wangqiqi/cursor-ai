@@ -13,7 +13,7 @@ fail() { echo "FAIL $1"; FAIL=$((FAIL + 1)); }
 ok() { echo "OK  $1"; }
 
 if ! sc_has_json_tool; then
-  echo "FAIL: jq or python3 required" >&2
+  echo "FAIL: jq or python (python3) required" >&2
   exit 1
 fi
 

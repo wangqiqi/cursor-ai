@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Serial or parallel runner for independent verify slices.
 
 run_suite() {

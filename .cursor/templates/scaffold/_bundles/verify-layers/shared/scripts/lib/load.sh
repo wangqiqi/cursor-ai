@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Bootstrap for scripts/verify/** slice scripts.
 set -euo pipefail
 # shellcheck source=common.sh

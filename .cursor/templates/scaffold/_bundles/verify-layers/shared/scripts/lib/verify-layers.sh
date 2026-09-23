@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Layered verify registry (L1–L3). Sourced by scripts/verify.sh.
 
 # L2-core: P0 merge gate. Must be subset of VERIFY_SLICES_STANDARD.
