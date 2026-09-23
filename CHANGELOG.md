@@ -21,6 +21,9 @@ All notable changes to Super Cursor are documented here.
 - **rules glob 误命中** — `tech/nextjs.mdc` `**/app/**` 命中 python-fastapi `src/app/main.py` 与 cpp-cmake `include/app/greet.hpp`；`ux.mdc`/`delivery.mdc` `**/src/**` 命中 rust-axum/cpp-cmake；`data-list.mdc` `**/*List*` 命中 `CMakeLists.txt`；`eslint.mdc` 挂到所有 JS/TS 源文件 → 全部收窄为语言/框架专属模式
 - **rules glob 零命中** — `api.mdc` · `error-context.mdc` 在自带后端栈命中为 0（go-api 用 `internal/handler/` 单数）· `cpp.mdc` 不覆盖 `.h` 头文件 → 补齐；brace glob（`**/*.{ts,tsx}`）为 Cursor 未文档化写法，展开为逐扩展名
 - **新增 `bin/verify-rules-globs.sh`** — frontmatter/键校验 · 禁 brace glob · plan 闸门 glob 断言 · 7 栈真实文件命中/误命中回归；已纳入聚合与接线自检
+- **alwaysApply 口径** — 常驻规则实为 **4** 条（`core` · `workflow` · `communication/cursor-standalone` · `communication/super-cursor-persona`），`AGENTS.md` 与 `.cursor/README.md` 此前写 2 条，常驻上下文被少算约 1.75×；`cursor-coherence.sh` 注释同步，`AGENTS.md` 补 `release.json` · `profiles/`
+- **CI 触发面** — `verify.yml` 的 `config/**` 在根目录不存在（真身 `.cursor/config/`），且漏 `install-super-cursor.sh` · `README.md` · `CHANGELOG.md` · `.github/workflows/**` → 改安装脚本或门面文档**不触发 CI**
+- **人格默认值** — `roles.json` 顶层 `default` 与 `workflow.json` `role.default` 互相矛盾（前者无人读取）；对齐为 `dashu` 并标注 SSOT
 
 ## [4.29.7] - 2026-09-20
 

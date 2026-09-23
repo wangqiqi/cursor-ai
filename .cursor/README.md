@@ -4,7 +4,7 @@
 
 ## 结构
 
-| 始终加载 | `rules/core.mdc` · `rules/workflow.mdc` |
+| 始终加载（4） | `rules/core.mdc` · `rules/workflow.mdc` · `rules/communication/cursor-standalone.mdc` · `rules/communication/super-cursor-persona.mdc` |
 | 按需 | skills · glob rules · `learn/` |
 
 ```

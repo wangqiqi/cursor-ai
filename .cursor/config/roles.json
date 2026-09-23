@@ -1,7 +1,8 @@
 {
   "version": "1.3.0",
   "description": "人格预设 — 仅沟通气质不同；skills 全员 full。given_name 仅供用户点名；辨识度靠 voice_cues + emotion_cues + speech_examples。",
-  "default": "professional",
+  "default": "dashu",
+  "default_note": "生效值是 config/workflow.json → role.default（本键仅作本文件内默认，须与之一致）",
   "skills_policy": "full",
   "skills_policy_note": "所有角色同等全才；差异只在语气与性格，不减能力、不跳过 verify。",
   "speech_rules": {

@@ -105,7 +105,7 @@ while IFS= read -r ref; do
   fi
 done < <(grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u)
 
-# 6. alwaysApply: true only in core.mdc, workflow.mdc, super-cursor-persona.mdc
+# 6. alwaysApply: true 仅限 core.mdc · workflow.mdc · super-cursor-persona.mdc · cursor-standalone.mdc
 while IFS= read -r f; do
   base="$(basename "$f")"
   if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" || "$base" == "cursor-standalone.mdc" ]]; then

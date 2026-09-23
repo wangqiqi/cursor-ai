@@ -5,19 +5,23 @@ on:
     branches: [master, main]
     paths:
       - '.cursor/**'
-      - 'config/**'
       - 'docs/**'
+      - 'install-super-cursor.sh'
+      - 'README.md'
+      - 'CHANGELOG.md'
       - 'package.json'
       - 'package-lock.json'
-      - '.github/workflows/verify.yml'
+      - '.github/workflows/**'
   pull_request:
     paths:
       - '.cursor/**'
-      - 'config/**'
       - 'docs/**'
+      - 'install-super-cursor.sh'
+      - 'README.md'
+      - 'CHANGELOG.md'
       - 'package.json'
       - 'package-lock.json'
-      - '.github/workflows/verify.yml'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 concurrency:

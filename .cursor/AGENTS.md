@@ -8,7 +8,7 @@
 
 Skills: **master** · **plan** · **run** · **long** · **learn** · **scaffold** · **git** · **security** · **api** · **ux** · **ia** · **release** · **debug** · **test** · **mcp** · **refactor** · **perf** · **review** · **study** · **delivery** · **user-manual** · **test-report** · **week** · **disk** · **maintain** · **ops-deploy** · **code-stats-viz** · **pencil-design**
 
-Rules: `core.mdc` + `workflow.mdc` (alwaysApply) · 其余按 glob 加载
+Rules: **`core.mdc` + `workflow.mdc` + `communication/cursor-standalone.mdc` + `communication/super-cursor-persona.mdc`** (alwaysApply) · 其余按 glob 加载
 
 | 目录 | 示例 |
 |------|------|
@@ -16,5 +16,5 @@ Rules: `core.mdc` + `workflow.mdc` (alwaysApply) · 其余按 glob 加载
 | `rules/execution/` | bugfix · commit · docs · scope · testing · submodule · api · ux · ia · cli-python · vibe · security-sdlc · **oss-first · input-bounds · extensibility · prompt-security · async-progress · long-running-ui · modal-layering · error-context · single-detector · data-batch** |
 | `rules/feedback/` | changelog · verify · tag · release · evolution |
 | `rules/tech/` | c · cpp · eslint · javascript · typescript · react · vue · nextjs · svelte · python · go · rust · java |
-| `config/` | workflow.json · roles.json（人格预设，仅语气） |
+| `config/` | workflow.json · release.json · roles.json（人格预设，仅语气）· profiles/（full · lite · rules-only） |
 | `rules/local/` | 目标项目私有（安装后自建） |
