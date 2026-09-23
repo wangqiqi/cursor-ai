@@ -17,7 +17,8 @@ SSOT="$CUR/skills/plan/reference/growth-layout.md"
 need_ref=(
   "$CUR/rules/execution/doc-hygiene.mdc"
   "$CUR/rules/feedback/verify.mdc"
-  "$CUR/skills/run/SKILL.md"
+  # run 的 Sprint 收尾细则已移入 reference/（C5 去重）→ 引用跟着落点走
+  "$CUR/skills/run/reference/sprint-closeout.md"
   "$CUR/skills/scaffold/SKILL.md"
   "$CUR/templates/cursorGrowth/learn/plan-conventions.md"
 )

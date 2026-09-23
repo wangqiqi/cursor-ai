@@ -176,16 +176,11 @@ flowchart LR
 
 | 层 | Command | 作用 |
 |----|---------|------|
-| **【日常】** | `/run` | 按 ACTIVE 实现 · `task-verify` · commit；**AUTONOMOUS** 时 Sprint 连跑 |
-| **【日常】** | `/plan` | 先总后分：Goal · Done when → 拆 TASK |
-| **【日常】** | `/master` | 真迷路时 AskQuestion 路由 |
-| **【生命周期】** | `/scaffold` | 7 栈脚手架 / 已有项目 audit |
-| **【生命周期】** | `/learn` | 项目认知 → `.cursorGrowth/learn/` |
-| **【生命周期】** | `/long` | Epic 长程：拆 Sprint → 每 Sprint plan+run → checkpoint |
-| **【生命周期】** | `/release` | Sprint 出口：merge / PR / 打 tag |
-| **【高级】** | `/delivery` | 交付验收：7 维（release 前建议） |
-| **【高级】** | `/manual` | 可发布使用说明书 · 配图 regen（Manual Contract） |
-| **【高级】** | `/report` | 全量/分层测试报告 · verify 后汇总（Report Contract） |
+| **【日常】** | `/run` · `/plan` · `/master` | 做事 · 拆 Sprint · 真迷路时路由 |
+| **【生命周期】** | `/scaffold` · `/learn` · `/long` · `/release` | 空仓起盘 · 项目认知 · Epic 长程 · Sprint 出口 |
+| **【高级】** | `/delivery` · `/manual` · `/report` | 上线走查 · 说明书 · 测试报告 |
+
+> 完整三层表（含"何时用/不做什么"）→ [`.cursor/README.md`](.cursor/README.md) §Slash 入口；**canonical 路由表** → `master` skill `routes.md`。此处只列名字，避免与两处重复。
 
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
@@ -198,21 +193,19 @@ flowchart LR
 
 每个栈自带 `scripts/test.sh`（开发循环）+ `scripts/verify.sh`（全量验收），与 plan/run 验收列对齐。
 
-| 类别 | scaffold id | 技术栈 |
-|------|-------------|--------|
-| 前端 | `react-vite-ts` | React + Vite + TS + Vitest |
-| 前端 | `vue-vite-ts` | Vue 3 + Vite + TS |
-| 前端 | `nextjs-ts` | Next.js App Router + Vitest |
-| 后端 | `go-api` | Go HTTP API |
-| 后端 | `rust-axum` | Rust + Axum |
-| 后端 | `python-fastapi` | FastAPI + ruff + mypy + pytest |
-| 系统 | `cpp-cmake` | C++ + CMake + ctest |
-
 ```bash
-./.cursor/bin/scaffold.sh list
+./.cursor/bin/scaffold.sh list                    # 7 栈清单（唯一真源）
 ./.cursor/bin/scaffold.sh apply go-api --dry-run   # 先预览
 ./.cursor/bin/scaffold.sh apply go-api
 ```
+
+| 类别 | scaffold id |
+|------|-------------|
+| 前端 | `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` |
+| 后端 | `go-api` · `rust-axum` · `python-fastapi` |
+| 系统 | `cpp-cmake` |
+
+> 各栈依赖与目录 → `scaffold.sh list` · [`scaffold.md`](.cursor/docs/scaffold.md) · `templates/scaffold/manifest.json`（避免在此维护第三份栈清单）。
 
 完整 walkthrough → [端到端示例](.cursor/docs/walkthrough.md)
 

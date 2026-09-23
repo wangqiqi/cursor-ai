@@ -10,6 +10,10 @@ All notable changes to Super Cursor are documented here.
 - **`plan-check` 验收列门禁（B2）** — 活跃任务的验收列若为描述性文字（`task-verify` 必 FAIL），`plan-check` 现在当场 WARN 并计入 issues、**退出 1**（开工前就暴露，而非等 `task-verify` 才发现）；判定逻辑抽为共享 `acceptance_kind()`（exec / manual / prose），`task-verify` 与 `plan-check` 单一真源。`runner-smoke` 增 4 条 plan-check 回归
 - **`task-verify` fail-closed（B1）** — 描述性验收列此前打印 `SKIP` 却 `return 0`（"防假完成"形同虚设），现改为 **FAIL + 退出 1** 并给出两种修法；唯一合法豁免是显式 `manual: <步骤与证据要求>`。`task_verify_heuristics.enabled` 在 `full` profile 默认开启（`lite`/`rules-only` 关闭），兜底脚本仅在存在时才跑。plan 模板与 `config/README` 补「验收列规则」；`runner-smoke` 增 4 条回归（描述性 FAIL · manual PASS · 可执行 PASS · 可执行失败 FAIL）
 
+### Changed
+
+- **去重：巨型 SKILL 瘦身 + 事实族收敛（C5）** — `run/SKILL.md` **8806 → 4080 字符（-53%）**，细节移入 `run/reference/{sprint-closeout,doc-sync,audit}.md`；`plan/SKILL.md` **7305 → 4408 字符（-40%）**，`先总后分`/`SDD`/`协作文档`/`Sprint 立项门禁` 四节改为指向既有 `reference/`（`phases.md` · `sdd/` · `doc-prd-enrich.md` · `prioritization.md` · `sprint-goal-gate.md`）。README 的三层 slash 表与 7 栈依赖表收敛为「名字 + 指向唯一真源」。`verify-doc-super-cursor.sh` 断言 run/plan SKILL ≤5000 字符且 `reference/` 必须存在
+
 ### Added
 
 - **三平台 CI matrix（A6）** — `verify.yml` 由单 ubuntu job 扩为 `ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，先非阻塞）`；`fail-fast: false`，矩阵项未通过不影响其它项

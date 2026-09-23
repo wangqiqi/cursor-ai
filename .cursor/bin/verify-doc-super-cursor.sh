@@ -96,11 +96,23 @@ else:
         if not re.search(r"\|\s*`?" + rid + r"`?\s*\|", mt):
             fails.append(f"master/SKILL.md missing main route id '{rid}' (routing moved out of the default payload)")
 
+# 巨型 SKILL 必须瘦身到 reference/（C5）：主流程留 SKILL，细节按需加载
+for name, limit in (("run", 5000), ("plan", 5000)):
+    p = cur / f"skills/{name}/SKILL.md"
+    if not p.is_file():
+        fails.append(f"skills/{name}/SKILL.md missing")
+        continue
+    size = len(p.read_text(encoding="utf-8"))
+    if size > limit:
+        fails.append(f"skills/{name}/SKILL.md {size} chars (>{limit}): move detail into reference/")
+    if not (cur / f"skills/{name}/reference").is_dir():
+        fails.append(f"skills/{name}/reference missing (detail must live there, not in SKILL)")
+
 if fails:
     for f in fails:
         print("FAIL skill metadata:", f)
     sys.exit(1)
-print(f"OK  skill metadata (28 files · description <=85 · dmi buckets)")
+print(f"OK  skill metadata (28 files · description <=85 · dmi buckets · run/plan slim)")
 PY
 then
   :

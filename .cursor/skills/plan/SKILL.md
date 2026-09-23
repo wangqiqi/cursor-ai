@@ -24,20 +24,8 @@ disable-model-invocation: true
 
 ## Sprint 立项门禁 · Goal 合格性
 
-**用这个**：Sprint Goal = **能力 / 模块 / 用户可见增量**。**不是那个**：打 tag · merge · 专补 CHANGELOG/README · 专跑 verify — 这些是 **Task 内步骤** 或 **`/release` 出口**。
-
-详表与反例 → `reference/sprint-goal-gate.md`（与 **followup-facade**「禁止专补 README Sprint」同类）。
-
-| 用户说 | 路由 |
-|--------|------|
-| 实现某功能 / 模块 / Epic 一块 | ✅ `/plan` 或 `/long` |
-| 打版 · 发 tag · merge · 开 PR | **`/release`**（非 Sprint） |
-| 补 CHANGELOG · 归档 · verify 绿 | 当前 Sprint **Done when** 或最后一项 TASK |
-| 补 README 门面 | 功能 TASK **同 Sprint**（**followup-facade**） |
-
-**阶段 1** 须 AskQuestion 区分「能力交付 vs 流程收尾」；若为后者 → **不得**新建 Active Sprint。
-
-**禁止**候选表出现「打版发 tag」「release sprint」等纯仪式 Goal。
+Sprint **Goal 必须是能力/模块交付**；打 tag · merge · 归档等**出口动作不得单独立项**。
+判定表与反例 → [reference/sprint-goal-gate.md](reference/sprint-goal-gate.md)（`plan-check` 会 WARN 仪式型 Goal）。
 
 ## 必读
 
@@ -86,17 +74,8 @@ Sprint **全部 TASK ✅** 后：**从 plan 删除整个 Active 区块**（不�
 
 ## 先总后分（摘要）
 
-| 层 | 载体 | 作用 |
-|----|------|------|
-| **总** | Sprint **Goal** · **Done when** · 候选表对齐 | 主题边界、全局验收 |
-| **分** | 扁平 `TASK-*` 表 · **执行顺序** | `/run`：默认 `AUTONOMOUS:true` **Sprint 连跑**；`false` 时一次一个 `ACTIVE` |
-
-1. **阶段 1** — Goal / Done when / Out of scope（**不写** TASK 表）→ 详 `reference/phases.md`
-2. **Follow-up / 门面** — 见 `reference/followup-facade.md`
-3. **阶段 2** — 拆 TASK + 执行顺序 → 详 `reference/phases.md`
-4. **阶段 3 · handoff** — `PLANNING:false` · `PLAN_APPROVED` · `ACTIVE`/`NEXT` · 默认 `AUTONOMOUS:true` → `plan-check` && `gate-check` → 告知用户 **只说一次 `/run`**
-
-大改动 / 跨模块：读 `rules/execution/vibe.mdc` · `rules/feedback/evolution.mdc`。
+冻结 **L0 Goal / Done when / Out of scope** → 划 L1 Theme → 同层 MECE 拆 TASK（`Target` · `Owns` · 主验收不跨 Theme）→ 每 TASK 可执行验收 + 落点。
+完整阶段与产物 → [reference/phases.md](reference/phases.md)。
 
 ## Sprint 连跑（AUTONOMOUS）
 
@@ -112,46 +91,11 @@ Sprint **全部 TASK ✅** 后：**从 plan 删除整个 Active 区块**（不�
 
 用户显式设 `AUTONOMOUS: false` → 恢复「每 TASK 手动 `/run`」。
 
-## Spec-Driven Development（SDD · 吸收自 github/spec-kit）
+## Spec-Driven Development（SDD · 可选）
 
-**用这个**：新功能从 0→1、要先写清 what/why 再拆 TASK。**不是那个**：常规 Sprint 增量（默认仍走下方「先总后分」）；不记 `/speckit.*` 命令。
-
-### 模式分流（`PLANNING:true` · AskQuestion ≤4）
-
-| 选项 id | 用户看到 | 流程 |
-|---------|----------|------|
-| `sprint` | 继续 / 常规 Sprint 增量 | 现有阶段 1→2→3（默认） |
-| `greenfield` | 新功能 · 从规格开始 | principles → spec → clarify → tech plan → tasks → 导入 TASK 表 |
-| `brownfield` | 存量功能增强 | 读代码 + 增量 `spec.md`；可跳过新目录 |
-| `doc` | 写文档 / PRD（非功能 spec） | §协作文档（doc-coauthoring） |
-
-工具不可用时：同表正文编号（**master** AskQuestion 约定）。
-
-### Greenfield 工件（目标项目）
-
-路径默认读 `workflow.json` → `sdd`（见 `reference/sdd/source-map.md`）：
-
-```
-docs/principles.md          # 可选 · principles-template
-docs/specs/001-<slug>/
-  spec.md                   # spec-template · what/why
-  clarifications.md         # clarify 产出（或 spec 内一节）
-  plan.md                   # tech-plan-template · how
-  tasks.md                  # tasks-template → 阶段 2 导入 plan TASK
-```
-
-**阶段 2 导入**：从 `tasks.md` 提取可验收项 → `.cursorGrowth/plan.md` 扁平 `TASK-*`；`[P]` 表可并行，写入执行顺序。
-
-### 模板
-
-| 文件 | 用途 |
-|------|------|
-| `reference/sdd/spec-template.md` | 功能 spec |
-| `reference/sdd/tech-plan-template.md` | 技术计划 |
-| `reference/sdd/tasks-template.md` | 任务分解 |
-| `reference/sdd/principles-template.md` | 项目原则（≠ constitution.mdc） |
-
-安装副本：`.cursor/templates/sdd/`（与 reference 同步）。
+大特性走 spec → plan → tasks 三件套；**模式分流 · 工件 · 模板** →
+[reference/sdd/](reference/sdd/)（`spec-template.md` · `tech-plan-template.md` · `tasks-template.md` · README）· 目录键 `sdd.specs_dir`。
+仅当需求有歧义或跨多 Sprint 时才启用；小改不要走 SDD。
 
 ## 任务 ID
 
@@ -162,37 +106,8 @@ docs/specs/001-<slug>/
 
 配置：`workflow.json` → `task_id.prefixes_skip` · `prefixes_autonomous`
 
-## 协作文档（DOC-* · 吸收自 anthropics/skills/doc-coauthoring）
+## 协作文档（DOC-*）
 
-用户说「写文档 / PRD / RFC / 设计 doc / 提案」→ **AskQuestion**（≤4 项，勿填空）：
-
-| 选项 | 动作 |
-|------|------|
-| **结构化协作** | 三阶段工作流（推荐 substantial doc） |
-| **自由撰写** | 直述，不走阶段 |
-| **SPIKE 调研** | `SPIKE-*` 只读 |
-| **同步现有 doc** | `DOC-*` 对齐 `rules/execution/docs.mdc` |
-| **可发布操作手册** | **user-manual** `/manual` · Manual Contract · 配图 regen |
-| **可发布测试报告** | **test-report** `/report` · Report Contract · verify 后汇总 |
-
-### 三阶段（结构化协作）
-
-1. **Context** — 用户 dump 背景；Agent 5–10 个澄清问题（可编号简答）
-2. **Refine** — 按节：头脑风暴 → 用户勾选 → 起草 → 迭代（`str_replace` 局部改，勿整篇重打）
-3. **Reader Testing** — 用 **review** agent 或新会话「仅持文档」回答 5–10 个读者问题；失败 → 回阶段 2
-
-Sprint 表用 `DOC-*`；验收：Reader Testing 通过或用户明确跳过。
-
-### 需求体检与 PRD 补漏（吸收自 SpaceZephyr/pm-skills）
-
-结构化协作或自由撰写 PRD / 功能说明时，在 Context 之前或 Refine 之后套用 **`reference/doc-prd-enrich.md`**：
-
-1. **需求体检** — 来源 · 用户价值 · 成功指标（见该文件信号表）
-2. **自动补漏** — 异常/埋点/非功能/对接（补入对应节，不堆附录）
-3. **待确认项** — 交付时单独汇总；每条带默认建议与影响范围
-
-信息严重不足 → 需求梳理兜底，不硬写完整 PRD。预审 → **review** §文档预审。
-
-### Backlog 优先级（吸收自 pm-skills）
-
-候选 Sprint · backlog · TASK 的 P0/P1 争议 → **`reference/prioritization.md`**（RICE · ICE · Kano · MoSCoW）。
+PRD/RFC/提案类产出走结构化协作（先共情 → 收敛 → 固化），并做需求体检与优先级排序 →
+[reference/doc-prd-enrich.md](reference/doc-prd-enrich.md) · [reference/prioritization.md](reference/prioritization.md)。
+大改版立 `DOC-*` 任务，验收写可执行命令或明确 `manual:`。
