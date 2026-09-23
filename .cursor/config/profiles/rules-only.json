@@ -3,5 +3,8 @@
   "workflow": {
     "enabled": false,
     "hooks_enabled": false
+  },
+  "task_verify_heuristics": {
+    "enabled": false
   }
 }

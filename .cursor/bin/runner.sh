@@ -317,8 +317,10 @@ task_verify() {
     return $?
   fi
 
-  if [[ "$HEURISTICS_ENABLED" != "true" ]]; then
-    echo "SKIP: heuristics disabled — run acceptance command in plan or verify manually"
+  # 显式人工验收 —— 唯一合法豁免（须在 plan / CHANGELOG 写清证据要求）
+  if [[ "$acc" == manual:* || "$acc" == "manual" || "$acc" == *"人工验收"* ]]; then
+    echo "MANUAL: 验收列声明为人工验收"
+    echo "        请在 plan/CHANGELOG 留下证据（命令输出 · 截图路径 · 复核人）"
     return 0
   fi
 
@@ -355,25 +357,28 @@ task_verify() {
     return $?
   fi
 
-  # Scaffold-aligned fallback (when acceptance is descriptive or empty)
+  # Scaffold-aligned fallback（描述性验收 + 存在脚手架脚本）—— 受 heuristics 开关控制
   local test_script="${FALLBACK_TEST#./}"
   local verify_script="${FALLBACK_VERIFY#./}"
-  if [[ -f "$ROOT/$test_script" ]]; then
+  if [[ "$HEURISTICS_ENABLED" == "true" && -f "$ROOT/$test_script" ]]; then
     echo "==> heuristics fallback: $FALLBACK_TEST"
     cd "$ROOT"
     bash "$test_script"
     return $?
   fi
-  if [[ -f "$ROOT/$verify_script" && "$acc" == *verify* ]]; then
+  if [[ "$HEURISTICS_ENABLED" == "true" && -f "$ROOT/$verify_script" && "$acc" == *verify* ]]; then
     echo "==> heuristics fallback: $FALLBACK_VERIFY"
     cd "$ROOT"
     bash "$verify_script"
     return $?
   fi
 
-  echo "SKIP: 验收列为描述性文字，请 Agent 按列手动执行；打版前须跑全量 VERIFY"
-  echo "TIP: plan 验收列优先写 $FALLBACK_TEST 或 npm test / pytest 等可执行命令"
-  return 0
+  # fail-closed：描述性验收**不得静默通过**（此前打印 SKIP 却 return 0 = 假完成温床）
+  echo "FAIL: 验收列不可自动判定（描述性文字）" >&2
+  echo "      当前: ${acc:-（空）}" >&2
+  echo "      修法一: 写成可执行命令（${FALLBACK_TEST} · npm test · pytest · bash scripts/verify_<feature>.sh）" >&2
+  echo "      修法二: 显式声明人工验收 → manual: <步骤与证据要求>" >&2
+  return 1
 }
 
 print_status() {

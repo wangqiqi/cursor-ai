@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **`task-verify` fail-closed（B1）** — 描述性验收列此前打印 `SKIP` 却 `return 0`（"防假完成"形同虚设），现改为 **FAIL + 退出 1** 并给出两种修法；唯一合法豁免是显式 `manual: <步骤与证据要求>`。`task_verify_heuristics.enabled` 在 `full` profile 默认开启（`lite`/`rules-only` 关闭），兜底脚本仅在存在时才跑。plan 模板与 `config/README` 补「验收列规则」；`runner-smoke` 增 4 条回归（描述性 FAIL · manual PASS · 可执行 PASS · 可执行失败 FAIL）
+
 ### Added
 
 - **平台作用域单一真源（A4）** — `docs/platforms.md` 新增「技能平台作用域」表（技能层 ≠ 母版脚本层，不可互相推断）；`verify-portability.sh` 双向断言 **文档声明 ⇔ 代码实际**：含 `require_linux` 的技能必须登记为 Linux-only，登记为 Linux-only 的必须确有 `require_linux`

@@ -37,6 +37,12 @@
 |----|------|----------|--------|------------|--------|
 | TASK-001 | Example feature | P0 | ⬜ | `./scripts/test.sh` | `src/` |
 
+**验收列规则**（`task-verify` **fail-closed**，描述性文字会直接 FAIL）：
+
+- ✅ 首选**可执行命令**：`` `./scripts/test.sh` `` · `` `npm run test` `` · `` `pytest tests/unit` `` · `` `bash scripts/verify_<feature>.sh` ``
+- ✅ 确需人工验收 → 显式写 `` `manual: <步骤与证据要求>` ``（唯一豁免；证据须落 plan/CHANGELOG）
+- ❌ 不要写「功能正常」「UI 没问题」这类无法判定的描述
+
 **执行顺序**: `TASK-001` → …
 
 ---

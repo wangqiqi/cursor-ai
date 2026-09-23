@@ -6,5 +6,8 @@
   },
   "autonomous": {
     "default": true
+  },
+  "task_verify_heuristics": {
+    "enabled": false
   }
 }

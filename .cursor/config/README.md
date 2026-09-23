@@ -16,11 +16,25 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `growth.learn_sources` | CHANGELOG, archive, plan | **learn** skill sources |
 | `task_id.prefixes_autonomous` | `["TASK-"]` | 常规实现任务前缀 |
 | `task_id.prefixes_skip` | `REV-`, `SPIKE-`, `DOC-` | `next-task` 自动选 ⬜ 时跳过（不 bypass gate-check） |
-| `task_verify_heuristics.enabled` | `false` | 设为 `true` 时，描述性验收列回退 `./scripts/test.sh` |
+| `task_verify_heuristics.enabled` | `true`（`full`）· `false`（`lite`/`rules-only`） | 描述性验收列回退 `fallback_test_script`（存在才跑） |
 | `task_verify_heuristics.fallback_test_script` | `./scripts/test.sh` | 开发任务默认验收 |
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
 | `task_verify_heuristics.frontend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `task_verify_heuristics.backend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
+
+### `task-verify` 语义（fail-closed）
+
+`./.cursor/bin/runner.sh task-verify` 按序判定；**描述性验收不再静默通过**：
+
+| 验收列形态 | 行为 |
+|------------|------|
+| 可执行命令（`./scripts/…` · `npm …` · `pytest …` · `bash …`） | 执行，按其退出码 |
+| `manual: <步骤与证据要求>` | **唯一豁免** — 返回 0，须在 plan/CHANGELOG 留证据 |
+| 描述性文字 **且** `fallback_test_script` 存在（heuristics 开） | 跑兜底脚本 |
+| 描述性文字（其余） | **FAIL + 退出 1**，并提示改成命令或 `manual:` |
+
+验收列写法 → `.cursor/templates/plan.md`。
+
 | `version_line_meta` | `VERSION_LINE` | plan HTML 注释 · 发版版本线 |
 | `version_tag_glob_env` | `VERSION_TAG_GLOB` | 环境变量名 · 覆盖 tag 匹配 glob |
 | `version_default_env` | `RELEASE_VERSION_DEFAULT` | 环境变量名 · 无 tag 时起始版本 |
