@@ -8,6 +8,9 @@ TMP_ROOT="$(mktemp -d)"
 FAIL=0
 
 fail() { echo "FAIL $1"; FAIL=$((FAIL + 1)); }
+
+# set -e 下"哪一行中止"必须可见 —— 曾出现「无 FAIL 行、秒退」，导致 macOS/Windows 失败无法定位
+trap 'echo "FAIL install smoke aborted at line $LINENO (unguarded command under set -e)" >&2' ERR
 ok() { echo "OK  $1"; }
 
 cleanup() { rm -rf "$TMP_ROOT"; }
@@ -26,6 +29,23 @@ assert_absent() {
 assert_grep() {
   local file="$1" pattern="$2" label="$3"
   grep -qE "$pattern" "$file" 2>/dev/null && ok "$label" || fail "$label ($file)"
+}
+
+# 安装必须「失败可见」：捕获输出，失败时打 FAIL 并回显尾部，且不中止整个 smoke
+run_install() {
+  local label="$1" out="$2"
+  shift 2
+  local rc=0
+  "$INSTALL" "$@" >"$out" 2>&1 || rc=$?
+  if [[ "$rc" -eq 0 ]]; then
+    ok "$label"
+  else
+    fail "$label (installer exit $rc)"
+    echo "  ---- installer output (tail) ----" >&2
+    tail -15 "$out" 2>/dev/null | sed 's/^/  | /' >&2
+    echo "  --------------------------------" >&2
+  fi
+  return 0
 }
 
 assert_git_ignored() {
@@ -48,7 +68,7 @@ echo "=== install smoke ==="
 
 # 1. full · empty target
 FULL="$TMP_ROOT/full-empty"
-"$INSTALL" "$FULL" --profile full > "$TMP_ROOT/full.out" 2>&1
+run_install "full: install into empty target" "$TMP_ROOT/full.out" "$FULL" --profile full
 assert_file "$FULL/.cursorGrowth/plan.md" "full: .cursorGrowth/plan.md copied"
 assert_file "$FULL/.cursorGrowth/learn/plan-conventions.md" "full: learn seeds"
 # B4：安装输出必须把「首次必做 /learn」讲清楚，否则闸门与验收会空转
@@ -77,20 +97,20 @@ assert_grep "$FULL/.cursor/bin/runner.sh" 'release-tag' "full: runner.sh release
 
 # 2. lite · no --copy-plan
 LITE="$TMP_ROOT/lite-no-plan"
-"$INSTALL" "$LITE" --profile lite >/dev/null
+run_install "lite: install" "$TMP_ROOT/lite.out" "$LITE" --profile lite
 assert_absent "$LITE/.cursorGrowth/plan.md" "lite: no plan without --copy-plan"
 assert_grep "$LITE/.gitignore" 'cursorGrowth' "lite: gitignore .cursorGrowth/"
 
 # 3. lite · --copy-plan
 LITE_COPY="$TMP_ROOT/lite-copy"
-"$INSTALL" "$LITE_COPY" --profile lite --copy-plan >/dev/null
+run_install "lite --copy-plan: install" "$TMP_ROOT/lite-copy.out" "$LITE_COPY" --profile lite --copy-plan
 assert_file "$LITE_COPY/.cursorGrowth/plan.md" "lite --copy-plan: .cursorGrowth/plan.md"
 
 # 4. merge existing .gitignore
 EXISTING="$TMP_ROOT/existing"
 mkdir -p "$EXISTING"
 echo 'node_modules/' >"$EXISTING/.gitignore"
-"$INSTALL" "$EXISTING" --profile full >/dev/null
+run_install "merge: install onto existing .gitignore" "$TMP_ROOT/existing.out" "$EXISTING" --profile full
 assert_grep "$EXISTING/.gitignore" 'node_modules' "merge: keeps node_modules/"
 assert_grep "$EXISTING/.gitignore" 'cursorGrowth' "merge: adds .cursorGrowth/"
 
@@ -101,10 +121,13 @@ assert_git_ignored "$FULL" ".cursorGrowth/plan.md" "full: .cursorGrowth/plan.md 
 HERE_ROOT="$TMP_ROOT/here-project"
 mkdir -p "$HERE_ROOT/src/pkg"
 git -C "$HERE_ROOT" init -q
-(
-  cd "$HERE_ROOT/src/pkg"
-  "$INSTALL" --replace >/dev/null
-) && ok "here: install from nested dir" || fail "here: install from nested dir"
+HERE_OUT="$TMP_ROOT/here.out"
+if ( cd "$HERE_ROOT/src/pkg" && "$INSTALL" --replace >"$HERE_OUT" 2>&1 ); then
+  ok "here: install from nested dir"
+else
+  fail "here: install from nested dir (see output)"
+  tail -10 "$HERE_OUT" 2>/dev/null | sed 's/^/  | /' >&2
+fi
 assert_file "$HERE_ROOT/.cursor/rules/core.mdc" "here: .cursor at git root"
 
 # 7. --setup-shell
@@ -112,7 +135,7 @@ HOME_SAVE="$HOME"
 export HOME="$TMP_ROOT/home-setup"
 mkdir -p "$HOME"
 touch "$HOME/.bashrc"
-"$INSTALL" --setup-shell >/dev/null
+run_install "setup-shell" "$TMP_ROOT/setup-shell.out" --setup-shell
 grep -qF 'SUPER_CURSOR_HOME=' "$HOME/.bashrc" && ok "setup-shell: SUPER_CURSOR_HOME" || fail "setup-shell: SUPER_CURSOR_HOME"
 grep -qF 'install-super-cursor' "$HOME/.bashrc" && ok "setup-shell: alias" || fail "setup-shell: alias"
 export HOME="$HOME_SAVE"

@@ -2,6 +2,10 @@
 # week skill — collect-week.py fixture smoke (hyphen + em-dash headings)
 set -euo pipefail
 
+# Windows cp1252 stdout 会让 python 打印中文报 UnicodeEncodeError
+export PYTHONIOENCODING="${PYTHONIOENCODING:-utf-8}"
+export PYTHONUTF8="${PYTHONUTF8:-1}"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Git Bash / Windows 可能只有 `python`；勿硬编码 python3
 PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"

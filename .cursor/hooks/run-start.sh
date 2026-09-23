@@ -2,6 +2,10 @@
 # run-start — sessionStart: inject plan context
 set -euo pipefail
 
+# Windows cp1252 stdout 会让 python 打印中文报 UnicodeEncodeError
+export PYTHONIOENCODING="${PYTHONIOENCODING:-utf-8}"
+export PYTHONUTF8="${PYTHONUTF8:-1}"
+
 HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CURSOR_DIR="$(cd "$HOOKS_DIR/.." && pwd)"
 # shellcheck source=lib/config-load.sh

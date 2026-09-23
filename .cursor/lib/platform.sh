@@ -6,6 +6,11 @@ SC_PLATFORM_LOADED=1
 set -euo pipefail
 
 # Resolve python3 or python (Git Bash / Windows may only expose `python`)
+# Windows 默认 cp1252 stdout：python 块打印中文会 UnicodeEncodeError 而崩。
+# 统一强制 UTF-8 stdio（对 3.7+ 生效；已显式设置时不覆盖）。
+export PYTHONIOENCODING="${PYTHONIOENCODING:-utf-8}"
+export PYTHONUTF8="${PYTHONUTF8:-1}"
+
 sc_python() {
   if [[ -n "${SC_PYTHON_CMD:-}" ]]; then
     echo "$SC_PYTHON_CMD"
@@ -147,21 +152,24 @@ sc_copy_tree() {
   shift 2
   local excludes=("$@")
 
+  # bash 3.2（macOS 系统 bash）+ set -u 下，空数组 "${arr[@]}" 会报 unbound variable 而中止；
+  # bash 4.4+ 才把它当空展开。故一律用 ${arr[@]+"${arr[@]}"} 形式。
+
   mkdir -p "$dest"
 
   if command -v rsync >/dev/null 2>&1; then
     local -a args=(-a)
     local ex
-    for ex in "${excludes[@]}"; do
+    for ex in ${excludes[@]+"${excludes[@]}"}; do
       args+=(--exclude "$ex")
     done
-    rsync "${args[@]}" "${src}/" "${dest}/"
+    rsync ${args[@]+"${args[@]}"} "${src}/" "${dest}/"
     return 0
   fi
 
   cp -a "${src}/." "${dest}/"
   local ex
-  for ex in "${excludes[@]}"; do
+  for ex in ${excludes[@]+"${excludes[@]}"}; do
     case "$ex" in
       hooks/state/*)
         rm -rf "${dest}/hooks/state/"* 2>/dev/null || true

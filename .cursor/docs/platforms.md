@@ -88,13 +88,15 @@ git config core.autocrlf   # 建议 false；或依赖仓库根 .gitattributes（
 
 `verify-portability.sh` 静态守护上面的跨平台承诺（GNU-only 构造 · 非 POSIX 正则 · 硬编码 `python3` · shebang · 裸 `ln -s` · `relative_to()` 未归一 · **行尾策略**）。
 
-### Windows 的三个坑（都已修复并有护栏）
+### 平台专属坑（都已修复并有护栏）
 
-| 坑 | 症状 | 护栏 |
-|----|------|------|
-| `core.autocrlf=true` 把 `*.sh` 检出为 CRLF | `#!/usr/bin/env bash\r` → 脚本**秒退且无报错** | 仓库根 `.gitattributes` 强制 `eol=lf`；门禁断言其存在且含 `eol=lf` |
-| `str(path.relative_to(root))` 返回 `rules\x.mdc` | 与 POSIX 字面量比较**全部不中** → 大批误报 FAIL | 一律 `.as_posix()`；门禁静态拦截未归一的写法 |
-| 无符号链接权限时裸 `ln -s` | `set -e` 下**直接中止安装/自检** | 安装脚本降级为目录副本（含 README）；门禁要求 `ln -s` 带 `2>/dev/null`/`||`/`if` |
+| 平台 | 坑 | 症状 | 护栏 |
+|------|----|------|------|
+| **macOS**（系统 bash 3.2） | `set -u` 下展开**空数组** `"${arr[@]}"` | `arr[@]: unbound variable` → 脚本中止（bash 4.4+ 才把它当空展开） | 一律写 `${arr[@]+"${arr[@]}"}`；`verify-portability` 拦截由 `"$@"` 填充的数组未守卫展开 |
+| **Windows** | Python stdout 默认 cp1252 | python 块打印中文即 `UnicodeEncodeError` 崩溃 | `platform.sh` 导出 `PYTHONIOENCODING=utf-8` + `PYTHONUTF8=1`；用 python 的脚本必须 source 平台库或自行导出（静态断言） |
+| **Windows** | `core.autocrlf=true` 把 `*.sh` 检出为 CRLF | `#!/usr/bin/env bash\r` → 脚本**秒退无报错** | 仓库根 `.gitattributes` 强制 `eol=lf`；门禁断言其存在且含 `eol=lf` |
+| **Windows** | `str(path.relative_to(root))` 返回 `rules\x.mdc` | 与 POSIX 字面量比较**全不中** → 大批误报 | 一律 `.as_posix()`；门禁静态拦截未归一的写法 |
+| **Windows / Git Bash** | 无符号链接权限时裸 `ln -s` | `set -e` 下**直接中止安装/自检** | 安装脚本降级为目录副本（含 README）；门禁要求 `ln -s` 带 `2>/dev/null`/`||`/`if` |
 
 **CI 矩阵**（`.github/workflows/verify.yml`）：ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，**非阻塞观察中**）。无 jq 的分支用 `SC_FORCE_PYTHON=1` 覆盖——因为 macOS runner 自带 jq，"runner 上恰好没有 jq"不可靠。
 

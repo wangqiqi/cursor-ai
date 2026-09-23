@@ -73,10 +73,10 @@ sc_verify_run_slices() {
   local -a rels=("$@")
   local -a scripts=()
   local rel
-  for rel in "${rels[@]}"; do
+  for rel in ${rels[@]+"${rels[@]}"}; do
     scripts+=("$(sc_vpath "$rel")")
   done
-  run_suite parallel "${scripts[@]}"
+  run_suite parallel ${scripts[@]+"${scripts[@]}"}
 }
 
 sc_verify_l1() {

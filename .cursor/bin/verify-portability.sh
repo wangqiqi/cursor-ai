@@ -61,6 +61,20 @@ for path in files:
     if not lines or not lines[0].startswith("#!/usr/bin/env bash"):
         fails.append(f"{rel}:1 shebang must be '#!/usr/bin/env bash'")
 
+    # Python 块会打印中文 → Windows 默认 cp1252 stdout 直接 UnicodeEncodeError。
+    # 要求 source platform/verify-common（其中 export PYTHONIOENCODING/UTF8），或本文件自行导出。
+    if "<<'PY'" in text and not re.search(r"(platform|verify-common)\.sh", text) and "PYTHONIOENCODING" not in text:
+        fails.append(
+            f"{rel}: python heredoc without UTF-8 stdio guard "
+            "(source lib/platform.sh or export PYTHONIOENCODING=utf-8)"
+        )
+
+    # bash 3.2（macOS 系统 bash）+ set -u：空数组展开会 unbound variable 中止（bash 4.4+ 才算空）。
+    # 只针对「由 \"$@\" 填充、可能为空」的数组，避免误报字面量数组。
+    splat_arrays = set(
+        re.findall(r"^\s*(?:local\s+(?:-[a-zA-Z]+\s+)*)?([A-Za-z_][A-Za-z0-9_]*)=\(\"\$@\"\)", text, re.M)
+    )
+
     for i, line in enumerate(lines, 1):
         stripped = line.lstrip()
         if stripped.startswith("#"):
@@ -85,6 +99,12 @@ for path in files:
             fails.append(f"{rel}:{i} readlink -f without same-line fallback")
         if LN_S_RE.search(code) and not re.search(r"2>/dev/null|\|\||if\s+ln\b", line):
             fails.append(f"{rel}:{i} bare 'ln -s' without fallback (Windows/Git Bash may lack symlink rights)")
+        for _name in splat_arrays:
+            if f'"${{{_name}[@]}}"' in line and f"{_name}[@]+" not in line:
+                fails.append(
+                    f"{rel}:{i} '${{{_name}[@]}}' may be empty: bash 3.2 + set -u aborts "
+                    f'(use ${{{_name}[@]}}+\"${{{_name}[@]}}\")'
+                )
         if PYTHON3_RE.search(code):
             fails.append(f"{rel}:{i} hardcoded python3 call (use $PYTHON_BIN / sc_python)")
 

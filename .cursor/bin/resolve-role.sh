@@ -5,6 +5,10 @@
 #   SC_PROJECT_ROOT / 第 3 参：读 <root>/.cursorGrowth/session/aliases.json（优先）
 # Exit 0 + JSON persona on unique match; exit 2 on ambiguous; exit 1 on miss
 set -euo pipefail
+
+# Windows cp1252 stdout 会让 python 打印中文报 UnicodeEncodeError
+export PYTHONIOENCODING="${PYTHONIOENCODING:-utf-8}"
+export PYTHONUTF8="${PYTHONUTF8:-1}"
 roles_file="${1:?roles.json}"
 query="${2:?query}"
 project_root="${3:-${SC_PROJECT_ROOT:-}}"
