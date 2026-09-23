@@ -182,7 +182,10 @@ gate_check() {
   echo "=== run gate-check ==="
   case "$reason" in
     OK)
-      echo "OK: PLAN_APPROVED=$(plan_plan_approved) · SPRINT=$(plan_sprint) · ACTIVE=$(plan_active)"
+      local gs ga
+      gs="$(plan_sprint)"
+      ga="$(plan_active)"
+      echo "OK: PLAN_APPROVED=$(plan_plan_approved) · SPRINT=${gs:-(none)} · ACTIVE=${ga:-(none)}"
       return 0
       ;;
     PLANNING)
@@ -219,7 +222,7 @@ plan_check() {
       issues=$((issues + 1))
     fi
   fi
-  if [[ -z "$(plan_sprint)" ]]; then
+  if [[ -z "$(plan_sprint)" ]] && ! plan_sprint_appears_closed; then
     echo "WARN: <!-- SPRINT --> 未设置"
     issues=$((issues + 1))
   fi
@@ -376,10 +379,13 @@ task_verify() {
 print_status() {
   echo "=== run status ==="
   echo "PLANNING:   $(plan_meta PLANNING || echo false)"
-  echo "SPRINT:     $(plan_sprint || echo '(none)')"
+  local sprint_disp active_disp
+  sprint_disp="$(plan_sprint)"
+  echo "SPRINT:     ${sprint_disp:-(none)}"
   echo "APPROVED:   $(plan_plan_approved || echo '(none)')"
   echo "AUTONOMOUS: $(plan_meta AUTONOMOUS || echo false)"
-  echo "ACTIVE:     $(plan_active || echo '(none)')"
+  active_disp="$(plan_active)"
+  echo "ACTIVE:     ${active_disp:-(none)}"
   local active
   active="$(plan_active)"
   if [[ -n "$active" ]]; then

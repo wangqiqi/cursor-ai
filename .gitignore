@@ -1,5 +1,8 @@
 .cursorGrowth/
 .cursor/rules/local
+# hooks 运行时状态（state/README.md 入 git，其余不入）
+.cursor/hooks/state/*
+!.cursor/hooks/state/README.md
 archive/
 *.log
 .DS_Store

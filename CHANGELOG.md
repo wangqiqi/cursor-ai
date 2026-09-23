@@ -7,6 +7,9 @@ All notable changes to Super Cursor are documented here.
 ### Fixed
 
 - **docs:build** — `training/skills.md` 的 `routes.md` 相对链接由 `../` 恢复为 `../../`；`ef5521b` 误改导致 VitePress dead-link 检查失败，CI 与 GitHub Pages 长期为红
+- **hooks** — 项目级 hook 路径 `./hooks/*.sh` → `.cursor/hooks/*.sh`。Cursor 项目级 hook 从 **project root** 运行（官方约定），原路径解析为 `<root>/hooks/*.sh`（不存在）→ growth 引导 · 会话上下文注入 · 自治 Sprint 连跑**静默从未执行**
+- **plan-parse** — `(none)`/`null` 模板占位归一化为「未设置」并让 `plan_task_row_field` 不再因 `pipefail` 中止 `set -e` 的 hook；修复全新安装下 `run-start`/`run-stop` 直接 exit 1
+- **gitignore** — `.cursor/hooks/state/*`（保留 `state/README.md`）；此前 `run-start` 写出的 `run.json` 会脏化工作区
 
 ## [4.29.7] - 2026-09-20
 

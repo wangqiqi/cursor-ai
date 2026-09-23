@@ -22,12 +22,22 @@ plan_meta() {
   grep -E "<!-- ${key}:" "$PLAN_FILE" 2>/dev/null | head -1 | sed -E "s/.*<!-- ${key}:[[:space:]]*([^>]+)[[:space:]]*-->.*/\1/" | sed 's/[[:space:]]*$//' || true
 }
 
+# 元数据取值：模板占位 (none)/null 视为「未设置」，返回空串
+plan_meta_value() {
+  local v
+  v="$(plan_meta "${1:-}")"
+  case "$v" in
+    ""|"(none)"|"null"|"None"|"NULL"|"-") return 0 ;;
+  esac
+  echo "$v"
+}
+
 plan_pending_count() {
   grep -c '| ⬜ |' "$PLAN_FILE" 2>/dev/null || echo "0"
 }
 
 plan_active() {
-  plan_meta "ACTIVE"
+  plan_meta_value "ACTIVE"
 }
 
 plan_verify() {
@@ -53,7 +63,7 @@ plan_planning() {
 }
 
 plan_sprint() {
-  plan_meta "SPRINT"
+  plan_meta_value "SPRINT"
 }
 
 # Active Sprint **Goal** 行正文（启发式 · 首条 **Goal**）
@@ -95,13 +105,14 @@ plan_max_loops() {
 }
 
 # 任务表字段：验收=第6列 · 落点=第7列
+# 未命中时返回空串且不因 pipefail 向上传播失败（调用方多为 set -e 的 hooks）
 plan_task_row_field() {
   local id="$1"
   local col="$2"
-  grep -E "\| \*\*${id}\*\* \||\| ${id} \|" "$PLAN_FILE" 2>/dev/null | head -1 | awk -F'|' -v c="$col" '{
+  { grep -E "\| \*\*${id}\*\* \||\| ${id} \|" "$PLAN_FILE" 2>/dev/null | head -1 | awk -F'|' -v c="$col" '{
     gsub(/^[ \t]+|[ \t]+$/, "", $c);
     print $c;
-  }'
+  }'; } || true
 }
 
 plan_task_status() {
@@ -117,7 +128,7 @@ plan_task_landing() {
 }
 
 plan_last_done() {
-  plan_meta "LAST_DONE"
+  plan_meta_value "LAST_DONE"
 }
 
 plan_sprint_status() {
@@ -152,7 +163,7 @@ plan_done_when_unchecked() {
 }
 
 plan_next_meta() {
-  plan_meta "NEXT"
+  plan_meta_value "NEXT"
 }
 
 # 短 ID / 片段 → 完整任务 ID
