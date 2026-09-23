@@ -25,6 +25,7 @@ for f in scripts/README.md scripts/lib/_common.sh scripts/verify/domain/.gitkeep
 done
 
 while IFS= read -r id; do
+  id="${id%$'\r'}"          # Windows python 文本模式可能残留 CR
   dir="$TEMPLATE_ROOT/$id"
   [[ -d "$dir" ]] || { fail "missing dir $id"; continue; }
 
@@ -32,8 +33,8 @@ while IFS= read -r id; do
     [[ -f "$dir/$script" ]] || fail "$id: missing $script"
   done
 
-  test_field="$(sc_manifest_scaffold_field "$MANIFEST" "$id" test)"
-  verify_field="$(sc_manifest_scaffold_field "$MANIFEST" "$id" verify)"
+  test_field="$(sc_manifest_scaffold_field "$MANIFEST" "$id" test)"; test_field="${test_field%$'\r'}"
+  verify_field="$(sc_manifest_scaffold_field "$MANIFEST" "$id" verify)"; verify_field="${verify_field%$'\r'}"
   [[ "$test_field" == "scripts/test.sh" ]] || fail "$id: manifest test field"
   [[ "$verify_field" == "scripts/verify.sh" ]] || fail "$id: manifest verify field"
 
@@ -54,7 +55,8 @@ done < <(sc_manifest_ids "$MANIFEST")
 
 # 测试框架必须与声明一致（testing.mdc 选型表 · 优先成熟开源）
 while IFS= read -r id; do
-  declared="$(sc_manifest_scaffold_field_join "$MANIFEST" "$id" test_framework 2>/dev/null || true)"
+  id="${id%$'\r'}"
+  declared="$(sc_manifest_scaffold_field_join "$MANIFEST" "$id" test_framework 2>/dev/null || true)"; declared="${declared%$'\r'}"
   [[ -z "$declared" || "$declared" == "null" ]] && continue
   hits=0
   for f in "$TEMPLATE_ROOT/$id/scripts/test.sh" "$TEMPLATE_ROOT/$id/scripts/verify.sh" "$TEMPLATE_ROOT/$id/package.json" "$TEMPLATE_ROOT/$id/pyproject.toml" "$TEMPLATE_ROOT/$id/Cargo.toml" "$TEMPLATE_ROOT/$id/CMakeLists.txt"; do
@@ -72,6 +74,7 @@ while IFS= read -r id; do
 done < <(sc_manifest_ids "$MANIFEST")
 
 while IFS= read -r id; do
+  id="${id%$'\r'}"
   src="$TEMPLATE_ROOT/$id/scripts/verify.sh"
   [[ -f "$src" ]] || continue
   # 任一共因子均可（_common.sh 或栈专用 _frontend.sh，后者自身 source _common.sh）

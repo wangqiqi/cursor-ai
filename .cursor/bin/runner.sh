@@ -379,11 +379,11 @@ docs_init() {
   [[ -d "$tpl" ]] || { echo "FAIL: missing templates/project-docs" >&2; return 1; }
 
   local dir chosen plan
-  dir="$(sc_docs_get "$cfg" dir || true)"; dir="${dir:-docs}"
+  dir="$(sc_docs_get "$cfg" dir || true)"; dir="${dir%$'\r'}"; dir="${dir:-docs}"
   if [[ -n "$profile" ]]; then
     chosen="$profile"
   else
-    chosen="$(sc_docs_get "$cfg" profile || true)"; chosen="${chosen:-web-fullstack}"
+    chosen="$(sc_docs_get "$cfg" profile || true)"; chosen="${chosen%$'\r'}"; chosen="${chosen:-web-fullstack}"
   fi
 
   if ! plan="$(sc_docs_plan "$cfg" "$chosen")"; then
@@ -435,7 +435,7 @@ docs_init() {
 
   # ROADMAP（例外 · 不加序号）
   local roadmap
-  roadmap="$(sc_docs_get "$cfg" roadmap_file || true)"; roadmap="${roadmap:-ROADMAP.md}"
+  roadmap="$(sc_docs_get "$cfg" roadmap_file || true)"; roadmap="${roadmap%$'\r'}"; roadmap="${roadmap:-ROADMAP.md}"
   local roadmap_dest="$ROOT/$dir/$roadmap"
   if [[ -f "$tpl/ROADMAP.md" ]]; then
     if [[ -e "$roadmap_dest" && "$force" != "true" ]]; then

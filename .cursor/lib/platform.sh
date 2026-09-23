@@ -243,6 +243,13 @@ _manifest_py() {
   "$py" - "$manifest" "$@" <<'PY'
 import json, sys
 
+# Windows 文本模式默认把 \n 转成 \r\n → shell `read` 会得到 "react-vite-ts\r"，
+# 后续 -d/字符串比较全部失败。强制 LF。
+try:
+    sys.stdout.reconfigure(newline="\n")
+except Exception:
+    pass
+
 path = sys.argv[1]
 cmd = sys.argv[2]
 data = json.load(open(path, encoding="utf-8"))
@@ -503,6 +510,13 @@ _docs_layout_py() {
   py="$(sc_python)" || return 1
   "$py" - "$cfg" "$@" <<'PY'
 import json, sys
+
+# Windows 文本模式默认把 \n 转成 \r\n → shell `read` 会得到 "react-vite-ts\r"，
+# 后续 -d/字符串比较全部失败。强制 LF。
+try:
+    sys.stdout.reconfigure(newline="\n")
+except Exception:
+    pass
 
 path, cmd = sys.argv[1], sys.argv[2]
 data = json.load(open(path, encoding="utf-8"))
