@@ -1,13 +1,13 @@
 # Quickstart (English)
 
 > Minimal English entry point. Canonical (Chinese) docs: `README.md` · `.cursor/docs/`.
-> Back to [English README](https://github.com/wangqiqi/cursor-ai/blob/master/README.en.md).
+> Back to the English README at the repository root: `README.en.md`.
 
 ## 1. Install
 
+（Clone or copy this repository first, then run from its root.）
+
 ```bash
-git clone https://github.com/wangqiqi/cursor-ai.git
-cd cursor-ai
 ./install-super-cursor.sh /path/to/your-project        # --profile full is the default
 ```
 
