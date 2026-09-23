@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- **示例去作者项目史（通用性收口 1）** — `growth-layout.md` 的域表示例此前带**真实时间戳与真实 sprint 号**（`20260906_093000` · `SPRINT-83/89/105/120/131` · `SPRINT-VIZ-L1` · `SPRINT-INT-VERIFY-01` · `v0.82.4` · `harness_sdk` · `web_operator_panel`），使用者会误以为模板自带这些编号；现一律改为占位令牌（`<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`）。`sprint-goal-gate.md` · `ops-deploy/SKILL.md` · `test-report/contract-schema.md` 的同类具体编号一并占位化。`denylist.txt` 增 7 条规则（数字型时间戳 + 作者 sprint 号族 + 专有 topic 名）**防回填**，负向测试已验证会 FAIL
+
 ### Changed
 
 - **文档同步（v4.29.8 后）** — 把本次 Sprint 新增的 8 道门禁与 4 处行为变更写进相应 SSOT：

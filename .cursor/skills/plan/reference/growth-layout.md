@@ -19,18 +19,20 @@
 
 ### 推荐域（`domain`）
 
+示例一律用**占位令牌**（`<YYYYMMDD>` · `<HHMMSS>` · `SPRINT-NN` · `<topic>`）：**不得**把某个项目的真实时间戳 / sprint 号写进母版（`config/denylist.txt` 会 FAIL）。
+
 | 域 | 放什么 | 示例 |
 |----|--------|------|
-| `sprint` | Sprint 闭合摘要 · TASK 汇总 | `sprint/20260907_153000_SPRINT-131_闭合.md` |
-| `spike` | SPIKE 结论 · 调研 ADR | `spike/20260906_093000_harness_sdk_SPIKE-001.md` |
-| `release` | 发版笔记 · tag 说明 | `release/20260907_152000_v0.82.4_发版.md` |
-| `doc` | 文档 Sprint · doc 收敛 | `doc/20260906_130500_DOC-06_SPRINT-105.md` |
-| `ops` | 运维 · 数据 · verify 分层 · 可观测 | `ops/20260906_183600_SPRINT-100-F3_Host_RSS可观测.md` |
-| `web` | WebUI · 控制台 · 前端 Sprint | `web/20260906_101200_web_operator_panel_SPRINT-89.md` |
-| `test` | 测试体系 · verify 编排 | `test/20260907_213800_SPRINT-INT-VERIFY-01_integration_orchestration.md` |
-| `operator` | 操作员 · MCP · 工具链 | `operator/20260906_200500_mcp_server_SPRINT-120.md` |
-| `harness` | Harness · SDK · 插件宿主 | `harness/20260906_092000_harness_pluggable_SPRINT-83.md` |
-| `viz` | 可视化 · 图表 Sprint | `viz/20260906_173700_可视化_L1_SPRINT-VIZ-L1.md` |
+| `sprint` | Sprint 闭合摘要 · TASK 汇总 | `sprint/<YYYYMMDD>_<HHMMSS>_SPRINT-NN_闭合.md` |
+| `spike` | SPIKE 结论 · 调研 ADR | `spike/<YYYYMMDD>_<HHMMSS>_<topic>_SPIKE-NN.md` |
+| `release` | 发版笔记 · tag 说明 | `release/<YYYYMMDD>_<HHMMSS>_v<X.Y.Z>.md` |
+| `doc` | 文档 Sprint · doc 收敛 | `doc/<YYYYMMDD>_<HHMMSS>_DOC-NN.md` |
+| `ops` | 运维 · 数据 · verify 分层 · 可观测 | `ops/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
+| `web` | WebUI · 控制台 · 前端 Sprint | `web/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
+| `test` | 测试体系 · verify 编排 | `test/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
+| `operator` | 操作员 · MCP · 工具链 | `operator/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
+| `harness` | Harness · SDK · 插件宿主 | `harness/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
+| `viz` | 可视化 · 图表 Sprint | `viz/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
 | `cv` / `cognition` / `society` | 领域模块（按项目自定） | 团队可在 plan-conventions 增删 |
 
 **禁止**：Sprint 收尾把长叙事只写进 plan 而不归档；**禁止**无域前缀持续新增根目录 flat 文件（迁移期除外，须登记 plan-conventions）。

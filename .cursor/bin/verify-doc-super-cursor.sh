@@ -53,7 +53,7 @@ else
   fail "bilingual entry missing or not linked from README.md (README.en.md · docs/quickstart.en.md)"
 fi
 
-# --- skill metadata 契约：description ≤85 字 + dmi 分桶（SPRINT-SKILL-META 回归）---
+# --- skill metadata 契约：description ≤85 字 + dmi 分桶（防再次被删的回归）---
 # 该节曾在 ef5521b 被静默删除且无人发现；此处断言存在性 + 实际元数据
 training="$CUR/docs/training/skills.md"
 if grep -q 'disable-model-invocation' "$training" 2>/dev/null \

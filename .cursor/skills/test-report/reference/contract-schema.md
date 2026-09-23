@@ -22,7 +22,7 @@ run:
   suites: Suite[]
 
 metadata:
-  sprint_key: string | null      # 如 SPRINT-QA-01
+  sprint_key: string | null      # 如 SPRINT-QA-NN
   environment_hint: string | null  # 自由文本 · 无密钥
 
 verify:

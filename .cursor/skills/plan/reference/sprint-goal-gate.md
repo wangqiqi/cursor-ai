@@ -62,7 +62,7 @@
 「下一 Sprint 候选」**禁止**出现纯仪式行：
 
 ```markdown
-| SPRINT-99 | 打版发 tag | SPRINT-04 已闭合 |   ← 删，改 /release
+| SPRINT-NN | 打版发 tag | SPRINT-04 已闭合 |   ← 删，改 /release
 ```
 
 候选表每行 Goal 须能通过上表「合格标准」。

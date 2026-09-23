@@ -32,6 +32,17 @@ C:\\Users\\
 # acme-internal
 # corp-nexus
 
+# --- 作者项目的真实历史（示例必须是合成占位） ---
+# 母版正文的示例一律用 `<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`；
+# 真实时间戳与真实 sprint 号会让使用者误以为模板自带这些编号。
+[0-9]{8}_[0-9]{6}
+SPRINT-(83|89|99|100|105|120|131)
+SPRINT-VIZ
+SPRINT-INT-VERIFY
+harness_sdk
+web_operator_panel
+v0\.82\.4
+
 # --- 凭据痕迹（只匹配密钥材料本身，勿写宽泛的扩展名） ---
 -----BEGIN [A-Z ]*PRIVATE KEY-----
 AKIA[0-9A-Z]{16}

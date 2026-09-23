@@ -15,7 +15,7 @@ disable-model-invocation: true
 - 新增或改 `docker-compose*.yml` · `Dockerfile` · `.env.example` · nginx 配置
 - 用户说「对齐 env」「compose 归位」「nginx 反代」「部署文档」
 - `/master` 或 **scaffold** 后需补部署面
-- Sprint 候选 **SPRINT-OPS-DEPLOY** 类任务
+- Sprint 候选 **SPRINT-NN** 类任务
 
 ## 流程（四步）
 
