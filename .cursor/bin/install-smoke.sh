@@ -48,9 +48,11 @@ echo "=== install smoke ==="
 
 # 1. full · empty target
 FULL="$TMP_ROOT/full-empty"
-"$INSTALL" "$FULL" --profile full >/dev/null
+"$INSTALL" "$FULL" --profile full > "$TMP_ROOT/full.out" 2>&1
 assert_file "$FULL/.cursorGrowth/plan.md" "full: .cursorGrowth/plan.md copied"
 assert_file "$FULL/.cursorGrowth/learn/plan-conventions.md" "full: learn seeds"
+# B4：安装输出必须把「首次必做 /learn」讲清楚，否则闸门与验收会空转
+assert_grep "$TMP_ROOT/full.out" '/learn' "full: output points at /learn first-run"
 assert_grep "$FULL/.gitignore" 'cursorGrowth' "full: gitignore .cursorGrowth/"
 assert_absent "$FULL/plan.md" "full: no root plan.md"
 assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template 执行顺序"

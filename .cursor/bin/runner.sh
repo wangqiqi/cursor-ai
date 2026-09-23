@@ -323,6 +323,65 @@ acceptance_kind() {
   fi
 }
 
+# --- 摩擦可观测（B5）：交付后记一行，供 /learn 汇总 ---
+json_escape() {
+  local s="${1:-}"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
+}
+
+friction_log() {
+  shift || true
+  local task="" rounds="0" rework="0" result="" note=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --task) task="${2:-}"; shift 2 ;;
+      --rounds) rounds="${2:-0}"; shift 2 ;;
+      --rework) rework="${2:-0}"; shift 2 ;;
+      --verify) result="${2:-}"; shift 2 ;;
+      --note) note="${2:-}"; shift 2 ;;
+      *) shift ;;
+    esac
+  done
+  [[ "$rounds" =~ ^[0-9]+$ ]] || rounds=0
+  [[ "$rework" =~ ^[0-9]+$ ]] || rework=0
+  local dir="$ROOT/.cursorGrowth/logs"
+  mkdir -p "$dir"
+  printf '{"ts":"%s","task":"%s","sprint":"%s","rounds":%s,"rework":%s,"verify":"%s","note":"%s"}\n' \
+    "$(iso8601_now)" \
+    "$(json_escape "$task")" \
+    "$(json_escape "$(plan_sprint)")" \
+    "$rounds" "$rework" \
+    "$(json_escape "${result:-unknown}")" \
+    "$(json_escape "$note")" >> "$dir/friction.jsonl"
+  echo "OK: friction logged (${task:-?} · rounds=$rounds · rework=$rework · verify=${result:-unknown})"
+}
+
+friction_report() {
+  local f="$ROOT/.cursorGrowth/logs/friction.jsonl"
+  if [[ ! -f "$f" ]]; then
+    echo "（无 friction 记录：交付后用 runner.sh friction-log 记一行）"
+    return 0
+  fi
+  awk '
+    {
+      n++
+      if ($0 ~ /"verify":"pass"/) ok++; else bad++
+      if (match($0, /"rounds":[0-9]+/)) tr += substr($0, RSTART+9, RLENGTH-9)
+      if (match($0, /"rework":[0-9]+/)) tw += substr($0, RSTART+9, RLENGTH-9)
+    }
+    END {
+      if (n > 0)
+        printf "tasks=%d · verify_pass=%d · verify_fail=%d · avg_rounds=%.1f · avg_rework=%.1f\n",
+               n, ok+0, bad+0, tr/n, tw/n
+    }
+  ' "$f"
+}
+
 task_verify() {
   local id="${1:-$(plan_active)}"
   local acc loc pattern test_py
@@ -505,6 +564,12 @@ case "$cmd" in
   plan-check)
     plan_check
     ;;
+  friction-log)
+    friction_log "$@"
+    ;;
+  friction-report)
+    friction_report
+    ;;
   help|-h|--help)
     cat <<EOF
 用法: $0 [status|gate-check|task-verify|verify|plan-check|next-task|...]
@@ -518,6 +583,8 @@ case "$cmd" in
   release-check P0 是否全部 ✅
   release-tag   在当前 HEAD 打 annotated tag（默认 patch bump）
   next_version  下一 patch 版本号
+  friction-log  记一行摩擦数据（--task --rounds --rework --verify --note）
+  friction-report  汇总摩擦数据（tasks · verify 通过率 · 平均轮次/返工）
 
 环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:
   VERSION_TAG_GLOB      git tag 匹配 glob（优先于 plan VERSION_LINE）

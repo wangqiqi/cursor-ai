@@ -355,11 +355,12 @@ echo "  profile: $PROFILE"
 echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"
+echo "  0. 首次必做 → 对 Agent 说 /learn（填充项目认知；不做则闸门/验收会空转）"
 echo "  1. 不确定从哪开始 → 对 Agent 说 /master"
 if [[ "$file_count" -le 3 ]]; then
   echo "  2. 空仓库 → /scaffold 选技术栈并创建骨架"
 else
-  echo "  2. 了解项目 → /learn"
+  echo "  2. 了解项目 → /learn（= 上面第 0 步，可跳过重复）"
 fi
 echo "  3. 拆需求 → /plan   4. 实现 → /run"
 echo "  5. 验收 → ./scripts/verify.sh（scaffold 后会生成）"

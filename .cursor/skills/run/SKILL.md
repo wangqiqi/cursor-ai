@@ -213,10 +213,15 @@ Ambiguous 时 AskQuestion ≤4 项，禁止开放式「你想用哪个 skill」�
    - [ ] **VERSION_TARGET**（若有）与 CHANGELOG / 打版 tag 一致
    - [ ] 团队在 `plan-conventions.md` 登记的可选段落 → 交付态或仅 archive
 4. 对外变更写入 CHANGELOG `[Unreleased]`（**勿**在 plan 维护 ROADMAP 全表）
-5. **`git commit`（必做）** — 仅已跟踪文件；message 例：`docs: close SPRINT-NN readme sync (DOC-00N)`
-6. **`/learn`** — 吸收 archive / CHANGELOG 到 `.cursorGrowth/learn/`（**建议**）
-7. `./.cursor/bin/runner.sh plan-check` — plan 内无已闭合 Sprint 正文
-8. 确认 `git status` 无意外脏文件（`.cursorGrowth/` 改动可存在且不必提交）
+5. **摩擦记录（每个 TASK 收尾一行）** — 让"拉扯"可观测、可回归：
+   ```bash
+   ./.cursor/bin/runner.sh friction-log --task <TASK-ID> --rounds <本任务交互轮次> --rework <返工次数> --verify <pass|fail>
+   ```
+   写入 `.cursorGrowth/logs/friction.jsonl`（gitignore）；`friction-report` 汇总。**/learn** 时把趋势写进 `learn/dev-conventions.md`。
+6. **`git commit`（必做）** — 仅已跟踪文件；message 例：`docs: close SPRINT-NN readme sync (DOC-00N)`
+7. **`/learn`** — 吸收 archive / CHANGELOG / `friction-report` 到 `.cursorGrowth/learn/`（**建议**）
+8. `./.cursor/bin/runner.sh plan-check` — plan 内无已闭合 Sprint 正文
+9. 确认 `git status` 无意外脏文件（`.cursorGrowth/` 改动可存在且不必提交）
 
 Sprint 收尾后若需 **merge/PR 或打 tag** → **`/release`**；新开 Sprint → **`/plan`**（设 `<!-- SPRINT_STATUS: active -->`）。
 

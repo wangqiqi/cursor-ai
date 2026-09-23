@@ -4,6 +4,9 @@ set -euo pipefail
 
 CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CURSOR_DIR/.." && pwd)"
+# Git Bash / Windows 可能只有 python；勿硬编码 python3
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+[[ -n "$PYTHON_BIN" ]] || { echo "FAIL: python required for runner smoke"; exit 1; }
 TMP_PLAN="$(mktemp)"
 trap 'rm -f "$TMP_PLAN"' EXIT
 
@@ -111,6 +114,24 @@ rm -rf "$D"
 
 D="$(mk_plan_project "bash -c 'exit 3'")"
 smoke_assert "$D" fail "task-verify 可执行命令失败时 FAIL" bash .cursor/bin/runner.sh task-verify TASK-001
+rm -rf "$D"
+
+# 摩擦日志（B5）：必须是合法 JSONL，report 可聚合
+D="$(mk_plan_project "bash -c 'exit 0'")"
+( cd "$D" && bash .cursor/bin/runner.sh friction-log --task TASK-001 --rounds 2 --rework 0 --verify pass --note 'x"y' ) >/dev/null 2>&1
+( cd "$D" && bash .cursor/bin/runner.sh friction-log --task TASK-002 --rounds 4 --rework 1 --verify fail ) >/dev/null 2>&1
+if [[ -f "$D/.cursorGrowth/logs/friction.jsonl" ]] && "$PYTHON_BIN" -c "
+import json,sys
+[json.loads(l) for l in open(sys.argv[1])]" "$D/.cursorGrowth/logs/friction.jsonl" 2>/dev/null; then
+  echo "OK  friction.jsonl is valid JSONL"
+else
+  echo "FAIL: friction.jsonl invalid"; rm -rf "$D"; exit 1
+fi
+rep="$( cd "$D" && bash .cursor/bin/runner.sh friction-report )"
+case "$rep" in
+  *"tasks=2"*"verify_pass=1"*"verify_fail=1"*) echo "OK  friction-report aggregates ($rep)" ;;
+  *) echo "FAIL: friction-report unexpected: $rep"; rm -rf "$D"; exit 1 ;;
+esac
 rm -rf "$D"
 
 echo "runner smoke passed."

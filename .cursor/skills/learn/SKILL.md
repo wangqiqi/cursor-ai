@@ -28,6 +28,20 @@ disable-model-invocation: true
 
 首次 **`/learn`** 在种子文件上**增量填写**「待填」项，并吸收 CHANGELOG / archive / plan。
 
+### 空模板最小采集（首次闭环 · 不必读全仓）
+
+`learn/` 全为「待填」时，**先用 3 个问题**把最小闭环填上（AskQuestion 或正文编号；能从仓库直接读出的**不要问**）：
+
+| # | 问什么 | 落点 | 为什么必须 |
+|---|--------|------|-----------|
+| 1 | 开发/测试命令（或「没有」） | `dev-conventions.md` · `scripts/test.sh` | `task-verify` 的兜底与验收列都依赖它；没有就是明确写「无」 |
+| 2 | 代码分层与入口（模块、目录、依赖方向） | `module-map.md` | 让 `/plan` 拆 TASK 时落点准确，减少返工轮次 |
+| 3 | 发版节奏（谁打 tag · 频率 · CHANGELOG 习惯） | `release-rhythm.md` | `/release` 与 ship agent 的判断依据 |
+
+读完这 3 项再按需补 `acceptance.md` / `changelog-insights.md`；**不要**为填表而通读全仓。
+
+安装脚本会在结尾提示「首次必做 → `/learn`」；跳过它，闸门与验收会空转（验收列只能写描述性文字，而 `task-verify` 对描述性验收是 fail-closed）。
+
 | 文件 | 内容 |
 |------|------|
 | `plan-conventions.md` | archive 命名 · 可选 plan 段落 · Sprint 标题用语 — 供 **plan** / **run** / `plan-check` |
@@ -37,6 +51,8 @@ disable-model-invocation: true
 | `changelog-insights.md` | 近期对外变更摘要 |
 | `last-sync.md` | 本次同步时间、来源、待确认项 |
 | `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill |
+
+**摩擦趋势**（若 `.cursorGrowth/logs/friction.jsonl` 存在）→ 运行 `./.cursor/bin/runner.sh friction-report`，把一行结论写进 `dev-conventions.md`（例：`avg_rounds=2.3 · verify_fail=1/8 — 验收列偏描述性`）。这是**唯一**衡量"少拉扯"是否真的改善的证据。
 
 **实验 / 批跑坐标**（通用闭环见 **spike** agent §experiment-loop）→ 写入 `dev-conventions.md` 或 `learn/` 专节：产物根目录 · 报告命名 · 索引 README · gate 脚本路径。**勿**把项目路径写进 `.cursor/` 母版。
 
