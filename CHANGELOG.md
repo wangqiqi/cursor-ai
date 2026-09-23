@@ -53,14 +53,16 @@ All notable changes to Super Cursor are documented here.
 - **`eol=lf` 行尾策略 + 门禁（Windows 第 4 个隐患）** — 仓库此前**没有 `.gitattributes`**：Git for Windows 默认 `core.autocrlf=true`，克隆会把 `*.sh` 检出为 CRLF，首行成 `#!/usr/bin/env bash\r` → 脚本**秒退且无报错**（与安装/自检"无 FAIL 行直接中止"的症状一致）。现新增仓库根 [`.gitattributes`](.gitattributes)：`* text=auto eol=lf` + 脚本/规则/配置显式 LF，`.bat`/`.cmd`/`.ps1` 反向 CRLF，二进制显式 `binary`；`verify-portability.sh` 断言其存在且真含 `eol=lf`（目标项目豁免）。`platforms.md` 增「Windows 的三个坑」对照表
 - **示例去作者项目史（通用性收口 1）** — `growth-layout.md` 的域表示例此前带**真实时间戳与真实 sprint 号**（`20260906_093000` · `SPRINT-83/89/105/120/131` · `SPRINT-VIZ-L1` · `SPRINT-INT-VERIFY-01` · `v0.82.4` · `harness_sdk` · `web_operator_panel`），使用者会误以为模板自带这些编号；现一律改为占位令牌（`<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`）。`sprint-goal-gate.md` · `ops-deploy/SKILL.md` · `test-report/contract-schema.md` 的同类具体编号一并占位化。`denylist.txt` 增 7 条规则（数字型时间戳 + 作者 sprint 号族 + 专有 topic 名）**防回填**，负向测试已验证会 FAIL
 - **bundle 解析 jq 回退（通用性收口 2）** — `scaffold.sh` 的 `apply-bundle` 与 `scaffold-integrity.sh` 的 bundle 检查此前**直连 `jq`**，绕过 `lib/platform.sh`：无可用 jq 时 `apply-bundle` 直接 `FAIL: unknown bundle`，且 `SC_FORCE_PYTHON=1` 也救不了 → Windows/Git Bash 无 jq 环境不可用，而 CI 的"回退腿"仍走 jq（**表面绿**）。现新增 7 个 `sc_manifest_bundle_*` 助手（与 scaffolds 同策略：jq 快路径 / python 回退），9 处调用点全部改经助手；`template-verify.sh` 的 scaffold smoke 增跑一遍 `SC_FORCE_PYTHON=1`，使回退覆盖**真实**发生
-
-## [4.29.8] - 2026-09-23
-
 - **macOS 阻塞腿失败：bash 3.2 空数组（第 12 个真缺陷）** — `install-super-cursor.sh` 以**零 exclude** 调用 `sc_copy_tree`，而 `sc_copy_tree` 内 `for ex in "${excludes[@]}"` 在 **bash 3.2（macOS 系统 bash）+ `set -u`** 下报 `unbound variable` 直接中止（bash 4.4+ 才算空展开）→ 安装脚本退出非零 → `install-smoke` 因 `set -e` 静默中止（**日志零输出、0.5 秒退出**，无法定位）。现全部改用 `${arr[@]+"${arr[@]}"}`；`verify-portability` 新增静态护栏，**首次运行又抓出脚手架 bundle `verify-layers.sh` 的同类 bug**（会被装进目标项目）并一并修复
 - **Windows 阻塞在 python 中文输出（第 13 个真缺陷）** — CI 精确定位到 `verify-docs-layout.sh` python 块第 81 行：Windows Python stdout 默认 **cp1252**，打印中文即 `UnicodeEncodeError` 崩溃。现 `platform.sh` 统一 `export PYTHONIOENCODING=utf-8` + `PYTHONUTF8=1`（对 3.7+ 生效），并给 4 个「用 python 却未 source 平台库」的脚本（`resolve-role` · `run-start` · `dev-maintain` · `verify_collect_week`）补上导出；`verify-portability` 静态断言「python 块必须有 UTF-8 保障」
 - **`install-smoke` 失败可见化** — 此前安装失败在 `set -e` 下一行中止，输出还被重定向到临时文件 → 日志只剩 `exit code 1`。现加 `ERR` trap 打印中止行号，并改为 `run_install` 助手：**记录 FAIL + 回显安装输出尾部 + 继续跑完其余断言**（不再一行失败就停）
 - **CI 双阻塞腿真因：`$VAR` 紧跟中文字符（multibyte 标识符）** — 上一轮把 `install-smoke` 改成失败可见后，macOS 日志给出确切错误：`line 327: PROFILE\uFFFD: unbound variable`。根因是 `echo "…（profile=$PROFILE）"` 里 `$PROFILE` **紧跟全角右括号 `）`**：bash 3.2（macOS 系统 bash）与 C locale 下的 Git Bash 会把多字节字符的字节**并入变量名**，`set -u` 下即 `unbound variable` 中止 —— 这一个缺陷同时解释 macOS 与 Windows 两条腿（也解释了为何"零输出、秒退"）。全仓 **10 处**（`install-super-cursor.sh` 5 · `runner.sh` 2 · `dev-maintain.sh` 2 · verify-layers bundle 1）改为花括号定界 `${VAR}`；`verify-portability` 新增静态护栏拦截该写法（负向/正向 fixture 均验证），并确认规则与文档的代码块内无同类写法
 - **Windows 腿：Python 文本模式输出 CRLF（第 14 个真缺陷）** — 阻塞腿修好后 Windows 只剩 `scaffold-integrity` 报 **7 个 `FAIL missing dir <stack>`**（目录明明都在）。根因：Windows 下 Python 文本模式把 `\n` 翻译成 `\r\n`，`sc_manifest_ids` 的输出经 `while read` 得到 `react-vite-ts\r` → `[[ -d "$TEMPLATE_ROOT/$id" ]]` 与字符串比较全部失败。修复：`_manifest_py` / `_docs_layout_py` 统一 `sys.stdout.reconfigure(newline="\n")`（根因），并在消费点（`scaffold-integrity` 的 3 个循环与 3 个字段、`runner.sh docs-init` 的 3 个标量）用 `${var%$'\r'}` 兜底剥离。**本地用「让 python 输出 `\r\n`」的方式模拟 Windows**：有剥离 → exit 0；去掉剥离 → 一字不差复现 CI 的 7 个 `missing dir`
+- **CHANGELOG 节点归属修复 + 门禁补强** — `4151782`/`6735172`/`9a60cc9` 三条 follow-up 的条目被**误写进已发布的 `[4.29.8]` 节点**（插入点算到了版本标题之后），使 CHANGELOG 对已打 tag 的版本失真。现按 `v4.29.8` tag 内容**逐字节还原**该节点，5 条条目移回 `[Unreleased]`；并给 `verify-changelog` 补一条本可拦住它的规则：**版本标题下不得先出现列表条目**（必须先有 `### ` 子节），开关放行历史节点的段落式叙事。负向 fixture 验证命中，历史 3 处段落风格不误报
+
+
+## [4.29.8] - 2026-09-23
+
 ### Added
 
 - **双语最低集（A5）** — 新增 `README.en.md` 与 `.cursor/docs/quickstart.en.md`（英文入门层：安装 · 三个日常指令 · 目录边界 · 自检 · 进阶表），主 `README.md` 顶部加入口；`quickstart.en.md` 同步进 VitePress 侧栏（`docs/guide/quickstart.en.md`，站点共 13 篇镜像），同步脚本与 `README.en.md` 一并镜像到 GitHub 绝对链接。`verify-doc-super-cursor.sh` 断言英文入口存在且被主 README 链接。**不**翻译 rules/skills 正文（成本高、收益低）
@@ -91,7 +93,6 @@ All notable changes to Super Cursor are documented here.
 - **默认人格去作者化（A2）** — `role.default` 由 `dashu`（油腻大叔）改为 `professional`（中性「专业搭档」）；`dashu` 人设的 `given_name` / `nicknames` 由作者真人称呼（`老周`）改为虚构 `老哥` / `大叔`，两词已入 `denylist.txt`。12 人格全部保留，仅换默认；**已安装项目不受影响**（其 `config/workflow.json` 是自己的副本）
 - **standalone 扫描过度豁免** — `maintain/scripts/dev-maintain.sh` 与 `skills/disk/*` 此前被排除在用户/机器路径扫描之外，实测两者**并不命中**该规则；豁免已删除，扫描面恢复完整（A1）
 - **A1 门禁落地时发现并修正一处过宽规则** — 凭据规则最初写成 `\.pem$`，会误命中 `templates/scaffold/_shared.cursorignore` 的合法 ignore 模式；改为只匹配密钥材料本体（`-----BEGIN … PRIVATE KEY-----` / AKIA key id）
-
 ## [4.29.7] - 2026-09-23
 
 ### Added

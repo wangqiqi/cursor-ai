@@ -43,13 +43,17 @@ text = path.read_text(encoding="utf-8", errors="replace")
 CANON = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"]
 
 nodes = []           # (heading, [(subsection, line_no)])
+bodies = {}          # heading -> [(line_no, text)] 标题之后到下一节点之前
 current = None
 for i, line in enumerate(text.splitlines(), 1):
     if line.startswith("## "):
         current = (line.strip(), [])
         nodes.append(current)
-    elif line.startswith("### ") and current is not None:
-        current[1].append((line[4:].strip(), i))
+        bodies[current[0]] = []
+    elif current is not None:
+        if line.startswith("### "):
+            current[1].append((line[4:].strip(), i))
+        bodies[current[0]].append((i, line))
 
 fails = []
 
@@ -77,6 +81,18 @@ for heading, subs in nodes:
                 f"{changelog}:{lines[0]} {heading} has {len(lines)} '### {name}' sections "
                 f"(lines {lines}) — 追加条目请并进已有小节"
             )
+
+    # 1b. 版本标题下必须先有 `### ` 子节：条目直接挂在 `## [x.y.z]` 后面说明插错了节点
+    #     （真实事故：per-commit 追加把 5 条 follow-up 写进了已发布的 4.29.8 节点）
+    for line_no, raw in bodies.get(heading, []):
+        if not raw.strip():
+            continue
+        if not raw.startswith("### ") and raw.lstrip().startswith("- "):
+            fail(
+                f"{changelog}:{line_no} {heading} starts with content before any '### ' subsection "
+                f"({raw.strip()[:50]!r}) — 列表条目漏到了错误节点（必须先有 ### 子节）"
+            )
+        break
 
     # 2. 已知小节必须按规范顺序出现 —— 仅约束 [Unreleased]（落地区）；
     #    已发布节点的顺序是历史，重排会制造无意义的 diff
