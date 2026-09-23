@@ -28,7 +28,7 @@
 | `ops` | 运维 · 数据 · verify 分层 · 可观测 | `ops/20260906_183600_SPRINT-100-F3_Host_RSS可观测.md` |
 | `web` | WebUI · 控制台 · 前端 Sprint | `web/20260906_101200_web_operator_panel_SPRINT-89.md` |
 | `test` | 测试体系 · verify 编排 | `test/20260907_213800_SPRINT-INT-VERIFY-01_integration_orchestration.md` |
-| `operator` | 操作员 · MCP · 工具链 | `operator/20260906_200500_guanfu_mcp_SPRINT-120.md` |
+| `operator` | 操作员 · MCP · 工具链 | `operator/20260906_200500_mcp_server_SPRINT-120.md` |
 | `harness` | Harness · SDK · 插件宿主 | `harness/20260906_092000_harness_pluggable_SPRINT-83.md` |
 | `viz` | 可视化 · 图表 Sprint | `viz/20260906_173700_可视化_L1_SPRINT-VIZ-L1.md` |
 | `cv` / `cognition` / `society` | 领域模块（按项目自定） | 团队可在 plan-conventions 增删 |
@@ -95,4 +95,4 @@ scripts/
 bash .cursor/bin/verify-growth-layout.sh
 ```
 
-目标项目可选：在 `scripts/README.md` 声明布局，并在 `dev-conventions.md` 链本 SSOT 或 GuanFu 式矩阵。
+目标项目可选：在 `scripts/README.md` 声明布局，并在 `dev-conventions.md` 链本 SSOT 或项目自有的 verify 矩阵。

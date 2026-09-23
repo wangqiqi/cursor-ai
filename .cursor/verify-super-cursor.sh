@@ -7,7 +7,7 @@ CUR="$ROOT/.cursor"
 FAIL=0
 
 # Mother-only layout: pure Super Cursor template repo (no co-located business tree).
-# Hybrid: .cursor/ + business code (e.g. sjudge). Auto-detect; override SC_VERIFY_LAYOUT=mother|hybrid.
+# Hybrid: .cursor/ + co-located business tree. Auto-detect; override SC_VERIFY_LAYOUT=mother|hybrid.
 is_hybrid_repo() {
   case "${SC_VERIFY_LAYOUT:-auto}" in
     hybrid) return 0 ;;
@@ -348,7 +348,7 @@ while IFS= read -r f; do
     *verify-super-cursor.sh) continue ;;
   esac
   user_violators="${user_violators}${f}"$'\n'
-done < <(grep -rlE 'saida|wangqiqi' "$CUR" 2>/dev/null || true)
+done < <(grep -rliE 'saida|wangqiqi|guanfu|sjudge|rdm-week' "$CUR" 2>/dev/null || true)
 if [[ -n "$(echo "$path_violators" | sed '/^$/d')" ]]; then
   echo "FAIL .cursor contains machine-specific absolute paths:"
   echo "$path_violators" | sed '/^$/d'
