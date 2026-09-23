@@ -3,23 +3,13 @@
 All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
-
 ### Added
 
 - **脚手架 `_shared/` 共享层（E3）** — `templates/scaffold/_shared/scripts/` 提供项目脚本骨架：`README.md`（分层矩阵 SSOT）· `lib/_common.sh`（`sc_root`/`sc_step`/`sc_ok`/`sc_fail`/`sc_require_cmd`/`sc_summary`）· `lib/_frontend.sh`（`sc_frontend_verify`）· `verify/{domain,tier}` + `ops` + `dev` 占位。`scaffold.sh apply` 改为**先铺共享层再铺栈文件**（栈可覆盖）→ 新项目从第一天就是分层结构；7 栈 `test.sh`/`verify.sh` 的前导统一为 source 公因子
 - **`bin/verify-scripts-layout.sh`（E4）** — 脚本分层与**重复块检测**门禁：≥4 行连续相同 → 要求提取到 `lib/_*.sh`；另查 `scripts/README.md` 矩阵 · 根脚本体量/数量 · shebang。有 `scripts/` 时按**项目模式**，母版无 `scripts/` 时按**模板模式**查 scaffold（因此自身也被 CI 覆盖）。该门禁首次运行即抓出前端三栈重复的 4 行验收逻辑 → 已提取为 `sc_frontend_verify`
-
-### Added
-
 - **archive 域分层骨架 + 门禁（F1/F2）** — `templates/cursorGrowth/archive/{sprint,spike,release,doc,ops}/` 骨架 + `archive/README.md` 域表；新增 `runner.sh archive-check`（根目录 flat 文件数 > `workflow.json` → `growth.archive_flat_max`（默认 5）即 FAIL，并列出应归入的域），已聚合进 `verify-growth-layout.sh`；`run` §Sprint 收尾 增一步。**本仓自己的 archive 同步分层**：23 个 flat 文件 → `sprint/`(12) · `doc/`(7) · `ops/`(5)，根目录 flat 归零
 - **域表 + docs 编号约定（F3）** — `templates/cursorGrowth/learn/plan-conventions.md` 成为**项目侧唯一登记表**（archive/scripts/docs 三处共用）：域表 · 归档命名与门禁 · **docs `NN_中文功能.md` 硬上限 10** · 序号纪律（不重用/留空/追加）· `ROADMAP.md` **例外不加序号** · 预留 **`07_用户手册.md`（`/manual` 自动生成）** 与 **`08_测试报告.md`（`/report` 自动生成）** + 生成标记 `<!-- generated: … · regenerate: … -->` · docs ↔ Growth 边界判定
-
-### Added
-
 - **测试框架选型（优先成熟开源）（G1–G4）** — `rules/execution/testing.mdc` 新增**§框架选型**表：TS/JS **Vitest** · React/Next/Vue/Svelte **Vitest + Testing Library** · E2E **Playwright** · Python **pytest**（+hypothesis 按需）· Go **go test** · Rust **cargo test** · C/C++ **CTest + Catch2/GoogleTest** · Java **JUnit 5** · BDD **Cucumber**；并给出"何时不引入"。纪律：优先宽松许可的活跃开源 · **一套到底**不混两套 runner · 跟随既有 lockfile 不迁移。`javascript`/`typescript`/`react`/`nextjs`/`svelte` 五条 tech rule 补默认框架指向（此前只有 react/java/python/go/rust/c/cpp/vue 写了）；`oss-first.mdc` 增「测试框架选型」段。`manifest.json` 7 栈新增 `test_framework` 声明，`scaffold-integrity.sh` **校验脚本/依赖里确实调用了它**（`platform.sh` 另加 `sc_manifest_scaffold_field_join` 以正确解析数组字段）
-
-### Added
-
 - **项目文档体系（D · 瀑布式号位）** — `config/docs-layout.json` + `rules/execution/project-docs.mdc` + `templates/project-docs/`（10 号位骨架 + `ROADMAP.md` + 名称映射索引）+ `bin/verify-docs-layout.sh`：
   - **号位 = 瀑布阶段（不可变）**：`01` 需求 · `02` 架构 · `03` 数据/契约 · `04` 接口/算法 · `05` 详细设计 · `06` 工程规范 · `07` 使用⚙ · `08` 测试⚙ · `09` 发布 · `10` 调优；**名称按 profile 替换**，跨项目号位可对齐
   - **必选号位** `01` `02` `06` `08` `10` + **`ROADMAP.md`（例外·不加序号）**；带序号文档 **硬上限 10**
@@ -30,9 +20,6 @@ All notable changes to Super Cursor are documented here.
   - **渐进启用**：`docs/` 尚无编号文档时不 FAIL 只提示，并改验 `templates/project-docs` 骨架（母版与 CI 因此也被覆盖）；一旦有第 1 份编号文档，全部断言生效
   - 与 **SDD** 衔接：`01` ← `sdd/spec-template` · `02` ← `tech-plan-template` · `05` ← `tasks-template`，不另写一套
 - **`verify-config.sh` 支持 `_comment` 注释键**（schema 与 config 均可带说明）
-
-### Added
-
 - **`runner.sh docs-init`（D 后续）** — 按 profile 一键铺 `docs/` 号位骨架，把"文档体系"从规则变成可执行：
   - 默认只铺**必选号位**（`01_需求规格` `02_架构设计` `06_开发规范` `08_测试报告` `10_调试调优`）+ `ROADMAP.md` + 自动生成的 `docs/README.md` 索引（避免一上来就 10 个空壳）
   - `--profile <p>` 覆盖并**写回** `config/docs-layout.json`；`--slots 03,04` 追加条件号位；`--all` 全 10 个；`--force` 覆盖；`--dry-run` 预演
@@ -42,29 +29,10 @@ All notable changes to Super Cursor are documented here.
 - **`consumer-smoke.sh` 增 docs 端到端腿** — install → `docs-init` → `verify-docs-layout` 必须绿，关闭"骨架存在但从没被真实消费"的盲区；消费方验证器列表补 `verify-docs-layout` · `verify-scripts-layout`
 - **`/learn` 增 docs bootstrap** — 首次学习时据仓库证据建议 profile（web 全栈 / API / 前端 / library / CLI）并 `docs-init` 铺骨架
 
-### Fixed
-
-- **Windows CI 抓到的 3 个真缺陷（跨平台）** — 这些在 Linux/macOS 下**永不出现**（Linux 用 `/`、符号链接把问题藏住），Windows 腿（非阻塞）把它们暴露出来：
-  1. **`verify-rules-globs.sh` 路径分隔符泄漏** — `str(path.relative_to(cur))` 在 Windows 返回 `rules\tech\nextjs.mdc`，与 `rules/tech/nextjs.mdc` 字面量比较**全部不中** → 5 条 rule 的 plan 闸门断言 + 12 条栈 fixture 断言误报 FAIL（17 个）。改为 `.as_posix()`，并新增**回归护栏**（rule key 含反斜杠即 FAIL）
-  2. **`verify-roo-compat.sh` 把项目私有 rules 当规则扫** — `.cursor/rules/local/` 是安装脚本链接到 gitignore Growth 的**项目私有**目录，按设计含 `README.md`（非规则）。Linux 下它是符号链接、`rglob` 不遍历（**假绿**），Windows 下实体化即 FAIL。现显式跳过 `rules/local/**`；用同一 fixture 对旧脚本复现出**与 CI 完全相同的报错**，新脚本 OK
-  3. **裸 `ln -s` 在 `set -e` 下中止安装/自检** — `install-super-cursor.sh` 与 `install-smoke.sh` 的自安装 fixture 都无守卫；Windows/Git Bash 无符号链接权限时**直接中止**（日志表现为"无 FAIL 行、秒退"）。现均加守卫：安装脚本**降级为目录副本**（`mkdir` + README）保证安装成功，smoke 无符号链接权限时显式 `SKIP` 而非静默中止
-- **`verify-portability.sh` 增两条静态护栏** — ① `relative_to(`/`os.path.relpath(` 必须同句 `.as_posix()`（防第 1 类复发）② 裸 `ln -s` 必须带 `2>/dev/null`/`||`/`if`（防第 3 类复发）。两者均有负向测试，且对现有守卫点**零误报**
-- 展示用路径统一 `.as_posix()`（`verify-doc-super-cursor` · `verify-scripts-layout`），消息里不再混入反斜杠
-
-- **`eol=lf` 行尾策略 + 门禁（Windows 第 4 个隐患）** — 仓库此前**没有 `.gitattributes`**：Git for Windows 默认 `core.autocrlf=true`，克隆会把 `*.sh` 检出为 CRLF，首行成 `#!/usr/bin/env bash\r` → 脚本**秒退且无报错**（与安装/自检"无 FAIL 行直接中止"的症状一致）。现新增仓库根 [`.gitattributes`](.gitattributes)：`* text=auto eol=lf` + 脚本/规则/配置显式 LF，`.bat`/`.cmd`/`.ps1` 反向 CRLF，二进制显式 `binary`；`verify-portability.sh` 断言其存在且真含 `eol=lf`（目标项目豁免）。`platforms.md` 增「Windows 的三个坑」对照表
-
+- **CHANGELOG 结构门禁 `bin/verify-changelog.sh`（第 11 道）** — 本次 Sprint 的 follow-up 以 per-commit 方式追加，导致 `[Unreleased]` 出现 **5×`### Added` / 2×`### Fixed` / 2×`### Changed`** 且顺序错乱（Added→Fixed→Changed→Fixed→Changed），违反 `changelog.mdc` 的"同版本不得双节"却**无任何门禁**。现新增门禁：必须存在 `[Unreleased]` · **同一版本节点内 `### X` 不得重复** · `[Unreleased]` 小节顺序固定 Added → Changed → Fixed（**已发布节点不重排**，避免无意义 diff）；CHANGELOG 不存在时**渐进跳过**（目标项目不会误报）。`[Unreleased]` 已合并为 3 个小节、19 条一条不少（主条目与续行数与合并前逐项一致，集合哈希相同）
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行
-
-### Fixed
-
-- **示例去作者项目史（通用性收口 1）** — `growth-layout.md` 的域表示例此前带**真实时间戳与真实 sprint 号**（`20260906_093000` · `SPRINT-83/89/105/120/131` · `SPRINT-VIZ-L1` · `SPRINT-INT-VERIFY-01` · `v0.82.4` · `harness_sdk` · `web_operator_panel`），使用者会误以为模板自带这些编号；现一律改为占位令牌（`<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`）。`sprint-goal-gate.md` · `ops-deploy/SKILL.md` · `test-report/contract-schema.md` 的同类具体编号一并占位化。`denylist.txt` 增 7 条规则（数字型时间戳 + 作者 sprint 号族 + 专有 topic 名）**防回填**，负向测试已验证会 FAIL
-
-- **bundle 解析 jq 回退（通用性收口 2）** — `scaffold.sh` 的 `apply-bundle` 与 `scaffold-integrity.sh` 的 bundle 检查此前**直连 `jq`**，绕过 `lib/platform.sh`：无可用 jq 时 `apply-bundle` 直接 `FAIL: unknown bundle`，且 `SC_FORCE_PYTHON=1` 也救不了 → Windows/Git Bash 无 jq 环境不可用，而 CI 的"回退腿"仍走 jq（**表面绿**）。现新增 7 个 `sc_manifest_bundle_*` 助手（与 scaffolds 同策略：jq 快路径 / python 回退），9 处调用点全部改经助手；`template-verify.sh` 的 scaffold smoke 增跑一遍 `SC_FORCE_PYTHON=1`，使回退覆盖**真实**发生
-
-### Changed
-
 - **文档同步（v4.29.8 后）** — 把本次 Sprint 新增的 8 道门禁与 4 处行为变更写进相应 SSOT：
   - `rules/feedback/verify.mdc`：新增 §task-verify 语义（fail-closed / `manual:` 豁免）、**§母版门禁清单**（8 道 · 各自守护什么 · 通用 vs 母版）、接线自检规则、跨平台与 CI 段
   - `rules/workflow.mdc` · `skills/run/SKILL.md`：任务闸门补 fail-closed 与 `manual:` 说明
@@ -73,6 +41,18 @@ All notable changes to Super Cursor are documented here.
   - `docs/building-super-cursor.md`：修正过期表述（alwaysApply 由"仅 2 个"改为**实际 4 个**）、补跨平台/配置守护、新增**贡献者门禁清单**（改什么 → 必须绿什么）；layout 模式说明补"已安装目标项目"第三种
   - `.cursor/README.md`：`bin/` 清单由 7/20 补全为分组全量、`config/` 补 `schema.json`·`denylist.txt`、自测命令补 consumer-smoke 与门禁清单链接、路由说明改为「主路由在 master/SKILL.md · routes.md 为扩展索引」
   - 根 `README.md`：§验证补 4 条命令 + 8 道门禁表；`.cursor/docs/quickstart.md` · `platforms.md`：自测补 consumer-smoke 与 `SC_FORCE_PYTHON=1`（含 CI 矩阵说明）；`skills/master/routes.md` 头部标注分层；`docs/training/skills.md` 可选能力补 3 行；`docs/index.md` 增「可守护」卡片 + 英文入口
+
+### Fixed
+
+- **Windows CI 抓到的 3 个真缺陷（跨平台）** — 这些在 Linux/macOS 下**永不出现**（Linux 用 `/`、符号链接把问题藏住），Windows 腿（非阻塞）把它们暴露出来：
+  1. **`verify-rules-globs.sh` 路径分隔符泄漏** — `str(path.relative_to(cur))` 在 Windows 返回 `rules\tech\nextjs.mdc`，与 `rules/tech/nextjs.mdc` 字面量比较**全部不中** → 5 条 rule 的 plan 闸门断言 + 12 条栈 fixture 断言误报 FAIL（17 个）。改为 `.as_posix()`，并新增**回归护栏**（rule key 含反斜杠即 FAIL）
+  2. **`verify-roo-compat.sh` 把项目私有 rules 当规则扫** — `.cursor/rules/local/` 是安装脚本链接到 gitignore Growth 的**项目私有**目录，按设计含 `README.md`（非规则）。Linux 下它是符号链接、`rglob` 不遍历（**假绿**），Windows 下实体化即 FAIL。现显式跳过 `rules/local/**`；用同一 fixture 对旧脚本复现出**与 CI 完全相同的报错**，新脚本 OK
+  3. **裸 `ln -s` 在 `set -e` 下中止安装/自检** — `install-super-cursor.sh` 与 `install-smoke.sh` 的自安装 fixture 都无守卫；Windows/Git Bash 无符号链接权限时**直接中止**（日志表现为"无 FAIL 行、秒退"）。现均加守卫：安装脚本**降级为目录副本**（`mkdir` + README）保证安装成功，smoke 无符号链接权限时显式 `SKIP` 而非静默中止
+- **`verify-portability.sh` 增两条静态护栏** — ① `relative_to(`/`os.path.relpath(` 必须同句 `.as_posix()`（防第 1 类复发）② 裸 `ln -s` 必须带 `2>/dev/null`/`||`/`if`（防第 3 类复发）。两者均有负向测试，且对现有守卫点**零误报**
+- 展示用路径统一 `.as_posix()`（`verify-doc-super-cursor` · `verify-scripts-layout`），消息里不再混入反斜杠
+- **`eol=lf` 行尾策略 + 门禁（Windows 第 4 个隐患）** — 仓库此前**没有 `.gitattributes`**：Git for Windows 默认 `core.autocrlf=true`，克隆会把 `*.sh` 检出为 CRLF，首行成 `#!/usr/bin/env bash\r` → 脚本**秒退且无报错**（与安装/自检"无 FAIL 行直接中止"的症状一致）。现新增仓库根 [`.gitattributes`](.gitattributes)：`* text=auto eol=lf` + 脚本/规则/配置显式 LF，`.bat`/`.cmd`/`.ps1` 反向 CRLF，二进制显式 `binary`；`verify-portability.sh` 断言其存在且真含 `eol=lf`（目标项目豁免）。`platforms.md` 增「Windows 的三个坑」对照表
+- **示例去作者项目史（通用性收口 1）** — `growth-layout.md` 的域表示例此前带**真实时间戳与真实 sprint 号**（`20260906_093000` · `SPRINT-83/89/105/120/131` · `SPRINT-VIZ-L1` · `SPRINT-INT-VERIFY-01` · `v0.82.4` · `harness_sdk` · `web_operator_panel`），使用者会误以为模板自带这些编号；现一律改为占位令牌（`<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`）。`sprint-goal-gate.md` · `ops-deploy/SKILL.md` · `test-report/contract-schema.md` 的同类具体编号一并占位化。`denylist.txt` 增 7 条规则（数字型时间戳 + 作者 sprint 号族 + 专有 topic 名）**防回填**，负向测试已验证会 FAIL
+- **bundle 解析 jq 回退（通用性收口 2）** — `scaffold.sh` 的 `apply-bundle` 与 `scaffold-integrity.sh` 的 bundle 检查此前**直连 `jq`**，绕过 `lib/platform.sh`：无可用 jq 时 `apply-bundle` 直接 `FAIL: unknown bundle`，且 `SC_FORCE_PYTHON=1` 也救不了 → Windows/Git Bash 无 jq 环境不可用，而 CI 的"回退腿"仍走 jq（**表面绿**）。现新增 7 个 `sc_manifest_bundle_*` 助手（与 scaffolds 同策略：jq 快路径 / python 回退），9 处调用点全部改经助手；`template-verify.sh` 的 scaffold smoke 增跑一遍 `SC_FORCE_PYTHON=1`，使回退覆盖**真实**发生
 
 ## [4.29.8] - 2026-09-23
 

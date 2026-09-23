@@ -13,6 +13,8 @@ alwaysApply: false
 
 读 `.cursor/config/release.json` 获取 tag 格式与文件名。
 
+**门禁**：`bash .cursor/bin/verify-changelog.sh` —— 必须存在 `[Unreleased]`；**同一版本节点内不得重复 `### Added/Changed/Fixed`**（追加条目请并进已有小节）；`[Unreleased]` 小节顺序固定 Added → Changed → Fixed（已发布节点不重排）。
+
 ## 版本节
 
 - 标题：`## [x.y.z] - YYYY-MM-DD`（或 config 约定）

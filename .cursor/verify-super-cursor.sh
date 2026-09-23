@@ -385,6 +385,7 @@ bash "$CUR/bin/verify-roo-compat.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用
