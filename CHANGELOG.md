@@ -12,6 +12,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **`bin/verify-roo-compat.sh`（C3）** — 把 README 的「Roo 兼容 / 协议无关」承诺变成可验证断言：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `commands/*.md` 的 frontmatter 键必须 ⊆ 开放协议白名单（出现编辑器私有键即 FAIL），且 `rules/` 下不得用会被忽略的 `.md`。已纳入 `verify-super-cursor.sh` 与接线自检
 - **根 `AGENTS.md`（C6）** — Cursor 官方支持项目根 `AGENTS.md`，此前只有 `.cursor/AGENTS.md`；新增母版根入口（指向 `.cursor/AGENTS.md` + 改仓纪律 + 验收命令），`verify-super-cursor.sh` 断言其存在且指向正确（母版专属，不随 `.cursor/` 复制）
 - **`bin/consumer-smoke.sh`（C2）** — 目标项目**端到端**回归，补齐 CI 只验母版自身的盲区：临时 git 项目 → `install --profile full` → 未批准时 `gate-check`/`plan-check` 必须 BLOCK → 3 个 hook 均 exit 0 且 stderr 干净 → 批准后闸门放行且 `run-start` 注入自治上下文 → 5 个 universal 验证器在消费方仓库全绿 → 母版门面项正确 SKIP。已纳入 `template-verify.sh`
 - **`config/schema.json` + `bin/verify-config.sh`（C1）** — 声明 6 个 config 文件的允许键与类型；未知键（如把 `release.mode` 误写成 `workflow.release.mode`）与类型错误现在**直接 FAIL**，不再静默回退默认值。已纳入 `verify-super-cursor.sh` 与接线自检
