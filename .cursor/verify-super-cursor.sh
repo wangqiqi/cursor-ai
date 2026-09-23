@@ -379,6 +379,7 @@ bash "$CUR/bin/verify-rules-globs.sh" || FAIL=$((FAIL+1))
 bash "$CUR/bin/verify-portability.sh" || FAIL=$((FAIL+1))
 bash "$CUR/bin/verify-config.sh" || FAIL=$((FAIL+1))
 bash "$CUR/bin/verify-roo-compat.sh" || FAIL=$((FAIL+1))
+bash "$CUR/bin/verify-secrets.sh" || FAIL=$((FAIL+1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用
