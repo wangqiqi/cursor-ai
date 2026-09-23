@@ -78,7 +78,7 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | `lite` | 个人：plan/run，无 hooks |
 | `rules-only` | 只要 rules/skills，关闭 plan/run 闸门 |
 
-支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python3`。详见 [跨平台说明](.cursor/docs/platforms.md)。
+支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python`；由 `bash .cursor/bin/verify-portability.sh` 静态守护。**技能另有各自平台作用域**（如 `maintain` 仅 Linux），见 [跨平台说明](.cursor/docs/platforms.md) §技能平台作用域。
 
 ### 全局同步（任意子目录 → Git 项目根）
 

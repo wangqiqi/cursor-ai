@@ -87,11 +87,38 @@ for path in files:
         if PYTHON3_RE.search(code):
             fails.append(f"{rel}:{i} hardcoded python3 call (use $PYTHON_BIN / sc_python)")
 
+# --- 技能平台作用域：文档声明 ⇔ 代码实际 ---
+platforms = cur / "docs/platforms.md"
+if not platforms.is_file():
+    fails.append("docs/platforms.md missing (platform scope undocumented)")
+else:
+    pt = platforms.read_text(encoding="utf-8", errors="replace")
+    m = re.search(r"^## 技能平台作用域\n(.*?)(?=^## )", pt, re.S | re.M)
+    section = m.group(1) if m else ""
+    if not section:
+        fails.append("docs/platforms.md: missing '## 技能平台作用域' section")
+    else:
+        linux_only = set()
+        for sh in (cur / "skills").glob("*/scripts/*.sh"):
+            if "require_linux" in sh.read_text(encoding="utf-8", errors="replace"):
+                linux_only.add(sh.parent.parent.name)
+        for sk in sorted(linux_only):
+            if not re.search(r"\*\*" + re.escape(sk) + r"\*\*", section):
+                fails.append(
+                    f"docs/platforms.md: skill '{sk}' enforces require_linux but is not documented as Linux-only"
+                )
+        for row in re.finditer(r"^\|\s*\*\*([a-z0-9-]+)\*\*\s*\|([^|]*)\|", section, re.M):
+            sk, scope = row.group(1), row.group(2)
+            if "仅 Linux" in scope and sk not in linux_only:
+                fails.append(
+                    f"docs/platforms.md: '{sk}' declared Linux-only but no require_linux in its scripts"
+                )
+
 if fails:
     for f in fails:
         print("FAIL portability:", f)
     sys.exit(1)
-print(f"OK  portability scan clean ({len(files)} scripts)")
+print(f"OK  portability scan clean ({len(files)} scripts) + platform scope consistent")
 PY
   then
     :

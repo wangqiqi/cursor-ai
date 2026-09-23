@@ -1,6 +1,6 @@
 ---
 name: disk
-description: 磁盘快照（关键词）：采集 HOME 与可配置路径占用 → .cursorGrowth/disk-snapshots/，并与上次对比。说「磁盘快照」「空间变动」时用。
+description: 磁盘快照（关键词 · 跨平台）：采集 HOME 与可配置路径占用 → .cursorGrowth/disk-snapshots/，并与上次对比。
 disable-model-invocation: true
 ---
 

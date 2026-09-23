@@ -22,6 +22,19 @@ bash .cursor/bin/platform-check.sh
 
 共享工具：`.cursor/lib/platform.sh`（ISO 时间戳、目录复制、JSON 读写、Node 栈检测）。
 
+## 技能平台作用域
+
+上表描述的是**母版脚本层**（install · runner · hooks · verify）。**技能**另有自己的作用域，二者不可互相推断：
+
+| 技能 | 作用域 | 依据 |
+|------|--------|------|
+| **maintain** | **仅 Linux（Ubuntu / Debian）** | 依赖 `apt` / `dpkg` / `journalctl` / systemd；脚本内 `require_linux` 在非 Linux 直接 `exit 3`，不静默降级 |
+| **disk** | 跨平台 | 纯 python 采集 HOME 与可配置路径（`config/default-paths.json`），无平台专属命令 |
+| **ops-deploy** | 跟随目标栈 | 只生成 / 校验 compose · env · nginx 约定，自身不依赖宿主平台 |
+| 其余技能 | 跨平台 | 仅读写文件 + 调用 `.cursor/bin/*`（母版脚本层已三平台自检） |
+
+约束：**技能若含 `require_linux`，必须在本表登记**。由 `bash .cursor/bin/verify-portability.sh` 断言（文档声明 ⇔ 代码实际），避免"README 说三平台、技能却只跑 Linux"这类漂移。
+
 ## Cursor Hooks
 
 Hooks 由 Cursor 调用 `.cursor/hooks/*.sh`。在 Windows 上请：
