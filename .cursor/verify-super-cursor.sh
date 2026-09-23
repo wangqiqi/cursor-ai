@@ -113,6 +113,12 @@ check "$CUR/bin/runner-smoke.sh"
 check "$CUR/bin/bootstrap-growth.sh"
 check "$CUR/bin/install-smoke.sh"
 check_mother_only "$ROOT/install-super-cursor.sh"
+check_mother_only "$ROOT/AGENTS.md"
+if [[ -f "$ROOT/AGENTS.md" ]] && ! is_hybrid_repo && is_mother_repo; then
+  grep -q '\.cursor/AGENTS\.md' "$ROOT/AGENTS.md" \
+    && echo "OK  root AGENTS.md points at .cursor/AGENTS.md" \
+    || { echo "FAIL root AGENTS.md must point at .cursor/AGENTS.md"; FAIL=$((FAIL+1)); }
+fi
 check "$CUR/config/profiles/full.json"
 check "$CUR/config/profiles/lite.json"
 check "$CUR/config/profiles/rules-only.json"
