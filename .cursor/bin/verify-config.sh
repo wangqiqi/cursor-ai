@@ -8,19 +8,12 @@
 set -euo pipefail
 
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-FAIL=0
-
-# shellcheck source=../lib/platform.sh
-source "$CUR/lib/platform.sh"
+# shellcheck source=../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-config"
 
 echo "=== verify-config ==="
 
-PY="$(sc_python 2>/dev/null || true)"
-if [[ -z "$PY" ]]; then
-  echo "FAIL python required for config validation"
-  FAIL=$((FAIL+1))
-else
-  if "$PY" - "$CUR" <<'PY'
+vc_py "$CUR" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -87,13 +80,5 @@ if fails:
     sys.exit(1)
 print(f"OK  config schema valid ({checked} files)")
 PY
-  then
-    :
-  else
-    FAIL=$((FAIL+1))
-  fi
-fi
 
-echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "verify-config passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "verify-config passed."

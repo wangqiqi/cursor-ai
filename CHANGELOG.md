@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行
+
 ### Fixed
 
 - **示例去作者项目史（通用性收口 1）** — `growth-layout.md` 的域表示例此前带**真实时间戳与真实 sprint 号**（`20260906_093000` · `SPRINT-83/89/105/120/131` · `SPRINT-VIZ-L1` · `SPRINT-INT-VERIFY-01` · `v0.82.4` · `harness_sdk` · `web_operator_panel`），使用者会误以为模板自带这些编号；现一律改为占位令牌（`<YYYYMMDD>_<HHMMSS>` · `SPRINT-NN` · `<topic>`）。`sprint-goal-gate.md` · `ops-deploy/SKILL.md` · `test-report/contract-schema.md` 的同类具体编号一并占位化。`denylist.txt` 增 7 条规则（数字型时间戳 + 作者 sprint 号族 + 专有 topic 名）**防回填**，负向测试已验证会 FAIL

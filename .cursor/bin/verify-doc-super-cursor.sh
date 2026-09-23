@@ -4,10 +4,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CUR="$ROOT/.cursor"
-FAIL=0
 
-fail() { echo "FAIL $*"; FAIL=$((FAIL+1)); }
-ok() { echo "OK  $*"; }
+# shellcheck source=../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-doc-super-cursor"
 
 echo "=== verify-doc-super-cursor ==="
 
@@ -15,13 +14,13 @@ echo "=== verify-doc-super-cursor ==="
 disk_skills="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
 readme_line="$(grep -E 'skills/.*[0-9]+ 个' "$ROOT/README.md" 2>/dev/null | head -1 || true)"
 if [[ -z "$readme_line" ]]; then
-  fail "README.md missing skills count line (N 个)"
+  vc_fail "README.md missing skills count line (N 个)"
 else
   readme_skills="$(echo "$readme_line" | grep -oE '[0-9]+ 个' | head -1 | grep -oE '[0-9]+' || true)"
   if [[ "$readme_skills" == "$disk_skills" ]]; then
-    ok "README skills count=$disk_skills matches disk"
+    vc_ok "README skills count=$disk_skills matches disk"
   else
-    fail "README skills count=$readme_skills disk=$disk_skills"
+    vc_fail "README skills count=$readme_skills disk=$disk_skills"
   fi
 fi
 
@@ -30,17 +29,17 @@ mc="$CUR/docs/migration-catalog.md"
 if [[ -f "$mc" ]]; then
   disk_rules="$(find "$CUR/rules" -name '*.mdc' | wc -l | tr -d ' ')"
   if grep -qE "${disk_skills} skills" "$mc" && grep -qE "${disk_rules} rules" "$mc"; then
-    ok "migration-catalog counts skills=$disk_skills rules=$disk_rules"
+    vc_ok "migration-catalog counts skills=$disk_skills rules=$disk_rules"
   else
-    fail "migration-catalog counts mismatch (expect ${disk_skills} skills · ${disk_rules} rules)"
+    vc_fail "migration-catalog counts mismatch (expect ${disk_skills} skills · ${disk_rules} rules)"
   fi
 else
-  fail "missing $mc"
+  vc_fail "missing $mc"
 fi
 
 # --- doc-hygiene rule registered ---
 check_rule() {
-  [[ -f "$1" ]] && ok "exists $1" || fail "missing $1"
+  [[ -f "$1" ]] && vc_ok "exists $1" || vc_fail "missing $1"
 }
 check_rule "$CUR/rules/execution/doc-hygiene.mdc"
 
@@ -48,9 +47,9 @@ check_rule "$CUR/rules/execution/doc-hygiene.mdc"
 if [[ -f "$ROOT/README.en.md" ]] \
   && grep -q 'README\.en\.md' "$ROOT/README.md" \
   && [[ -f "$CUR/docs/quickstart.en.md" ]]; then
-  ok "bilingual entry (README.en.md + docs/quickstart.en.md) present and linked"
+  vc_ok "bilingual entry (README.en.md + docs/quickstart.en.md) present and linked"
 else
-  fail "bilingual entry missing or not linked from README.md (README.en.md · docs/quickstart.en.md)"
+  vc_fail "bilingual entry missing or not linked from README.md (README.en.md · docs/quickstart.en.md)"
 fi
 
 # --- skill metadata 契约：description ≤85 字 + dmi 分桶（防再次被删的回归）---
@@ -58,15 +57,12 @@ fi
 training="$CUR/docs/training/skills.md"
 if grep -q 'disable-model-invocation' "$training" 2>/dev/null \
   && grep -q '≤85' "$training" 2>/dev/null; then
-  ok "training/skills.md documents dmi policy + description cap"
+  vc_ok "training/skills.md documents dmi policy + description cap"
 else
-  fail "training/skills.md missing disable-model-invocation policy section"
+  vc_fail "training/skills.md missing disable-model-invocation policy section"
 fi
 
-py_meta="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
-if [[ -z "$py_meta" ]]; then
-  fail "python required for skill metadata check"
-elif "$py_meta" - "$CUR" <<'PY'
+vc_py "$CUR" <<'PY'
 import re, sys
 from pathlib import Path
 
@@ -123,18 +119,9 @@ if fails:
     sys.exit(1)
 print(f"OK  skill metadata (28 files · description <=85 · dmi buckets · run/plan slim)")
 PY
-then
-  :
-else
-  FAIL=$((FAIL+1))
-fi
 
 # --- relative markdown links under .cursor/docs ---
-py="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
-if [[ -z "$py" ]]; then
-  fail "python required for doc link check"
-else
-  if "$py" - "$CUR/docs" <<'PY'
+vc_py "$CUR/docs" <<'PY'
 import re, sys
 from pathlib import Path
 
@@ -166,13 +153,5 @@ if broken:
 print("OK  relative links in .cursor/docs (%d files)" % len(list(docs_root.rglob('*.md'))))
 sys.exit(0)
 PY
-  then
-    :
-  else
-    FAIL=$((FAIL+1))
-  fi
-fi
 
-echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "verify-doc-super-cursor passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "verify-doc-super-cursor passed."

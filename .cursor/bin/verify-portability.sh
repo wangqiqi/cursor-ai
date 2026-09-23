@@ -14,19 +14,12 @@ set -euo pipefail
 
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
-FAIL=0
-
-# shellcheck source=../lib/platform.sh
-source "$CUR/lib/platform.sh"
+# shellcheck source=../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-portability"
 
 echo "=== verify-portability ==="
 
-PY="$(sc_python 2>/dev/null || true)"
-if [[ -z "$PY" ]]; then
-  echo "FAIL python required for portability scan"
-  FAIL=$((FAIL+1))
-else
-  if "$PY" - "$ROOT" "$CUR" <<'PY'
+vc_py "$ROOT" "$CUR" <<'PY'
 import re
 import sys
 from pathlib import Path
@@ -120,13 +113,5 @@ if fails:
     sys.exit(1)
 print(f"OK  portability scan clean ({len(files)} scripts) + platform scope consistent")
 PY
-  then
-    :
-  else
-    FAIL=$((FAIL+1))
-  fi
-fi
 
-echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "verify-portability passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "verify-portability passed."

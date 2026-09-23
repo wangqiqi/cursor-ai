@@ -9,24 +9,12 @@ set -euo pipefail
 
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
-FAIL=0
-
-fail() { echo "FAIL $*"; FAIL=$((FAIL + 1)); }
-ok() { echo "OK  $*"; }
-
-# shellcheck source=../lib/platform.sh
-source "$CUR/lib/platform.sh"
+# shellcheck source=../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-rules-globs"
 
 echo "=== verify-rules-globs ==="
 
-PY="$(sc_python 2>/dev/null || true)"
-if [[ -z "$PY" ]]; then
-  fail "python required for rules glob check"
-  echo "$FAIL check(s) failed."
-  exit 1
-fi
-
-if "$PY" - "$CUR" <<'PY'
+vc_py "$CUR" <<'PY'
 import re
 import sys
 from pathlib import Path
@@ -177,12 +165,5 @@ if fails:
     sys.exit(1)
 print("rules globs check passed.")
 PY
-then
-  :
-else
-  FAIL=$((FAIL + 1))
-fi
 
-echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "verify-rules-globs passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "verify-rules-globs passed."

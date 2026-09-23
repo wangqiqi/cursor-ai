@@ -4,7 +4,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CUR="$ROOT/.cursor"
-FAIL=0
+
+# shellcheck source=bin/../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-super-cursor"
 
 # Mother-only layout: pure Super Cursor template repo (no co-located business tree).
 # Hybrid: .cursor/ + co-located business tree. Auto-detect; override SC_VERIFY_LAYOUT=mother|hybrid.
@@ -27,7 +29,7 @@ skip_mother_only() {
   is_hybrid_repo || ! is_mother_repo
 }
 
-check() { [[ -e "$1" ]] && echo "OK  $1" || { echo "FAIL $1"; FAIL=$((FAIL+1)); }; }
+check() { [[ -e "$1" ]] && echo "OK  $1" || { echo "FAIL $1"; VC_FAIL=$((VC_FAIL + 1)); }; }
 check_mother_only() {
   local path="$1" label="${2:-$1}"
   if skip_mother_only; then
@@ -36,7 +38,7 @@ check_mother_only() {
   fi
   check "$path"
 }
-check_absent() { [[ -e "$1" ]] && { echo "FAIL must not exist: $1"; FAIL=$((FAIL+1)); } || echo "OK  absent $1"; }
+check_absent() { [[ -e "$1" ]] && { echo "FAIL must not exist: $1"; VC_FAIL=$((VC_FAIL + 1)); } || echo "OK  absent $1"; }
 check_absent_mother_only() {
   local path="$1" label="${2:-must not exist: $1}"
   if skip_mother_only; then
@@ -51,7 +53,7 @@ check_verify_workflow() {
       echo "OK  hybrid: scripts/verify.sh (skip .github/workflows/verify.yml)"
     else
       echo "FAIL hybrid: scripts/verify.sh missing"
-      FAIL=$((FAIL+1))
+      VC_FAIL=$((VC_FAIL + 1))
     fi
     return 0
   fi
@@ -65,7 +67,7 @@ check_grep_absent() {
   local dir="$1" pattern="$2"
   if grep -rq --exclude="verify-super-cursor.sh" "$pattern" "$dir" 2>/dev/null; then
     echo "FAIL $dir contains $pattern"
-    FAIL=$((FAIL+1))
+    VC_FAIL=$((VC_FAIL + 1))
   else
     echo "OK  no '$pattern' in $(basename "$dir") tree"
   fi
@@ -88,7 +90,7 @@ check "$CUR/config/README.md"
 check "$CUR/templates/plan.md"
 if [[ -f "$CUR/templates/plan.md" ]] && ! grep -qE '^\*\*(执行顺序|Order)\*\*' "$CUR/templates/plan.md" 2>/dev/null; then
   echo "FAIL templates/plan.md missing **执行顺序** line"
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 else
   echo "OK  templates/plan.md has execution order line"
 fi
@@ -117,7 +119,7 @@ check_mother_only "$ROOT/AGENTS.md"
 if [[ -f "$ROOT/AGENTS.md" ]] && ! is_hybrid_repo && is_mother_repo; then
   grep -q '\.cursor/AGENTS\.md' "$ROOT/AGENTS.md" \
     && echo "OK  root AGENTS.md points at .cursor/AGENTS.md" \
-    || { echo "FAIL root AGENTS.md must point at .cursor/AGENTS.md"; FAIL=$((FAIL+1)); }
+    || { echo "FAIL root AGENTS.md must point at .cursor/AGENTS.md"; VC_FAIL=$((VC_FAIL + 1)); }
 fi
 check "$CUR/config/profiles/full.json"
 check "$CUR/config/profiles/lite.json"
@@ -248,11 +250,11 @@ echo "--- platform helpers ---"
 # shellcheck source=lib/platform.sh
 source "$CUR/lib/platform.sh"
 ts="$(iso8601_now)"
-[[ -n "$ts" ]] && echo "OK  iso8601_now=$ts" || { echo "FAIL iso8601_now"; FAIL=$((FAIL+1)); }
+[[ -n "$ts" ]] && echo "OK  iso8601_now=$ts" || { echo "FAIL iso8601_now"; VC_FAIL=$((VC_FAIL + 1)); }
 pf="$(json_cfg "$CUR/config/workflow.json" plan_file __missing__)"
-[[ "$pf" == ".cursorGrowth/plan.md" ]] && echo "OK  json_cfg plan_file=$pf" || { echo "FAIL json_cfg plan_file=$pf"; FAIL=$((FAIL+1)); }
+[[ "$pf" == ".cursorGrowth/plan.md" ]] && echo "OK  json_cfg plan_file=$pf" || { echo "FAIL json_cfg plan_file=$pf"; VC_FAIL=$((VC_FAIL + 1)); }
 we="$(json_cfg "$CUR/config/workflow.json" workflow.enabled __missing__)"
-[[ "$we" == "true" ]] && echo "OK  json_cfg workflow.enabled=$we" || { echo "FAIL json_cfg workflow.enabled=$we"; FAIL=$((FAIL+1)); }
+[[ "$we" == "true" ]] && echo "OK  json_cfg workflow.enabled=$we" || { echo "FAIL json_cfg workflow.enabled=$we"; VC_FAIL=$((VC_FAIL + 1)); }
 
 echo "--- changelog order (newest_first) ---"
 # release.json order=newest_first：已发布 ## [x.y.z] 节须严格新→旧；## [Unreleased] 可置顶
@@ -261,7 +263,7 @@ if [[ ! -f "$CL" ]]; then
   echo "OK  no root CHANGELOG.md (skip order check)"
 elif ! py="$(sc_python 2>/dev/null)"; then
   echo "FAIL python required for CHANGELOG order check"
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 else
   if "$py" - "$CL" <<'PY'
 import re, sys
@@ -289,7 +291,7 @@ PY
   then
     :
   else
-    FAIL=$((FAIL+1))
+    VC_FAIL=$((VC_FAIL + 1))
   fi
 fi
 
@@ -318,11 +320,11 @@ PY
   then
     :
   else
-    FAIL=$((FAIL+1))
+    VC_FAIL=$((VC_FAIL + 1))
   fi
 else
   echo "FAIL roles.json missing"
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 fi
 
 echo "--- standalone: no upstream URL in skills ---"
@@ -335,7 +337,7 @@ done < <(grep -rl 'https://github.com' "$CUR/skills" 2>/dev/null || true)
 if [[ -n "$(echo "$violators" | sed '/^$/d')" ]]; then
   echo "FAIL skills contain github.com URL (use docs/library-index.md):"
   echo "$violators" | sed '/^$/d'
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 else
   echo "OK  skills no upstream github URLs"
 fi
@@ -344,7 +346,7 @@ echo "--- standalone: denylist（用户 / 项目 / 机器 / 凭据）---"
 DENYLIST="$CUR/config/denylist.txt"
 if [[ ! -f "$DENYLIST" ]]; then
   echo "FAIL missing $DENYLIST — standalone guard would be silently disabled"
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 else
   deny_rules=0
   deny_hits=""
@@ -362,7 +364,7 @@ else
   if [[ -n "$(printf '%s' "$deny_hits" | sed '/^$/d')" ]]; then
     echo "FAIL .cursor violates standalone denylist ($DENYLIST):"
     printf '%s' "$deny_hits" | sed '/^$/d' | sort -u
-    FAIL=$((FAIL+1))
+    VC_FAIL=$((VC_FAIL + 1))
   else
     echo "OK  standalone denylist clean (${deny_rules} rules)"
   fi
@@ -370,16 +372,16 @@ fi
 
 echo "=== doc + growth-layout + rules-globs 子验证（母版专属）==="
 if is_mother_repo; then
-  bash "$CUR/bin/verify-doc-super-cursor.sh" || FAIL=$((FAIL+1))
-  bash "$CUR/bin/verify-growth-layout.sh" || FAIL=$((FAIL+1))
+  bash "$CUR/bin/verify-doc-super-cursor.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-growth-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 else
   echo "SKIP  non-mother: verify-doc / verify-growth-layout（母版门面计数检查）"
 fi
-bash "$CUR/bin/verify-rules-globs.sh" || FAIL=$((FAIL+1))
-bash "$CUR/bin/verify-portability.sh" || FAIL=$((FAIL+1))
-bash "$CUR/bin/verify-config.sh" || FAIL=$((FAIL+1))
-bash "$CUR/bin/verify-roo-compat.sh" || FAIL=$((FAIL+1))
-bash "$CUR/bin/verify-secrets.sh" || FAIL=$((FAIL+1))
+bash "$CUR/bin/verify-rules-globs.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-portability.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-config.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-roo-compat.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用
@@ -393,11 +395,10 @@ for _v in "$CUR"/bin/verify-*.sh; do
 done
 if [[ -n "$orphans" ]]; then
   echo "FAIL orphaned verifier(s) not aggregated by verify-super-cursor.sh or template-verify.sh:$orphans"
-  FAIL=$((FAIL+1))
+  VC_FAIL=$((VC_FAIL + 1))
 else
   echo "OK  all bin/verify-*.sh are aggregated"
 fi
 
 echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "All checks passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "All checks passed."

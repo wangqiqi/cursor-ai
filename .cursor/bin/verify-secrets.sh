@@ -9,19 +9,12 @@ set -euo pipefail
 
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
-FAIL=0
-
-# shellcheck source=../lib/platform.sh
-source "$CUR/lib/platform.sh"
+# shellcheck source=../lib/verify-common.sh
+source "$CUR/lib/verify-common.sh" "verify-secrets"
 
 echo "=== verify-secrets ==="
 
-PY="$(sc_python 2>/dev/null || true)"
-if [[ -z "$PY" ]]; then
-  echo "FAIL python required for secret scan"
-  FAIL=$((FAIL+1))
-else
-  if "$PY" - "$ROOT" <<'PY'
+vc_py "$ROOT" <<'PY'
 import re
 import subprocess
 import sys
@@ -85,13 +78,5 @@ if hits:
     sys.exit(1)
 print(f"OK  no secrets in {len(tracked)} tracked files")
 PY
-  then
-    :
-  else
-    FAIL=$((FAIL+1))
-  fi
-fi
 
-echo "---"
-[[ "$FAIL" -eq 0 ]] && echo "verify-secrets passed." && exit 0
-echo "$FAIL check(s) failed." && exit 1
+vc_summary "verify-secrets passed."
