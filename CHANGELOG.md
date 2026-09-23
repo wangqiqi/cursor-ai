@@ -3,6 +3,9 @@
 All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
+
+## [4.29.9] - 2026-09-23
+
 ### Added
 
 - **脚手架 `_shared/` 共享层（E3）** — `templates/scaffold/_shared/scripts/` 提供项目脚本骨架：`README.md`（分层矩阵 SSOT）· `lib/_common.sh`（`sc_root`/`sc_step`/`sc_ok`/`sc_fail`/`sc_require_cmd`/`sc_summary`）· `lib/_frontend.sh`（`sc_frontend_verify`）· `verify/{domain,tier}` + `ops` + `dev` 占位。`scaffold.sh apply` 改为**先铺共享层再铺栈文件**（栈可覆盖）→ 新项目从第一天就是分层结构；7 栈 `test.sh`/`verify.sh` 的前导统一为 source 公因子
@@ -59,7 +62,6 @@ All notable changes to Super Cursor are documented here.
 - **CI 双阻塞腿真因：`$VAR` 紧跟中文字符（multibyte 标识符）** — 上一轮把 `install-smoke` 改成失败可见后，macOS 日志给出确切错误：`line 327: PROFILE\uFFFD: unbound variable`。根因是 `echo "…（profile=$PROFILE）"` 里 `$PROFILE` **紧跟全角右括号 `）`**：bash 3.2（macOS 系统 bash）与 C locale 下的 Git Bash 会把多字节字符的字节**并入变量名**，`set -u` 下即 `unbound variable` 中止 —— 这一个缺陷同时解释 macOS 与 Windows 两条腿（也解释了为何"零输出、秒退"）。全仓 **10 处**（`install-super-cursor.sh` 5 · `runner.sh` 2 · `dev-maintain.sh` 2 · verify-layers bundle 1）改为花括号定界 `${VAR}`；`verify-portability` 新增静态护栏拦截该写法（负向/正向 fixture 均验证），并确认规则与文档的代码块内无同类写法
 - **Windows 腿：Python 文本模式输出 CRLF（第 14 个真缺陷）** — 阻塞腿修好后 Windows 只剩 `scaffold-integrity` 报 **7 个 `FAIL missing dir <stack>`**（目录明明都在）。根因：Windows 下 Python 文本模式把 `\n` 翻译成 `\r\n`，`sc_manifest_ids` 的输出经 `while read` 得到 `react-vite-ts\r` → `[[ -d "$TEMPLATE_ROOT/$id" ]]` 与字符串比较全部失败。修复：`_manifest_py` / `_docs_layout_py` 统一 `sys.stdout.reconfigure(newline="\n")`（根因），并在消费点（`scaffold-integrity` 的 3 个循环与 3 个字段、`runner.sh docs-init` 的 3 个标量）用 `${var%$'\r'}` 兜底剥离。**本地用「让 python 输出 `\r\n`」的方式模拟 Windows**：有剥离 → exit 0；去掉剥离 → 一字不差复现 CI 的 7 个 `missing dir`
 - **CHANGELOG 节点归属修复 + 门禁补强** — `4151782`/`6735172`/`9a60cc9` 三条 follow-up 的条目被**误写进已发布的 `[4.29.8]` 节点**（插入点算到了版本标题之后），使 CHANGELOG 对已打 tag 的版本失真。现按 `v4.29.8` tag 内容**逐字节还原**该节点，5 条条目移回 `[Unreleased]`；并给 `verify-changelog` 补一条本可拦住它的规则：**版本标题下不得先出现列表条目**（必须先有 `### ` 子节），开关放行历史节点的段落式叙事。负向 fixture 验证命中，历史 3 处段落风格不误报
-
 
 ## [4.29.8] - 2026-09-23
 
