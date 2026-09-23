@@ -109,6 +109,19 @@ grep -qF 'SUPER_CURSOR_HOME=' "$HOME/.bashrc" && ok "setup-shell: SUPER_CURSOR_H
 grep -qF 'install-super-cursor' "$HOME/.bashrc" && ok "setup-shell: alias" || fail "setup-shell: alias"
 export HOME="$HOME_SAVE"
 
+# 8. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
+SELF="$TMP_ROOT/self-replace"
+mkdir -p "$SELF"
+cp "$INSTALL" "$SELF/install-super-cursor.sh"
+ln -s "$ROOT/.cursor" "$SELF/.cursor"
+(
+  cd "$SELF"
+  env -u SUPER_CURSOR_HOME -u CURSOR_AI_HOME \
+    bash ./install-super-cursor.sh "$SELF" --replace >/dev/null 2>&1
+) && fail "self-replace: must refuse source==target" || ok "self-replace: refuses source==target"
+assert_file "$SELF/.cursor/hooks.json" "self-replace: .cursor intact"
+assert_file "$ROOT/.cursor/hooks.json" "self-replace: mother repo untouched"
+
 echo "---"
 if [[ "$FAIL" -eq 0 ]]; then
   echo "install smoke passed."

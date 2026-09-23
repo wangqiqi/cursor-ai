@@ -11,6 +11,7 @@ All notable changes to Super Cursor are documented here.
 - **plan-parse** — `(none)`/`null` 模板占位归一化为「未设置」并让 `plan_task_row_field` 不再因 `pipefail` 中止 `set -e` 的 hook；修复全新安装下 `run-start`/`run-stop` 直接 exit 1
 - **gitignore** — `.cursor/hooks/state/*`（保留 `state/README.md`）；此前 `run-start` 写出的 `run.json` 会脏化工作区
 - **run 硬闸门 fail-closed** — `PLAN_APPROVED: (none)` 不再被当作已批准。全新安装 `gate-check` 现在正确 `BLOCK` + exit 1（此前模板默认值直接放行，"无 `PLAN_APPROVED` 不写业务代码"形同虚设）；`install-smoke` 断言由"闸门通过"反转为"闸门必须 BLOCK"
+- **install `--replace` 自毁** — 目标与母版为同一仓库时直接拒绝（此前先 `rm -rf` 源 `.cursor/`、再自拷空目录，实测母版 `.cursor/` 373 → 0 文件；README 推荐的 `super-cursor-sync --replace` 在母版仓库内执行即命中）；`install-smoke` 增加回归断言
 
 ## [4.29.7] - 2026-09-20
 

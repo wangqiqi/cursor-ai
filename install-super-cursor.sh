@@ -218,6 +218,19 @@ fi
 # shellcheck source=.cursor/lib/platform.sh
 source "$SOURCE/.cursor/lib/platform.sh"
 
+# 防自毁（P0-4）：源与目标同一仓库时，--replace 会先 rm -rf 源 .cursor/，
+# 随后 sc_copy_tree 的 mkdir -p 让 rsync/cp 自拷空目录 → 母版被清空。
+if [[ "$REPLACE" == "true" ]]; then
+  source_real="$(cd "$SOURCE" && pwd -P)"
+  target_real="$(cd "$TARGET" 2>/dev/null && pwd -P || true)"
+  if [[ -n "$target_real" && "$source_real" == "$target_real" ]]; then
+    echo "错误: 目标与母版为同一仓库（$target_real）。" >&2
+    echo "      --replace 会先删除 .cursor/ 再自拷空目录，导致模板被清空。已中止。" >&2
+    echo "提示: 母版仓库无需安装自身；请在目标项目中执行，或先 git clone 到别处。" >&2
+    exit 1
+  fi
+fi
+
 mkdir -p "$TARGET"
 if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   rm -rf "$TARGET/.cursor"
