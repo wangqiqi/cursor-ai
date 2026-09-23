@@ -18,7 +18,8 @@
       "CHANGELOG.md",
       ".cursorGrowth/archive/",
       ".cursorGrowth/plan.md"
-    ]
+    ],
+    "archive_flat_max": 5
   },
   "release": {
     "enabled": true,

@@ -334,6 +334,29 @@ json_escape() {
   printf '%s' "$s"
 }
 
+# archive 域分层门禁：根目录 flat 文件超阈值即 FAIL（growth-layout §Archive 布局）
+archive_check() {
+  local rel dir max flat
+  rel="$(sc_config '.archive_dir' '.cursorGrowth/archive')"
+  dir="$ROOT/$rel"
+  max="$(sc_config '.growth.archive_flat_max' '5')"
+  [[ "$max" =~ ^[0-9]+$ ]] || max=5
+  if [[ ! -d "$dir" ]]; then
+    echo "OK: archive 目录尚未创建（$rel）"
+    return 0
+  fi
+  flat="$(find "$dir" -maxdepth 1 -type f | wc -l | tr -d ' ')"
+  echo "=== archive-check: $rel (flat=$flat · max=$max) ==="
+  if [[ "$flat" -gt "$max" ]]; then
+    echo "FAIL: archive 根目录有 ${flat} 个 flat 文件（>${max}）→ 按域归档：" >&2
+    find "$dir" -maxdepth 1 -type f -exec basename {} \; | sed 's|^|  |' | sort
+    echo "  域：sprint · spike · release · doc · ops（域表与扩展 → learn/plan-conventions.md）" >&2
+    return 1
+  fi
+  echo "OK: 根目录 flat 文件 ${flat}/${max}（域目录：$(find "$dir" -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ') 个）"
+  return 0
+}
+
 friction_log() {
   shift || true
   local task="" rounds="0" rework="0" result="" note=""
@@ -570,6 +593,9 @@ case "$cmd" in
   friction-report)
     friction_report
     ;;
+  archive-check)
+    archive_check
+    ;;
   help|-h|--help)
     cat <<EOF
 用法: $0 [status|gate-check|task-verify|verify|plan-check|next-task|...]
@@ -585,6 +611,7 @@ case "$cmd" in
   next_version  下一 patch 版本号
   friction-log  记一行摩擦数据（--task --rounds --rework --verify --note）
   friction-report  汇总摩擦数据（tasks · verify 通过率 · 平均轮次/返工）
+  archive-check archive 域分层检查（根目录 flat 文件超阈值即 FAIL）
 
 环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:
   VERSION_TAG_GLOB      git tag 匹配 glob（优先于 plan VERSION_LINE）

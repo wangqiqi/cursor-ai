@@ -9,6 +9,7 @@
 1. `./.cursor/bin/runner.sh verify` — **须满足 Sprint Done when**（母版含 `cursor-coherence.sh` · README 与 CHANGELOG 对齐）
    - **可选** — Done when 含「测试报告」/ QA benchmark / 持久化 `docs/test-report.md` → **`/report`**（**test-report**；步骤 1 刚跑完 verify 时优先 **from-logs**；见 `reference/regen-gates.md` §sprint）
 2. 将本 Sprint 笔记写入 **`.cursorGrowth/archive/{domain}/`** — **至少一级域目录**（域表 · scripts 树 → **plan** `reference/growth-layout.md`；命名见 `learn/plan-conventions.md`）
+2b. `./.cursor/bin/runner.sh archive-check` — 归档域分层（根目录 flat 超阈值即 FAIL；域表 → `learn/plan-conventions.md`）
 3. **plan 正文 reconciliation**（与 archive 一致；**必做**，仅 `.cursorGrowth/plan.md`）：
    - [ ] `<!-- SPRINT_STATUS: closed -->` · `<!-- ACTIVE: (none) -->` · `<!-- NEXT: (none) -->`
    - [ ] **从 plan 删除整个已闭合 Active Sprint 区块**（Goal · Done when · TASK 表）— **勿**改标题留「已闭合」正文

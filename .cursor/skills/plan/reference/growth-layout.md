@@ -37,6 +37,8 @@
 
 **禁止**：Sprint 收尾把长叙事只写进 plan 而不归档；**禁止**无域前缀持续新增根目录 flat 文件（迁移期除外，须登记 plan-conventions）。
 
+**门禁**：`runner.sh archive-check` —— `{archive_dir}` 根目录 flat 文件数 > `workflow.json` → `growth.archive_flat_max`（默认 5）即 FAIL；`verify-growth-layout.sh` 已聚合该检查。脚手架安装即带 `archive/{domain}/` 骨架。
+
 ### Agent 写入
 
 | 时机 | 路径 |

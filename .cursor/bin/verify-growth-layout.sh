@@ -53,6 +53,14 @@ else
   vc_fail "growth-layout missing default archive domain table"
 fi
 
+# archive 域分层（根目录不得长期堆 flat 文件）
+if bash "$CUR/bin/runner.sh" archive-check >/tmp/vg-archive.$$ 2>&1; then
+  vc_ok "archive domains ($(tail -1 /tmp/vg-archive.$$))"
+else
+  vc_fail "archive flat files exceed threshold — 见 runner.sh archive-check"
+fi
+rm -f /tmp/vg-archive.$$
+
 if grep -q 'verify-growth-layout.sh' "$CUR/verify-super-cursor.sh" 2>/dev/null; then
   vc_ok "verify-super-cursor aggregates verify-growth-layout"
 else

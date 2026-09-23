@@ -9,7 +9,7 @@
     "version_tag_glob_env": "string",
     "version_default_env": "string",
     "workflow": { "enabled": "bool", "hooks_enabled": "bool" },
-    "growth": { "enabled": "bool", "dir": "string", "learn_dir": "string", "learn_sources": "array" },
+    "growth": { "enabled": "bool", "dir": "string", "learn_dir": "string", "learn_sources": "array", "archive_flat_max": "int" },
     "release": { "enabled": "bool", "mode": "string", "config": "string" },
     "task_id": { "prefixes_autonomous": "array", "prefixes_skip": "array" },
     "autonomous": {
