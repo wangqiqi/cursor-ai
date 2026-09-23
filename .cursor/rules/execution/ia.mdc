@@ -1,6 +1,7 @@
 ---
 description: 信息架构（IA）普遍性原则 — 工作流正交、角色逐级放权、分支点；项目路由矩阵见 docs/design/ 或 learn/
 globs:
+  - .cursorGrowth/plan.md
   - plan.md
   - docs/design/**
   - docs/**/IA*.md

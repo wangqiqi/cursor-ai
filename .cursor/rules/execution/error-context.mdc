@@ -4,6 +4,7 @@ globs:
   - "**/api/**"
   - "**/worker*/**"
   - "**/workers/**"
+  - "**/handler/**"
   - "**/handlers/**"
   - "**/services/**"
   - "**/*error*"

@@ -1,7 +1,10 @@
 ---
 description: 文案/i18n/禁词/E2E 锚点三联 — 改 copy 时同步 locale、verify 与可访问性标签（通用）
 globs:
-  - "**/*.{tsx,jsx,vue,svelte}"
+  - "**/*.tsx"
+  - "**/*.jsx"
+  - "**/*.vue"
+  - "**/*.svelte"
   - "**/locales/**"
   - "**/i18n/**"
   - "**/*i18n*"

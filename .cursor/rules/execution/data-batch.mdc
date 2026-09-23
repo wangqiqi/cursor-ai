@@ -3,7 +3,11 @@ description: 数据访问批处理护栏 — IN 分块、列表参数上限、�
 globs:
   - "**/*.py"
   - "**/*.sql"
-  - "**/*.{ts,js,go,rs,java}"
+  - "**/*.ts"
+  - "**/*.js"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.java"
 alwaysApply: false
 ---
 

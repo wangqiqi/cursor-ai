@@ -5,6 +5,7 @@ globs:
   - "**/*.cpp"
   - "**/*.cxx"
   - "**/*.hpp"
+  - "**/*.h"
   - "**/CMakeLists.txt"
   - "**/*.cmake"
 alwaysApply: false

@@ -1,11 +1,17 @@
 ---
 description: 分页列表与 cursor pager — render 重置、limit 与 API tunable 对齐（通用）
 globs:
-  - "**/*.{tsx,jsx,vue,svelte}"
+  - "**/*.tsx"
+  - "**/*.jsx"
+  - "**/*.vue"
+  - "**/*.svelte"
   - "**/*page*"
   - "**/*pager*"
   - "**/*pagination*"
-  - "**/*List*"
+  - "**/*List.tsx"
+  - "**/*List.jsx"
+  - "**/*List.vue"
+  - "**/*List.svelte"
 alwaysApply: false
 ---
 

@@ -1,12 +1,10 @@
 ---
 description: ESLint integration SOP for JS/TS projects
 globs:
-  - "**/*.js"
-  - "**/*.jsx"
-  - "**/*.ts"
-  - "**/*.tsx"
   - "**/.eslintrc*"
   - "**/eslint.config.*"
+  - "**/.eslintignore"
+  - "**/.eslintcache"
 alwaysApply: false
 ---
 

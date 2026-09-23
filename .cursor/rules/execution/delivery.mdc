@@ -1,12 +1,17 @@
 ---
 description: 交付验收触发时机 — 7 维清单见 delivery skill；项目路径见 learn/acceptance.md 与 rules/local/
 globs:
+  - .cursorGrowth/plan.md
   - plan.md
   - docs/**
   - README.md
-  - "**/src/**"
-  - "**/app/**"
   - "**/components/**"
+  - "**/pages/**"
+  - "**/views/**"
+  - "**/*.tsx"
+  - "**/*.jsx"
+  - "**/*.vue"
+  - "**/*.svelte"
   - openapi/**
   - "**/*openapi*"
 alwaysApply: false

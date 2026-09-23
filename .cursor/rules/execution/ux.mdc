@@ -1,11 +1,15 @@
 ---
 description: UX 总览与路由 — IA 为结构层特化；规划用 ia · 上线走查用 delivery · 细则见项目设计规范
 globs:
+  - .cursorGrowth/plan.md
   - plan.md
   - docs/design/**
-  - "**/src/**"
-  - "**/app/**"
   - "**/components/**"
+  - "**/pages/**"
+  - "**/*.tsx"
+  - "**/*.jsx"
+  - "**/*.vue"
+  - "**/*.svelte"
 alwaysApply: false
 ---
 

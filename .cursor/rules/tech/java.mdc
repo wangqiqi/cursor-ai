@@ -2,11 +2,11 @@
 description: Java coding SOP
 globs:
   - "**/*.java"
-  - "pom.xml"
-  - "build.gradle"
-  - "build.gradle.kts"
-  - "settings.gradle"
-  - "settings.gradle.kts"
+  - "**/pom.xml"
+  - "**/build.gradle"
+  - "**/build.gradle.kts"
+  - "**/settings.gradle"
+  - "**/settings.gradle.kts"
 alwaysApply: false
 ---
 

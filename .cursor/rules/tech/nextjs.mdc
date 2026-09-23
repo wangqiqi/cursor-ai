@@ -1,9 +1,16 @@
 ---
 description: Next.js App Router SOP
 globs:
-  - "**/app/**"
+  - "app/**/*.tsx"
+  - "app/**/*.ts"
+  - "app/**/*.jsx"
+  - "app/**/*.js"
+  - "src/app/**/*.tsx"
+  - "src/app/**/*.ts"
+  - "src/app/**/*.jsx"
+  - "src/app/**/*.js"
   - "**/next.config.*"
-  - "middleware.ts"
+  - "**/middleware.ts"
 alwaysApply: false
 ---
 

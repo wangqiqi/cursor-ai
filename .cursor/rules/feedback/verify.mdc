@@ -1,6 +1,7 @@
 ---
 description: 验收命令与分层 — gate-check · task-verify · verify 脚本；编辑 plan VERIFY 或 scripts/ 时加载
 globs:
+  - .cursorGrowth/plan.md
   - plan.md
   - scripts/verify.sh
   - scripts/test.sh

@@ -17,6 +17,10 @@ All notable changes to Super Cursor are documented here.
 - **文档站链接** — `sync-cursor-docs.sh` 替换串多写一个 `(`（`]((/guide/x)`），markdown-it 判为非法链接并**渲染成纯文本**，且 VitePress 不报错：**12 处站内链接（5 个镜像页）**失效；同时改为「临时文件就地重写」以兼容 BSD/macOS `sed`（原 `sed -i` 无后缀为 GNU only）
 - **rules/local 链接** — `rules-catalog.md` 原链指向 gitignore 的符号链接，镜像后改写出的 GitHub URL **404**；改指已跟踪的 `templates/cursorGrowth/rules/local/README.md`
 - **runner.sh help** — heredoc 未转义反引号触发命令替换：stderr 输出 `version_*_env: 未找到命令`、帮助文本被污染；`runner-smoke` 增加 help 干净度与「模板闸门必须 BLOCK」回归
+- **rules glob 校准** — 5 条 plan 闸门规则（`verify` · `changelog` · `ia` · `delivery` · `ux`）glob `plan.md`，但真 plan 在 `.cursorGrowth/plan.md`（Cursor glob 无斜杠模式**仅匹配根目录**）→ 编辑真 plan 时**永不加载**，闸门规则形同不存在；现同时 glob 两处，`archive/**/*` 同理补 `.cursorGrowth/archive/**/*`
+- **rules glob 误命中** — `tech/nextjs.mdc` `**/app/**` 命中 python-fastapi `src/app/main.py` 与 cpp-cmake `include/app/greet.hpp`；`ux.mdc`/`delivery.mdc` `**/src/**` 命中 rust-axum/cpp-cmake；`data-list.mdc` `**/*List*` 命中 `CMakeLists.txt`；`eslint.mdc` 挂到所有 JS/TS 源文件 → 全部收窄为语言/框架专属模式
+- **rules glob 零命中** — `api.mdc` · `error-context.mdc` 在自带后端栈命中为 0（go-api 用 `internal/handler/` 单数）· `cpp.mdc` 不覆盖 `.h` 头文件 → 补齐；brace glob（`**/*.{ts,tsx}`）为 Cursor 未文档化写法，展开为逐扩展名
+- **新增 `bin/verify-rules-globs.sh`** — frontmatter/键校验 · 禁 brace glob · plan 闸门 glob 断言 · 7 栈真实文件命中/误命中回归；已纳入聚合与接线自检
 
 ## [4.29.7] - 2026-09-20
 

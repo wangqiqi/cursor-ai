@@ -2,8 +2,8 @@
 description: Rust coding SOP
 globs:
   - "**/*.rs"
-  - "Cargo.toml"
-  - "Cargo.lock"
+  - "**/Cargo.toml"
+  - "**/Cargo.lock"
 alwaysApply: false
 ---
 

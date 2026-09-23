@@ -2,8 +2,8 @@
 description: Go coding SOP
 globs:
   - "**/*.go"
-  - "go.mod"
-  - "go.sum"
+  - "**/go.mod"
+  - "**/go.sum"
 alwaysApply: false
 ---
 

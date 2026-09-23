@@ -346,9 +346,10 @@ else
   echo "OK  no user/machine paths in SOP"
 fi
 
-echo "=== doc + growth-layout 子验证 ==="
+echo "=== doc + growth-layout + rules-globs 子验证 ==="
 bash "$CUR/bin/verify-doc-super-cursor.sh" || FAIL=$((FAIL+1))
 bash "$CUR/bin/verify-growth-layout.sh" || FAIL=$((FAIL+1))
+bash "$CUR/bin/verify-rules-globs.sh" || FAIL=$((FAIL+1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

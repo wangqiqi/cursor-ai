@@ -2,8 +2,14 @@
 description: 执行规范 — 后端 API/schema 与前端类型/客户端同步
 globs:
   - "**/api/**"
+  - "**/handler/**"
+  - "**/handlers/**"
+  - "**/routes/**"
+  - "**/routers/**"
+  - "**/controllers/**"
   - "**/schemas/**"
   - "**/types/**"
+  - "**/*.proto"
   - "**/*openapi*"
   - "**/*swagger*"
 alwaysApply: false

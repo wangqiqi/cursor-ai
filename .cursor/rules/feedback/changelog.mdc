@@ -2,7 +2,9 @@
 description: 反馈规范 — CHANGELOG 结构与 plan 分工
 globs:
   - CHANGELOG.md
+  - .cursorGrowth/plan.md
   - plan.md
+  - .cursorGrowth/archive/**/*
   - archive/**/*
 alwaysApply: false
 ---
