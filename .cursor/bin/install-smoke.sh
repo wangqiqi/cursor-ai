@@ -58,8 +58,13 @@ assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template �
 (
   cd "$FULL"
   bash .cursor/bin/runner.sh plan-check >/dev/null
-  bash .cursor/bin/runner.sh gate-check >/dev/null
-) && ok "full: plan-check + gate-check" || fail "full: plan-check + gate-check"
+) && ok "full: plan-check runs" || fail "full: plan-check runs"
+# 闸门必须 fail-closed：模板默认 PLAN_APPROVED:(none) 不得放行（P0-3 回归）
+(
+  cd "$FULL"
+  bash .cursor/bin/runner.sh gate-check >/dev/null 2>&1
+) && fail "full: gate-check must BLOCK before PLAN_APPROVED" \
+  || ok "full: gate-check blocks unapproved plan"
 assert_grep "$FULL/.cursor/bin/runner.sh" 'release-tag' "full: runner.sh release-tag"
 
 # 2. lite · no --copy-plan

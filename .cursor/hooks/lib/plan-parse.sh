@@ -91,7 +91,7 @@ plan_sprint_goal_ritual_only() {
 }
 
 plan_plan_approved() {
-  plan_meta "PLAN_APPROVED"
+  plan_meta_value "PLAN_APPROVED"
 }
 
 plan_max_loops() {
