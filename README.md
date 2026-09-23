@@ -1,5 +1,7 @@
 # Super Cursor
 
+> **English**: [README.en.md](README.en.md) · Quickstart → [quickstart.en.md](.cursor/docs/quickstart.en.md)
+
 [![Version](https://img.shields.io/badge/version-4.29.6-blue?style=flat-square)](CHANGELOG.md)
 [![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)

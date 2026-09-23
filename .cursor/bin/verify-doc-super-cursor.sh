@@ -44,6 +44,15 @@ check_rule() {
 }
 check_rule "$CUR/rules/execution/doc-hygiene.mdc"
 
+# --- 双语最低集（A5）：英文入口存在且被主 README 链接 ---
+if [[ -f "$ROOT/README.en.md" ]] \
+  && grep -q 'README\.en\.md' "$ROOT/README.md" \
+  && [[ -f "$CUR/docs/quickstart.en.md" ]]; then
+  ok "bilingual entry (README.en.md + docs/quickstart.en.md) present and linked"
+else
+  fail "bilingual entry missing or not linked from README.md (README.en.md · docs/quickstart.en.md)"
+fi
+
 # --- skill metadata 契约：description ≤85 字 + dmi 分桶（SPRINT-SKILL-META 回归）---
 # 该节曾在 ef5521b 被静默删除且无人发现；此处断言存在性 + 实际元数据
 training="$CUR/docs/training/skills.md"

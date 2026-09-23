@@ -27,6 +27,7 @@ rm -rf "$DEST/guide" "$DEST/reference" "$DEST/training"
 mkdir -p "$DEST/guide" "$DEST/reference" "$DEST/training"
 
 copy quickstart.md guide/quickstart.md
+copy quickstart.en.md guide/quickstart.en.md
 copy walkthrough.md guide/walkthrough.md
 copy plan-run.md guide/plan-run.md
 copy platforms.md guide/platforms.md
@@ -52,6 +53,7 @@ for f in "$DEST/guide"/*.md; do
   rewrite_guide_links "$f"
 done
 
+
 sed_rewrite "$DEST/guide/walkthrough.md" \
   -e 's](\.\./\.\./README\.md)](https://github.com/wangqiqi/cursor-ai)]g' \
   -e 's](\.\./README\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/README.md)]g'
@@ -69,4 +71,4 @@ sed_rewrite "$DEST/reference/library-index.md" \
   -e 's](rules-catalog\.md)](/reference/rules-catalog)]g' \
   -e 's](rules-catalog)](/reference/rules-catalog)]g'
 
-echo "sync-cursor-docs: mirrored 12 files from .cursor/docs/"
+echo "sync-cursor-docs: mirrored 13 files from .cursor/docs/"

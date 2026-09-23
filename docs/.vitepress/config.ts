@@ -23,6 +23,7 @@ export default defineConfig({
           text: "入门",
           items: [
             { text: "快速开始", link: "/guide/quickstart" },
+            { text: "Quickstart (EN)", link: "/guide/quickstart.en" },
             { text: "Walkthrough", link: "/guide/walkthrough" },
             { text: "plan · run", link: "/guide/plan-run" },
             { text: "跨平台", link: "/guide/platforms" },

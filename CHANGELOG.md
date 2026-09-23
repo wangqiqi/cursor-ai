@@ -16,6 +16,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **双语最低集（A5）** — 新增 `README.en.md` 与 `.cursor/docs/quickstart.en.md`（英文入门层：安装 · 三个日常指令 · 目录边界 · 自检 · 进阶表），主 `README.md` 顶部加入口；`quickstart.en.md` 同步进 VitePress 侧栏（`docs/guide/quickstart.en.md`，站点共 13 篇镜像），同步脚本与 `README.en.md` 一并镜像到 GitHub 绝对链接。`verify-doc-super-cursor.sh` 断言英文入口存在且被主 README 链接。**不**翻译 rules/skills 正文（成本高、收益低）
+
 - **三平台 CI matrix（A6）** — `verify.yml` 由单 ubuntu job 扩为 `ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，先非阻塞）`；`fail-fast: false`，矩阵项未通过不影响其它项
 - **`SC_FORCE_PYTHON=1`（可测的 JSON 回退）** — `platform.sh` 新增该开关（`sc_has_json_tool` + 10 处 jq 分支），让「无 jq → python 回退」成为**可显式切换并验证**的路径。此前 CI 只在 ubuntu+jq 上跑，"回退"从未被覆盖（macOS runner 自带 jq，靠"恰好没装"不可行）
 - **`bin/verify-secrets.sh`（C4）** — 只扫 **已跟踪** 文件（`git ls-files`）：AWS key · 私钥材料 · GitHub/Slack token · 硬编码凭据赋值 · 被跟踪的 `.env`；示例占位（`example`/`your_`/`xxx`/`<...>`）与 `.env.example` 豁免。`.cursorignore`/`.gitignore` 只防「被读」，这道门禁防「被提交」；已纳入 `verify-super-cursor.sh`
