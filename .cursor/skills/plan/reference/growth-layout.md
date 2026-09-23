@@ -50,6 +50,8 @@
 
 适用于安装后目标项目的 `scripts/`（混合仓）。纯母版仓无根 `scripts/`，纪律仍供 scaffold · verify 引用。
 
+**脚手架已内置该骨架**：`scaffold.sh apply` 先铺 `templates/scaffold/_shared/scripts/`（`README.md` 矩阵 · `lib/_common.sh` · `lib/_frontend.sh` · `verify/{domain,tier}` 占位），栈内文件随后覆盖。门禁：`verify-scripts-layout.sh`（分层 + **重复块检测**：≥4 行相同即要求提取到 `lib/_*.sh`）。
+
 ```text
 scripts/
 ├── README.md              # SSOT：矩阵 · 分层 · 域表（项目必填，见 verify）

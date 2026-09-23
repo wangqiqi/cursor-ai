@@ -102,6 +102,8 @@ disable-model-invocation: true
 
 manifest 字段 `test` / `verify` 见 `templates/scaffold/manifest.json`。
 
+**共享层**：apply 会先铺 `templates/scaffold/_shared/**`（`scripts/README.md` 矩阵 · `scripts/lib/_common.sh` 公因子 · `verify/{domain,tier}` · `ops` · `dev` 骨架），栈内同名文件随后覆盖 → 新仓从第一天就是分层结构。
+
 **scripts 目录分级**：新仓脚本树落点纪律（`verify/tier/` · `verify/domain/` · `lib/` · `ops/` · `dev/`）见 **plan** `reference/growth-layout.md` §Scripts 布局；`growth-layout` 同源约定 Growth `archive/{domain}/`。
 
 ## 流程（已有项目）

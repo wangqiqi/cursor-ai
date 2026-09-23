@@ -50,3 +50,16 @@
 - 脚手架文件写入**仓库根**（业务代码），不是 `.cursor/`
 - 项目特化约定 → `/learn` → `.cursorGrowth/learn/`
 - 新栈母版贡献须用户明确要求（`.cursor/` 不可变原则）
+
+## 共享层 `_shared/`
+
+`apply` 先铺 `templates/scaffold/_shared/**`，再由栈内文件覆盖（`_shared.cursorignore` 仍单独合并）：
+
+| 文件 | 作用 |
+|------|------|
+| `scripts/README.md` | **项目脚本矩阵 SSOT**（分层 + 何时跑） |
+| `scripts/lib/_common.sh` | 公因子：`sc_root` · `sc_step` · `sc_ok/sc_fail` · `sc_require_cmd` · `sc_summary` |
+| `scripts/lib/_frontend.sh` | 前端栈公因子：`sc_frontend_verify`（lint → type-check → test → build） |
+| `scripts/verify/{domain,tier}/` · `ops/` · `dev/` | 分层骨架（`.gitkeep` 占位） |
+
+规则：**根目录只留入口**，新实现落子目录，共享断言进 `lib/_*.sh`；由 `verify-scripts-layout.sh` 断言（含重复块检测）。

@@ -19,6 +19,11 @@ fi
 
 echo "=== scaffold integrity ==="
 
+# 共享层：scripts 分层骨架 + lib 公因子（E3）
+for f in scripts/README.md scripts/lib/_common.sh scripts/verify/domain/.gitkeep scripts/verify/tier/.gitkeep; do
+  [[ -f "$TEMPLATE_ROOT/_shared/$f" ]] && ok "_shared/$f" || fail "_shared missing $f"
+done
+
 while IFS= read -r id; do
   dir="$TEMPLATE_ROOT/$id"
   [[ -d "$dir" ]] || { fail "missing dir $id"; continue; }
@@ -45,6 +50,17 @@ while IFS= read -r id; do
   esac
 
   ok "$id"
+done < <(sc_manifest_ids "$MANIFEST")
+
+while IFS= read -r id; do
+  src="$TEMPLATE_ROOT/$id/scripts/verify.sh"
+  [[ -f "$src" ]] || continue
+  # 任一共因子均可（_common.sh 或栈专用 _frontend.sh，后者自身 source _common.sh）
+  if grep -q 'lib/_' "$src"; then
+    ok "$id verify.sh sources scripts/lib/_* 公因子"
+  else
+    fail "$id verify.sh does not source scripts/lib/_*.sh (scripts 分层前导)"
+  fi
 done < <(sc_manifest_ids "$MANIFEST")
 
 bundle_root="$TEMPLATE_ROOT/_bundles/user-manual"

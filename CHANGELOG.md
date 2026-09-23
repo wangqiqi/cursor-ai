@@ -4,6 +4,11 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **脚手架 `_shared/` 共享层（E3）** — `templates/scaffold/_shared/scripts/` 提供项目脚本骨架：`README.md`（分层矩阵 SSOT）· `lib/_common.sh`（`sc_root`/`sc_step`/`sc_ok`/`sc_fail`/`sc_require_cmd`/`sc_summary`）· `lib/_frontend.sh`（`sc_frontend_verify`）· `verify/{domain,tier}` + `ops` + `dev` 占位。`scaffold.sh apply` 改为**先铺共享层再铺栈文件**（栈可覆盖）→ 新项目从第一天就是分层结构；7 栈 `test.sh`/`verify.sh` 的前导统一为 source 公因子
+- **`bin/verify-scripts-layout.sh`（E4）** — 脚本分层与**重复块检测**门禁：≥4 行连续相同 → 要求提取到 `lib/_*.sh`；另查 `scripts/README.md` 矩阵 · 根脚本体量/数量 · shebang。有 `scripts/` 时按**项目模式**，母版无 `scripts/` 时按**模板模式**查 scaffold（因此自身也被 CI 覆盖）。该门禁首次运行即抓出前端三栈重复的 4 行验收逻辑 → 已提取为 `sc_frontend_verify`
+
 ### Changed
 
 - **验证器公因子（E1/E2）** — 8 个 `verify-*.sh` 此前各写一套 `FAIL=0 / fail() / ok() / python 解析 / 汇总退出`，风格还不统一（4 个有 `fail()/ok()`，4 个没有）。新增 [`lib/verify-common.sh`](.cursor/lib/verify-common.sh)：`vc_title/vc_ok/vc_fail/vc_info/vc_skip/vc_py/vc_summary` + `sc_python` 统一解析，`vc_py` 保证在 `set -e` 下不中断。7 个子验证器 + 聚合器全部改经该骨架，**行为零变化**（逐脚本 `OK/FAIL/exit` 与重构前基线逐项一致：config 1 · doc 7 · growth-layout 10 · portability 1 · roo 1 · rules-globs 18 · secrets 1 · 聚合 202）。新增一门禁的成本从 ~90 行降到 ~20 行

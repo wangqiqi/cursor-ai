@@ -90,7 +90,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 
 `plan-check` 会在**开工前**对 prose 验收列 WARN 并计入 issues。写法 → `.cursor/templates/plan.md`。
 
-## 母版门禁清单（8 道 · 全部接线）
+## 母版门禁清单（9 道 · 全部接线）
 
 `verify-super-cursor.sh` 聚合以下子验证器；`template-verify.sh` 是母版完整入口：
 
@@ -104,6 +104,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 | `verify-doc-super-cursor.sh` | 门面计数 · doc 相对链接 · skill `description ≤85` · dmi 分桶 · run/plan SKILL 体积 · 双语入口 | 母版 |
 | `verify-growth-layout.sh` | `archive/{domain}` 与 `scripts/` 分级引用 | 母版 |
 | `consumer-smoke.sh` | **目标项目端到端**：install → 闸门 BLOCK → hook → 批准放行 → 目标仓库全绿 | 母版 |
+| `verify-scripts-layout.sh` | `scripts/` 分层：根只留入口 · `scripts/README.md` · 根脚本体量 · **重复块检测**（≥4 行相同 → 提取到 `lib/_*.sh`）；无 `scripts/` 时改查 scaffold 模板 | 通用 |
 
 **接线自检**：`bin/verify-*.sh` 必须被 `verify-super-cursor.sh` 或 `template-verify.sh` 调用，否则 FAIL —— 防止"脚本存在但从未生效"（本项目曾有两个验证器长期未接线）。
 

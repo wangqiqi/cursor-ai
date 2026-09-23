@@ -204,8 +204,16 @@ cmd_apply() {
   fi
 
   local src_dir="$TEMPLATE_ROOT/$id"
-  local rel src dest
+  local rel src dest shared_dir="$TEMPLATE_ROOT/_shared"
   echo "=== apply: $id (dry_run=$dry_run force=$force) ==="
+
+  # 先铺共享层（scripts 分层骨架 + lib 公因子），栈内同名文件随后覆盖
+  if [[ -d "$shared_dir" ]]; then
+    while IFS= read -r -d '' rel; do
+      rel="${rel#./}"
+      apply_file "$shared_dir/$rel" "$ROOT/$rel" "$force" "$dry_run"
+    done < <(cd "$shared_dir" && find . -type f -print0)
+  fi
   while IFS= read -r -d '' rel; do
     rel="${rel#./}"
     src="$src_dir/$rel"
