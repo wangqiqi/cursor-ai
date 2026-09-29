@@ -1,4 +1,6 @@
 .cursorGrowth/
+# DSH 运行时生长/会话状态（本地私有，不入 git）
+.dsh/
 .cursor/rules/local
 # hooks 运行时状态（state/README.md 入 git，其余不入）
 .cursor/hooks/state/*
