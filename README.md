@@ -117,21 +117,21 @@ alias install-super-cursor="$SUPER_CURSOR_HOME/install-super-cursor.sh"
 ## 工作流一览
 
 ```mermaid
-flowchart LR
-  A["/master<br/>不确定？先路由"] --> B["/scaffold<br/>空仓库起盘"]
-  A --> C["/learn<br/>项目认知"]
-  C --> D["/plan<br/>先总后分 · Sprint"]
-  B --> D
-  D --> E{"gate-check"}
-  E -->|通过| F["/run<br/>实现 + 验收"]
-  E -->|未通过| D
-  F --> G["task-verify"]
-  G --> H["commit + next-task"]
-  H --> F
-  H --> J["/delivery<br/>交付验收（可选）"]
-  J --> R["/report<br/>测试报告（可选）"]
-  R --> K["/release<br/>merge/PR/打 tag"]
-  H --> I["verify + release/ship"]
+flowchart TB
+  master["/master 不确定先路由"] --> scaffold["/scaffold 空仓库起盘"]
+  master --> learn["/learn 项目认知"]
+  learn --> plan["/plan 先总后分 Sprint"]
+  scaffold --> plan
+  plan --> gate{"gate-check"}
+  gate -->|pass| run["/run 实现与验收"]
+  gate -->|block| plan
+  run --> tv["task-verify"]
+  tv --> commit["commit 与 next-task"]
+  commit --> run
+  commit --> delivery["/delivery 可选"]
+  delivery --> report["/report 可选"]
+  report --> release["/release merge PR tag"]
+  commit --> ship["verify 与 release ship"]
 ```
 
 **核心机制：**
