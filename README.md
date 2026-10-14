@@ -240,7 +240,7 @@ Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次�
 
 ## 兼容 Roo Code
 
-**Roo Code** 采用与 Cursor 兼容的 skills / rules / commands 协议，**Super Cursor 的所有内容可以原样投喂**。一次安装，两端生效：
+**Roo Code** 采用与 Cursor 兼容的 **skills / rules** 协议（母版 slash 直挂 skill，无 `commands/` 层），**Super Cursor 的分发内容可以原样复制到 `.roo/`**。一次安装，两端生效：
 
 ```bash
 # Cursor 用户：标准安装

@@ -26,7 +26,6 @@ ALLOW = {
     "rule": {"description", "globs", "alwaysApply"},
     "skill": {"name", "description", "disable-model-invocation", "paths", "icon", "color"},
     "agent": {"name", "description", "model", "readonly", "is_background"},
-    "command": {"description"},
 }
 
 
@@ -74,10 +73,6 @@ for p in sorted((cur / "skills").glob("*/SKILL.md")):
     check("skill", p, rel_of(p))
 for p in sorted((cur / "agents").glob("*.md")):
     check("agent", p, rel_of(p))
-cmd_dir = cur / "commands"
-if cmd_dir.is_dir():
-    for p in sorted(cmd_dir.glob("*.md")):
-        check("command", p, rel_of(p))
 
 # rules 必须是 .mdc（Cursor/协议约定）；.cursor/rules 里的 .md 会被忽略
 for p in sorted((cur / "rules").rglob("*.md")):
