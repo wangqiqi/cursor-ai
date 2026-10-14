@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# SPIKE-005 SPRINT-PLUGIN-AGENTS: agents in plugin scope archived.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
+shopt -s nullglob
+files=("$ARCHIVE_DIR"/*_SPIKE_plugin_agents_scope.md)
+if [[ ${#files[@]} -eq 0 ]]; then
+  echo "FAIL: no archive meta/*_SPIKE_plugin_agents_scope.md" >&2
+  exit 1
+fi
+latest="$(printf '%s\n' "${files[@]}" | sort | tail -1)"
+for needle in "ship" "review" "spike" "sync-plugin-subset" "super-cursor-mvp" "0.2.0"; do
+  grep -qF "$needle" "$latest" || { echo "FAIL: missing '$needle' in $latest" >&2; exit 1; }
+done
+echo "OK: plugin agents scope spike archive $latest"
