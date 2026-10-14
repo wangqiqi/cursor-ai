@@ -22,6 +22,10 @@ done
 
 [[ -f "$PLUGIN/skills/master/routes.md" ]] || fail "missing skills/master/routes.md"
 
+for agent in ship review spike; do
+  [[ -f "$PLUGIN/agents/$agent.md" ]] || fail "missing agents/$agent.md"
+done
+
 for skill in git release debug test; do
   [[ ! -d "$PLUGIN/skills/$skill" ]] || fail "skills/$skill should not be in MVP plugin"
 done
@@ -39,4 +43,4 @@ grep -q '"command": "hooks/run-start.sh"' "$PLUGIN/hooks/hooks.json" \
 
 bash "$ROOT/.cursor/bin/verify-cursor-plugin-manifest.sh" || exit 1
 
-echo "OK: cursor-plugin MVP subset (lifecycle skills · core rules · hooks · no commands)"
+echo "OK: cursor-plugin MVP subset (lifecycle skills · agents · core rules · hooks · no commands)"
