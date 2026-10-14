@@ -95,6 +95,13 @@ grep -q "## Plugin MVP" "$cloud_doc" || vc_fail "cursor-cloud.md missing Plugin 
 grep -q "verify-cursor-plugin-mvp" "$cloud_doc" || vc_fail "cursor-cloud.md missing plugin verify command"
 vc_ok "Plugin MVP docs (install primary · cursor-platform + cursor-cloud)"
 
+grep -q "## Skills bundle" "$platform_learn" || vc_fail "cursor-platform.md missing Skills bundle section"
+grep -q "skill-bundles.json" "$platform_learn" || vc_fail "cursor-platform.md missing skill-bundles.json"
+grep -q "## Skills bundle" "$cloud_doc" || vc_fail "cursor-cloud.md missing Skills bundle section"
+grep -q "verify-install-skills-bundle" "$cloud_doc" || vc_fail "cursor-cloud.md missing verify-install-skills-bundle"
+grep -qF 'skills-bundle' "$ROOT/README.md" || vc_fail "README.md missing --skills-bundle option"
+vc_ok "skills bundle docs (README · cursor-platform · cursor-cloud)"
+
 vc_py "$CUR" <<'PY'
 import re, sys
 from pathlib import Path

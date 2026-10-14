@@ -79,7 +79,7 @@
 | 1 | 备份 `.cursor/` → `.cursorGrowth/archive/pre-super-cursor-YYYYMMDD/`（可选） |
 | 2 | `install-super-cursor.sh <目标> --profile full --replace` |
 | 3 | 业务 rules → `.cursorGrowth/rules/local/`（安装脚本会链 `rules/local`） |
-| 4 | 验收：skills/agents 与母版 `diff` 空 · `rules/local` 符号链接有效 · `platform-check.sh` 绿 |
+| 4 | 验收：skills/agents 与母版 `diff` 空（若用 `--skills-bundle core` 则 skills 为 23）· `rules/local` 有效 · `platform-check.sh` 绿 |
 
 **勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README（门面检查仅母版仓库）。
 

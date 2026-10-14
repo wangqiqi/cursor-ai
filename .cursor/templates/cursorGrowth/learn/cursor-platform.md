@@ -47,4 +47,13 @@
 | 验收 | `bash .cursor/bin/verify-cursor-plugin-manifest.sh` · `bash .cursor/bin/verify-cursor-plugin-mvp.sh` |
 | 边界 | **install 仍 SSOT** — Plugin 不提供 `gate-check` / 全量 verify / 28 skills；hooks 脚本依赖 `config/` 时须已 install 或手拷 |
 
+## Skills bundle（install）
+
+| 项 | 说明 |
+|----|------|
+| 默认 | `--skills-bundle full`（28 skills，与历史行为一致） |
+| **core** | 23 skills；排除五工具 skill（见 `config/skill-bundles.json`） |
+| 与 profile | **独立** — `lite`/`rules-only` 仍只改 workflow，不 silent 改 bundle |
+| 验收 | `bash .cursor/bin/verify-install-skills-bundle.sh` |
+
 Cloud / MCP 可选面 → `.cursor/docs/cursor-cloud.md`（含 Plugin 与 install 分流一句）。

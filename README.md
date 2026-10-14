@@ -73,6 +73,7 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | `--profile full\|lite\|rules-only` | 工作流档位（默认 `full`） |
 | `--replace` | 先删目标 `.cursor/` 再拷贝（**升级/迁移推荐**） |
 | `--copy-plan` | 复制 `templates/plan.md` → `.cursorGrowth/plan.md` |
+| `--skills-bundle full\|core` | skills 子集（默认 **full**=28；**core**=23，不含五工具 skill） |
 
 | 分发 | 说明 |
 |------|------|
