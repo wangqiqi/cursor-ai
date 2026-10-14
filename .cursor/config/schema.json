@@ -94,6 +94,12 @@
     "call_resolution": "object",
     "personas": "array"
   },
+  "skill-bundles.json": {
+    "_comment": "Install-time skills subset; see install-super-cursor.sh --skills-bundle",
+    "default": "string",
+    "bundles": "object",
+    "tools_skills": "array"
+  },
   "profiles/full.json": {
     "profile": "string",
     "workflow": {
