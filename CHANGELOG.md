@@ -10,6 +10,7 @@ All notable changes to Super Cursor are documented here.
 - **`.cursor-plugin/`** — `plugin.json` 脚手架（`super-cursor-mvp`）· `verify-cursor-plugin-manifest.sh`
 - **Plugin 子集** — `sync-plugin-subset.sh` · lifecycle skills + 11 核心 rules + hooks；`verify-cursor-plugin-mvp.sh`
 - **Plugin 文档** — `cursor-platform.md` §Plugin MVP · `cursor-cloud.md` 本地加载与 install 边界；`verify-doc-super-cursor` 断言
+- **verify 接线** — `verify-super-cursor.sh` 聚合 `verify-spike-plugin-mvp-scope` · `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp`
 
 ## [4.29.11] - 2026-10-14
 

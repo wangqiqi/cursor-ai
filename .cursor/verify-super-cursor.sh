@@ -393,6 +393,11 @@ bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-cursor-platform-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-spike-tools-skills-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
 
+echo "=== cursor-plugin MVP ==="
+bash "$CUR/bin/verify-spike-plugin-mvp-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-cursor-plugin-manifest.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
+
 echo "--- skills check dedupe ---"
 check_skill_checks_not_duplicated
 
