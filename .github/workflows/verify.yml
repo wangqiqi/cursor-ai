@@ -5,10 +5,13 @@ on:
     branches: [master, main]
     paths:
       - '.cursor/**'
+      - '.cursor-plugin/**'
+      - 'bin/**'
       - 'docs/**'
       - 'install-super-cursor.sh'
       - 'AGENTS.md'
       - 'README.md'
+      - 'README.en.md'
       - 'CHANGELOG.md'
       - 'package.json'
       - 'package-lock.json'
@@ -16,10 +19,13 @@ on:
   pull_request:
     paths:
       - '.cursor/**'
+      - '.cursor-plugin/**'
+      - 'bin/**'
       - 'docs/**'
       - 'install-super-cursor.sh'
       - 'AGENTS.md'
       - 'README.md'
+      - 'README.en.md'
       - 'CHANGELOG.md'
       - 'package.json'
       - 'package-lock.json'

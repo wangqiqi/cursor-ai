@@ -7,16 +7,26 @@ CUR="$ROOT/.cursor"
 TPL="$CUR/templates/cursorGrowth"
 ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
 
+# 归档为本地私有（.cursorGrowth/ 不入 git）→ 未引导时跳过归档段，其余契约检查照跑
+# shellcheck source=../lib/growth-archive.sh
+source "$ROOT/.cursor/lib/growth-archive.sh"
+archive_ready=false
+if sc_growth_archive_available "$ARCHIVE_DIR" "verify-cursor-platform-contract"; then
+  archive_ready=true
+fi
+
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
 # --- SPIKE archive + library-index ---
-shopt -s nullglob
-spike_files=("$ARCHIVE_DIR"/*_SPIKE_cursor_official_align.md)
-[[ ${#spike_files[@]} -gt 0 ]] || fail "no archive meta/*_SPIKE_cursor_official_align.md"
-spike_latest="$(printf '%s\n' "${spike_files[@]}" | sort | tail -1)"
-for needle in "In · Doc · Skip" "官方文档锚点" "TASK-004"; do
-  grep -q "$needle" "$spike_latest" || fail "missing '$needle' in $spike_latest"
-done
+if [[ "$archive_ready" == "true" ]]; then
+  shopt -s nullglob
+  spike_files=("$ARCHIVE_DIR"/*_SPIKE_cursor_official_align.md)
+  [[ ${#spike_files[@]} -gt 0 ]] || fail "no archive meta/*_SPIKE_cursor_official_align.md"
+  spike_latest="$(printf '%s\n' "${spike_files[@]}" | sort | tail -1)"
+  for needle in "In · Doc · Skip" "官方文档锚点" "TASK-004"; do
+    grep -q "$needle" "$spike_latest" || fail "missing '$needle' in $spike_latest"
+  done
+fi
 LIB="$CUR/docs/library-index.md"
 grep -q "Cursor 官方平台" "$LIB" || fail "library-index.md missing Cursor 官方平台 section"
 
@@ -88,12 +98,15 @@ fi
 grep -q 'sessionStart' "$HOOKS" || fail "hooks.json sessionStart"
 
 # --- plugin distribution archive ---
-plugin_files=("$ARCHIVE_DIR"/*_plugin_distribution_decision.md)
-[[ ${#plugin_files[@]} -gt 0 ]] || fail "no archive meta/*_plugin_distribution_decision.md"
-plugin_latest="$(printf '%s\n' "${plugin_files[@]}" | sort | tail -1)"
-for needle in "install-super-cursor" "Cursor Plugin" "Agent Plugin" "Marketplace"; do
-  grep -q "$needle" "$plugin_latest" || fail "missing '$needle' in $plugin_latest"
-done
+if [[ "$archive_ready" == "true" ]]; then
+  shopt -s nullglob
+  plugin_files=("$ARCHIVE_DIR"/*_plugin_distribution_decision.md)
+  [[ ${#plugin_files[@]} -gt 0 ]] || fail "no archive meta/*_plugin_distribution_decision.md"
+  plugin_latest="$(printf '%s\n' "${plugin_files[@]}" | sort | tail -1)"
+  for needle in "install-super-cursor" "Cursor Plugin" "Agent Plugin" "Marketplace"; do
+    grep -q "$needle" "$plugin_latest" || fail "missing '$needle' in $plugin_latest"
+  done
+fi
 grep -q 'install-super-cursor' "$LEARN_TPL" || fail "cursor-platform.md install path"
 grep -q 'cursor-plugin' "$LEARN_TPL" || fail "cursor-platform.md plugin MVP pointer"
 

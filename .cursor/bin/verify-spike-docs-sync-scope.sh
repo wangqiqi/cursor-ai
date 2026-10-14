@@ -3,6 +3,12 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
+
+# 归档为本地私有（.cursorGrowth/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验
+# shellcheck source=../lib/growth-archive.sh
+source "$ROOT/.cursor/lib/growth-archive.sh"
+sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-docs-sync-scope" || exit 0
+
 shopt -s nullglob
 files=("$ARCHIVE_DIR"/*_SPIKE_docs_sync_scope.md)
 if [[ ${#files[@]} -eq 0 ]]; then
