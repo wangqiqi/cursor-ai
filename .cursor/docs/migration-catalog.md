@@ -80,6 +80,7 @@
 | 2 | `install-super-cursor.sh <目标> --profile full --replace` |
 | 3 | 业务 rules → `.cursorGrowth/rules/local/`（安装脚本会链 `rules/local`） |
 | 4 | 验收：skills/agents 与母版 `diff` 空（若用 `--skills-bundle core` 则 skills 为 23）· `rules/local` 有效 · `platform-check.sh` 绿 |
+| （可选） | 持久文档号位：`runner.sh docs-init` · `bash .cursor/bin/verify-docs-layout.sh`（契约见 `config/docs-layout.json`） |
 
 **勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README（门面检查仅母版仓库）。
 

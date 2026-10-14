@@ -115,6 +115,9 @@ bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册
 | 新增 `bin/verify-*.sh` | **接线自检**（必须被聚合调用）+ 至少 1 个负向测试 | `rules/feedback/verify.mdc` §母版门禁清单 · 根 README §验证 |
 | 新增对外文档 | `docs:build`（dead-link）· `verify-doc-super-cursor.sh` | `docs/scripts/sync-cursor-docs.sh` + `.vitepress/config.ts` 侧栏 |
 | 动安装/门面 | `install-smoke.sh` · `consumer-smoke.sh` | CHANGELOG `[Unreleased]` |
+| 改 `docs-layout` / `templates/project-docs` | `verify-docs-layout.sh` · `verify-config.sh` | `plan-conventions.md` learn 模板 · `templates/project-docs/README.md` |
+
+目标项目铺文档骨架：`bash .cursor/bin/runner.sh docs-init [--profile web-fullstack]` → `docs/NN_*.md`；门禁 `verify-docs-layout.sh`（母版无编号 `docs/` 时验模板）。
 
 细则 → `rules/execution/doc-hygiene.mdc` §门面计数。
 

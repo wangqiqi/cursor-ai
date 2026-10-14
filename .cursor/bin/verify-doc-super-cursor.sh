@@ -102,6 +102,18 @@ grep -q "verify-install-skills-bundle" "$cloud_doc" || vc_fail "cursor-cloud.md 
 grep -qF 'skills-bundle' "$ROOT/README.md" || vc_fail "README.md missing --skills-bundle option"
 vc_ok "skills bundle docs (README · cursor-platform · cursor-cloud)"
 
+tpl_07="$CUR/templates/project-docs/07_用户手册.md"
+tpl_08="$CUR/templates/project-docs/08_测试报告.md"
+learn_pc="$CUR/templates/cursorGrowth/learn/plan-conventions.md"
+[[ -f "$tpl_07" ]] || vc_fail "templates/project-docs/07_用户手册.md missing"
+[[ -f "$tpl_08" ]] || vc_fail "templates/project-docs/08_测试报告.md missing"
+grep -qF "generated: manual" "$tpl_07" || vc_fail "07 template missing manual generated marker"
+grep -qF "generated: report" "$tpl_08" || vc_fail "08 template missing report generated marker"
+grep -qF "docs-layout.json" "$learn_pc" || vc_fail "plan-conventions missing docs-layout.json pointer"
+grep -qF "docs-init" "$CUR/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing docs-init"
+grep -qF "docs-init" "$mc" || vc_fail "migration-catalog missing docs-init"
+vc_ok "project-docs SSOT (07/08 templates · plan-conventions · contributor docs)"
+
 vc_py "$CUR" <<'PY'
 import re, sys
 from pathlib import Path
