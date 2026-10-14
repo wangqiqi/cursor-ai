@@ -78,7 +78,7 @@ resolve_tag_glob() {
 resolve_version_default() {
   local version_line="$1"
   local plan_default env_default
-  plan_default="$(plan_meta "VERSION_DEFAULT")"
+  plan_default="$(version_default_value)"
   env_default="$(sc_env_get "$VERSION_DEFAULT_ENV")"
   if [[ -n "$version_line" ]]; then
     echo "${env_default:-${plan_default:-${version_line}.0}}"
@@ -91,10 +91,40 @@ next_version() {
   bump_version patch
 }
 
+# 版本键归位：模板占位说明（"(optional · major.minor，如 4.22…)"）绝不是版本号。
+# 非「数字点分」值一律视为未设置 —— 否则 release-tag 会拿垃圾 tag_glob 交给 git tag。
+# 三个 helper 都显式 return 0：调用处是 `v="$(helper)"`，非零返回会在 set -e 下中断。
+version_line_value() {
+  local v
+  v="$(plan_meta_value "VERSION_LINE")"
+  if [[ "$v" =~ ^[0-9]+\.[0-9]+$ ]]; then
+    printf '%s\n' "$v"
+  fi
+  return 0
+}
+
+version_default_value() {
+  local v
+  v="$(plan_meta_value "VERSION_DEFAULT")"
+  if [[ "$v" =~ ^[0-9]+(\.[0-9]+){1,2}$ ]]; then
+    printf '%s\n' "$v"
+  fi
+  return 0
+}
+
+release_bump_value() {
+  local v
+  v="$(plan_meta_value "RELEASE_BUMP")"
+  case "$v" in
+    patch|minor|major) printf '%s\n' "$v" ;;
+  esac
+  return 0
+}
+
 bump_version() {
   local bump="${1:-patch}"
   local latest ver major minor patch tag_glob default_ver version_line
-  version_line="$(plan_meta "VERSION_LINE")"
+  version_line="$(version_line_value)"
   tag_glob="$(resolve_tag_glob "$version_line")"
   default_ver="$(resolve_version_default "$version_line")"
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
@@ -119,7 +149,7 @@ bump_version() {
 }
 
 release_tag() {
-  local bump="${RELEASE_BUMP:-$(plan_meta RELEASE_BUMP)}"
+  local bump="${RELEASE_BUMP:-$(release_bump_value)}"
   bump="${bump:-patch}"
   local release_config="$CURSOR_DIR/config/release.json"
   local auto_minor auto_major tag_prefix annotated version tag_name msg
@@ -161,7 +191,7 @@ release_tag() {
 release_check() {
   local p0_open tag_glob version_line latest
   p0_open="$(grep -E '\| P0 \|' "$PLAN" 2>/dev/null | grep -cv '| ✅ |' || true)"
-  version_line="$(plan_meta "VERSION_LINE")"
+  version_line="$(version_line_value)"
   tag_glob="$(resolve_tag_glob "$version_line")"
   latest="$(git -C "$ROOT" tag -l "$tag_glob" --sort=-v:refname 2>/dev/null | head -1 || true)"
   if [[ "$p0_open" -eq 0 ]]; then
