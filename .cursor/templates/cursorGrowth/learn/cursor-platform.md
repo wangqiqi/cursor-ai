@@ -75,4 +75,11 @@ Cloud / MCP 可选面 → `.cursor/docs/cursor-cloud.md`（含 Plugin 与 instal
 
 ## Marketplace
 
-**Defer 上架** — 本仓仅仓库根 `.cursor-plugin/` 本地加载；Marketplace 发布 checklist 见 SPIKE-006 归档，另 Sprint 立项。
+**Defer 实际上架** — 本仓仅仓库根 `.cursor-plugin/` **本地加载**；**不**替代 `install-super-cursor.sh`。
+
+| 文档 | 内容 |
+|------|------|
+| 三轨 vs Marketplace | `archive/meta/*_SPIKE_plugin_phase2_scope.md` |
+| **未来上架清单**（manifest 扩展 · 提交前门禁） | `archive/meta/*_SPIKE_marketplace_prep_scope.md` |
+
+母版维护者提交前：`bash .cursor/bin/sync-plugin-subset.sh` → `verify-cursor-plugin-manifest.sh` → `verify-cursor-plugin-mvp.sh`。归档回归：`bash .cursor/bin/verify-spike-marketplace-prep-scope.sh`。

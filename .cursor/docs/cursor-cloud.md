@@ -66,6 +66,16 @@ Plugin hooks **不**打包 `workflow.json`。`config-load.sh` 期望目标仓库
 
 归档矩阵 → `archive/meta/*_SPIKE_plugin_phase2_scope.md`（Growth）。
 
+## Marketplace（Defer · 未来清单）
+
+**仍 Defer 上架** — Marketplace 不是第三轨替代物；Plugin 包未来可能上架，当前仅本地 `.cursor-plugin/`。
+
+| 项 | 指针 |
+|----|------|
+| 清单归档 | `archive/meta/*_SPIKE_marketplace_prep_scope.md`（Growth） |
+| 门禁脚本 | `bash .cursor/bin/verify-spike-marketplace-prep-scope.sh` |
+| 长文 SSOT | install 后 `learn/cursor-platform.md` §Marketplace |
+
 ## Skills bundle（install 可选）
 
 默认 **`install-super-cursor.sh`** 仍安装 **28** skills（`--skills-bundle full`，可省略）。若目标项目不需要五工具 skill（`week` · `disk` · `maintain` · `ops-deploy` · `code-stats-viz`），可用 **`--skills-bundle core`** → 安装后 **23** skills。契约 SSOT：`config/skill-bundles.json`。
