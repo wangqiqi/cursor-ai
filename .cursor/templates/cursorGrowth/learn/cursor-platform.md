@@ -29,5 +29,10 @@
 
 ## 分发
 
-- **默认**：`install-super-cursor.sh` + profile（full / lite / rules-only）。
-- **Plugin 形态**：见 Sprint TASK-006 / archive；非 install 替代品。
+| 方式 | 何时用 |
+|------|--------|
+| **`install-super-cursor.sh`** + profile | **默认** — 全量 `.cursor/` + Growth 引导 |
+| **Cursor Plugin**（`.cursor-plugin/`） | 团队 Marketplace · 一键装 rules/skills/hooks；**母版未打包**（见下 Sprint MVP） |
+| **Agent Plugin**（根 `plugin.json`） | 仅外发 skills+MCP 子集 |
+
+决策归档 → `.cursorGrowth/archive/meta/*_plugin_distribution_decision.md`（TASK-006）。**不**用 Plugin 替代 install 的 verify / runner 契约。

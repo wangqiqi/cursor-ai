@@ -382,6 +382,7 @@ bash "$CUR/bin/verify-task-002-bugbot-templates.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-task-003-mcp-cloud-templates.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-task-004-commands-retired.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-task-005-hooks-cloud-doc.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-task-006-plugin-distribution.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

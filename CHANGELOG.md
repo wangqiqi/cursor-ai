@@ -12,6 +12,7 @@ All notable changes to Super Cursor are documented here.
 - **plan TASK-003** — `mcp.json.example` · `environment.json.example`；`.cursor/docs/cursor-cloud.md`；`platforms.md` 交叉链；`verify-task-003-mcp-cloud-templates.sh`；VitePress sync
 - **plan TASK-004** — 删除 `.cursor/commands/`（10）；slash 仅以 skill 为 SSOT；更新 naming · training/skills · README · `verify-task-004-commands-retired.sh`
 - **plan TASK-005** — `platforms.md` §Hooks 增补 Cloud parity 与 Tab hooks 评估（默认不写入 `hooks.json`）；`verify-task-005-hooks-cloud-doc.sh`
+- **SPRINT-CURSOR-ALIGN** — Plugin 分发决策归档（install 主路径 · Plugin MVP 后置）；`verify-task-006-plugin-distribution.sh`；退役 `commands/` · 可选 Bugbot/MCP/Cloud 模板 · `cursor-platform` 文档
 
 ## [4.29.9] - 2026-09-23
 

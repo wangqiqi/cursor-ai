@@ -90,7 +90,7 @@
 | Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（`commands/` 已退役） | `skills/` · `training/skills.md` |
 | Hooks + Cloud | Repo command hooks；Cloud 不跑用户 `~/.cursor/hooks` | `hooks.json` · `platforms.md` |
 | MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/cursorGrowth/`（TASK-002/003） |
-| Plugins Marketplace | **Doc/后续**；主路径仍为 `install-super-cursor.sh` | `library-index.md` · TASK-006 |
+| Plugins Marketplace | **install 主路径**；Plugin MVP 单列 Sprint（见 archive meta plugin_distribution） | `learn/cursor-platform.md` |
 | Automations | 用户全局 `/automate`；母版不嵌密钥 | `cursor-platform.md` |
 | 嵌套 `AGENTS.md` · skill `paths` | 大仓消费方指南 | `.cursorGrowth/learn/cursor-platform.md` |
 
