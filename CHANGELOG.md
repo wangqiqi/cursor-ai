@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.14] - 2026-10-14
+
 ### Added
 
 - **SPRINT-DOCS-SYNC** — SPIKE-004：docs SSOT 审计矩阵 · `verify-spike-docs-sync-scope.sh`

@@ -2,7 +2,7 @@
 
 > **English**: [README.en.md](README.en.md) · Quickstart → [quickstart.en.md](.cursor/docs/quickstart.en.md)
 
-[![Version](https://img.shields.io/badge/version-4.29.13-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.29.14-blue?style=flat-square)](CHANGELOG.md)
 [![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
@@ -43,7 +43,7 @@
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
 ├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · project-docs（`docs-init` 号位）· 7 栈脚手架 · manual/test-report 契约 · verify-layers / design-system bundles
+└── templates/  plan.md · sdd/ · project-docs（`docs-init` 号位）· 7 栈脚手架 · user-manual / test-report 契约 · verify-layers / design-system bundles
 ```
 
 **根目录（可直接 clone / 复制）：**
