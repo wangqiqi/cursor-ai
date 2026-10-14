@@ -29,6 +29,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `workflow.enabled` | `true` | plan/run SOP |
 | `workflow.hooks_enabled` | `true` | run-start / run-stop |
 | `growth.enabled` | `true` | growth-init hook |
+| `growth.onekey_bootstrap` | `true` | 项目根无 `onekey_start.sh` 时从 `templates/project-onekey/` 复制（不覆盖） |
 | `growth.learn_sources` | CHANGELOG, archive, plan | **learn** skill sources |
 | `task_id.prefixes_autonomous` | `["TASK-"]` | 常规实现任务前缀 |
 | `task_id.prefixes_skip` | `REV-`, `SPIKE-`, `DOC-` | `next-task` 自动选 ⬜ 时跳过（不 bypass gate-check） |

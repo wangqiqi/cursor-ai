@@ -10,6 +10,8 @@ CURSOR_DIR="$(cd "$HOOKS_DIR/.." && pwd)"
 source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
+# shellcheck source=../lib/onekey-bootstrap.sh
+source "$HOOKS_DIR/../lib/onekey-bootstrap.sh"
 
 sc_resolve_project_root "$HOOKS_DIR"
 sc_init_config "$CURSOR_DIR"
@@ -103,5 +105,7 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
     fi
   fi
 fi
+
+sc_bootstrap_onekey_start "$PROJECT_ROOT" "${SC_CURSOR_DIR:-$CURSOR_DIR}" "$SC_ONEKEY_BOOTSTRAP"
 
 echo "$INPUT"

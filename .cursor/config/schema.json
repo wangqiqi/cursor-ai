@@ -17,7 +17,8 @@
       "dir": "string",
       "learn_dir": "string",
       "learn_sources": "array",
-      "archive_flat_max": "int"
+      "archive_flat_max": "int",
+      "onekey_bootstrap": "bool"
     },
     "release": {
       "enabled": "bool",

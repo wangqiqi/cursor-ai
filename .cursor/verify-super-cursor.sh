@@ -390,6 +390,7 @@ bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-onekey-template.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== mother-only: platform · SPIKE · plugin · hygiene ==="
 if is_mother_repo; then
@@ -405,6 +406,7 @@ if is_mother_repo; then
   bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-marketplace-prep-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-onekey-bootstrap-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
 else
   echo "SKIP  non-mother: platform/SPIKE/plugin/hygiene（Growth 归档 · install-smoke · .cursor-plugin）"
 fi

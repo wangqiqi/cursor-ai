@@ -71,6 +71,22 @@ for h in growth-init run-start run-stop; do
     fail "hook $h rc=$rc stderr=$err"
   fi
 done
+
+# 3c. onekey bootstrap：growth-init 后根目录应有模板；二次 hook 不覆盖
+if [[ -f "$PROJ/onekey_start.sh" && -x "$PROJ/onekey_start.sh" ]]; then
+  ok "growth-init bootstrapped onekey_start.sh"
+  onekey_hash="$(sha256sum "$PROJ/onekey_start.sh" | awk '{print $1}')"
+  printf '{"conversation_id":"c1","workspace_roots":["%s"]}' "$PROJ" | run_in_proj bash .cursor/hooks/growth-init.sh >/dev/null 2>&1 || true
+  onekey_hash2="$(sha256sum "$PROJ/onekey_start.sh" | awk '{print $1}')"
+  if [[ "$onekey_hash" == "$onekey_hash2" ]]; then
+    ok "growth-init does not overwrite existing onekey_start.sh"
+  else
+    fail "growth-init overwrote onekey_start.sh"
+  fi
+else
+  fail "onekey_start.sh missing after growth-init (growth.onekey_bootstrap)"
+fi
+
 grep -q 'run gate blocked' "$TMP/run-start.err" 2>/dev/null || true
 out="$(printf '{"conversation_id":"c1","workspace_roots":["%s"]}' "$PROJ" | run_in_proj bash .cursor/hooks/run-start.sh 2>/dev/null || true)"
 case "$out" in

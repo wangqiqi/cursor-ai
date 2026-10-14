@@ -60,7 +60,7 @@ case "$cmd" in
     done
     ;;
   *)
-    echo "未知子命令: $cmd（试 help）" >&2
+    echo "未知子命令: ${cmd}（试 help）" >&2
     exit 1
     ;;
 esac

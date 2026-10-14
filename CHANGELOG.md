@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **install-bootstrap onekey** — `growth.onekey_bootstrap`（默认开）：`growth-init` 在目标项目根无 `onekey_start.sh` 时从 `.cursor/templates/project-onekey/` 复制并 `chmod +x`（不覆盖已有）；母版仓 SSOT 仅模板，根目录不得放置 `onekey_start.sh`（`verify-onekey-template.sh`）
+
 ### Changed
 
 - **文档对齐磁盘** — 常驻 rules 为 **4** 个（`core` · `workflow` · `cursor-standalone` · `super-cursor-persona`），根 `README.md` · `rules-catalog.md` · `effective-collaboration.md` 原写「2 个」；`config/README.md` 的 `plan_file` / `archive_dir` 默认值与 `workflow.json` 对齐（`.cursorGrowth/…`）· 键表碎片归位 · Templates 落点更正；`migration-catalog.md` 补 **E2E** 组行；`.cursor/AGENTS.md` execution 行修未闭合加粗并补 5 个 rule；`scaffold.md` 表格恢复连续；`README.en.md` 规则计数与重复 `skills/` 行；VitePress 移除指向不存在 favicon 的 `head`

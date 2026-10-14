@@ -35,6 +35,7 @@ HOOK_SCRIPTS=(
 # 只带 hook 运行期真需要的；verify-common/growth-archive 属母版门禁，不入插件。
 LIB_SCRIPTS=(
   lib/platform.sh
+  lib/onekey-bootstrap.sh
 )
 
 copy_file() {

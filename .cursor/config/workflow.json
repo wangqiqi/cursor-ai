@@ -19,7 +19,8 @@
       ".cursorGrowth/archive/",
       ".cursorGrowth/plan.md"
     ],
-    "archive_flat_max": 5
+    "archive_flat_max": 5,
+    "onekey_bootstrap": true
   },
   "release": {
     "enabled": true,
