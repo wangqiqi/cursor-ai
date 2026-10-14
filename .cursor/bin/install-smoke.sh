@@ -140,7 +140,14 @@ grep -qF 'SUPER_CURSOR_HOME=' "$HOME/.bashrc" && ok "setup-shell: SUPER_CURSOR_H
 grep -qF 'install-super-cursor' "$HOME/.bashrc" && ok "setup-shell: alias" || fail "setup-shell: alias"
 export HOME="$HOME_SAVE"
 
-# 8. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
+# 8. skills-bundle core
+CORE_BUNDLE="$TMP_ROOT/core-bundle"
+run_install "core bundle: install" "$TMP_ROOT/core-bundle.out" "$CORE_BUNDLE" --profile lite --skills-bundle core
+core_n="$(find "$CORE_BUNDLE/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
+[[ "$core_n" == "23" ]] && ok "core bundle: 23 skills" || fail "core bundle: skills=$core_n (expected 23)"
+assert_absent "$CORE_BUNDLE/.cursor/skills/week/SKILL.md" "core bundle: no week skill"
+
+# 9. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
 # 需要符号链接来构造「source==target」；无符号链接权限的平台（Windows/Git Bash）显式 SKIP，
 # 而不是让裸 ln -s 在 set -e 下中止整个 smoke（曾导致 Windows 腿秒退且无 FAIL 行）
 SELF="$TMP_ROOT/self-replace"

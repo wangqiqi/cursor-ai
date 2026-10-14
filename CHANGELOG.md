@@ -4,6 +4,14 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **SPRINT-LITE-SKILLS** — SPIKE-003：`--skills-bundle full|core` 契约归档 · `verify-spike-skills-bundle-scope.sh`
+- **`skill-bundles.json`** — install 子集 SSOT（core 排除五工具 skill）· `verify-config` 校验
+- **install** — `--skills-bundle core` → 23 skills；默认 full 仍为 28 · `sc_apply_skills_bundle` · `verify-install-skills-bundle.sh`
+- **文档** — README · `cursor-cloud` · `cursor-platform` · `migration-catalog` skills bundle 说明
+- **verify** — `verify-super-cursor` 聚合 skills bundle 门禁 · install-smoke core 路径
+
 ## [4.29.12] - 2026-10-14
 
 ### Added
