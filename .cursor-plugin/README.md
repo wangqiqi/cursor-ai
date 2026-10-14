@@ -26,6 +26,7 @@
 ## 验证
 
 ```bash
+bash .cursor/bin/sync-plugin-subset.sh   # 母版改 rules 后先同步
 bash .cursor/bin/verify-cursor-plugin-manifest.sh
-bash .cursor/bin/verify-cursor-plugin-mvp.sh
+bash .cursor/bin/verify-cursor-plugin-mvp.sh   # 含 verify.mdc 与母版 diff parity
 ```
