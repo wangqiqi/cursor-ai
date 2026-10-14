@@ -47,6 +47,20 @@
 | 验收 | `bash .cursor/bin/verify-cursor-plugin-manifest.sh` · `bash .cursor/bin/verify-cursor-plugin-mvp.sh` |
 | 边界 | **install 仍 SSOT** — Plugin 不提供 `gate-check` / 全量 verify / 28 skills；hooks 脚本依赖 `config/` 时须已 install 或手拷 |
 
+## 分发三轨（install · plugin · skills-bundle）
+
+| 轨 | 典型 skills | `config/` | 用途 |
+|----|-------------|-----------|------|
+| **install full**（默认） | 28 | ✅ | 母版 SSOT · `runner.sh` · 全量 verify |
+| **install `--skills-bundle core`** | 23 | ✅ | 去掉五工具 skill；**仍**全量 rules/agents/hooks |
+| **`.cursor-plugin/`** | 5 lifecycle + agents | ❌（须目标已 install） | 本地 Plugin；`sync-plugin-subset.sh` |
+
+`core`（23）与 Plugin（5）**不可互换**；详见 `archive/meta/*_SPIKE_plugin_phase2_scope.md`。
+
+## Hooks 与 config（Plugin）
+
+Plugin 携带 `hooks/run-start.sh` 等，但 **`hooks/lib/config-load.sh` 读取 `.cursor/config/workflow.json`**。仅加载 Plugin、未 install → plan 闸门与 profile 合并**不**成立。推荐顺序：**先 `install-super-cursor.sh`，再启用 Plugin**。
+
 ## Skills bundle（install）
 
 | 项 | 说明 |
@@ -55,5 +69,10 @@
 | **core** | 23 skills；排除五工具 skill（见 `config/skill-bundles.json`） |
 | 与 profile | **独立** — `lite`/`rules-only` 仍只改 workflow，不 silent 改 bundle |
 | 验收 | `bash .cursor/bin/verify-install-skills-bundle.sh` |
+| 与 Plugin | **无自动对齐** — `skill-bundles.json` 管 install；Plugin 子集见 §Plugin MVP |
 
 Cloud / MCP 可选面 → `.cursor/docs/cursor-cloud.md`（含 Plugin 与 install 分流一句）。
+
+## Marketplace
+
+**Defer 上架** — 本仓仅仓库根 `.cursor-plugin/` 本地加载；Marketplace 发布 checklist 见 SPIKE-006 归档，另 Sprint 立项。

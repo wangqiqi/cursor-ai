@@ -52,6 +52,20 @@ bash .cursor/bin/verify-cursor-plugin-mvp.sh
 
 范围与 install 差异 → `templates/cursorGrowth/learn/cursor-platform.md` §Plugin MVP · `archive/meta/*_SPIKE_plugin_mvp_scope.md`（Growth 运行时路径）。
 
+### Hooks · config（Plugin 必读）
+
+Plugin hooks **不**打包 `workflow.json`。`config-load.sh` 期望目标仓库已有 **`.cursor/config/`**（通常来自 prior **install**）。仅 Plugin、无 install → `gate-check` / plan 元数据不可用。
+
+### 分发三轨（对照）
+
+| 轨 | skills（约） | 说明 |
+|----|--------------|------|
+| install **full** | 28 | 默认 |
+| install **`--skills-bundle core`** | 23 | 非 Plugin |
+| **`.cursor-plugin/`** | 5 lifecycle | 非 core；见 `verify-cursor-plugin-mvp.sh` |
+
+归档矩阵 → `archive/meta/*_SPIKE_plugin_phase2_scope.md`（Growth）。
+
 ## Skills bundle（install 可选）
 
 默认 **`install-super-cursor.sh`** 仍安装 **28** skills（`--skills-bundle full`，可省略）。若目标项目不需要五工具 skill（`week` · `disk` · `maintain` · `ops-deploy` · `code-stats-viz`），可用 **`--skills-bundle core`** → 安装后 **23** skills。契约 SSOT：`config/skill-bundles.json`。
