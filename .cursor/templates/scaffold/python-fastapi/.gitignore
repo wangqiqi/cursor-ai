@@ -5,5 +5,11 @@ __pycache__/
 dist/
 *.egg-info/
 
+.ruff_cache/
+.mypy_cache/
+
 # Super Cursor (plan · archive · learn · rules)
 .cursorGrowth/
+
+# verify 锁（scripts/verify.sh 运行期创建）
+.verify.lock

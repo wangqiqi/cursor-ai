@@ -15,6 +15,9 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
+      // vue 的 flat/recommended 会把 languageOptions.parser 设为 vue-eslint-parser，
+      // 且覆盖到 .ts —— 不指定内层 parser 时源码里的 module 语法直接 parse error
+      parserOptions: { parser: tseslint.parser },
     },
   },
 );

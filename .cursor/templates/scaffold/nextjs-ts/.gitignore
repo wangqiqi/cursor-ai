@@ -7,3 +7,6 @@ out/
 
 # Super Cursor (plan · archive · learn · rules)
 .cursorGrowth/
+
+# verify 锁（scripts/verify.sh 运行期创建）
+.verify.lock

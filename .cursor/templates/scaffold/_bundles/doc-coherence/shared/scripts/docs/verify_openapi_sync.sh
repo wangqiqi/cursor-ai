@@ -6,6 +6,7 @@ cd "$ROOT"
 
 [[ -f package.json ]] || { echo "SKIP: no package.json"; exit 0; }
 [[ -f docs/openapi.yaml ]] || { echo "SKIP: no docs/openapi.yaml"; exit 0; }
+command -v node >/dev/null 2>&1 || { echo "SKIP: node 不可用（该 slice 需要 Node；非 Node 栈可忽略）"; exit 0; }
 
 node <<'NODE'
 const { read, mustInclude } = require('./scripts/lib/doc-anchors');

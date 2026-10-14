@@ -4,6 +4,8 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/load.sh"
 sc_cd_root
 
+command -v node >/dev/null 2>&1 || { echo "SKIP: node 不可用（该 slice 需要 Node；非 Node 栈可忽略）"; exit 0; }
+
 node <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -13,7 +15,8 @@ const layersPath = path.join(root, 'scripts/lib/verify-layers.sh');
 const text = fs.readFileSync(layersPath, 'utf8');
 
 function extractArray(name) {
-  const re = new RegExp(`${name}=\\(\\s*([\\s\\S]*?)\\n\\)`, 'm');
+  // 不能要求 `)` 独占一行：空数组写作 `VERIFY_SLICES_HEAVY=()`（单行）
+  const re = new RegExp(`${name}=\\(([\\s\\S]*?)\\)`, 'm');
   const match = text.match(re);
   if (!match) throw new Error(`missing ${name} in verify-layers.sh`);
   const entries = [];
