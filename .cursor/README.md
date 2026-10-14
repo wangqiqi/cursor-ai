@@ -9,8 +9,7 @@
 
 ```
 rules/   communication · execution · feedback · tech
-skills/  master plan run learn scaffold git release …（SOP 正文；日常只记 plan/run/master）
-commands/ 三层 slash（薄入口 → 加载 skill；见下表）
+skills/  master plan run learn scaffold git release …（SOP + slash SSOT；日常只记 plan/run/master）
 agents/  ship review spike（子进程委派；日常不必记）
 hooks/   growth-init run-start run-stop
 config/  workflow.json release.json roles.json + schema.json（config 校验）· denylist.txt（母版独立扫描）
@@ -36,9 +35,9 @@ bash .cursor/verify-system.sh                # 同上 layout（alias）
 
 命名：[docs/naming.md](docs/naming.md)
 
-## Slash 入口（三层 · 记前两层即可）
+## Skill slash（三层 · 记前两层即可）
 
-slash 菜单按 **【日常】→【生命周期】→【高级】** 标注；Agent 可自动选用的 skill **不必死记 slash**。
+`/plan` 等直接加载同名 **skill**（无 `commands/` 层）。菜单按 **【日常】→【生命周期】→【高级】** 标注；Agent 可自动选用的 skill **不必死记 slash**。
 
 ### 【日常】80% 时间
 

@@ -64,7 +64,7 @@
 
 | 范围 | 标准 |
 |------|------|
-| 结构 | 28 skills · 3 agents · 54 rules · 10 commands · config/hooks/bin 齐全 |
+| 结构 | 28 skills · 3 agents · 54 rules · config/hooks/bin 齐全（无 `commands/`） |
 | 注册 | 每个 `rules/**/*.mdc` 在 `verify-super-cursor.sh` 有 check |
 | layout | **mother** 纯空仓 · **hybrid** 业务树共存（自动 SKIP 纯母版项）— `rules/feedback/verify.mdc` |
 | 交叉引用 | AGENTS ↔ 磁盘 · routes ↔ skills/agents · roles=12 |
@@ -87,7 +87,7 @@
 
 | 官方能力 | 母版策略 | 落点 |
 |----------|----------|------|
-| Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（commands 退役中） | `skills/` · `training/skills.md` |
+| Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（`commands/` 已退役） | `skills/` · `training/skills.md` |
 | Hooks + Cloud | Repo command hooks；Cloud 不跑用户 `~/.cursor/hooks` | `hooks.json` · `platforms.md` |
 | MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/cursorGrowth/`（TASK-002/003） |
 | Plugins Marketplace | **Doc/后续**；主路径仍为 `install-super-cursor.sh` | `library-index.md` · TASK-006 |

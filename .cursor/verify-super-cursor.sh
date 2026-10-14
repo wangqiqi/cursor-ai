@@ -134,19 +134,11 @@ check "$CUR/skills/scaffold/SKILL.md"
 check "$CUR/skills/git/SKILL.md"
 check "$CUR/skills/release/SKILL.md"
 check "$CUR/skills/long/SKILL.md"
-check "$CUR/commands/plan.md"
-check "$CUR/commands/run.md"
-check "$CUR/commands/master.md"
-check "$CUR/commands/learn.md"
-check "$CUR/commands/scaffold.md"
-check "$CUR/commands/release.md"
-check "$CUR/commands/long.md"
-check "$CUR/commands/delivery.md"
 check "$CUR/skills/delivery/SKILL.md"
 check "$CUR/skills/ux/SKILL.md"
 check "$CUR/skills/ia/SKILL.md"
-check "$CUR/commands/manual.md"
-check "$CUR/commands/report.md"
+check "$CUR/skills/user-manual/SKILL.md"
+check "$CUR/skills/test-report/SKILL.md"
 check "$CUR/skills/debug/SKILL.md"
 check "$CUR/skills/review/SKILL.md"
 check "$CUR/skills/week/SKILL.md"
@@ -178,8 +170,6 @@ check "$CUR/rules/tech/javascript.mdc"
 check "$CUR/rules/execution/security-sdlc.mdc"
 check "$CUR/skills/review/SKILL.md"
 check "$CUR/skills/study/SKILL.md"
-check "$CUR/skills/user-manual/SKILL.md"
-check "$CUR/skills/test-report/SKILL.md"
 check "$CUR/agents/review.md"
 check "$CUR/agents/spike.md"
 check "$CUR/docs/migration-catalog.md"
@@ -386,6 +376,11 @@ bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-spike-cursor-align-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-task-001-cursor-platform.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-task-002-bugbot-templates.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-task-003-mcp-cloud-templates.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-task-004-commands-retired.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

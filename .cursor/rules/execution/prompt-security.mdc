@@ -3,7 +3,6 @@ description: Prompt / 工具调用安全 — 拒越权指令、防注入、不�
 globs:
   - "**/.cursor/skills/**"
   - "**/.cursor/agents/**"
-  - "**/.cursor/commands/**"
   - "**/prompts/**"
   - "**/*prompt*"
   - "**/*system*message*"

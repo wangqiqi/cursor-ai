@@ -38,8 +38,7 @@
 ```text
 .cursor/
 ├── rules/      沟通 · 执行（含 oss-first · data-batch · i18n-copy · data-list · doc-hygiene · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     28 个：master · plan · run · **long** · learn · scaffold · git · release · security · api · ux · ia · debug · test · mcp · refactor · perf · review · study · delivery · user-manual · test-report · week · disk · maintain · **ops-deploy** · **code-stats-viz** · pencil-design
-├── commands/   【日常】run · plan · master · 【生命周期】scaffold · learn · **long** · release · 【高级】delivery · manual · report（其余 skill-only）
+├── skills/     28 个 · slash SSOT（/plan · /run · …；无 `commands/` 薄指针）
 ├── agents/     ship · review · spike
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
@@ -260,7 +259,7 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 
 **设计要点**：
 
-- 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `commands/*.md` · `config/*.json` — 由 **`bash .cursor/bin/verify-roo-compat.sh`** 断言（frontmatter 键 ⊆ 开放协议白名单，出现编辑器私有键即 FAIL）
+- 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `config/*.json` — 由 **`bash .cursor/bin/verify-roo-compat.sh`** 断言（frontmatter 键 ⊆ 开放协议白名单，出现编辑器私有键即 FAIL）
 - **不**依赖 `.cursorrules` 单文件等旧式约定；核心 plan/run 闸门靠 rules + skills + `config/*.json`，**不绑** Cursor 私有 API
 - **hooks**（`run-start` / `run-stop`）为 Cursor **自治 Sprint 增强**；Roo 或无需连跑时用 `--profile lite` / `rules-only` 即可降级
 - `.cursorGrowth/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移

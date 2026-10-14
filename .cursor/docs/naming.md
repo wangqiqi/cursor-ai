@@ -58,22 +58,21 @@ Cursor Task 体系有内置 subagent **`release`**。项目 `.cursor/agents/rele
 
 本模板 **不绑死** Cursor 内部 tool 旧名（如已废弃的 `edit_file` / `run_terminal_cmd`）；以会话实际工具表为准。
 
-## 五层关系（commands · skills · agents · rules · hooks）
+## 四层关系（skills · agents · rules · hooks）
 
 ```text
-你记的 slash          commands/*.md（薄）     skills/*.md（SOP）
-【日常】/run /plan /master ────────────────→ run · plan · master
+你记的 slash（Cursor 2.4+）     skills/<name>/SKILL.md（SOP · 唯一 SSOT）
+【日常】/run /plan /master ────────────────→ run · plan · master（多数 dmi=true）
 【生命周期】/scaffold /learn /long /release → scaffold · learn · long · release
 【高级】/delivery /manual /report ─────────→ delivery · user-manual · test-report
-ux · ia · debug · review · week · disk … ──→ Agent 按意图自动读 skill（无 slash）
-git · test · api · security … ─────────────→ 同上（无 slash）
+ux · ia · debug · review · week · disk … ──→ Agent 按意图自动读 skill（无 slash / 或 dmi 显式调用）
 
 agents/     仅委派：ship（自治打版）· review/spike（只读）
 rules/      编辑匹配文件时 glob 自动加载
 hooks/      会话：growth-init · plan 上下文注入
 ```
 
-**约定**：slash **永远**命中 `commands/*.md`；同名 skill 是正文。无 command 的 skill **不是**「丢了」，是刻意不进菜单。
+**约定**：slash 直接加载 **skill**（无 `.cursor/commands/` 薄指针）。`disable-model-invocation: true` 的 skill 仅显式 `/skill-name`；其余可由 Agent 按 `description` 自动选用。
 
 **review**（项目内）：同名 **skill**（母会话清单）+ **agent**（只读子进程）— 委派时用 agent。  
 **全局 review**（`skills-cursor/review`）只路由 Bugbot / Security — 与项目 REV-* 无关；安全专项优先 **security** skill。

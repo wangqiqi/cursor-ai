@@ -2,7 +2,7 @@
 
 **路由详表（canonical）**：[`skills/master/routes.md`](../../skills/master/routes.md)。本页为人读摘要，避免与 routes 双写长表。
 
-入口均在 `core.mdc`。说 slash 或关键词触发。
+入口均在 `core.mdc`。slash 命中 **skill 名**（Cursor 2.4+；母版已退役 `commands/`）。关键词触发仅适用于 **未** 设 `disable-model-invocation` 的 skill。
 
 ## Slash 三层（记【日常】即可）
 
