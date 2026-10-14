@@ -2,6 +2,12 @@
 
 All notable changes to Super Cursor are documented here.
 
+## [Unreleased]
+
+### Changed
+
+- **验证器** — SPRINT-CURSOR-ALIGN 七段 verify 合并为 `verify-cursor-platform-contract.sh`；`verify-super-cursor.sh` 单点调用
+
 ## [4.29.10] - 2026-10-14
 
 ### Added

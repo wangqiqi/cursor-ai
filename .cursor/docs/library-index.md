@@ -117,7 +117,7 @@
 | Automations | `cloud-agent/automations` | 用户 `/automate`（全局） |
 | Bugbot | `bugbot` | TASK-002 `BUGBOT.md` / `bugbot.yaml` 模板 |
 
-差距矩阵归档 → `.cursorGrowth/archive/meta/`（`verify-spike-cursor-align-archive.sh`）。
+差距矩阵归档 → `.cursorGrowth/archive/meta/`（`verify-cursor-platform-contract.sh`）。
 
 ## 安装外网 skill 前
 
