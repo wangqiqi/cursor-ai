@@ -75,6 +75,13 @@ for rel in "${LIB_SCRIPTS[@]}"; do
   copy_file "$rel"
 done
 
+# onekey bootstrap：插件轨无完整 templates/，须 bundled project-onekey（与母版 SSOT 同源）
+onekey_tpl="templates/project-onekey/onekey_start.sh"
+[[ -f "$SRC/$onekey_tpl" ]] || { echo "FAIL: missing $SRC/$onekey_tpl" >&2; exit 1; }
+mkdir -p "$DEST/templates/project-onekey"
+cp "$SRC/$onekey_tpl" "$DEST/$onekey_tpl"
+chmod +x "$DEST/$onekey_tpl" 2>/dev/null || true
+
 # Plugin-local hooks.json (paths relative to repo / plugin root)
 cat > "$DEST/hooks/hooks.json" <<'EOF'
 {

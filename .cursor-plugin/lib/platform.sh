@@ -164,12 +164,9 @@ sc_apply_skills_bundle() {
     echo "FAIL: python required to apply skills bundle" >&2
     return 1
   fi
-  while IFS= read -r skill; do
-    [[ -z "$skill" ]] && continue
-    if [[ -d "$skills_dir/$skill" ]]; then
-      rm -rf "$skills_dir/$skill"
-    fi
-  done < <("$py" - "$cfg" "$bundle" <<'PY'
+  local out
+  # 先收结果再判断退出码：`done < <(python …)` 看不到子进程状态，未知 bundle 会静默成功
+  if ! out="$("$py" - "$cfg" "$bundle" <<'PY'
 import json, sys
 cfg = json.load(open(sys.argv[1], encoding="utf-8"))
 bundle = sys.argv[2]
@@ -181,7 +178,18 @@ spec = bundles[bundle]
 for name in spec.get("exclude_skills") or []:
     print(name)
 PY
-)
+  )"; then
+    echo "FAIL: skills bundle '$bundle' not in $cfg" >&2
+    return 1
+  fi
+  while IFS= read -r skill; do
+    # Windows python stdout 为 CRLF：不剥尾 \r 则目录名匹配不上，exclude 静默失效
+    skill="${skill%$'\r'}"
+    [[ -z "$skill" ]] && continue
+    if [[ -d "$skills_dir/$skill" ]]; then
+      rm -rf "$skills_dir/$skill"
+    fi
+  done <<< "$out"
 }
 
 # Copy directory tree; prefers rsync, falls back to cp -a (Git Bash / minimal macOS)

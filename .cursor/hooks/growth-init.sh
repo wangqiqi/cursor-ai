@@ -106,6 +106,7 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   fi
 fi
 
+SC_HOOK_CURSOR_DIR="$CURSOR_DIR"
 sc_bootstrap_onekey_start "$PROJECT_ROOT" "${SC_CURSOR_DIR:-$CURSOR_DIR}" "$SC_ONEKEY_BOOTSTRAP"
 
 echo "$INPUT"

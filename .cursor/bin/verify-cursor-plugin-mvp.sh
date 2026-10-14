@@ -39,6 +39,12 @@ done
 [[ -f "$PLUGIN/hooks/lib/config-load.sh" ]] || fail "missing hooks/lib/config-load.sh"
 # hooks/lib 里 source ../../lib/platform.sh —— 缺这份就三个 hook 全哑（2026-10-14 修）
 [[ -f "$PLUGIN/lib/platform.sh" ]] || fail "missing lib/platform.sh (hooks source ../../lib/platform.sh)"
+[[ -f "$PLUGIN/lib/onekey-bootstrap.sh" ]] || fail "missing lib/onekey-bootstrap.sh"
+onekey_ssot="$ROOT/.cursor/templates/project-onekey/onekey_start.sh"
+onekey_plugin="$PLUGIN/templates/project-onekey/onekey_start.sh"
+[[ -f "$onekey_plugin" ]] || fail "missing templates/project-onekey/onekey_start.sh (run sync-plugin-subset.sh)"
+cmp -s "$onekey_ssot" "$onekey_plugin" \
+  || fail "plugin onekey template diverges from mother SSOT"
 
 grep -q '"command": "hooks/run-start.sh"' "$PLUGIN/hooks/hooks.json" \
   || fail "hooks.json must use plugin-local hooks/ paths"
@@ -76,5 +82,7 @@ done
 # growth.enabled=true 必须真被读到：配置路径读错时 growth-init 提前返回，不会建 .cursorGrowth
 [[ -d "$smoke_root/.cursorGrowth" ]] \
   || fail "plugin hooks ignored .cursor/config/workflow.json (growth.enabled not applied)"
+[[ -f "$smoke_root/onekey_start.sh" && -x "$smoke_root/onekey_start.sh" ]] \
+  || fail "plugin growth-init did not bootstrap onekey_start.sh from bundled template"
 
 echo "OK: cursor-plugin MVP subset (lifecycle skills · agents · core rules · hooks · no commands)"

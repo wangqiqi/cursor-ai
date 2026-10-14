@@ -22,10 +22,17 @@ sc_bootstrap_onekey_start() {
     return 0
   fi
 
-  local tpl="$cursor_dir/templates/project-onekey/onekey_start.sh"
-  if [[ ! -f "$tpl" && -n "${SC_PROJECT_ROOT:-}" && -f "${SC_PROJECT_ROOT}/.cursor/templates/project-onekey/onekey_start.sh" ]]; then
-    tpl="${SC_PROJECT_ROOT}/.cursor/templates/project-onekey/onekey_start.sh"
-  fi
+  local tpl="" base
+  for base in \
+    "$cursor_dir" \
+    "${SC_PROJECT_ROOT:+$SC_PROJECT_ROOT/.cursor}" \
+    "${SC_HOOK_CURSOR_DIR:-}"; do
+    [[ -z "$base" ]] && continue
+    if [[ -f "$base/templates/project-onekey/onekey_start.sh" ]]; then
+      tpl="$base/templates/project-onekey/onekey_start.sh"
+      break
+    fi
+  done
   if [[ ! -f "$tpl" ]]; then
     return 0
   fi
