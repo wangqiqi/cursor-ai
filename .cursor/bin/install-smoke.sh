@@ -94,6 +94,14 @@ fi
 ) && fail "full: gate-check must BLOCK before PLAN_APPROVED" \
   || ok "full: gate-check blocks unapproved plan"
 assert_grep "$FULL/.cursor/bin/runner.sh" 'release-tag' "full: runner.sh release-tag"
+assert_file "$FULL/onekey_start.sh" "full: onekey_start.sh bootstrapped at install"
+[[ -x "$FULL/onekey_start.sh" ]] && ok "full: onekey_start.sh executable" \
+  || fail "full: onekey_start.sh not executable"
+onekey_hash="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
+run_install "full: reinstall idempotent onekey" "$TMP_ROOT/full-reinstall.out" "$FULL" --profile full
+onekey_hash2="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
+[[ "$onekey_hash" == "$onekey_hash2" ]] && ok "full: reinstall does not overwrite onekey_start.sh" \
+  || fail "full: reinstall overwrote onekey_start.sh"
 
 # 2. lite · no --copy-plan
 LITE="$TMP_ROOT/lite-no-plan"

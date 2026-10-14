@@ -383,6 +383,15 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   fi
 fi
 
+# 项目根 onekey_start.sh（与 growth-init 同源 · growth.onekey_bootstrap）
+# shellcheck source=.cursor/lib/onekey-bootstrap.sh
+source "$SOURCE/.cursor/lib/onekey-bootstrap.sh"
+_onekey_enabled="true"
+if [[ -f "$TARGET/.cursor/config/workflow.json" ]]; then
+  _onekey_enabled="$(json_cfg "$TARGET/.cursor/config/workflow.json" "growth.onekey_bootstrap" "true")"
+fi
+sc_bootstrap_onekey_start "$TARGET" "$TARGET/.cursor" "$_onekey_enabled"
+
 # Detect empty-ish project for hints
 file_count=0
 if [[ -d "$TARGET" ]]; then

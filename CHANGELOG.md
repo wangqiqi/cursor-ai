@@ -6,7 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **install-bootstrap onekey** — `growth.onekey_bootstrap`（默认开）：`growth-init` 在目标项目根无 `onekey_start.sh` 时从 `.cursor/templates/project-onekey/` 复制并 `chmod +x`（不覆盖已有）；母版仓 SSOT 仅模板，根目录不得放置 `onekey_start.sh`（`verify-onekey-template.sh`）
+- **install-bootstrap onekey** — `growth.onekey_bootstrap`（默认开）：`install-super-cursor.sh` 与 `growth-init` 共用 `lib/onekey-bootstrap.sh`，在目标项目根无 `onekey_start.sh` 时从 `.cursor/templates/project-onekey/` 复制并 `chmod +x`（不覆盖已有）；母版仓 SSOT 仅模板，根目录不得放置 `onekey_start.sh`（`verify-onekey-template.sh`）
 
 ### Changed
 
