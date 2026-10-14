@@ -1,5 +1,5 @@
 {
-  "_comment": "install-super-cursor.sh --skills-bundle; mother repo always ships all skills",
+  "_comment": "install-super-cursor.sh --skills-bundle; mother repo always ships all skills. Not the same as .cursor-plugin/ (5 lifecycle skills) — see cursor-platform.md §分发三轨",
   "default": "full",
   "bundles": {
     "full": {
