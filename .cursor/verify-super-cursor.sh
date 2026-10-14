@@ -73,6 +73,49 @@ check_grep_absent() {
   fi
 }
 
+# Disk skill dirs must match verify-doc-super-cursor.sh (28 · each SKILL.md).
+check_skills_contract() {
+  local expected=28 disk missing=0
+  disk="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
+  if [[ "$disk" != "$expected" ]]; then
+    echo "FAIL skills disk count=$disk (expected $expected; sync verify-doc-super-cursor.sh)"
+    VC_FAIL=$((VC_FAIL + 1))
+    return
+  fi
+  while IFS= read -r -d '' d; do
+    if [[ ! -f "$d/SKILL.md" ]]; then
+      echo "FAIL missing $d/SKILL.md"
+      missing=$((missing + 1))
+    fi
+  done < <(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
+  if [[ "$missing" -gt 0 ]]; then
+    VC_FAIL=$((VC_FAIL + 1))
+  else
+    echo "OK  skills contract ($expected dirs · each SKILL.md; count SSOT with verify-doc-super-cursor)"
+  fi
+}
+
+check_skill_checks_not_duplicated() {
+  local dupes skill count
+  dupes="$(grep -E 'check "\$CUR/skills/[^"]+/SKILL\.md"' "$CUR/verify-super-cursor.sh" | sort | uniq -d || true)"
+  if [[ -n "$dupes" ]]; then
+    echo "FAIL duplicate per-skill check lines in verify-super-cursor.sh:"
+    printf '%s\n' "$dupes"
+    VC_FAIL=$((VC_FAIL + 1))
+    return
+  fi
+  for skill in debug review release; do
+    count="$(grep -cF "skills/$skill/SKILL.md" "$CUR/verify-super-cursor.sh" || true)"
+    if [[ "$count" -gt 1 ]]; then
+      echo "FAIL skills/$skill/SKILL.md referenced $count times in check lines"
+      VC_FAIL=$((VC_FAIL + 1))
+    fi
+  done
+  if [[ "$VC_FAIL" -eq 0 ]]; then
+    echo "OK  no duplicate per-skill check lines (debug/review/release)"
+  fi
+}
+
 echo "=== Super Cursor verify (universal) ==="
 if is_hybrid_repo; then
   echo "layout mode: hybrid (.cursor + business tree)"
@@ -111,6 +154,7 @@ check "$CUR/verify-system.sh"
 check "$CUR/lib/platform.sh"
 check "$CUR/skills/master/SKILL.md"
 check "$CUR/skills/master/routes.md"
+check_skills_contract
 check "$CUR/bin/runner-smoke.sh"
 check "$CUR/bin/bootstrap-growth.sh"
 check "$CUR/bin/install-smoke.sh"
@@ -127,27 +171,6 @@ check "$CUR/config/profiles/rules-only.json"
 check "$CUR/docs/walkthrough.md"
 check "$CUR/rules/tech/rust.mdc"
 check "$CUR/rules/tech/nextjs.mdc"
-check "$CUR/skills/plan/SKILL.md"
-check "$CUR/skills/run/SKILL.md"
-check "$CUR/skills/learn/SKILL.md"
-check "$CUR/skills/scaffold/SKILL.md"
-check "$CUR/skills/git/SKILL.md"
-check "$CUR/skills/release/SKILL.md"
-check "$CUR/skills/long/SKILL.md"
-check "$CUR/skills/delivery/SKILL.md"
-check "$CUR/skills/ux/SKILL.md"
-check "$CUR/skills/ia/SKILL.md"
-check "$CUR/skills/user-manual/SKILL.md"
-check "$CUR/skills/test-report/SKILL.md"
-check "$CUR/skills/debug/SKILL.md"
-check "$CUR/skills/review/SKILL.md"
-check "$CUR/skills/week/SKILL.md"
-check "$CUR/skills/disk/SKILL.md"
-check "$CUR/skills/maintain/SKILL.md"
-check "$CUR/skills/code-stats-viz/SKILL.md"
-check "$CUR/skills/pencil-design/SKILL.md"
-check "$CUR/skills/security/SKILL.md"
-check "$CUR/skills/api/SKILL.md"
 check "$CUR/rules/tech/c.mdc"
 check "$CUR/rules/communication/constitution.mdc"
 check "$CUR/rules/feedback/evolution.mdc"
@@ -160,16 +183,9 @@ check "$CUR/rules/communication/super-cursor-persona.mdc"
 check "$CUR/rules/communication/cursor-standalone.mdc"
 check "$CUR/docs/library-index.md"
 check "$CUR/config/roles.json"
-check "$CUR/skills/debug/SKILL.md"
-check "$CUR/skills/test/SKILL.md"
-check "$CUR/skills/mcp/SKILL.md"
-check "$CUR/skills/refactor/SKILL.md"
-check "$CUR/skills/perf/SKILL.md"
 check "$CUR/rules/tech/eslint.mdc"
 check "$CUR/rules/tech/javascript.mdc"
 check "$CUR/rules/execution/security-sdlc.mdc"
-check "$CUR/skills/review/SKILL.md"
-check "$CUR/skills/study/SKILL.md"
 check "$CUR/agents/review.md"
 check "$CUR/agents/spike.md"
 check "$CUR/docs/migration-catalog.md"
@@ -186,7 +202,6 @@ check "$CUR/bin/template-verify.sh"
 check_absent_mother_only "$ROOT/scripts"
 check_absent "$ROOT/examples"
 check_verify_workflow
-check "$CUR/skills/release/SKILL.md"
 check "$CUR/agents/ship.md"
 check "$CUR/AGENTS.md"
 check "$CUR/docs/naming.md"
@@ -220,7 +235,6 @@ check "$CUR/rules/execution/deploy-ops.mdc"
 check "$CUR/rules/execution/doc-hygiene.mdc"
 check "$CUR/rules/execution/project-docs.mdc"
 check "$CUR/rules/execution/i18n-copy.mdc"
-check "$CUR/skills/ops-deploy/SKILL.md"
 check "$CUR/rules/execution/oss-first.mdc"
 check "$CUR/rules/execution/input-bounds.mdc"
 check "$CUR/rules/execution/extensibility.mdc"
@@ -377,6 +391,9 @@ bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-cursor-platform-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
+
+echo "--- skills check dedupe ---"
+check_skill_checks_not_duplicated
 
 echo "=== verify wiring 自检 ==="
 # 防止「脚本存在但没接线」：bin/verify-*.sh 必须被本脚本或 template-verify.sh 调用

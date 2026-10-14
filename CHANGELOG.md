@@ -7,6 +7,7 @@ All notable changes to Super Cursor are documented here.
 ### Changed
 
 - **验证器** — SPRINT-CURSOR-ALIGN 七段 verify 合并为 `verify-cursor-platform-contract.sh`；`verify-super-cursor.sh` 单点调用
+- **verify-super-cursor** — 28 skills 由 `check_skills_contract` 与 `verify-doc-super-cursor` 对齐；移除重复的 per-skill `check` 行
 
 ## [4.29.10] - 2026-10-14
 
