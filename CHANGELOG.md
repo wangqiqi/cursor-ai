@@ -6,7 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
-- **SPRINT-PLUGIN-RULES-SYNC（进行中）** — `sync-plugin-subset` 同步分组 `verify.mdc` · MVP 断言 parity · manifest **0.2.1**
+- **SPRINT-PLUGIN-RULES-SYNC** — Plugin `verify.mdc` 与母版分组门禁同步 · `verify-cursor-plugin-mvp` diff parity · manifest **0.2.1** · 贡献者触发表
 
 ## [4.29.17] - 2026-10-14
 
