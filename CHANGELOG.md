@@ -7,6 +7,7 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **SPRINT-PLUGIN-MVP** — SPIKE-002：`.cursor-plugin/` 子集矩阵归档（lifecycle skills · 核心 rules · 最小 hooks；agents Out）
+- **`.cursor-plugin/`** — `plugin.json` 脚手架（`super-cursor-mvp`）· `verify-cursor-plugin-manifest.sh`
 
 ## [4.29.11] - 2026-10-14
 

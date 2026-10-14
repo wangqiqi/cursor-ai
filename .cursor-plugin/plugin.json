@@ -1,0 +1,7 @@
+{
+  "name": "super-cursor-mvp",
+  "version": "0.1.0",
+  "description": "Super Cursor lifecycle subset for Cursor Plugin local load. Full SOP: install-super-cursor.sh.",
+  "license": "MIT",
+  "keywords": ["cursor", "super-cursor", "plan", "run", "workflow"]
+}
