@@ -117,6 +117,7 @@ bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册
 | 动安装/门面 | `install-smoke.sh` · `consumer-smoke.sh` | CHANGELOG `[Unreleased]` |
 | 改 `docs-layout` / `templates/project-docs` | `verify-docs-layout.sh` · `verify-config.sh` | `plan-conventions.md` learn 模板 · `templates/project-docs/README.md` |
 | Plugin 分发 / 三轨文档 | `verify-doc-super-cursor.sh` · `verify-spike-plugin-phase2-scope.sh` | `cursor-cloud.md` · `cursor-platform.md` learn · `.cursor-plugin/README.md` |
+| 母版 `rules/feedback` → Plugin 子集 | `bash .cursor/bin/sync-plugin-subset.sh` · `verify-cursor-plugin-mvp.sh`（`verify.mdc` 与母版 diff parity） | `.cursor-plugin/rules/` · `plugin.json` 版本 · `.cursor-plugin/README.md` |
 | 门面 / verify 索引（README · catalog） | `verify-doc-super-cursor.sh` · `verify-spike-mother-hygiene-scope.sh` | `migration-catalog.md` §母版 verify 索引 · `rules/feedback/verify.mdc` §母版门禁清单 · 根 README §验证 |
 
 目标项目铺文档骨架：`bash .cursor/bin/runner.sh docs-init [--profile web-fullstack]` → `docs/NN_*.md`；门禁 `verify-docs-layout.sh`（母版无编号 `docs/` 时验模板）。
