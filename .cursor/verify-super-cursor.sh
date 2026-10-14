@@ -390,25 +390,23 @@ bash "$CUR/bin/verify-secrets.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-cursor-platform-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-spike-tools-skills-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
 
-echo "=== skills bundle install ==="
-bash "$CUR/bin/verify-spike-skills-bundle-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
-
-echo "=== docs layout SSOT ==="
-bash "$CUR/bin/verify-spike-docs-sync-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-
-echo "=== cursor-plugin MVP ==="
-bash "$CUR/bin/verify-spike-plugin-mvp-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-cursor-plugin-manifest.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-spike-plugin-agents-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-
-echo "=== mother repo hygiene ==="
-bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+echo "=== mother-only: platform · SPIKE · plugin · hygiene ==="
+if is_mother_repo; then
+  bash "$CUR/bin/verify-cursor-platform-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-tools-skills-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-skills-bundle-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-docs-sync-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-plugin-mvp-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-cursor-plugin-manifest.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-plugin-agents-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+else
+  echo "SKIP  non-mother: platform/SPIKE/plugin/hygiene（Growth 归档 · install-smoke · .cursor-plugin）"
+fi
 
 echo "--- skills check dedupe ---"
 check_skill_checks_not_duplicated

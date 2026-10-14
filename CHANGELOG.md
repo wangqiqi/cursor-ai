@@ -4,9 +4,14 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **SPRINT-MOTHER-HYGIENE** — SPIKE-007：门面漂移归档 · `verify-spike-mother-hygiene-scope.sh`
+
 ### Changed
 
-- **SPRINT-MOTHER-HYGIENE（进行中）** — `verify.mdc` / `migration-catalog` / README 验证门面分组；废弃「11 道门禁」表述
+- **文档** — `migration-catalog` §三轨 · §母版 verify 索引；根 README 分组验证表 · Mermaid 工作流图 GitHub 兼容
+- **verify** — `verify.mdc` 分组门禁清单 · `verify-doc-super-cursor` 门面断言 · 目标项目 SKIP 母版 SPIKE/plugin 聚合
 
 ## [4.29.16] - 2026-10-14
 
