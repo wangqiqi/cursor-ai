@@ -54,6 +54,10 @@ for f in mcp.json.example environment.json.example; do
 done
 grep -q 'mcpServers' "$TPL/mcp.json.example" || fail "mcp.json.example"
 grep -q '"install"' "$TPL/environment.json.example" || fail "environment.json.example install"
+grep -q '"build"' "$TPL/environment.json.example" && fail "environment.json.example must be install-only (use environment.docker.json.example)"
+[[ -f "$TPL/environment.docker.json.example" ]] || fail "missing environment.docker.json.example"
+grep -q 'dockerfile' "$TPL/environment.docker.json.example" || fail "environment.docker.json.example build"
+grep -q 'environment.docker.json.example' "$DOC" || fail "cursor-cloud.md missing docker environment example"
 [[ -f "$DOC" ]] || fail "missing cursor-cloud.md"
 grep -q 'ops-deploy' "$DOC" || fail "cursor-cloud.md missing ops-deploy link"
 grep -q 'cursor-cloud.md' "$CUR/docs/platforms.md" || fail "platforms.md missing link"

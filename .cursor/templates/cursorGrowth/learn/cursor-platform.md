@@ -19,7 +19,7 @@
 | slash | **仅 skill**（`commands/` 已删除）· 生命周期类 `disable-model-invocation: true` |
 | MCP / Cloud / Bugbot 模板 | `templates/cursorGrowth/` 可选复制，不随 install 默认注入 |
 | Bugbot 启用 | 复制 `BUGBOT.md` → `.cursor/BUGBOT.md`，`config/bugbot.yaml.example` → `.cursor/config/bugbot.yaml`（见 `templates/cursorGrowth/README.md`） |
-| MCP / Cloud | `mcp.json.example` → `.cursor/mcp.json`；`environment.json.example` → `.cursor/environment.json`（见 `cursor-cloud.md`） |
+| MCP / Cloud | `mcp.json.example` → `.cursor/mcp.json`；`environment.json.example` → `.cursor/environment.json`（仅 install；Docker → `environment.docker.json.example`，见 `cursor-cloud.md`） |
 
 ## Monorepo 消费方
 

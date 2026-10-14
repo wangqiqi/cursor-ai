@@ -10,6 +10,7 @@ All notable changes to Super Cursor are documented here.
 - **verify-super-cursor** — 28 skills 由 `check_skills_contract` 与 `verify-doc-super-cursor` 对齐；移除重复的 per-skill `check` 行
 - **slash 文档 SSOT** — 长路由表仅 `skills/master/routes.md`；`.cursor/README.md` 改为摘要+链接；`verify-doc-super-cursor` 防三层 Command 表回潮
 - **verify-roo-compat** — 移除已退役 `.cursor/commands/` 的 command frontmatter 扫描；根 README Roo 节与 skills-only slash 一致
+- **Cloud 模板** — `environment.json.example` 仅 `install`；Docker 进阶 → `environment.docker.json.example`（`cursor-cloud.md`）
 
 ## [4.29.10] - 2026-10-14
 

@@ -48,7 +48,8 @@ PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：
 | 模板 | 复制到 |
 |------|--------|
 | `templates/cursorGrowth/mcp.json.example` | `.cursor/mcp.json` |
-| `templates/cursorGrowth/environment.json.example` | `.cursor/environment.json` |
+| `templates/cursorGrowth/environment.json.example` | `.cursor/environment.json`（仅 `install`） |
+| `templates/cursorGrowth/environment.docker.json.example` | 可选：合并 `build` 段或整文件替换 |
 
 详述 → `.cursor/docs/cursor-cloud.md` · 部署面 → **ops-deploy** skill。
 
