@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **SPRINT-DOCS-SYNC** — SPIKE-004：docs SSOT 审计矩阵 · `verify-spike-docs-sync-scope.sh`
+- **project-docs** — 骨架 `07_用户手册.md` 与 manual 契约对齐 · `verify-docs-layout` 强化 07/08 generated 与默认 profile 文件名
+- **learn** — `plan-conventions.md` 与 `docs-layout.json` 号位表一致
+- **贡献者文档** — `building-super-cursor` · `migration-catalog` 补 `docs-init` / `verify-docs-layout` 链
+- **verify** — `verify-doc-super-cursor` project-docs 断言 · `verify-super-cursor` 接线
+
+### Changed
+
+- **README** — templates 行注明 `project-docs` / `docs-init`
+
 ## [4.29.13] - 2026-10-14
 
 ### Added
