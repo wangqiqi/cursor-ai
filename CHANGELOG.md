@@ -12,6 +12,7 @@ All notable changes to Super Cursor are documented here.
 - **verify-roo-compat** — 移除已退役 `.cursor/commands/` 的 command frontmatter 扫描；根 README Roo 节与 skills-only slash 一致
 - **Cloud 模板** — `environment.json.example` 仅 `install`；Docker 进阶 → `environment.docker.json.example`（`cursor-cloud.md`）
 - **文档站 sync** — `sync-cursor-docs.sh` 用 guide 根 `*.md` glob + reference 白名单；侧栏补 `cursor-cloud`
+- **SPIKE tools bundle** — 决策归档：五工具 skill **Defer** 从 full 剥离、**In** 未来 optional bundle；`verify-spike-tools-skills-archive.sh`
 
 ## [4.29.10] - 2026-10-14
 
