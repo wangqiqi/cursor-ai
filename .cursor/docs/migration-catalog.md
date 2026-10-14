@@ -82,3 +82,16 @@
 | 4 | 验收：skills/agents 与母版 `diff` 空 · `rules/local` 符号链接有效 · `platform-check.sh` 绿 |
 
 **勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README（门面检查仅母版仓库）。
+
+## 2026 官方面（Cursor IDE 配置）
+
+| 官方能力 | 母版策略 | 落点 |
+|----------|----------|------|
+| Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（commands 退役中） | `skills/` · `training/skills.md` |
+| Hooks + Cloud | Repo command hooks；Cloud 不跑用户 `~/.cursor/hooks` | `hooks.json` · `platforms.md` |
+| MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/cursorGrowth/`（TASK-002/003） |
+| Plugins Marketplace | **Doc/后续**；主路径仍为 `install-super-cursor.sh` | `library-index.md` · TASK-006 |
+| Automations | 用户全局 `/automate`；母版不嵌密钥 | `cursor-platform.md` |
+| 嵌套 `AGENTS.md` · skill `paths` | 大仓消费方指南 | `.cursorGrowth/learn/cursor-platform.md` |
+
+详矩阵 → `archive/meta/*_SPIKE_cursor_official_align.md` · 维护摘要 → `learn/cursor-platform.md`（install 后路径相同）。
