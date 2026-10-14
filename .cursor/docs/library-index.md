@@ -101,6 +101,24 @@
 
 升级 CLI 后同步 skill：`curl -fsSL "https://unpkg.com/@pencil.dev/cli@latest/SKILL.md" -o .cursor/skills/pencil-design/SKILL.md`
 
+## Cursor 官方平台（配置面 · 只读对照）
+
+对照母版与 Cursor IDE 能力时查官方文档（路径相对 `cursor.com/docs`）：
+
+| 主题 | 路径 | 母版落点 |
+|------|------|----------|
+| Plugins | `plugins` | **scaffold** / install；SPIKE → `archive/meta/*_SPIKE_cursor_official_align.md` |
+| Skills | `skills` | `.cursor/skills/` · `training/skills.md` |
+| Rules | `rules` | `.cursor/rules/*.mdc` |
+| Subagents | `subagents` | `.cursor/agents/` |
+| Hooks | `hooks` | `hooks.json` · `platforms.md` |
+| MCP | `mcp` | TASK-003 模板 |
+| Cloud Agents | `cloud-agent` | TASK-003 `environment.json` 模板 |
+| Automations | `cloud-agent/automations` | 用户 `/automate`（全局） |
+| Bugbot | `bugbot` | TASK-002 `BUGBOT.md` / `bugbot.yaml` 模板 |
+
+差距矩阵归档 → `.cursorGrowth/archive/meta/`（`verify-spike-cursor-align-archive.sh`）。
+
 ## 安装外网 skill 前
 
 **security** §外部 Agent Skill · **master** → `deps` · 用户确认后装 `~/.cursor/skills/`。

@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **plan SPIKE-001** — `library-index.md` 增「Cursor 官方平台」对照表；`verify-spike-cursor-align-archive.sh` 校验差距矩阵归档（`.cursorGrowth/archive/meta/`）
+
 ## [4.29.9] - 2026-09-23
 
 ### Added
