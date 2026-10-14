@@ -2,10 +2,11 @@
 
 All notable changes to Super Cursor are documented here.
 
-## [Unreleased]
+## [4.29.11] - 2026-10-14
 
 ### Changed
 
+- **SPRINT-MOTHER-LEAN** — 母版减维护面：verify 合并 · skills 28 契约 · slash SSOT · roo-compat · Cloud 环境示例拆分 · VitePress sync glob · tools bundle SPIKE
 - **验证器** — SPRINT-CURSOR-ALIGN 七段 verify 合并为 `verify-cursor-platform-contract.sh`；`verify-super-cursor.sh` 单点调用
 - **verify-super-cursor** — 28 skills 由 `check_skills_contract` 与 `verify-doc-super-cursor` 对齐；移除重复的 per-skill `check` 行
 - **slash 文档 SSOT** — 长路由表仅 `skills/master/routes.md`；`.cursor/README.md` 改为摘要+链接；`verify-doc-super-cursor` 防三层 Command 表回潮
