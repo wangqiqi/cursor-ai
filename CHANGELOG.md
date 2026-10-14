@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **SPRINT-MOTHER-HYGIENE（进行中）** — `verify.mdc` / `migration-catalog` / README 验证门面分组；废弃「11 道门禁」表述
+
 ## [4.29.16] - 2026-10-14
 
 ### Added
