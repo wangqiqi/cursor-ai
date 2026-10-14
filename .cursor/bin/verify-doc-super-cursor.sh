@@ -93,7 +93,11 @@ grep -q "install-super-cursor" "$platform_learn" || vc_fail "cursor-platform.md 
 grep -q "sync-plugin-subset" "$platform_learn" || vc_fail "cursor-platform.md missing sync-plugin-subset"
 grep -q "## Plugin MVP" "$cloud_doc" || vc_fail "cursor-cloud.md missing Plugin MVP section"
 grep -q "verify-cursor-plugin-mvp" "$cloud_doc" || vc_fail "cursor-cloud.md missing plugin verify command"
-vc_ok "Plugin MVP docs (install primary · cursor-platform + cursor-cloud)"
+grep -qF "agents" "$platform_learn" || vc_fail "cursor-platform.md must document plugin agents"
+grep -qF "ship" "$cloud_doc" || vc_fail "cursor-cloud.md must mention plugin agents (ship)"
+grep -qF "verify-spike-plugin-agents-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-spike-plugin-agents-scope"
+vc_ok "Plugin MVP docs (install primary · agents · cursor-platform + cursor-cloud)"
 
 grep -q "## Skills bundle" "$platform_learn" || vc_fail "cursor-platform.md missing Skills bundle section"
 grep -q "skill-bundles.json" "$platform_learn" || vc_fail "cursor-platform.md missing skill-bundles.json"

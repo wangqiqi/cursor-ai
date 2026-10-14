@@ -42,7 +42,7 @@
 | 项 | 说明 |
 |----|------|
 | 目录 | 仓库根 **`.cursor-plugin/`**（`plugin.json` · `super-cursor-mvp`） |
-| 含 | 5 lifecycle skills · 11 核心 rules · 最小 hooks（**无** `commands/` · **无** `config/` · **无** agents） |
+| 含 | 5 lifecycle skills · **agents**（ship · review · spike）· 11 核心 rules · 最小 hooks（**无** `commands/` · **无** `config/`） |
 | 同步 | 母版改 `.cursor/` 子集后：`bash .cursor/bin/sync-plugin-subset.sh` |
 | 验收 | `bash .cursor/bin/verify-cursor-plugin-manifest.sh` · `bash .cursor/bin/verify-cursor-plugin-mvp.sh` |
 | 边界 | **install 仍 SSOT** — Plugin 不提供 `gate-check` / 全量 verify / 28 skills；hooks 脚本依赖 `config/` 时须已 install 或手拷 |
