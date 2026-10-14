@@ -141,6 +141,18 @@ grep -qF "verify-spike-mother-hygiene-scope" "$ROOT/.cursor/verify-super-cursor.
   || vc_fail "verify-super-cursor must wire verify-spike-mother-hygiene-scope"
 vc_ok "mother hygiene facade (migration-catalog · README · verify wire)"
 
+grep -qF "onekey_bootstrap" "$CUR/config/README.md" || vc_fail "config/README.md missing growth.onekey_bootstrap"
+grep -qF "verify-onekey-template" "$mc" || vc_fail "migration-catalog missing verify-onekey-template"
+grep -qF "verify-spike-onekey-bootstrap-scope" "$mc" || vc_fail "migration-catalog missing verify-spike-onekey-bootstrap-scope"
+grep -qF "verify-onekey-template" "$ROOT/README.md" || vc_fail "README.md missing verify-onekey-template"
+grep -qF "onekey_start.sh" "$CUR/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing onekey触发表"
+grep -qF "templates/project-onekey" "$CUR/docs/scaffold.md" || vc_fail "scaffold.md missing project-onekey pointer"
+grep -qF "verify-onekey-template" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-onekey-template"
+grep -qF "verify-spike-onekey-bootstrap-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-spike-onekey-bootstrap-scope"
+vc_ok "onekey bootstrap docs (config · catalog · README · building · scaffold · verify wire)"
+
 tpl_07="$CUR/templates/project-docs/07_用户手册.md"
 tpl_08="$CUR/templates/project-docs/08_测试报告.md"
 learn_pc="$CUR/templates/cursorGrowth/learn/plan-conventions.md"

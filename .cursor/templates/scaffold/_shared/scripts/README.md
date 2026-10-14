@@ -2,6 +2,10 @@
 
 本目录是**项目脚本的落点矩阵**；`plan-check` / `/run` 验收列与 `rules/feedback/verify.mdc` 的 L0–L3 分层都读这里。
 
+## 仓库根 `onekey_start.sh`（与 `scripts/` 并列）
+
+`scaffold apply` 会从 `_shared/onekey_start.sh` 铺到**项目根**（与 Super Cursor `templates/project-onekey/` 同源）。薄菜单入口：`test` → `scripts/test.sh` · `verify` → `scripts/verify.sh`。已 install 且 `growth.onekey_bootstrap` 为真时，`growth-init` / `install-super-cursor.sh` 亦会在根无该文件时复制同一模板（不覆盖已有）。
+
 ## 分层
 
 | 位置 | 放什么 | 禁止 |

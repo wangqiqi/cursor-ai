@@ -115,6 +115,7 @@ bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册
 | 新增 `bin/verify-*.sh` | **接线自检**（必须被聚合调用）+ 至少 1 个负向测试 | `rules/feedback/verify.mdc` §母版门禁清单 · 根 README §验证 |
 | 新增对外文档 | `docs:build`（dead-link）· `verify-doc-super-cursor.sh` | `docs/scripts/sync-cursor-docs.sh` + `.vitepress/config.ts` 侧栏 |
 | 动安装/门面 | `install-smoke.sh` · `consumer-smoke.sh` | CHANGELOG `[Unreleased]` |
+| **onekey bootstrap**（根 `onekey_start.sh` · SSOT `templates/project-onekey` · `growth.onekey_bootstrap`） | `verify-onekey-template.sh` · `verify-spike-onekey-bootstrap-scope.sh` · `install-smoke` · `consumer-smoke` · `scaffold-integrity.sh` · `verify-cursor-plugin-mvp` | `config/README.md` · `scaffold.md` · `_shared/scripts/README.md` · `migration-catalog` §verify 索引 · 根 README §验证 |
 | 改 `docs-layout` / `templates/project-docs` | `verify-docs-layout.sh` · `verify-config.sh` | `plan-conventions.md` learn 模板 · `templates/project-docs/README.md` |
 | Plugin 分发 / 三轨文档 | `verify-doc-super-cursor.sh` · `verify-spike-plugin-phase2-scope.sh` | `cursor-cloud.md` · `cursor-platform.md` learn · `.cursor-plugin/README.md` |
 | Marketplace prep（**Defer 上架** · 清单文档） | `verify-spike-marketplace-prep-scope.sh` · `verify-doc-super-cursor.sh` | Growth `archive/meta/*_SPIKE_marketplace_prep_scope.md` · §Marketplace 链（learn · cloud · catalog · plugin README） · `verify-super-cursor` 接线 |

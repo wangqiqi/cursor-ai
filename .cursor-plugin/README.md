@@ -12,8 +12,9 @@
 | `skills/` | master · plan · run · learn · scaffold |
 | `agents/` | ship · review · spike |
 | `hooks/hooks.json` | 会话 hooks 契约 |
+| `templates/project-onekey/` | `growth-init` 用 bundled `onekey_start.sh`（与母版 SSOT 同源；`.cursor` 未带模板时回退） |
 
-无 `commands/`（slash 直挂 skill）· 无 `config/`（**先 install** 再依赖 hooks 读 `workflow.json`）。
+无 `commands/`（slash 直挂 skill）· 无完整 `config/`（**先 install** 再依赖 hooks 读 `workflow.json`）。
 
 ## 与 install / skills-bundle
 

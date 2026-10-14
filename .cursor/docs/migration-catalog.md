@@ -90,8 +90,8 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 
 | 组 | 脚本 | 守护 |
 |----|------|------|
-| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 |
-| **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` | `--skills-bundle` 契约 |
+| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · **project-onekey 模板**（母版根不得有 `onekey_start.sh`） |
+| **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `--skills-bundle` 契约 · onekey bootstrap SPIKE 归档 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / docs-init SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
@@ -107,7 +107,7 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | 1 | 备份 `.cursor/` → `.cursorGrowth/archive/pre-super-cursor-YYYYMMDD/`（可选） |
 | 2 | `install-super-cursor.sh <目标> --profile full --replace` |
 | 3 | 业务 rules → `.cursorGrowth/rules/local/`（安装脚本会链 `rules/local`） |
-| 4 | 验收：skills/agents 与母版 `diff` 空（若用 `--skills-bundle core` 则 skills 为 23）· `rules/local` 有效 · `platform-check.sh` 绿 |
+| 4 | 验收：skills/agents 与母版 `diff` 空（若用 `--skills-bundle core` 则 skills 为 23）· `rules/local` 有效 · `platform-check.sh` 绿 · 根目录 `onekey_start.sh`（`growth.onekey_bootstrap` 默认开；已有文件不覆盖） |
 | （可选） | 持久文档号位：`runner.sh docs-init` · `bash .cursor/bin/verify-docs-layout.sh`（契约见 `config/docs-layout.json`） |
 
 **勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README（门面检查仅母版仓库）。

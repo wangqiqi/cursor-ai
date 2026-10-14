@@ -15,7 +15,9 @@ install-super-cursor --replace
 cd /path/to/your-project
 ```
 
-`full` profile 会自动复制 `plan.md`。**记三个 slash 即可**：`/run`（做事）· `/plan`（拆 Sprint）· `/master`（真迷路）。
+`full` profile 会自动复制 `plan.md`。若仓库根尚无 `onekey_start.sh`，install / `growth-init` 会按 `growth.onekey_bootstrap`（默认开）从 `templates/project-onekey/` 铺一份薄菜单（→ `scripts/test.sh` · `scripts/verify.sh`；**不覆盖**已有文件）。`/scaffold apply` 亦经 `_shared/onekey_start.sh` 同源铺设。
+
+**记三个 slash 即可**：`/run`（做事）· `/plan`（拆 Sprint）· `/master`（真迷路）。
 
 | 层 | Slash |
 |----|-------|
