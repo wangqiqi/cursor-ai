@@ -2,7 +2,7 @@
 
 > **English**: [README.en.md](README.en.md) · Quickstart → [quickstart.en.md](.cursor/docs/quickstart.en.md)
 
-[![Version](https://img.shields.io/badge/version-4.29.9-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.29.11-blue?style=flat-square)](CHANGELOG.md)
 [![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
@@ -49,8 +49,9 @@
 **根目录（可直接 clone / 复制）：**
 
 ```text
-.cursor/  install-super-cursor.sh  README.md  CHANGELOG.md  .gitignore  .cursorignore
+.cursor/  .cursor-plugin/  install-super-cursor.sh  README.md  CHANGELOG.md  .gitignore  .cursorignore
 # plan 工作副本：安装时从 templates/plan.md → workflow.json 的 plan_file（Growth，gitignore）
+# .cursor-plugin/：可选 Cursor Plugin MVP（lifecycle 子集）；全量 SOP 仍走 install-super-cursor.sh
 ```
 
 **安装到其它项目：**
@@ -72,6 +73,11 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | `--profile full\|lite\|rules-only` | 工作流档位（默认 `full`） |
 | `--replace` | 先删目标 `.cursor/` 再拷贝（**升级/迁移推荐**） |
 | `--copy-plan` | 复制 `templates/plan.md` → `.cursorGrowth/plan.md` |
+
+| 分发 | 说明 |
+|------|------|
+| **`install-super-cursor.sh`** | **默认 / 主路径** — 全量 `.cursor/` · `runner.sh` · `verify-super-cursor` |
+| **`.cursor-plugin/`** | **可选** — lifecycle Plugin MVP（本地加载）；**不**替代 install → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
 
 | profile | 适合 |
 |---------|------|
