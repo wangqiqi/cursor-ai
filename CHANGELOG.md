@@ -16,6 +16,7 @@ All notable changes to Super Cursor are documented here.
 - **release 版本解析** — `templates/plan.md` 里 `VERSION_LINE` 的占位说明被当版本号：`runner.sh next_version` 产出 `(optional · …).0`，`release-tag` 会拿非法 tag 名去 `git tag`。`VERSION_LINE` / `VERSION_DEFAULT` / `RELEASE_BUMP` 现做取值归一 + 数字校验，非法一律视为未设置
 - **install `--replace`** — 删除前校验目标 `.cursor/` 确为 Super Cursor 安装（`hooks.json` + `rules/core.mdc`），避免在 `$HOME` 等目录误删 Cursor 自身配置
 - **portability 门禁** — `verify-portability` 的裸 `ln -s` 规则漏掉缩进行（正是 `growth-init.sh` 那处）；`growth-init` 符号链接失败改为降级目录副本，不再中断 `beforeSubmitPrompt`
+- **Windows `--skills-bundle core`** — `sc_apply_skills_bundle` 用 `while read` 消费 python 输出，而 Windows python stdout 是 CRLF：技能名带尾 `\r` 导致 exclude 静默全失效（CI windows 腿 `FAIL: core bundle skills=28 (expected 23)`，该腿自 SPRINT-LITE-SKILLS 起一直红）。现剥离尾 `\r`，并先收结果再判退出码（未知 bundle 不再静默成功）
 - **scaffold 开箱即红** — `vue-vite-ts/eslint.config.js`：`...pluginVue.configs["flat/recommended"]` 把 `languageOptions.parser` 覆盖到 `.ts`（vue-eslint-parser 无内层 parser）→ 新装项目 `npm run lint` 直接 parse error，补 `parserOptions: { parser: tseslint.parser }`；`verify-layers` bundle 的 `verify_layers_registry.sh` 正则要求 `)` 独占行，遇 `VERIFY_SLICES_HEAVY=()` 单行空数组即 throw → `--core/--l2/--full` 开箱全挂，改为 `${name}=\(([\s\S]*?)\)`；`verify-core.sh` / `verify-release.sh` 改经 `bash` 调用，不再依赖 exec 位
 - **scaffold 稳健性** — Node slice（registry · design-tokens · openapi-sync）缺 node 时输出 `SKIP` 而非硬失败；7 个栈 `.gitignore` 补 `.verify.lock`，`python-fastapi` 补 `.ruff_cache/` `.mypy_cache/`，`react-vite-ts` / `vue-vite-ts` 补 `*.tsbuildinfo`（门禁自身产生的缓存不再漏进消费方工作树）
 
