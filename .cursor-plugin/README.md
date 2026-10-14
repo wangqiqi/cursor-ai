@@ -23,6 +23,14 @@
 | **`--skills-bundle core`**（23） | 非 Plugin；仍 install 到 `.cursor/` |
 | **本 Plugin**（5 skills） | 本地子集；≠ core。三轨矩阵 → `cursor-platform.md` §分发三轨 |
 
+## Marketplace（Defer）
+
+**不**替代 install；**仍 Defer** Cursor Marketplace 实际上架。未来 manifest / 提交前门禁清单 → Growth `archive/meta/*_SPIKE_marketplace_prep_scope.md`；长文 → `learn/cursor-platform.md` §Marketplace · `cursor-cloud.md` §Marketplace。
+
+```bash
+bash .cursor/bin/verify-spike-marketplace-prep-scope.sh   # 母版：归档回归
+```
+
 ## 验证
 
 ```bash

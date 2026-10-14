@@ -82,7 +82,7 @@
 | **`--skills-bundle core`** | 同上 + `--skills-bundle core` | **23**（`skill-bundles.json`） | 同 install 全量 | 精简工具 skill，**不是** Plugin |
 | **`.cursor-plugin/`** | 本地加载 Plugin 子集 | **5** lifecycle + **agents** | **无** 打包 config；hooks 依赖已 install 的 `workflow.json` | 可选叠加；须 **先 install** |
 
-Marketplace 上架：**Defer**（文档决策，见 phase2 SPIKE）。Plugin 与 `core` install **文件树不等价** — 仅文档矩阵对齐。
+Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md`）。**未来上架清单**（manifest 扩展 · 提交前门禁）→ `archive/meta/*_SPIKE_marketplace_prep_scope.md` · `bash .cursor/bin/verify-spike-marketplace-prep-scope.sh`。Plugin 与 `core` install **文件树不等价** — 仅文档矩阵对齐。
 
 ## 母版 verify 索引（`bin/verify-*.sh`）
 
@@ -93,7 +93,7 @@ Marketplace 上架：**Defer**（文档决策，见 phase2 SPIKE）。Plugin 与
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 |
 | **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` | `--skills-bundle` 契约 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / docs-init SPIKE |
-| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` | `.cursor-plugin/` 子集与三轨文档 |
+| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
 | **hygiene** | `verify-spike-mother-hygiene-scope` | 门面漂移审计（`archive/meta/*_SPIKE_mother_hygiene_scope.md`） |
 
@@ -118,7 +118,7 @@ Marketplace 上架：**Defer**（文档决策，见 phase2 SPIKE）。Plugin 与
 | Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（`commands/` 已退役） | `skills/` · `training/skills.md` |
 | Hooks + Cloud | Repo command hooks；Cloud 不跑用户 `~/.cursor/hooks` | `hooks.json` · `platforms.md` |
 | MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/cursorGrowth/`（TASK-002/003） |
-| Plugins Marketplace | **install 主路径**；Plugin 为可选第三轨（**Defer 上架** · 见 `*_SPIKE_plugin_phase2_scope.md`） | `learn/cursor-platform.md` · `.cursor-plugin/README.md` |
+| Plugins Marketplace | **install 主路径**；Plugin 为可选第三轨（**Defer 上架** · 三轨 `*_SPIKE_plugin_phase2_scope.md` · 清单 `*_SPIKE_marketplace_prep_scope.md`） | `learn/cursor-platform.md` · `cursor-cloud.md` §Marketplace · `.cursor-plugin/README.md` |
 | Automations | 用户全局 `/automate`；母版不嵌密钥 | `cursor-platform.md` |
 | 嵌套 `AGENTS.md` · skill `paths` | 大仓消费方指南 | `.cursorGrowth/learn/cursor-platform.md` |
 
