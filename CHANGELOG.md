@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.19] - 2026-10-14
+
 ### Added
 
 - **SPRINT-MARKETPLACE-PREP** — SPIKE-008：Marketplace **Defer** 前提下未来上架清单（manifest · 提交前门禁）Growth 归档 · `verify-spike-marketplace-prep-scope.sh`
