@@ -23,8 +23,8 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | Key | Default | Purpose |
 |-----|---------|---------|
 | `profile` | `full` | 安装 profile 标记（`full` · `lite` · `rules-only`） |
-| `plan_file` | `plan.md` | Plan path（**gitignore**，本地工作副本） |
-| `archive_dir` | `archive` | Sprint 归档目录 |
+| `plan_file` | `.cursorGrowth/plan.md` | Plan path（**gitignore**，本地工作副本；根 `plan.md` 为 legacy，install 会迁入 Growth） |
+| `archive_dir` | `.cursorGrowth/archive` | Sprint 归档目录（域子目录见 growth-layout） |
 | `verify_default` | `./scripts/verify.sh` | 全量验收（plan 内 `VERIFY` 元数据可覆盖） |
 | `workflow.enabled` | `true` | plan/run SOP |
 | `workflow.hooks_enabled` | `true` | run-start / run-stop |
@@ -37,6 +37,15 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
 | `task_verify_heuristics.frontend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `task_verify_heuristics.backend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
+| `version_line_meta` | `VERSION_LINE` | plan HTML 注释 · 发版版本线 |
+| `version_tag_glob_env` | `VERSION_TAG_GLOB` | 环境变量名 · 覆盖 tag 匹配 glob |
+| `version_default_env` | `RELEASE_VERSION_DEFAULT` | 环境变量名 · 无 tag 时起始版本 |
+| `release.mode` | `patch-per-task` | 打版粒度：`patch-per-task`（Sprint 末 ship）· `tag-per-commit`（每 commit + `release-tag`） |
+| `role.default` | `professional` | 人格预设 id（见 `config/roles.json`；默认中性「专业搭档」，无强风格） |
+| `role.config` | `.cursor/config/roles.json` | 人格列表；**仅语气，全能** |
+| `autonomous.default` | `true` | plan 模板默认是否自治（**一次 `/run` Sprint 连跑**） |
+| `autonomous.max_loops_default` | `15` | hooks `loop_limit` 参考 |
+| `autonomous.interrupt_on` | 见 `workflow.json` | 仅这些类型停跑问人（decision · blocker · …） |
 
 ### `task-verify` 语义（fail-closed）
 
@@ -50,16 +59,6 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | 描述性文字（其余） | **FAIL + 退出 1**，并提示改成命令或 `manual:` |
 
 验收列写法 → `.cursor/templates/plan.md`。
-
-| `version_line_meta` | `VERSION_LINE` | plan HTML 注释 · 发版版本线 |
-| `version_tag_glob_env` | `VERSION_TAG_GLOB` | 环境变量名 · 覆盖 tag 匹配 glob |
-| `version_default_env` | `RELEASE_VERSION_DEFAULT` | 环境变量名 · 无 tag 时起始版本 |
-| `release.mode` | `patch-per-task` | 打版粒度：`patch-per-task`（Sprint 末 ship）· `tag-per-commit`（每 commit + `release-tag`） |
-| `role.default` | `professional` | 人格预设 id（见 `config/roles.json`；默认中性「专业搭档」，无强风格） |
-| `role.config` | `.cursor/config/roles.json` | 人格列表；**仅语气，全能** |
-| `autonomous.default` | `true` | plan 模板默认是否自治（**一次 `/run` Sprint 连跑**） |
-| `autonomous.max_loops_default` | `15` | hooks `loop_limit` 参考 |
-| `autonomous.interrupt_on` | 见 `workflow.json` | 仅这些类型停跑问人（decision · blocker · …） |
 
 ### 人格切换（`role.default`）
 
@@ -120,7 +119,7 @@ Install profiles（`install-super-cursor.sh --profile`）:
 
 ## Templates
 
-- `templates/plan.md` → 复制到 repo root（**`plan.md` 在 .gitignore，不提交**；须含 **`**执行顺序**`** 行）
+- `templates/plan.md` → 复制到 `.cursorGrowth/plan.md`（**`.cursorGrowth/` 在 .gitignore，不提交**；须含 **`**执行顺序**`** 行）
 - `templates/cursorGrowth/` → bootstrap on first prompt
 
 ## Local overrides

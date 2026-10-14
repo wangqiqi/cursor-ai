@@ -111,6 +111,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 ## 跨平台与 CI
 
 - **目标项目**：无 `install-super-cursor.sh` 时 `verify-super-cursor.sh` **SKIP** 母版块（Growth SPIKE · plugin · hygiene · `install-smoke` 路径）；通用 core 门禁仍跑
+- **SPIKE 归档门禁（母版）**：`.cursorGrowth/archive/meta/` 是本地私有（`.cursorGrowth/` 不入 git）。该目录**不存在**（新克隆 / CI）时归档段 `SKIP` 放行并打印原因；目录存在但目标归档缺失 → 仍 **FAIL**（本地证据回归）。公因子 → `lib/growth-archive.sh`
 - 无 `jq` 时走 python 回退；`SC_FORCE_PYTHON=1` 可**强制**该路径（CI 用它覆盖非 jq 分支）
 - CI 矩阵：ubuntu（+jq，含文档构建）· macos（BSD 工具链）· windows/Git Bash（非阻塞观察中）
 - 平台作用域与技能限制 → `docs/platforms.md` §技能平台作用域

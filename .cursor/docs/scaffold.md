@@ -58,10 +58,10 @@
 | 文件 | 作用 |
 |------|------|
 | `scripts/README.md` | **项目脚本矩阵 SSOT**（分层 + 何时跑） |
-
-各栈 `manifest.json` → `test_framework` 声明首选测试栈（`testing.mdc` §框架选型），`scaffold-integrity.sh` 校验脚本真的调用了它。
 | `scripts/lib/_common.sh` | 公因子：`sc_root` · `sc_step` · `sc_ok/sc_fail` · `sc_require_cmd` · `sc_summary` |
 | `scripts/lib/_frontend.sh` | 前端栈公因子：`sc_frontend_verify`（lint → type-check → test → build） |
 | `scripts/verify/{domain,tier}/` · `ops/` · `dev/` | 分层骨架（`.gitkeep` 占位） |
+
+各栈 `manifest.json` → `test_framework` 声明首选测试栈（`testing.mdc` §框架选型），`scaffold-integrity.sh` 校验脚本真的调用了它。
 
 规则：**根目录只留入口**，新实现落子目录，共享断言进 `lib/_*.sh`；由 `verify-scripts-layout.sh` 断言（含重复块检测）。

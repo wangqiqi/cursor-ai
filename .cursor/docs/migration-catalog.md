@@ -96,6 +96,7 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
 | **hygiene** | `verify-spike-mother-hygiene-scope` | 门面漂移审计（`archive/meta/*_SPIKE_mother_hygiene_scope.md`） |
+| **E2E** | `consumer-smoke.sh`（经 `template-verify`） | 目标项目：install → 闸门 BLOCK → hook → 全绿 |
 
 语义与 `task-verify` fail-closed → `rules/feedback/verify.mdc` §母版门禁清单。
 

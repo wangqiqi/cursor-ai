@@ -12,9 +12,8 @@ never in the shared template.
 
 ```text
 .cursor/
-├── rules/       4 always-on + 49 glob/description-scoped rules
-├── skills/      28 skills (plan · run · learn · scaffold · debug · test · review …)
-├── skills/      slash SSOT (/plan, /run, …); no commands/ stubs
+├── rules/       4 always-on + 49 glob-scoped + 1 description-scoped rules
+├── skills/      28 skills (plan · run · learn · scaffold · debug · test · review …); slash SSOT (/plan, /run, …), no commands/ stubs
 ├── agents/      ship · review · spike (subagents)
 ├── hooks/       growth-init · run-start · run-stop
 ├── config/      workflow.json · release.json · roles.json · schema.json · denylist.txt

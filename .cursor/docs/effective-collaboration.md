@@ -23,7 +23,7 @@ Super Cursor 的目标不是「让 Agent 说得更短」，而是 **更快、沿
 |------|--------|----------|
 | **先总后分** | 方向猜错、一次改太多 | `/plan` · `gate-check` |
 | **逐条验收** | 「看起来完了」的假完成 | `task-verify` · Acceptance 列 |
-| **glob 按需 rules** | 每条消息背负无关栈细则 | `rules/*.mdc`（仅 `core` + `workflow` 常驻） |
+| **glob 按需 rules** | 每条消息背负无关栈细则 | `rules/*.mdc`（仅 `core` · `workflow` · `cursor-standalone` · `super-cursor-persona` 4 条常驻） |
 | **项目认知沉淀** | 新会话重复解释结构 | `/learn` → `.cursorGrowth/learn/` |
 | **探索与执行分离** | 主会话被检索日志淹没 | explore / spike 子 agent |
 | **可验证才 commit** | 隐性返工 | `verify` · **delivery**（发版前） |

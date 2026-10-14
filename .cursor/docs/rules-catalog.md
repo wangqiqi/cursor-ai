@@ -6,12 +6,12 @@ Super Cursor 母版仅含 **通用** rules（`core` · `workflow` · `execution/
 
 | 模式 | frontmatter | 用途 |
 |------|-------------|------|
-| Always | `alwaysApply: true` | 母版仅 `core` + `workflow` |
+| Always | `alwaysApply: true` | 母版 4 个：`core` · `workflow` · `communication/cursor-standalone` · `communication/super-cursor-persona` |
 | Auto | `globs: [...]` | `tech/*` · `testing.mdc` 等 |
 | Agent | `description` 清晰 | Agent 按任务 relevance 加载 |
 | Manual | `@ruleName` | 显式引用 |
 
-保持 alwaysApply ≤2 · 单 rule 宜 <500 行 · 细节进 skills 或 `references/`。
+保持 alwaysApply **=4**（当前母版即 4；新增须同步 `.cursor/AGENTS.md` 与根 README 的常驻说明） · 单 rule 宜 <500 行 · 细节进 skills 或 `references/`。
 
 ## 社区策展（高引用 · 只链不拷）
 

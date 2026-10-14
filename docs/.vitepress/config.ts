@@ -5,7 +5,6 @@ export default defineConfig({
   title: "Super Cursor",
   description: "可安装、可复用、可演进的 Cursor Agent 工作流母版",
   base: "/cursor-ai/",
-  head: [["link", { rel: "icon", href: "/cursor-ai/favicon.ico" }]],
   themeConfig: {
     nav: [
       { text: "首页", link: "/" },

@@ -231,7 +231,7 @@ Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次�
 |------|------|
 | `/plan` · `gate-check` | 先对齐 Goal，避免想到哪改到哪 |
 | `task-verify` · Acceptance | 可验证才 commit，防假完成 |
-| glob 按需 rules | 固定开销可控（仅 `core` + `workflow` 常驻） |
+| glob 按需 rules | 固定开销可控（仅 `core` · `workflow` · `cursor-standalone` · `super-cursor-persona` 4 条常驻） |
 | `/learn` · `.cursorGrowth/` | 新会话少重复讲项目结构 |
 
 日常习惯：**一事一对话** · 模糊先 `/plan` · 关键决策用强模型 · `@文件` 精准投喂。详述 → [效果型效率](.cursor/docs/effective-collaboration.md)
