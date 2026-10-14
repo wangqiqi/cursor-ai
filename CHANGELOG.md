@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.17] - 2026-10-14
+
 ### Added
 
 - **SPRINT-MOTHER-HYGIENE** — SPIKE-007：门面漂移归档 · `verify-spike-mother-hygiene-scope.sh`
