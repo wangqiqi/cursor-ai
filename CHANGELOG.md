@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.16] - 2026-10-14
+
 ### Added
 
 - **SPRINT-PLUGIN-PHASE2** — SPIKE-006：install · plugin · skills-bundle **三轨矩阵** · Marketplace **Defer** · `verify-spike-plugin-phase2-scope.sh`
