@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.13] - 2026-10-14
+
 ### Added
 
 - **SPRINT-LITE-SKILLS** — SPIKE-003：`--skills-bundle full|core` 契约归档 · `verify-spike-skills-bundle-scope.sh`
