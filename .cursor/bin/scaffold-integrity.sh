@@ -20,9 +20,18 @@ fi
 echo "=== scaffold integrity ==="
 
 # 共享层：scripts 分层骨架 + lib 公因子（E3）
-for f in scripts/README.md scripts/lib/_common.sh scripts/verify/domain/.gitkeep scripts/verify/tier/.gitkeep; do
+for f in scripts/README.md scripts/lib/_common.sh scripts/verify/domain/.gitkeep scripts/verify/tier/.gitkeep onekey_start.sh; do
   [[ -f "$TEMPLATE_ROOT/_shared/$f" ]] && ok "_shared/$f" || fail "_shared missing $f"
 done
+onekey_ssot="$CURSOR_DIR/templates/project-onekey/onekey_start.sh"
+onekey_shared="$TEMPLATE_ROOT/_shared/onekey_start.sh"
+if [[ -f "$onekey_ssot" && -f "$onekey_shared" ]]; then
+  if cmp -s "$onekey_ssot" "$onekey_shared"; then
+    ok "_shared/onekey_start.sh matches project-onekey SSOT"
+  else
+    fail "_shared/onekey_start.sh diverges from templates/project-onekey/"
+  fi
+fi
 
 while IFS= read -r id; do
   id="${id%$'\r'}"          # Windows python 文本模式可能残留 CR
