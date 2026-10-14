@@ -1,3 +1,6 @@
+# 母版仓本地试 hook/install 可能生成；SSOT 在 .cursor/templates/project-onekey/
+/onekey_start.sh
+
 .cursorGrowth/
 # DSH 运行时生长/会话状态（本地私有，不入 git）
 .dsh/

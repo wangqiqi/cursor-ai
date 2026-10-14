@@ -11,6 +11,7 @@ All notable changes to Super Cursor are documented here.
 ### Changed
 
 - **onekey 文档** — `quickstart` · `scaffold` · `building-super-cursor` 触发表 · `migration-catalog` / 根 README / `verify.mdc` verify 索引 · `_shared/scripts/README` 契约 · `.cursor-plugin/README` bundled 模板 · `verify-doc-super-cursor` 接线断言
+- **母版 hygiene** — 根 `.gitignore` 忽略本地试跑生成的 `/onekey_start.sh`（目标项目仍由 install/growth-init/scaffold 铺设）
 
 - **文档对齐磁盘** — 常驻 rules 为 **4** 个（`core` · `workflow` · `cursor-standalone` · `super-cursor-persona`），根 `README.md` · `rules-catalog.md` · `effective-collaboration.md` 原写「2 个」；`config/README.md` 的 `plan_file` / `archive_dir` 默认值与 `workflow.json` 对齐（`.cursorGrowth/…`）· 键表碎片归位 · Templates 落点更正；`migration-catalog.md` 补 **E2E** 组行；`.cursor/AGENTS.md` execution 行修未闭合加粗并补 5 个 rule；`scaffold.md` 表格恢复连续；`README.en.md` 规则计数与重复 `skills/` 行；VitePress 移除指向不存在 favicon 的 `head`
 
