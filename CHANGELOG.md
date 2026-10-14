@@ -2,17 +2,19 @@
 
 All notable changes to Super Cursor are documented here.
 
-## [Unreleased]
+## [4.29.10] - 2026-10-14
 
 ### Added
 
-- **plan SPIKE-001** — `library-index.md` 增「Cursor 官方平台」对照表；`verify-spike-cursor-align-archive.sh` 校验差距矩阵归档（`.cursorGrowth/archive/meta/`）
-- **plan TASK-001** — `templates/cursorGrowth/learn/cursor-platform.md` 采纳摘要；`migration-catalog.md` §2026 官方面；`verify-task-001-cursor-platform.sh`
-- **plan TASK-002** — Bugbot 可选模板 `templates/cursorGrowth/BUGBOT.md` · `config/bugbot.yaml.example`；`cursorGrowth/README.md` 复制路径；`verify-task-002-bugbot-templates.sh`
-- **plan TASK-003** — `mcp.json.example` · `environment.json.example`；`.cursor/docs/cursor-cloud.md`；`platforms.md` 交叉链；`verify-task-003-mcp-cloud-templates.sh`；VitePress sync
-- **plan TASK-004** — 删除 `.cursor/commands/`（10）；slash 仅以 skill 为 SSOT；更新 naming · training/skills · README · `verify-task-004-commands-retired.sh`
-- **plan TASK-005** — `platforms.md` §Hooks 增补 Cloud parity 与 Tab hooks 评估（默认不写入 `hooks.json`）；`verify-task-005-hooks-cloud-doc.sh`
-- **SPRINT-CURSOR-ALIGN** — Plugin 分发决策归档（install 主路径 · Plugin MVP 后置）；`verify-task-006-plugin-distribution.sh`；退役 `commands/` · 可选 Bugbot/MCP/Cloud 模板 · `cursor-platform` 文档
+- **SPRINT-CURSOR-ALIGN** — Cursor 2025–2026 配置面对齐：`library-index` §官方平台 · `cursor-platform` learn 模板 · `migration-catalog` §2026 官方面
+- **可选模板** — Bugbot（`BUGBOT.md` · `bugbot.yaml.example`）· MCP / Cloud（`mcp.json.example` · `environment.json.example` · `cursor-cloud.md`）
+- **验证器** — `verify-spike-cursor-align-archive` · `verify-task-001`～`006`（Sprint 归档与门禁接线）
+
+### Changed
+
+- **slash SSOT** — 删除 `.cursor/commands/`（10）；`/plan` · `/run` 等直接加载同名 **skill**（Cursor 2.4+）；`naming.md` · `training/skills.md` · README 已更新
+- **Hooks 文档** — `platforms.md` 增补 Cloud Agents parity 与 Tab hooks 策略（默认不写入 `hooks.json`）
+- **Plugin 分发** — 决策归档：主路径仍为 `install-super-cursor.sh`；Cursor Plugin MVP 后置单独 Sprint
 
 ## [4.29.9] - 2026-09-23
 
