@@ -6,6 +6,24 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 SRC="$ROOT/.cursor/docs"
 DEST="$ROOT/docs"
 
+# --- Sync layout (edit here; new root *.md → guide/ unless listed in REFERENCE_DOCS) ---
+REFERENCE_DOCS=(
+  migration-catalog.md
+  rules-catalog.md
+  library-index.md
+)
+# Subpaths under .cursor/docs mirrored to docs/training/ (basename preserved)
+TRAINING_GLOB="training/*.md"
+
+is_reference_doc() {
+  local base="$1"
+  local r
+  for r in "${REFERENCE_DOCS[@]}"; do
+    [[ "$base" == "$r" ]] && return 0
+  done
+  return 1
+}
+
 copy() {
   local rel="$1"
   local out="$2"
@@ -26,20 +44,29 @@ sed_rewrite() {
 rm -rf "$DEST/guide" "$DEST/reference" "$DEST/training"
 mkdir -p "$DEST/guide" "$DEST/reference" "$DEST/training"
 
-copy quickstart.md guide/quickstart.md
-copy quickstart.en.md guide/quickstart.en.md
-copy walkthrough.md guide/walkthrough.md
-copy plan-run.md guide/plan-run.md
-copy platforms.md guide/platforms.md
-copy cursor-cloud.md guide/cursor-cloud.md
-copy effective-collaboration.md guide/effective-collaboration.md
-copy building-super-cursor.md guide/building-super-cursor.md
-copy scaffold.md guide/scaffold.md
-copy naming.md guide/naming.md
-copy rules-catalog.md reference/rules-catalog.md
-copy migration-catalog.md reference/migration-catalog.md
-copy library-index.md reference/library-index.md
-copy training/skills.md training/skills.md
+SYNC_COUNT=0
+shopt -s nullglob
+for src_path in "$SRC"/*.md; do
+  base="$(basename "$src_path")"
+  if is_reference_doc "$base"; then
+    copy "$base" "reference/$base"
+  else
+    copy "$base" "guide/$base"
+  fi
+  SYNC_COUNT=$((SYNC_COUNT + 1))
+done
+
+for src_path in "$SRC"/$TRAINING_GLOB; do
+  [[ -f "$src_path" ]] || continue
+  rel="${src_path#"$SRC"/}"
+  copy "$rel" "$rel"
+  SYNC_COUNT=$((SYNC_COUNT + 1))
+done
+
+[[ -f "$DEST/guide/cursor-cloud.md" ]] || {
+  echo "sync-cursor-docs: FAIL missing guide/cursor-cloud.md (expected from .cursor/docs/cursor-cloud.md)" >&2
+  exit 1
+}
 
 # 站内绝对路径必须写成 [text](/guide/x)，多一个 '(' 会让 markdown-it 解析失败并渲染成纯文本
 rewrite_guide_links() {
@@ -53,7 +80,6 @@ rewrite_guide_links() {
 for f in "$DEST/guide"/*.md; do
   rewrite_guide_links "$f"
 done
-
 
 sed_rewrite "$DEST/guide/walkthrough.md" \
   -e 's](\.\./\.\./README\.md)](https://github.com/wangqiqi/cursor-ai)]g' \
@@ -72,4 +98,4 @@ sed_rewrite "$DEST/reference/library-index.md" \
   -e 's](rules-catalog\.md)](/reference/rules-catalog)]g' \
   -e 's](rules-catalog)](/reference/rules-catalog)]g'
 
-echo "sync-cursor-docs: mirrored 13 files from .cursor/docs/"
+echo "sync-cursor-docs: mirrored ${SYNC_COUNT} files from .cursor/docs/ (guide glob + reference list + ${TRAINING_GLOB})"

@@ -27,6 +27,7 @@ export default defineConfig({
             { text: "Walkthrough", link: "/guide/walkthrough" },
             { text: "plan · run", link: "/guide/plan-run" },
             { text: "跨平台", link: "/guide/platforms" },
+            { text: "Cloud · MCP", link: "/guide/cursor-cloud" },
           ],
         },
         {
