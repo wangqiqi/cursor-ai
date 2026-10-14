@@ -99,6 +99,15 @@ grep -qF "verify-spike-plugin-agents-scope" "$ROOT/.cursor/verify-super-cursor.s
   || vc_fail "verify-super-cursor must wire verify-spike-plugin-agents-scope"
 vc_ok "Plugin MVP docs (install primary · agents · cursor-platform + cursor-cloud)"
 
+grep -q "## 分发三轨" "$platform_learn" || vc_fail "cursor-platform.md missing 分发三轨 section"
+grep -q "## Hooks 与 config" "$platform_learn" || vc_fail "cursor-platform.md missing Hooks 与 config section"
+grep -q "分发三轨" "$cloud_doc" || vc_fail "cursor-cloud.md missing 分发三轨 table"
+grep -q "config-load" "$cloud_doc" || vc_fail "cursor-cloud.md missing hooks config dependency"
+grep -qF "cursor-plugin" "$CUR/config/skill-bundles.json" || vc_fail "skill-bundles.json must reference plugin boundary"
+grep -qF "verify-spike-plugin-phase2-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-spike-plugin-phase2-scope"
+vc_ok "plugin phase2 docs (三轨 · hooks/config · skill-bundles · verify wire)"
+
 grep -q "## Skills bundle" "$platform_learn" || vc_fail "cursor-platform.md missing Skills bundle section"
 grep -q "skill-bundles.json" "$platform_learn" || vc_fail "cursor-platform.md missing skill-bundles.json"
 grep -q "## Skills bundle" "$cloud_doc" || vc_fail "cursor-cloud.md missing Skills bundle section"
