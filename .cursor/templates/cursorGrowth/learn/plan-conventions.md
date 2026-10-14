@@ -33,13 +33,15 @@
 
 **规则**：对外持久文档一律 `NN_中文功能.md`；**带序号文档硬上限 10 个**（超限必须合并同类或下沉 Growth）。
 
-| 号 | 用途 | 生成方式 |
-|----|------|----------|
-| `01`–`06` | 自主分配（产品概述 · 快速开始 · 架构 · 接口契约 · 开发规范 · 部署运维） | 人 / Agent 撰写 |
-| **`07_用户手册.md`** | 可发布使用说明书 | **自动生成** — `/manual`（Manual Contract） |
-| **`08_测试报告.md`** | 发布测试报告 | **自动生成** — `/report`（Report Contract） |
-| `09`–`10` | 预留（验收与发布 · 待定） | 人 / Agent 撰写 |
+| 号 | 阶段（固定） | 生成方式 |
+|----|--------------|----------|
+| `01`–`06` | 需求 · 架构 · 数据/契约 · 接口/算法 · 详细设计 · 工程规范 | 人 / Agent（名称见 `docs-layout.json` → `profiles.<profile>`） |
+| **`07`** | 使用（默认文件名 **`07_用户手册.md`**，`web-fullstack`） | **自动生成** — `/manual`（`config/manual.yaml` → `doc_path`） |
+| **`08`** | 测试（**`08_测试报告.md`**） | **自动生成** — `/report`（`config/test-report.yaml` → `doc_path`） |
+| `09`–`10` | 发布 · 调优 | 人 / Agent（名称按 profile） |
 | `ROADMAP.md` | 长期计划（**例外：不加序号**） | 人 / Agent 维护 |
+
+号位语义与 profile 名称表 → `config/docs-layout.json` · `templates/project-docs/README.md`（与母版 `project-docs.mdc` 一致）。
 
 **序号纪律**：号**不重用**（删除后留空号）· 新增**追加**· 两自动生成文档的号由 `config/manual.yaml` / `config/test-report.yaml` 的 `doc_path` 固定，**不得手写**。
 
