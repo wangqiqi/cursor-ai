@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **SPRINT-PLUGIN-PHASE2** — SPIKE-006：install · plugin · skills-bundle **三轨矩阵** · Marketplace **Defer** · `verify-spike-plugin-phase2-scope.sh`
+- **文档** — hooks/config 依赖 · `skill-bundles.json` 与 Plugin 边界 · `cursor-cloud` / `cursor-platform` / `.cursor-plugin/README`
+- **verify** — `verify-doc-super-cursor` phase2 断言 · `verify-super-cursor` 接线
+
 ## [4.29.15] - 2026-10-14
 
 ### Added

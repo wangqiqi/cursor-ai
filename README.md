@@ -78,7 +78,7 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | 分发 | 说明 |
 |------|------|
 | **`install-super-cursor.sh`** | **默认 / 主路径** — 全量 `.cursor/` · `runner.sh` · `verify-super-cursor` |
-| **`.cursor-plugin/`** | **可选** — lifecycle Plugin MVP + **ship/review/spike** agents（本地加载）；**不**替代 install → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
+| **`.cursor-plugin/`** | **可选** — lifecycle 子集 + agents（本地加载）；与 **`--skills-bundle core`** 不同轨；**先 install** 再靠 hooks 读 config → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
 
 | profile | 适合 |
 |---------|------|
