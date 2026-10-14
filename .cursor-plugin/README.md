@@ -8,7 +8,7 @@
 
 | 路径 | 内容 |
 |------|------|
-| `rules/` | 核心 `.mdc`（由 `scripts/sync-plugin-subset.sh` 同步，TASK-002+） |
+| `rules/` | 核心 `.mdc`（`bash .cursor/bin/sync-plugin-subset.sh` 从 `.cursor/` 同步） |
 | `skills/` | master · plan · run · learn · scaffold |
 | `hooks/hooks.json` | 会话 hooks 契约 |
 
