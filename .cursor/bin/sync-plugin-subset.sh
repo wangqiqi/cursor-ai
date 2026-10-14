@@ -22,6 +22,8 @@ RULES=(
 
 SKILLS=(master plan run learn scaffold)
 
+AGENTS=(ship review spike)
+
 HOOK_SCRIPTS=(
   hooks/growth-init.sh
   hooks/run-start.sh
@@ -35,8 +37,8 @@ copy_file() {
   cp "$SRC/$rel" "$out"
 }
 
-rm -rf "$DEST/rules" "$DEST/skills"
-mkdir -p "$DEST/rules" "$DEST/skills"
+rm -rf "$DEST/rules" "$DEST/skills" "$DEST/agents"
+mkdir -p "$DEST/rules" "$DEST/skills" "$DEST/agents"
 
 for rel in "${RULES[@]}"; do
   [[ -f "$SRC/$rel" ]] || { echo "FAIL: missing $SRC/$rel" >&2; exit 1; }
@@ -47,6 +49,11 @@ for name in "${SKILLS[@]}"; do
   [[ -d "$SRC/skills/$name" ]] || { echo "FAIL: missing skill $name" >&2; exit 1; }
   mkdir -p "$DEST/skills/$name"
   cp -a "$SRC/skills/$name/." "$DEST/skills/$name/"
+done
+
+for name in "${AGENTS[@]}"; do
+  [[ -f "$SRC/agents/$name.md" ]] || { echo "FAIL: missing agent $SRC/agents/$name.md" >&2; exit 1; }
+  cp "$SRC/agents/$name.md" "$DEST/agents/$name.md"
 done
 
 mkdir -p "$DEST/hooks/lib"
@@ -82,4 +89,4 @@ cat > "$DEST/hooks/hooks.json" <<'EOF'
 }
 EOF
 
-echo "sync-plugin-subset: rules=${#RULES[@]} skills=${#SKILLS[@]} hooks+lib → $DEST"
+echo "sync-plugin-subset: rules=${#RULES[@]} skills=${#SKILLS[@]} agents=${#AGENTS[@]} hooks+lib → $DEST"
