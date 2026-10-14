@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **SPRINT-PLUGIN-AGENTS** — SPIKE-005：Plugin 纳入 ship/review/spike · `verify-spike-plugin-agents-scope.sh`
+- **`.cursor-plugin/`** — `sync-plugin-subset` 同步 agents · `verify-cursor-plugin-mvp` 断言 · manifest **0.2.0**
+- **文档** — `cursor-platform` · `cursor-cloud` · 根 README Plugin 行含 agents
+
 ## [4.29.14] - 2026-10-14
 
 ### Added
