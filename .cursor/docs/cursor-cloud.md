@@ -43,7 +43,7 @@ cp .cursor/templates/cursorGrowth/environment.json.example .cursor/environment.j
 
 ## Plugin MVP（本地加载 · 非 Marketplace）
 
-仓库根 **`.cursor-plugin/`** 为 **lifecycle 子集**（plan · run · master · learn · scaffold + 核心 rules + hooks）。**主路径仍是** [`install-super-cursor.sh`](../../install-super-cursor.sh) 全量 `.cursor/` — Plugin **不**带 `workflow.json` · 全量 skills · `verify-super-cursor` 契约。
+仓库根 **`.cursor-plugin/`** 为 **lifecycle 子集**（plan · run · master · learn · scaffold + 核心 rules + hooks）。**主路径仍是** 仓库根 `install-super-cursor.sh` 全量 `.cursor/` — Plugin **不**带 `workflow.json` · 全量 skills · `verify-super-cursor` 契约。
 
 ```bash
 bash .cursor/bin/sync-plugin-subset.sh    # 母版维护者：从 .cursor/ 刷新子集

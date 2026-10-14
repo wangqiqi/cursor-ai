@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.12] - 2026-10-14
+
 ### Added
 
 - **SPRINT-PLUGIN-MVP** — SPIKE-002：`.cursor-plugin/` 子集矩阵归档（lifecycle skills · 核心 rules · 最小 hooks；agents Out）
@@ -12,6 +14,10 @@ All notable changes to Super Cursor are documented here.
 - **Plugin 文档** — `cursor-platform.md` §Plugin MVP · `cursor-cloud.md` 本地加载与 install 边界；`verify-doc-super-cursor` 断言
 - **verify 接线** — `verify-super-cursor.sh` 聚合 `verify-spike-plugin-mvp-scope` · `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp`
 - **README 门面** — 根 README 区分 `install-super-cursor.sh` 与 `.cursor-plugin/` 可选 MVP
+
+### Fixed
+
+- **文档站** — `cursor-cloud.md` 去掉指向仓库根脚本的 VitePress 死链（改为内联 `install-super-cursor.sh` 表述）
 
 ## [4.29.11] - 2026-10-14
 
