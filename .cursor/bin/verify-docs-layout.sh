@@ -66,7 +66,26 @@ def check_templates():
     for extra in ("README.md", "ROADMAP.md"):
         if not (tpl / extra).is_file():
             fail(f"templates/project-docs missing {extra}")
+    for n, kind in sorted(generated.items()):
+        hits = list(tpl.glob(f"{n}_*.md"))
+        if not hits:
+            continue
+        text = hits[0].read_text(encoding="utf-8", errors="replace")
+        if "<!-- generated:" not in text:
+            fail(f"templates/project-docs slot {n} ({kind}) missing generated marker")
+    default_profile = str(cfg.get("profile") or "web-fullstack")
     profiles = cfg.get("profiles") or {}
+    pmap = profiles.get(default_profile) or {}
+    for n in ("07", "08"):
+        name = pmap.get(n)
+        if not name:
+            continue
+        expected = tpl / f"{n}_{name}.md"
+        if not expected.is_file():
+            fail(
+                f"templates/project-docs missing {expected.name} "
+                f"(default profile {default_profile} slot {n})"
+            )
     if not profiles:
         fail("docs-layout.json: profiles is empty (无法按项目类型替换名称)")
     for pname, mapping in profiles.items():
