@@ -29,7 +29,8 @@ if [[ "$PROJECT_ROOT" == *"/.cursor" || "$(basename "$PROJECT_ROOT")" == ".curso
 fi
 
 GROWTH_DIR="$PROJECT_ROOT/.cursorGrowth"
-TEMPLATE_DIR="$CURSOR_DIR/templates/cursorGrowth"
+# 插件轨不含 templates/ → 回退到已安装项目的母版模板（否则 Growth 只是空目录）
+TEMPLATE_DIR="${SC_CURSOR_DIR:-$CURSOR_DIR}/templates/cursorGrowth"
 
 if [[ ! -d "$GROWTH_DIR" ]]; then
   mkdir -p "$GROWTH_DIR"
@@ -92,7 +93,14 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]] || { [[ -d "$CURSOR_LOCAL" ]] && \
     [[ "$(find "$CURSOR_LOCAL" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')" -le 1 ]]; }; then
     rm -rf "$CURSOR_LOCAL"
-    ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL"
+    mkdir -p "$(dirname "$CURSOR_LOCAL")"
+    # Windows / Git Bash 可能无符号链接权限：失败必须降级为目录副本，不能让 hook 中断（set -e）
+    if ! ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+      mkdir -p "$CURSOR_LOCAL"
+      cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \
+        || cp "$TEMPLATE_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \
+        || true
+    fi
   fi
 fi
 

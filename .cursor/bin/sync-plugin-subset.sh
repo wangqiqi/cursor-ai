@@ -30,6 +30,13 @@ HOOK_SCRIPTS=(
   hooks/run-stop.sh
 )
 
+# hooks/lib/*.sh 通过 source "$_LIB_DIR/../../lib/platform.sh" 依赖母版 lib/。
+# 插件轨必须自带一份，否则三个 hook 在 source 阶段即 exit 1（2026-10-14 修）。
+# 只带 hook 运行期真需要的；verify-common/growth-archive 属母版门禁，不入插件。
+LIB_SCRIPTS=(
+  lib/platform.sh
+)
+
 copy_file() {
   local rel="$1"
   local out="$DEST/$rel"
@@ -37,7 +44,7 @@ copy_file() {
   cp "$SRC/$rel" "$out"
 }
 
-rm -rf "$DEST/rules" "$DEST/skills" "$DEST/agents"
+rm -rf "$DEST/rules" "$DEST/skills" "$DEST/agents" "$DEST/lib"
 mkdir -p "$DEST/rules" "$DEST/skills" "$DEST/agents"
 
 for rel in "${RULES[@]}"; do
@@ -56,11 +63,16 @@ for name in "${AGENTS[@]}"; do
   cp "$SRC/agents/$name.md" "$DEST/agents/$name.md"
 done
 
-mkdir -p "$DEST/hooks/lib"
+mkdir -p "$DEST/hooks/lib" "$DEST/lib"
 for rel in "${HOOK_SCRIPTS[@]}"; do
   copy_file "$rel"
 done
 cp -a "$SRC/hooks/lib/." "$DEST/hooks/lib/"
+
+for rel in "${LIB_SCRIPTS[@]}"; do
+  [[ -f "$SRC/$rel" ]] || { echo "FAIL: missing $SRC/$rel" >&2; exit 1; }
+  copy_file "$rel"
+done
 
 # Plugin-local hooks.json (paths relative to repo / plugin root)
 cat > "$DEST/hooks/hooks.json" <<'EOF'
@@ -89,4 +101,4 @@ cat > "$DEST/hooks/hooks.json" <<'EOF'
 }
 EOF
 
-echo "sync-plugin-subset: rules=${#RULES[@]} skills=${#SKILLS[@]} agents=${#AGENTS[@]} hooks+lib → $DEST"
+echo "sync-plugin-subset: rules=${#RULES[@]} skills=${#SKILLS[@]} agents=${#AGENTS[@]} lib=${#LIB_SCRIPTS[@]} hooks+lib → $DEST"

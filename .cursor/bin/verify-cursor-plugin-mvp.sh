@@ -37,6 +37,8 @@ for hook in hooks/hooks.json hooks/growth-init.sh hooks/run-start.sh hooks/run-s
 done
 
 [[ -f "$PLUGIN/hooks/lib/config-load.sh" ]] || fail "missing hooks/lib/config-load.sh"
+# hooks/lib 里 source ../../lib/platform.sh —— 缺这份就三个 hook 全哑（2026-10-14 修）
+[[ -f "$PLUGIN/lib/platform.sh" ]] || fail "missing lib/platform.sh (hooks source ../../lib/platform.sh)"
 
 grep -q '"command": "hooks/run-start.sh"' "$PLUGIN/hooks/hooks.json" \
   || fail "hooks.json must use plugin-local hooks/ paths"
@@ -55,5 +57,24 @@ if grep -qE '11 道(门禁| · 全部接线)' "$verify_mdc"; then
 fi
 
 bash "$ROOT/.cursor/bin/verify-cursor-plugin-manifest.sh" || exit 1
+
+# --- hooks 冒烟：复制到临时项目实跑三个 hook ---
+# 只查「文件存在」看不见两类死法：缺 lib/platform.sh（source 即退 1）、
+# 读不到已安装项目的 .cursor/config（用户配置被静默忽略）。
+smoke_root="$(mktemp -d)"
+trap 'rm -rf "$smoke_root"' EXIT
+cp -a "$PLUGIN" "$smoke_root/plugin"
+mkdir -p "$smoke_root/.cursor/config"
+printf '%s\n' '{"workflow":{"enabled":true,"hooks_enabled":true},"growth":{"enabled":true}}' \
+  > "$smoke_root/.cursor/config/workflow.json"
+hook_input='{"conversation_id":"verify-plugin","hook_event_name":"sessionStart"}'
+for hook in growth-init run-start run-stop; do
+  if ! hook_out="$(printf '%s' "$hook_input" | bash "$smoke_root/plugin/hooks/$hook.sh" 2>&1)"; then
+    fail "$hook.sh exited non-zero: $hook_out"
+  fi
+done
+# growth.enabled=true 必须真被读到：配置路径读错时 growth-init 提前返回，不会建 .cursorGrowth
+[[ -d "$smoke_root/.cursorGrowth" ]] \
+  || fail "plugin hooks ignored .cursor/config/workflow.json (growth.enabled not applied)"
 
 echo "OK: cursor-plugin MVP subset (lifecycle skills · agents · core rules · hooks · no commands)"

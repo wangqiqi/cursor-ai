@@ -33,7 +33,11 @@ plan_meta_value() {
 }
 
 plan_pending_count() {
-  grep -c '| ⬜ |' "$PLAN_FILE" 2>/dev/null || echo "0"
+  local n
+  # grep -c 无命中时「既打印 0 又返回 1」→ 直接 || echo "0" 会输出两行，
+  # 写进 hooks/state/run.json 就是非法 JSON（2026-10-14 修）
+  n="$(grep -c '| ⬜ |' "$PLAN_FILE" 2>/dev/null || true)"
+  echo "${n:-0}"
 }
 
 plan_active() {

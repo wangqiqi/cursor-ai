@@ -8,6 +8,7 @@ source "$_LIB_DIR/../../lib/platform.sh"
 
 SC_CONFIG="${SC_CONFIG:-}"
 SC_PROJECT_ROOT="${SC_PROJECT_ROOT:-}"
+SC_CURSOR_DIR="${SC_CURSOR_DIR:-}"
 SC_PLAN_REL="${SC_PLAN_REL:-.cursorGrowth/plan.md}"
 SC_WORKFLOW_ENABLED="${SC_WORKFLOW_ENABLED:-true}"
 SC_HOOKS_ENABLED="${SC_HOOKS_ENABLED:-true}"
@@ -29,6 +30,15 @@ sc_resolve_project_root() {
 
 sc_init_config() {
   local cursor_dir="$1"
+  # 插件轨（.cursor-plugin/hooks）旁无 config/（SPIKE-002 把 config 划在插件范围外）→
+  # 回退到已安装项目的 .cursor/，否则用户的 workflow.json 被静默忽略
+  # （契约见 .cursor-plugin/README.md：先 install，再依赖 hooks 读 workflow.json）
+  if [[ ! -f "${cursor_dir}/config/workflow.json" \
+        && -n "${SC_PROJECT_ROOT:-}" \
+        && -f "${SC_PROJECT_ROOT}/.cursor/config/workflow.json" ]]; then
+    cursor_dir="${SC_PROJECT_ROOT}/.cursor"
+  fi
+  SC_CURSOR_DIR="$cursor_dir"
   SC_CONFIG="${cursor_dir}/config/workflow.json"
   SC_PLAN_REL="$(sc_cfg '.plan_file' '.cursorGrowth/plan.md')"
   SC_WORKFLOW_ENABLED="$(sc_cfg '.workflow.enabled' 'true')"

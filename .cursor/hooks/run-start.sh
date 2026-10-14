@@ -120,17 +120,17 @@ fi
 
 cat > "$STATE_DIR/run.json" <<EOF
 {
-  "conversation_id": "$conversation_id",
-  "active_id": "$active",
-  "active_status": "$status",
-  "sprint": "$sprint",
-  "plan_approved": "$approved",
+  "conversation_id": "$(json_escape_text "$conversation_id")",
+  "active_id": "$(json_escape_text "$active")",
+  "active_status": "$(json_escape_text "$status")",
+  "sprint": "$(json_escape_text "$sprint")",
+  "plan_approved": "$(json_escape_text "$approved")",
   "planning": $planning,
-  "gate": "$gate",
-  "verify_cmd": "$verify",
+  "gate": "$(json_escape_text "$gate")",
+  "verify_cmd": "$(json_escape_text "$verify")",
   "autonomous": $autonomous,
   "pending_count": $pending,
-  "session_started_at": "$(iso8601_now)"
+  "session_started_at": "$(json_escape_text "$(iso8601_now)")"
 }
 EOF
 
@@ -163,14 +163,14 @@ if [[ "$autonomous" == "true" && -n "$active" ]]; then
 - **Interrupt only**: decision_needed · blocker · high_risk · release · goal_drift (workflow.json autonomy.interrupt_on)
 - **Verify**: \`./.cursor/bin/runner.sh task-verify\`; release \`${verify}\`
 - Load \`run\`: gate-check → implement → task-verify → commit → next ACTIVE"
-  role_hint="$(sc_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
+  role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     ctx="${ctx}
 - **Persona hint**: ${role_hint}"
   fi
   json_additional_context "$ctx"
 else
-  role_hint="$(sc_role_hint "$CURSOR_DIR" 2>/dev/null || true)"
+  role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     json_additional_context "## session
 - **Persona hint**: ${role_hint}"

@@ -42,15 +42,25 @@ json_workspace_root() {
 json_string() {
   local text="$1"
   local py
+  # 必须 printf（而非 here-string `<<<`）：here-string 会附送尾换行，
+  # 让 JSON 字符串值凭空多一个 "\n"（2026-10-14 修）
   if command -v jq >/dev/null 2>&1; then
-    jq -Rs . <<< "$text"
+    printf '%s' "$text" | jq -Rs .
     return 0
   fi
   if py="$(_json_py)" && [[ -n "$py" ]]; then
-    "$py" -c 'import json,sys; print(json.dumps(sys.stdin.read()))' <<< "$text"
+    printf '%s' "$text" | "$py" -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
     return 0
   fi
   echo '""'
+}
+
+# json_string 返回含外层引号的 JSON 字符串；这里取「可安全插入 JSON 模板」的内层文本，
+# 供手写 heredoc 的调用方使用（裸插值遇引号/换行即写坏 JSON）
+json_escape_text() {
+  local s
+  s="$(json_string "$1")"
+  printf '%s' "${s:1:${#s}-2}"
 }
 
 json_additional_context() {

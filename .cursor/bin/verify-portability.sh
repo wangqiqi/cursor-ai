@@ -49,7 +49,7 @@ GNU_ONLY = [
 ]
 NON_POSIX_RE = re.compile(r"(grep\s+(-\w+\s+)*'[^']*\\s|sed\s+(-\w+\s+)*'[^']*\\s)")
 READLINK_RE = re.compile(r"readlink\s+-f\b")
-LN_S_RE = re.compile(r"(^|[;&|(]\s*|\bthen\s+)ln\s+-s")
+LN_S_RE = re.compile(r"(^\s*|[;&|(]\s*|\bthen\s+)ln\s+-s")
 PYTHON3_RE = re.compile(r"(^|[|(]\s*|\$\(\s*|\beval\s+\"\$\(\s*)python3\s")
 
 fails = []
