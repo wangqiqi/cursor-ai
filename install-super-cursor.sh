@@ -270,16 +270,34 @@ fi
 
 mkdir -p "$TARGET"
 if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
-  rm -rf "$TARGET/.cursor"
-  echo "已删除旧 .cursor/（--replace 干净覆盖）"
+  # 身份校验（P0-4 补强）：只覆盖 Super Cursor 安装，别把 Cursor 自己的 ~/.cursor
+  # 或在 dotfiles 仓库根跑 --replace 时的无关目录整体删掉。
+  if [[ -f "$TARGET/.cursor/hooks.json" && -f "$TARGET/.cursor/rules/core.mdc" ]]; then
+    rm -rf "$TARGET/.cursor"
+    echo "已删除旧 .cursor/（--replace 干净覆盖）"
+  else
+    echo "错误: $TARGET/.cursor 不像 Super Cursor 安装（缺 hooks.json / rules/core.mdc）。" >&2
+    echo "      --replace 会整体删除该目录，已中止；确认要覆盖请先手动移走或改名。" >&2
+    exit 1
+  fi
 fi
 sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 sc_apply_skills_bundle "$TARGET" "$SKILLS_BUNDLE" || exit 1
 
+# 运行态/本地私有路径与母版 .gitignore 对齐：漏了会在消费方仓库留下 untracked 噪音
+SC_IGNORE_LINES=(
+  '.cursorGrowth/'
+  '.cursor/rules/local'
+  '.cursor/hooks/state/*'
+  '!.cursor/hooks/state/README.md'
+)
 if [[ -f "$TARGET/.gitignore" ]]; then
-  grep -q '.cursorGrowth' "$TARGET/.gitignore" 2>/dev/null || echo '.cursorGrowth/' >> "$TARGET/.gitignore"
+  for _ignore in "${SC_IGNORE_LINES[@]}"; do
+    grep -qxF "$_ignore" "$TARGET/.gitignore" 2>/dev/null \
+      || echo "$_ignore" >> "$TARGET/.gitignore"
+  done
 else
-  printf '%s\n' '.cursorGrowth/' > "$TARGET/.gitignore"
+  printf '%s\n' "${SC_IGNORE_LINES[@]}" > "$TARGET/.gitignore"
 fi
 
 # .cursorignore — Agent 硬排除（与 .gitignore 互补；密钥须重复声明）
