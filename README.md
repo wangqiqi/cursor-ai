@@ -327,7 +327,7 @@ bash .cursor/bin/cursor-coherence.sh         # 交叉自洽（skills/agents/rule
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 |
 | **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` | `--skills-bundle`（full / core） |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / `docs-init` SPIKE |
-| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` | `.cursor-plugin/` 子集 · 三轨文档 |
+| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep（Defer） |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
 | **hygiene** | `verify-spike-mother-hygiene-scope` | 门面漂移审计 |
 | **E2E** | `consumer-smoke.sh`（`template-verify` 内） | 目标项目 install → 闸门 → hook 闭环 |

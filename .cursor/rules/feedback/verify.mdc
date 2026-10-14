@@ -99,7 +99,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG 结构 · 门面计数与 doc 链 | 通用 / 母版 |
 | **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` | `--skills-bundle full/core` 契约 | 母版 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs · `docs-init` SPIKE 归档 | 母版 |
-| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` | `.cursor-plugin/` 子集 · 三轨文档 | 母版 |
+| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 | 母版 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE | 母版 |
 | **hygiene** | `verify-spike-mother-hygiene-scope` | README / `migration-catalog` 门面与聚合脚本 SSOT（Growth 归档） | 母版 |
 | **E2E** | `consumer-smoke.sh`（经 `template-verify`） | 目标项目：install → 闸门 BLOCK → hook → 全绿 | 母版 |
