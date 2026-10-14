@@ -13,7 +13,15 @@
 | `agents/` | ship · review · spike |
 | `hooks/hooks.json` | 会话 hooks 契约 |
 
-无 `commands/`（slash 直挂 skill）。
+无 `commands/`（slash 直挂 skill）· 无 `config/`（**先 install** 再依赖 hooks 读 `workflow.json`）。
+
+## 与 install / skills-bundle
+
+| 轨 | 说明 |
+|----|------|
+| **install**（默认 28 skills） | SSOT · 全量 config/hooks/verify |
+| **`--skills-bundle core`**（23） | 非 Plugin；仍 install 到 `.cursor/` |
+| **本 Plugin**（5 skills） | 本地子集；≠ core。三轨矩阵 → `cursor-platform.md` §分发三轨 |
 
 ## 验证
 

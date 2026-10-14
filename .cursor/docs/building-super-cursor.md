@@ -116,6 +116,7 @@ bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册
 | 新增对外文档 | `docs:build`（dead-link）· `verify-doc-super-cursor.sh` | `docs/scripts/sync-cursor-docs.sh` + `.vitepress/config.ts` 侧栏 |
 | 动安装/门面 | `install-smoke.sh` · `consumer-smoke.sh` | CHANGELOG `[Unreleased]` |
 | 改 `docs-layout` / `templates/project-docs` | `verify-docs-layout.sh` · `verify-config.sh` | `plan-conventions.md` learn 模板 · `templates/project-docs/README.md` |
+| Plugin 分发 / 三轨文档 | `verify-doc-super-cursor.sh` · `verify-spike-plugin-phase2-scope.sh` | `cursor-cloud.md` · `cursor-platform.md` learn · `.cursor-plugin/README.md` |
 
 目标项目铺文档骨架：`bash .cursor/bin/runner.sh docs-init [--profile web-fullstack]` → `docs/NN_*.md`；门禁 `verify-docs-layout.sh`（母版无编号 `docs/` 时验模板）。
 
