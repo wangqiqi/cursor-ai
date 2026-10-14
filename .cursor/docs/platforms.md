@@ -39,15 +39,47 @@ bash .cursor/bin/platform-check.sh
 
 可选 **`.cursor/mcp.json`** · **`.cursor/environment.json`** 模板与复制说明 → **`cursor-cloud.md`**。密钥走 Dashboard / `${env:…}`，勿写入母版模板。
 
-Cloud Agents 会执行仓库内 **command hooks**（`.cursor/hooks.json`）；用户级 `~/.cursor/hooks.json` 在云端不可用。
-
 ## Cursor Hooks
 
-Hooks 由 Cursor 调用 `.cursor/hooks/*.sh`。在 Windows 上请：
+配置：`.cursor/hooks.json`（`version: 1`）· 脚本路径相对**项目根** → `.cursor/hooks/*.sh`（勿写 `./hooks/`）。
+
+### 母版已接线（本地 IDE）
+
+| 事件 | 脚本 | 作用 |
+|------|------|------|
+| `beforeSubmitPrompt` | `growth-init.sh` | Growth 引导 |
+| `sessionStart` | `run-start.sh` | plan 元数据 · Persona 注入 |
+| `stop` | `run-stop.sh` | 自治 Sprint followup（`AUTONOMOUS`） |
+
+`full` profile 默认启用；`lite` / `rules-only` 可关 hooks，闸门与 Sprint 仍可用（见 `config/profiles/`）。
+
+### Cloud Agents parity
+
+| 项 | 本地 IDE | Cloud Agents |
+|----|----------|--------------|
+| 仓库 `.cursor/hooks.json` | ✅ command hooks | ✅ **仅 command**（同上路径） |
+| `~/.cursor/hooks.json` | ✅ 用户级 | ❌ VM 无本机 home |
+| Prompt hooks | 视版本 | ❌ 不用 prompt 型 |
+| 探索期只读环境 | — | hooks **尚未**运行；可写环境后才执行 |
+| 企业 | — | 可叠加团队/企业托管 hooks |
+
+Cloud 不读 `.cursorGrowth/plan.md`；验收命令写进 `environment.json` 的 `install` 或 PR 说明。详 **cursor-cloud.md** · 官方 **hooks**（Cloud agent support 矩阵）。
+
+### Tab hooks（IDE · 默认未启用）
+
+与 Agent hooks **分开策略**：`beforeTabFileRead` · `afterTabFileEdit` 管 Tab 补全读/写文件，**不**走 `run-start` / `run-stop` 链路。
+
+| 决策 | 母版 |
+|------|------|
+| 默认 | **不**写入 `hooks.json`（避免 Tab 与 Sprint 闸门耦合） |
+| 敏感仓 | 可自行加 Tab hook（审计/脱敏）；脚本须快、幂等、无密钥出网 |
+| 参考键名 | `beforeTabFileRead` · `afterTabFileEdit`（官方 Hooks 文档） |
+
+### Windows 本地
 
 1. 安装 **Git for Windows**（含 Git Bash）
-2. 在 Cursor 终端默认 shell 选 **Git Bash**，或确保 `bash` 在 PATH 中
-3. 若 hooks 未触发，可改用 `--profile lite`（关闭 hooks，rules/plan/run 仍可用）
+2. Cursor 终端默认 **Git Bash**，或确保 `bash` 在 PATH
+3. hooks 未触发 → `--profile lite`（关闭 hooks，rules/plan/run 仍可用）
 
 ## 无 jq 时
 

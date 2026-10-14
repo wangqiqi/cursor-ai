@@ -11,6 +11,7 @@ All notable changes to Super Cursor are documented here.
 - **plan TASK-002** — Bugbot 可选模板 `templates/cursorGrowth/BUGBOT.md` · `config/bugbot.yaml.example`；`cursorGrowth/README.md` 复制路径；`verify-task-002-bugbot-templates.sh`
 - **plan TASK-003** — `mcp.json.example` · `environment.json.example`；`.cursor/docs/cursor-cloud.md`；`platforms.md` 交叉链；`verify-task-003-mcp-cloud-templates.sh`；VitePress sync
 - **plan TASK-004** — 删除 `.cursor/commands/`（10）；slash 仅以 skill 为 SSOT；更新 naming · training/skills · README · `verify-task-004-commands-retired.sh`
+- **plan TASK-005** — `platforms.md` §Hooks 增补 Cloud parity 与 Tab hooks 评估（默认不写入 `hooks.json`）；`verify-task-005-hooks-cloud-doc.sh`
 
 ## [4.29.9] - 2026-09-23
 

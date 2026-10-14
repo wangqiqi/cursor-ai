@@ -86,6 +86,7 @@ hooks/      会话：growth-init · plan 上下文注入
 
 - 配置：`.cursor/hooks.json`，`version: 1`
 - 脚本：`.cursor/hooks/*.sh`，名称自定；**事件 key 必须用官方名**
+- Cloud / Tab 事件与母版默认 → **`platforms.md` §Cursor Hooks**
 
 ## 项目认知
 

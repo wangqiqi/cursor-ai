@@ -31,7 +31,7 @@ cp .cursor/templates/cursorGrowth/environment.json.example .cursor/environment.j
 - **`install`**：Build 时执行的幂等脚本（依赖安装、代码生成等）。
 - **`build.dockerfile`**：高级场景；勿 `COPY` 整个项目（Cursor 自行 checkout）。
 - **密钥**：Dashboard → Cloud Agents Secrets；不要依赖把 `.env.local` 打进快照。
-- **Hooks**：仓库 `.cursor/hooks.json` 在 Cloud 可跑 **command** hooks；`~/.cursor/hooks.json` 不可用。
+- **Hooks**：仓库 `.cursor/hooks.json` 在 Cloud 可跑 **command** hooks；`~/.cursor/hooks.json` 不可用。本地 vs Cloud vs Tab 对照 → **`platforms.md` §Cursor Hooks**。
 - 部署/compose 约定 → **ops-deploy** skill（与 VM 内 install 脚本分工：install=Build，compose=运行时文档）。
 
 ## 与 Super Cursor 闸门
