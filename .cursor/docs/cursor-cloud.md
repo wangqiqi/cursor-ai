@@ -40,3 +40,14 @@ cp .cursor/templates/cursorGrowth/environment.json.example .cursor/environment.j
 
 - 本地 Sprint 仍靠 `.cursorGrowth/plan.md` + `runner.sh gate-check`。
 - Cloud 跑 agent **不**读取你本机 `.cursorGrowth/`；把验收命令写进 `install` 或 PR 描述。
+
+## Plugin MVP（本地加载 · 非 Marketplace）
+
+仓库根 **`.cursor-plugin/`** 为 **lifecycle 子集**（plan · run · master · learn · scaffold + 核心 rules + hooks）。**主路径仍是** [`install-super-cursor.sh`](../../install-super-cursor.sh) 全量 `.cursor/` — Plugin **不**带 `workflow.json` · 全量 skills · `verify-super-cursor` 契约。
+
+```bash
+bash .cursor/bin/sync-plugin-subset.sh    # 母版维护者：从 .cursor/ 刷新子集
+bash .cursor/bin/verify-cursor-plugin-mvp.sh
+```
+
+范围与 install 差异 → `templates/cursorGrowth/learn/cursor-platform.md` §Plugin MVP · `archive/meta/*_SPIKE_plugin_mvp_scope.md`（Growth 运行时路径）。

@@ -83,6 +83,18 @@ if grep -q '| `scaffold` |' "$training" && grep -q '主路由（第 1 轮' "$tra
 fi
 vc_ok "slash SSOT (routes.md canonical · README/training no 3-tier duplicate tables)"
 
+# --- Plugin MVP docs: install primary + sync/verify commands ---
+platform_learn="$CUR/templates/cursorGrowth/learn/cursor-platform.md"
+cloud_doc="$CUR/docs/cursor-cloud.md"
+[[ -f "$platform_learn" ]] || vc_fail "missing cursor-platform.md learn template"
+[[ -f "$cloud_doc" ]] || vc_fail "missing cursor-cloud.md"
+grep -q "## Plugin MVP" "$platform_learn" || vc_fail "cursor-platform.md missing Plugin MVP section"
+grep -q "install-super-cursor" "$platform_learn" || vc_fail "cursor-platform.md must state install primary path"
+grep -q "sync-plugin-subset" "$platform_learn" || vc_fail "cursor-platform.md missing sync-plugin-subset"
+grep -q "## Plugin MVP" "$cloud_doc" || vc_fail "cursor-cloud.md missing Plugin MVP section"
+grep -q "verify-cursor-plugin-mvp" "$cloud_doc" || vc_fail "cursor-cloud.md missing plugin verify command"
+vc_ok "Plugin MVP docs (install primary · cursor-platform + cursor-cloud)"
+
 vc_py "$CUR" <<'PY'
 import re, sys
 from pathlib import Path

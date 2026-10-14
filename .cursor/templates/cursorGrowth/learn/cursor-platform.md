@@ -31,8 +31,20 @@
 
 | 方式 | 何时用 |
 |------|--------|
-| **`install-super-cursor.sh`** + profile | **默认** — 全量 `.cursor/` + Growth 引导 |
-| **Cursor Plugin**（`.cursor-plugin/`） | 团队 Marketplace · 一键装 rules/skills/hooks；**母版未打包**（见下 Sprint MVP） |
+| **`install-super-cursor.sh`** + profile | **默认 / 主路径** — 全量 `.cursor/` + Growth 引导 · `runner.sh` · `verify-super-cursor` |
+| **Cursor Plugin**（`.cursor-plugin/`） | **MVP 已入库** — lifecycle 子集本地加载；**不**替代 install（见 §Plugin MVP） |
 | **Agent Plugin**（根 `plugin.json`） | 仅外发 skills+MCP 子集 |
 
-决策归档 → `.cursorGrowth/archive/meta/*_plugin_distribution_decision.md`（TASK-006）。**不**用 Plugin 替代 install 的 verify / runner 契约。
+决策归档 → `.cursorGrowth/archive/meta/*_plugin_distribution_decision.md` · 子集矩阵 → `*_SPIKE_plugin_mvp_scope.md`。
+
+## Plugin MVP
+
+| 项 | 说明 |
+|----|------|
+| 目录 | 仓库根 **`.cursor-plugin/`**（`plugin.json` · `super-cursor-mvp`） |
+| 含 | 5 lifecycle skills · 11 核心 rules · 最小 hooks（**无** `commands/` · **无** `config/` · **无** agents） |
+| 同步 | 母版改 `.cursor/` 子集后：`bash .cursor/bin/sync-plugin-subset.sh` |
+| 验收 | `bash .cursor/bin/verify-cursor-plugin-manifest.sh` · `bash .cursor/bin/verify-cursor-plugin-mvp.sh` |
+| 边界 | **install 仍 SSOT** — Plugin 不提供 `gate-check` / 全量 verify / 28 skills；hooks 脚本依赖 `config/` 时须已 install 或手拷 |
+
+Cloud / MCP 可选面 → `.cursor/docs/cursor-cloud.md`（含 Plugin 与 install 分流一句）。
