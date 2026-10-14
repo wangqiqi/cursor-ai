@@ -43,6 +43,15 @@ PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：
 
 启用：Dashboard 连接仓库 · Automations 打开 Bugbot。本地 `REV-*` 仍用 **review** skill。
 
+### MCP · Cloud（可选 · 不进 `.cursorGrowth/`）
+
+| 模板 | 复制到 |
+|------|--------|
+| `templates/cursorGrowth/mcp.json.example` | `.cursor/mcp.json` |
+| `templates/cursorGrowth/environment.json.example` | `.cursor/environment.json` |
+
+详述 → `.cursor/docs/cursor-cloud.md` · 部署面 → **ops-deploy** skill。
+
 种子：`.cursor/templates/cursorGrowth/` · **`/learn`** 在已有文件上增量更新
 
 ## 如何更新

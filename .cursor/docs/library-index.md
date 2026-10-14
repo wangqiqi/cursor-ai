@@ -112,8 +112,8 @@
 | Rules | `rules` | `.cursor/rules/*.mdc` |
 | Subagents | `subagents` | `.cursor/agents/` |
 | Hooks | `hooks` | `hooks.json` · `platforms.md` |
-| MCP | `mcp` | TASK-003 模板 |
-| Cloud Agents | `cloud-agent` | TASK-003 `environment.json` 模板 |
+| MCP | `mcp` | `templates/cursorGrowth/mcp.json.example` · `cursor-cloud.md` |
+| Cloud Agents | `cloud-agent` | `environment.json.example` · `cursor-cloud.md` |
 | Automations | `cloud-agent/automations` | 用户 `/automate`（全局） |
 | Bugbot | `bugbot` | TASK-002 `BUGBOT.md` / `bugbot.yaml` 模板 |
 

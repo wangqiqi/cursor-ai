@@ -35,6 +35,12 @@ bash .cursor/bin/platform-check.sh
 
 约束：**技能若含 `require_linux`，必须在本表登记**。由 `bash .cursor/bin/verify-portability.sh` 断言（文档声明 ⇔ 代码实际），避免"README 说三平台、技能却只跑 Linux"这类漂移。
 
+## Cursor Cloud · MCP
+
+可选 **`.cursor/mcp.json`** · **`.cursor/environment.json`** 模板与复制说明 → **`cursor-cloud.md`**。密钥走 Dashboard / `${env:…}`，勿写入母版模板。
+
+Cloud Agents 会执行仓库内 **command hooks**（`.cursor/hooks.json`）；用户级 `~/.cursor/hooks.json` 在云端不可用。
+
 ## Cursor Hooks
 
 Hooks 由 Cursor 调用 `.cursor/hooks/*.sh`。在 Windows 上请：

@@ -31,6 +31,7 @@ copy quickstart.en.md guide/quickstart.en.md
 copy walkthrough.md guide/walkthrough.md
 copy plan-run.md guide/plan-run.md
 copy platforms.md guide/platforms.md
+copy cursor-cloud.md guide/cursor-cloud.md
 copy effective-collaboration.md guide/effective-collaboration.md
 copy building-super-cursor.md guide/building-super-cursor.md
 copy scaffold.md guide/scaffold.md
