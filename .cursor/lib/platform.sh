@@ -145,6 +145,45 @@ PY
   return 1
 }
 
+# Remove optional tools skills after install (--skills-bundle core).
+# SSOT: .cursor/config/skill-bundles.json
+sc_apply_skills_bundle() {
+  local target="$1" bundle="${2:-full}"
+  local cfg="$target/.cursor/config/skill-bundles.json"
+  local skills_dir="$target/.cursor/skills"
+  local py skill
+
+  if [[ "$bundle" == "full" ]]; then
+    return 0
+  fi
+  if [[ ! -f "$cfg" ]]; then
+    echo "FAIL: missing $cfg for skills bundle" >&2
+    return 1
+  fi
+  if ! py="$(sc_python)"; then
+    echo "FAIL: python required to apply skills bundle" >&2
+    return 1
+  fi
+  while IFS= read -r skill; do
+    [[ -z "$skill" ]] && continue
+    if [[ -d "$skills_dir/$skill" ]]; then
+      rm -rf "$skills_dir/$skill"
+    fi
+  done < <("$py" - "$cfg" "$bundle" <<'PY'
+import json, sys
+cfg = json.load(open(sys.argv[1], encoding="utf-8"))
+bundle = sys.argv[2]
+bundles = cfg.get("bundles") or {}
+if bundle not in bundles:
+    print(f"unknown bundle: {bundle}", file=sys.stderr)
+    sys.exit(2)
+spec = bundles[bundle]
+for name in spec.get("exclude_skills") or []:
+    print(name)
+PY
+)
+}
+
 # Copy directory tree; prefers rsync, falls back to cp -a (Git Bash / minimal macOS)
 # Usage: sc_copy_tree <src_dir> <dest_dir> [exclude_glob ...]
 sc_copy_tree() {

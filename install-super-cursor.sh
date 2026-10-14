@@ -19,6 +19,7 @@ usage() {
   --setup-shell                    写入 ~/.bashrc / ~/.zshrc（母版目录执行一次）
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
+  --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
   --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
@@ -136,6 +137,7 @@ done
 SOURCE="$(resolve_source_root)" || exit 1
 TARGET=""
 PROFILE="full"
+SKILLS_BUNDLE="full"
 COPY_PLAN="false"
 REPLACE="false"
 USE_HERE="false"
@@ -159,6 +161,15 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       PROFILE="$2"
+      shift 2
+      ;;
+    --skills-bundle)
+      if [[ $# -lt 2 || "${2:-}" == -* ]]; then
+        echo "错误: --skills-bundle 需要取值（full|core）" >&2
+        usage
+        exit 1
+      fi
+      SKILLS_BUNDLE="$2"
       shift 2
       ;;
     --copy-plan)
@@ -228,6 +239,14 @@ case "$PROFILE" in
     ;;
 esac
 
+case "$SKILLS_BUNDLE" in
+  full|core) ;;
+  *)
+    echo "错误: 无效 skills-bundle: ${SKILLS_BUNDLE}（可选 full · core）" >&2
+    exit 1
+    ;;
+esac
+
 if [[ ! -d "$SOURCE/.cursor" ]]; then
   echo "错误: 未找到 $SOURCE/.cursor" >&2
   exit 1
@@ -255,6 +274,7 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   echo "已删除旧 .cursor/（--replace 干净覆盖）"
 fi
 sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+sc_apply_skills_bundle "$TARGET" "$SKILLS_BUNDLE" || exit 1
 
 if [[ -f "$TARGET/.gitignore" ]]; then
   grep -q '.cursorGrowth' "$TARGET/.gitignore" 2>/dev/null || echo '.cursorGrowth/' >> "$TARGET/.gitignore"
@@ -358,6 +378,7 @@ echo "╔═══════════════════════�
 echo "║  Super Cursor 已安装 → $TARGET"
 echo "╚══════════════════════════════════════════════════╝"
 echo "  profile: $PROFILE"
+echo "  skills-bundle: $SKILLS_BUNDLE"
 echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"
