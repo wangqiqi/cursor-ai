@@ -62,6 +62,27 @@ else
   vc_fail "training/skills.md missing disable-model-invocation policy section"
 fi
 
+# --- slash SSOT: routes.md canonical; README/training no full 3-tier Command tables ---
+routes="$CUR/skills/master/routes.md"
+readme="$CUR/README.md"
+naming="$CUR/docs/naming.md"
+[[ -f "$routes" ]] || vc_fail "missing $routes"
+grep -q "## 主路由" "$routes" || vc_fail "routes.md missing 主路由 section"
+grep -qE 'skills/master/routes\.md|master/routes\.md' "$readme" \
+  || vc_fail ".cursor/README.md must link skills/master/routes.md (slash SSOT)"
+grep -qE 'routes\.md.*canonical|canonical.*routes|路由详表.*routes\.md' "$training" \
+  || vc_fail "training/skills.md must declare routes.md canonical"
+grep -qE 'routes\.md|master/routes' "$naming" \
+  || vc_fail "naming.md must reference routes.md for slash SSOT"
+if grep -q '### 【日常】' "$readme" && grep -q '### 【生命周期】' "$readme" \
+  && grep -qE '\| `/scaffold` \|' "$readme"; then
+  vc_fail ".cursor/README.md still has full 3-tier slash tables; summary + routes.md only"
+fi
+if grep -q '| `scaffold` |' "$training" && grep -q '主路由（第 1 轮' "$training"; then
+  vc_fail "training/skills.md duplicates routes.md main route table"
+fi
+vc_ok "slash SSOT (routes.md canonical · README/training no 3-tier duplicate tables)"
+
 vc_py "$CUR" <<'PY'
 import re, sys
 from pathlib import Path

@@ -8,7 +8,7 @@ Super Cursor 命名：**短、见名知意、不与 Cursor 内置冲突**。
 |------|--------|------|
 | Skill | `master` `plan` `run` `learn` `scaffold` `git` `release` `security` `api` | `shell` `loop` `canvas` `sdk`…（见下） |
 | Agent | **`ship`**（发版 subagent） | **`release`**（Cursor 内置 subagent） |
-| Command | **【日常】** `/run` `/plan` `/master` · **【生命周期】** `/scaffold` `/learn` `/long` `/release` · **【高级】** `/delivery` `/manual` `/report`（其余 skill 无 slash） |
+| Command | **【日常】** `/run` `/plan` `/master` · **【生命周期】** `/scaffold` `/learn` `/long` `/release` · **【高级】** `/delivery` `/manual` `/report`（其余 skill 无 slash）；**详表** → `skills/master/routes.md` |
 | Config | `workflow.json` `release.json` | — |
 | Hooks 脚本 | `growth-init` `run-start` `run-stop` | 事件名用官方：`sessionStart` `stop` 等 |
 
@@ -72,7 +72,7 @@ rules/      编辑匹配文件时 glob 自动加载
 hooks/      会话：growth-init · plan 上下文注入
 ```
 
-**约定**：slash 直接加载 **skill**（无 `.cursor/commands/` 薄指针）。`disable-model-invocation: true` 的 skill 仅显式 `/skill-name`；其余可由 Agent 按 `description` 自动选用。
+**约定**：slash 直接加载 **skill**（无 `.cursor/commands/` 薄指针）。`disable-model-invocation: true` 的 skill 仅显式 `/skill-name`；其余可由 Agent 按 `description` 自动选用。主路由 / `more` / 关键词索引的 **canonical 长表** → **`skills/master/routes.md`**（`.cursor/README.md` 与 `docs/training/skills.md` 只保留摘要 + 链接，不双写三层 Command 表）。
 
 **review**（项目内）：同名 **skill**（母会话清单）+ **agent**（只读子进程）— 委派时用 agent。  
 **全局 review**（`skills-cursor/review`）只路由 Bugbot / Security — 与项目 REV-* 无关；安全专项优先 **security** skill。

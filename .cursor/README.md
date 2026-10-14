@@ -35,38 +35,13 @@ bash .cursor/verify-system.sh                # 同上 layout（alias）
 
 命名：[docs/naming.md](docs/naming.md)
 
-## Skill slash（三层 · 记前两层即可）
+## Skill slash（摘要 · 详表不在此重复）
 
-`/plan` 等直接加载同名 **skill**（无 `commands/` 层）。菜单按 **【日常】→【生命周期】→【高级】** 标注；Agent 可自动选用的 skill **不必死记 slash**。
+`/plan` 等直接加载同名 **skill**（无 `commands/` 层）。口诀：**【日常】** `/run` · `/plan` · `/master` → **【生命周期】** `/scaffold` · `/learn` · `/long` · `/release` → **【高级】** `/delivery` · `/manual` · `/report`（**ux** · **ia** · **debug** · **review** 等为 skill-only，Agent 按意图或 `@`）。
 
-### 【日常】80% 时间
+**Canonical 路由**（主路由 7 项 · `more` 子路由 · 关键词 · DAILY/LIBRARY）→ [`skills/master/routes.md`](skills/master/routes.md)；内联 7 项菜单 → [`skills/master/SKILL.md`](skills/master/SKILL.md)。培训摘要 → [docs/training/skills.md](docs/training/skills.md) · 命名 → [docs/naming.md](docs/naming.md)。
 
-| Command | 何时用 | Skill |
-|---------|--------|-------|
-| **`/run`** | 已有 TASK · 写代码 · 修 bug（**默认入口**） | run |
-| **`/plan`** | 新开 Sprint · 拆 Goal/TASK（无 ACTIVE 时） | plan |
-| **`/master`** | 真迷路 · 刚安装 · 不知 slash（**勿滥用**） | master |
-
-### 【生命周期】Sprint 前后
-
-| Command | 何时用 | Skill |
-|---------|--------|-------|
-| `/scaffold` | 空仓库建栈 · 已有项目 audit | scaffold |
-| `/learn` | 让 Agent 了解本项目；可据证据**建议约定**（落 Growth / local，不擅自改 `.cursor/`） | learn |
-| `/long` | Epic 长程 · 多 Sprint plan/run 链 · checkpoint 续跑 | long |
-| `/release` | merge / PR / 打 tag（Sprint 出口） | release |
-
-### 【高级】按需
-
-| Command | 何时用 | Skill |
-|---------|--------|-------|
-| `/delivery` | UI/功能 Sprint 发版前 7 维走查（**不是**规划导航） | delivery |
-| `/manual` | 可发布软件使用说明书 · 配图 regen（**不是** delivery 走查） | user-manual |
-| `/report` | 全量/分层测试报告 · verify 后汇总（**不是** 写测试） | test-report |
-
-**无 slash · skill-only**（Agent 按意图自动选用，或 `@` / 关键词）：**ux** · **ia** · **debug** · **review** · **pencil-design**（以及 api/git/test/…）。
-
-**需显式 `/skill` 调用**（`disable-model-invocation: true` — Agent **不会**按关键词自动选用）：**`/week`** · **`/disk`** · **`/maintain`** · **`/ops-deploy`** · **`/code-stats-viz`**。策略表 → [docs/training/skills.md](docs/training/skills.md) §disable-model-invocation。
+**需显式 `/skill` 调用**（`disable-model-invocation: true`）：`/week` · `/disk` · `/maintain` · `/ops-deploy` · `/code-stats-viz` — 策略表 → [docs/training/skills.md](docs/training/skills.md) §disable-model-invocation。
 
 ## 使用场景
 
