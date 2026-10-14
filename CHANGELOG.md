@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.18] - 2026-10-14
+
 ### Changed
 
 - **SPRINT-PLUGIN-RULES-SYNC** — Plugin `verify.mdc` 与母版分组门禁同步 · `verify-cursor-plugin-mvp` diff parity · manifest **0.2.1** · 贡献者触发表
