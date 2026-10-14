@@ -108,6 +108,19 @@ grep -qF "verify-spike-plugin-phase2-scope" "$ROOT/.cursor/verify-super-cursor.s
   || vc_fail "verify-super-cursor must wire verify-spike-plugin-phase2-scope"
 vc_ok "plugin phase2 docs (三轨 · hooks/config · skill-bundles · verify wire)"
 
+plugin_readme="$ROOT/.cursor-plugin/README.md"
+[[ -f "$plugin_readme" ]] || vc_fail "missing .cursor-plugin/README.md"
+grep -q "## Marketplace" "$platform_learn" || vc_fail "cursor-platform.md missing Marketplace section"
+grep -qF "marketplace_prep_scope" "$platform_learn" || vc_fail "cursor-platform.md missing marketplace prep archive pointer"
+grep -q "## Marketplace" "$cloud_doc" || vc_fail "cursor-cloud.md missing Marketplace section"
+grep -qF "verify-spike-marketplace-prep-scope" "$cloud_doc" || vc_fail "cursor-cloud.md missing marketplace prep verify command"
+grep -q "## Marketplace" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing Marketplace section"
+grep -qF "marketplace_prep_scope" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing marketplace prep archive pointer"
+grep -qF "verify-spike-marketplace-prep-scope" "$mc" || vc_fail "migration-catalog missing marketplace prep verifier"
+grep -qF "verify-spike-marketplace-prep-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-spike-marketplace-prep-scope"
+vc_ok "marketplace prep docs (platform · cloud · plugin README · catalog · verify wire)"
+
 grep -q "## Skills bundle" "$platform_learn" || vc_fail "cursor-platform.md missing Skills bundle section"
 grep -q "skill-bundles.json" "$platform_learn" || vc_fail "cursor-platform.md missing skill-bundles.json"
 grep -q "## Skills bundle" "$cloud_doc" || vc_fail "cursor-cloud.md missing Skills bundle section"

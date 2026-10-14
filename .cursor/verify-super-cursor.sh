@@ -403,6 +403,7 @@ if is_mother_repo; then
   bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-plugin-agents-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-spike-marketplace-prep-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
 else
   echo "SKIP  non-mother: platform/SPIKE/plugin/hygiene（Growth 归档 · install-smoke · .cursor-plugin）"
