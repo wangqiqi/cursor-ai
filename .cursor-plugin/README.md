@@ -8,7 +8,7 @@
 
 | 路径 | 内容 |
 |------|------|
-| `rules/` | 核心 `.mdc`（`bash .cursor/bin/sync-plugin-subset.sh` 从 `.cursor/` 同步） |
+| `rules/` | 核心 `.mdc`（`bash .cursor/bin/sync-plugin-subset.sh` 从 `.cursor/` 同步；`feedback/verify.mdc` 须与母版分组门禁一致） |
 | `skills/` | master · plan · run · learn · scaffold |
 | `agents/` | ship · review · spike |
 | `hooks/hooks.json` | 会话 hooks 契约 |
