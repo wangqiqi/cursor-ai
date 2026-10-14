@@ -115,6 +115,19 @@ grep -q "verify-install-skills-bundle" "$cloud_doc" || vc_fail "cursor-cloud.md 
 grep -qF 'skills-bundle' "$ROOT/README.md" || vc_fail "README.md missing --skills-bundle option"
 vc_ok "skills bundle docs (README · cursor-platform · cursor-cloud)"
 
+grep -q "## 分发三轨" "$mc" || vc_fail "migration-catalog missing 分发三轨 section"
+grep -q "## 母版 verify 索引" "$mc" || vc_fail "migration-catalog missing 母版 verify 索引 section"
+grep -qF "verify-spike-mother-hygiene-scope" "$mc" || vc_fail "migration-catalog missing hygiene verifier"
+grep -qF "**hygiene**" "$ROOT/README.md" || vc_fail "README.md missing hygiene verify group"
+grep -qF "migration-catalog" "$ROOT/README.md" || vc_fail "README.md must link migration-catalog verify index"
+grep -qF "verify-spike-mother-hygiene-scope" "$ROOT/README.md" || vc_fail "README.md must mention verify-spike-mother-hygiene-scope"
+if grep -qF "11 道门禁" "$ROOT/README.md"; then
+  vc_fail "README.md still mentions obsolete 11 道门禁"
+fi
+grep -qF "verify-spike-mother-hygiene-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+  || vc_fail "verify-super-cursor must wire verify-spike-mother-hygiene-scope"
+vc_ok "mother hygiene facade (migration-catalog · README · verify wire)"
+
 tpl_07="$CUR/templates/project-docs/07_用户手册.md"
 tpl_08="$CUR/templates/project-docs/08_测试报告.md"
 learn_pc="$CUR/templates/cursorGrowth/learn/plan-conventions.md"

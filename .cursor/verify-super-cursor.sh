@@ -407,6 +407,9 @@ bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-spike-plugin-agents-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
 
+echo "=== mother repo hygiene ==="
+bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+
 echo "--- skills check dedupe ---"
 check_skill_checks_not_duplicated
 
