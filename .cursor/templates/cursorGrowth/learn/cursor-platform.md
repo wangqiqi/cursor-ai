@@ -18,6 +18,7 @@
 |----|------|
 | 退役 `.cursor/commands/` | TASK-004 · slash 与内容均以 skill 为 SSOT |
 | MCP / Cloud / Bugbot 模板 | `templates/cursorGrowth/` 可选复制，不随 install 默认注入 |
+| Bugbot 启用 | 复制 `BUGBOT.md` → `.cursor/BUGBOT.md`，`config/bugbot.yaml.example` → `.cursor/config/bugbot.yaml`（见 `templates/cursorGrowth/README.md`） |
 
 ## Monorepo 消费方
 

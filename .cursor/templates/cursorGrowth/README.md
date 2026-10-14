@@ -30,6 +30,18 @@
 | `learn/changelog-insights.md` | 近期变更摘要 |
 | `learn/last-sync.md` | `/learn` 同步元数据 |
 | `learn/acceptance.md` | （可选）delivery 验收路径 |
+| `learn/cursor-platform.md` | Cursor 官方配置面对齐摘要 |
+
+### Bugbot（可选 · 不进 `.cursorGrowth/`）
+
+PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：
+
+| 模板 | 复制到 |
+|------|--------|
+| `templates/cursorGrowth/BUGBOT.md` | `.cursor/BUGBOT.md` |
+| `templates/cursorGrowth/config/bugbot.yaml.example` | `.cursor/config/bugbot.yaml` |
+
+启用：Dashboard 连接仓库 · Automations 打开 Bugbot。本地 `REV-*` 仍用 **review** skill。
 
 种子：`.cursor/templates/cursorGrowth/` · **`/learn`** 在已有文件上增量更新
 
