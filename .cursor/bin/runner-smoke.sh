@@ -134,4 +134,58 @@ case "$rep" in
 esac
 rm -rf "$D"
 
+# run-stop：SPRINT_STATUS closed + 无待办 → 不再 followup（自治收尾死循环回归）
+mk_closed_autonomous_plan() {
+  local d
+  d="$(mktemp -d)"
+  mkdir -p "$d/.cursor" "$d/.cursorGrowth"
+  cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  echo "# t" > "$d/README.md"
+  {
+    echo '<!-- PLANNING: false -->'
+    echo '<!-- PLAN_APPROVED: 2026-10-15 user -->'
+    echo '<!-- AUTONOMOUS: true -->'
+    echo '<!-- SPRINT: SPRINT-01-textbooks -->'
+    echo '<!-- SPRINT_STATUS: closed -->'
+    echo '<!-- ACTIVE: (none) -->'
+    echo '<!-- NEXT: (none) -->'
+    echo '<!-- LAST_DONE: TASK-007 -->'
+    echo '**执行顺序**: `TASK-007`'
+    echo ''
+    echo '| ID | Task | Priority | Status | Acceptance | Target |'
+    echo '|----|------|----------|--------|------------|--------|'
+    echo '| TASK-007 | done | P0 | ✅ | bash -c true | src/ |'
+  } > "$d/.cursorGrowth/plan.md"
+  printf '%s' "$d"
+}
+
+D="$(mk_closed_autonomous_plan)"
+out="$( ( cd "$D" && printf '%s' '{"status":"completed","loop_count":0}' | bash .cursor/hooks/run-stop.sh ) )"
+[[ "$out" == "{}" ]] || { echo "FAIL: run-stop on closed sprint expected {}, got: $out"; rm -rf "$D"; exit 1; }
+echo "OK  run-stop silent when SPRINT_STATUS closed"
+rm -rf "$D"
+
+# closed + 无 PLAN_APPROVED（收尾后常见）→ 仍静默，勿 gate followup
+mk_closed_no_approval() {
+  local d
+  d="$(mktemp -d)"
+  mkdir -p "$d/.cursor" "$d/.cursorGrowth"
+  cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  echo "# t" > "$d/README.md"
+  {
+    echo '<!-- PLANNING: false -->'
+    echo '<!-- PLAN_APPROVED: (none) -->'
+    echo '<!-- AUTONOMOUS: true -->'
+    echo '<!-- SPRINT_STATUS: closed -->'
+    echo '<!-- ACTIVE: (none) -->'
+    echo '| TASK-007 | done | P0 | ✅ | bash -c true | src/ |'
+  } > "$d/.cursorGrowth/plan.md"
+  printf '%s' "$d"
+}
+D="$(mk_closed_no_approval)"
+out="$( ( cd "$D" && printf '%s' '{"status":"completed","loop_count":0}' | bash .cursor/hooks/run-stop.sh ) )"
+[[ "$out" == "{}" ]] || { echo "FAIL: run-stop closed without approval expected {}, got: $out"; rm -rf "$D"; exit 1; }
+echo "OK  run-stop silent when closed (no PLAN_APPROVED)"
+rm -rf "$D"
+
 echo "runner smoke passed."

@@ -42,6 +42,13 @@ if [[ "$loop_count" -ge "$max_loops" ]]; then
   exit 0
 fi
 
+# 已闭合且无待办：无自治链可跑，勿再 gate/收尾 followup（含 PLAN_APPROVED 已清回模板占位）
+pending="$(plan_pending_count)"
+if [[ "$(plan_sprint_status)" == "closed" && "$pending" -eq 0 ]]; then
+  echo "{}"
+  exit 0
+fi
+
 gate="$(plan_gate_ok || true)"
 if [[ "$gate" != "OK" ]]; then
   if [[ "$gate" == "NO_APPROVAL" ]]; then
@@ -58,7 +65,6 @@ if [[ -n "$active" ]]; then
   active_status="$(plan_task_status "$active")"
 fi
 
-pending="$(plan_pending_count)"
 roadmap_open="$(plan_roadmap_open)"
 
 if [[ "$active_status" == "🔧" || "$active_status" == "⬜" ]]; then

@@ -52,8 +52,9 @@ flowchart LR
 | plan 含 `\| ⚠️ \|` | 阻塞，回 plan |
 | ACTIVE `✅` 且仍有 pending | 链下一 ID |
 | pending = 0 | Sprint 收尾 verify/archive |
+| `SPRINT_STATUS: closed` 且 pending = 0 | **无 followup**（在 gate 之前退出；避免收尾后重复「sprint complete」或 `missing PLAN_APPROVED`） |
 
-**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。
+**注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。收尾须把 plan 写上 `<!-- SPRINT_STATUS: closed -->`，否则 `pending=0` 时仍会触发一次收尾 followup。
 
 ## 决策打断矩阵
 

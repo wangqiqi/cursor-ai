@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.21] - 2026-10-15
+
+### Fixed
+
+- **run-stop 自治死循环** — `SPRINT_STATUS: closed` 且 `pending=0` 时在 **gate 之前** 返回 `{}`：不再反复「sprint complete」，也不在收尾后 `PLAN_APPROVED` 清回 `(none)` 时每轮 `missing PLAN_APPROVED`（`runner-smoke` 回归）
+
 ## [4.29.20] - 2026-10-15
 
 ### Added
