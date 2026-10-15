@@ -37,17 +37,18 @@ if [[ ! -f "$PLAN" ]] || plan_planning || ! plan_autonomous; then
   exit 0
 fi
 
+# 已闭合且无待办：无自治链可跑（先于 MAX_LOOPS / gate，避免收尾后反复 followup）
+if plan_autonomous_chain_idle; then
+  echo "{}"
+  exit 0
+fi
+
 if [[ "$loop_count" -ge "$max_loops" ]]; then
   json_followup "run: MAX_LOOPS=${max_loops}. Review plan and continue manually."
   exit 0
 fi
 
-# 已闭合且无待办：无自治链可跑，勿再 gate/收尾 followup（含 PLAN_APPROVED 已清回模板占位）
 pending="$(plan_pending_count)"
-if [[ "$(plan_sprint_status)" == "closed" && "$pending" -eq 0 ]]; then
-  echo "{}"
-  exit 0
-fi
 
 gate="$(plan_gate_ok || true)"
 if [[ "$gate" != "OK" ]]; then

@@ -186,6 +186,24 @@ D="$(mk_closed_no_approval)"
 out="$( ( cd "$D" && printf '%s' '{"status":"completed","loop_count":0}' | bash .cursor/hooks/run-stop.sh ) )"
 [[ "$out" == "{}" ]] || { echo "FAIL: run-stop closed without approval expected {}, got: $out"; rm -rf "$D"; exit 1; }
 echo "OK  run-stop silent when closed (no PLAN_APPROVED)"
+out="$( ( cd "$D" && printf '%s' '{"conversation_id":"c1"}' | bash .cursor/hooks/run-start.sh ) )"
+case "$out" in
+  *"gate blocked"*|*"PLAN_APPROVED"*) echo "FAIL: run-start on closed idle must not gate-block: $out"; rm -rf "$D"; exit 1 ;;
+esac
+echo "OK  run-start silent on closed idle (no gate blocked)"
+out="$( ( cd "$D" && printf '%s' '{"status":"completed","loop_count":99}' | bash .cursor/hooks/run-stop.sh ) )"
+[[ "$out" == "{}" ]] || { echo "FAIL: run-stop closed at MAX_LOOPS expected {}, got: $out"; rm -rf "$D"; exit 1; }
+echo "OK  run-stop silent when closed (ignores MAX_LOOPS)"
+rm -rf "$D"
+
+# closed 但 ACTIVE 仍指向旧 ID → run-start 勿注入 Sprint 连跑
+D="$(mk_closed_autonomous_plan)"
+sed -i 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-007 -->/' "$D/.cursorGrowth/plan.md"
+out="$( ( cd "$D" && printf '%s' '{"conversation_id":"c1"}' | bash .cursor/hooks/run-start.sh ) )"
+case "$out" in
+  *"autonomous"*) echo "FAIL: run-start must not chain when closed idle: $out"; rm -rf "$D"; exit 1 ;;
+esac
+echo "OK  run-start no autonomous block when closed idle"
 rm -rf "$D"
 
 echo "runner smoke passed."

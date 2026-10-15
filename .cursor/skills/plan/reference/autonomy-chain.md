@@ -36,7 +36,7 @@ flowchart LR
 |------|------|----------------|
 | `gate-check` | `.cursor/bin/runner.sh` | `PLAN_APPROVED` + 非 `PLANNING` 才允许编码 |
 | `next-task` | 同上 | 按 **执行顺序** 解析下一 `⬜`；**跳过** `prefixes_skip`（SPIKE/REV/DOC） |
-| `run-start` | `.cursor/hooks/run-start.sh` | `sessionStart` 注入 Sprint/ACTIVE/人格 hint；`AUTONOMOUS` 时强调 **Sprint 连跑** |
+| `run-start` | `.cursor/hooks/run-start.sh` | `sessionStart` 注入 Sprint/ACTIVE/人格 hint；`AUTONOMOUS` 时强调 **Sprint 连跑**；`plan_autonomous_chain_idle` 时跳过 gate/连跑块 |
 | `run-stop` | `.cursor/hooks/run-stop.sh` | `status=completed` + `plan_autonomous` → `followup_message` 链下一 TASK |
 | `plan-parse` | `.cursor/hooks/lib/plan-parse.sh` | `plan_autonomous()` 读 HTML 注释 |
 | `json_followup` | `.cursor/hooks/lib/json-utils.sh` | 输出 `{"followup_message": "..."}` |
@@ -52,7 +52,7 @@ flowchart LR
 | plan 含 `\| ⚠️ \|` | 阻塞，回 plan |
 | ACTIVE `✅` 且仍有 pending | 链下一 ID |
 | pending = 0 | Sprint 收尾 verify/archive |
-| `SPRINT_STATUS: closed` 且 pending = 0 | **无 followup**（在 gate 之前退出；避免收尾后重复「sprint complete」或 `missing PLAN_APPROVED`） |
+| `plan_autonomous_chain_idle`（`closed` + pending = 0） | **run-stop**：无 followup（先于 MAX_LOOPS / gate）；**run-start**：不注入 gate blocked / Sprint 连跑 |
 
 **注意**：hook 只发 **followup 文案**；Agent 须在 **同一会话** 内继续执行，勿等用户再次 `/run`（除非决策打断）。收尾须把 plan 写上 `<!-- SPRINT_STATUS: closed -->`，否则 `pending=0` 时仍会触发一次收尾 followup。
 

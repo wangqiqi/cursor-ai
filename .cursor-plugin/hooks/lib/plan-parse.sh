@@ -139,6 +139,11 @@ plan_sprint_status() {
   plan_meta "SPRINT_STATUS"
 }
 
+# 自治 hook 无链可跑：元数据 closed 且任务表无 ⬜（run-stop / run-start 共用）
+plan_autonomous_chain_idle() {
+  [[ "$(plan_sprint_status)" == "closed" ]] && [[ "$(plan_pending_count)" -eq 0 ]]
+}
+
 # Sprint 是否已闭合（元数据或 ACTIVE 空且 LAST_DONE 有值）
 plan_sprint_appears_closed() {
   local active last status

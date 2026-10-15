@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.22] - 2026-10-15
+
+### Fixed
+
+- **自治 hook 收尾态** — `plan_autonomous_chain_idle()`（`closed` + 无 `⬜`）供 **run-stop** / **run-start** 共用：`run-stop` 先于 `MAX_LOOPS` 静默；`run-start` 不再对空壳 plan 注入 gate blocked 或 Sprint 连跑（`runner-smoke` 回归）
+
 ## [4.29.21] - 2026-10-15
 
 ### Fixed

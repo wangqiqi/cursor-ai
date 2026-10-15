@@ -88,6 +88,17 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
 PY
 }
 
+json_persona_only_context() {
+  local role_hint
+  role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
+  if [[ -n "$role_hint" ]]; then
+    json_additional_context "## session
+- **Persona hint**: ${role_hint}"
+  else
+    echo "{}"
+  fi
+}
+
 if [[ "$SC_HOOKS_ENABLED" != "true" || "$SC_WORKFLOW_ENABLED" != "true" ]]; then
   echo "{}"
   exit 0
@@ -148,6 +159,11 @@ if [[ "$planning" == "true" ]]; then
   exit 0
 fi
 
+if plan_autonomous_chain_idle; then
+  json_persona_only_context
+  exit 0
+fi
+
 if [[ "$gate" != "OK" ]]; then
   ctx="## run gate blocked (${gate})
 - Complete \`plan\` and set \`PLAN_APPROVED\`
@@ -170,13 +186,7 @@ if [[ "$autonomous" == "true" && -n "$active" ]]; then
   fi
   json_additional_context "$ctx"
 else
-  role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
-  if [[ -n "$role_hint" ]]; then
-    json_additional_context "## session
-- **Persona hint**: ${role_hint}"
-  else
-    echo "{}"
-  fi
+  json_persona_only_context
 fi
 
 exit 0
