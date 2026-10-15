@@ -198,7 +198,9 @@ rm -rf "$D"
 
 # closed 但 ACTIVE 仍指向旧 ID → run-start 勿注入 Sprint 连跑
 D="$(mk_closed_autonomous_plan)"
-sed -i 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-007 -->/' "$D/.cursorGrowth/plan.md"
+sed 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-007 -->/' \
+  "$D/.cursorGrowth/plan.md" > "$D/.cursorGrowth/plan.md.tmp"
+mv "$D/.cursorGrowth/plan.md.tmp" "$D/.cursorGrowth/plan.md"
 out="$( ( cd "$D" && printf '%s' '{"conversation_id":"c1"}' | bash .cursor/hooks/run-start.sh ) )"
 case "$out" in
   *"autonomous"*) echo "FAIL: run-start must not chain when closed idle: $out"; rm -rf "$D"; exit 1 ;;

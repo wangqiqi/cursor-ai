@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.23] - 2026-10-15
+
+### Fixed
+
+- **Windows CI** — `runner-smoke.sh` 误用 `sed -i`（Git Bash / BSD 需 `-i ''`），`verify-portability` 在 `windows-latest` 腿 FAIL；改为临时文件替换（与同脚本顶部 fixture 一致）
+
 ## [4.29.22] - 2026-10-15
 
 ### Fixed
