@@ -14,6 +14,7 @@ All notable changes to Super Cursor are documented here.
 
 - **CI / VitePress** — `sync-cursor-docs` 从 `adaptors/cursor/docs` 镜像 `cursor-cloud` · `plan-run`；`effective-collaboration` 站内链改为 `plan-run.md`
 - **CI / Windows** — `verify-doc` pack 根回退；`sc_copy_cursor_pack` 跳过 `core/rules/local`；`rsync -aL` / `cp -L` 避免 install 拷贝 symlink 失败；`runner-smoke` 用 `sc_stage_cursor_pack`（`link-cursor-ide` 不污染 stdout）
+- **install** — `rules/local` 相对路径按 `.cursor/rules` 是否为 symlink 分支（`harness/core/rules` 锚点用 4 层 `..`）；`link-cursor-ide` 重装可恢复目录副本；`bootstrap-growth` 修复错误链
 
 ## [5.0.3] - 2026-10-26
 

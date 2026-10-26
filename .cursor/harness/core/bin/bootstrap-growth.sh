@@ -27,11 +27,10 @@ if [[ -f "$GROWTH_TEMPLATE/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/loc
   cp "$GROWTH_TEMPLATE/rules/local/README.md" "$GROWTH_DIR/rules/local/README.md"
 fi
 
-if [[ -d "$ROOT/.cursor/harness/core/rules" ]]; then
-  CURSOR_LOCAL="$ROOT/.cursor/harness/core/rules/local"
+CURSOR_LOCAL="$ROOT/.cursor/rules/local"
+if [[ -L "$ROOT/.cursor/rules" ]]; then
   LOCAL_REL="../../../../.growing/rules/local"
 else
-  CURSOR_LOCAL="$ROOT/.cursor/rules/local"
   LOCAL_REL="../../.growing/rules/local"
 fi
 # Repair mistaken plain-file pointer (must be symlink or directory)
@@ -48,9 +47,9 @@ if [[ -d "$GROWTH_DIR/rules/local" ]]; then
         || cp -f "$GROWTH_TEMPLATE/rules/local/README.md" "$CURSOR_LOCAL/README.md"
       echo "OK  rules/local directory (symlink unavailable)"
     fi
-  elif [[ -L "$CURSOR_LOCAL" && ! -e "$CURSOR_LOCAL" ]]; then
+  elif [[ -L "$CURSOR_LOCAL" ]] && { [[ ! -e "$CURSOR_LOCAL" ]] || [[ "$(readlink "$CURSOR_LOCAL" 2>/dev/null)" != "$LOCAL_REL" ]]; }; then
     rm -f "$CURSOR_LOCAL"
-    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+    if ln -sf "$LOCAL_REL" "$CURSOR_LOCAL" 2>/dev/null; then
       echo "Repaired .cursor/rules/local symlink"
     else
       mkdir -p "$CURSOR_LOCAL"

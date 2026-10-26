@@ -288,7 +288,7 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
 fi
 if [[ -d "$SOURCE/.cursor/harness/core" ]]; then
   sc_copy_cursor_pack "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
-  bash "$SOURCE/.cursor/harness/link-cursor-ide.sh" "$TARGET/.cursor"
+  bash "$SOURCE/.cursor/harness/link-cursor-ide.sh" "$TARGET/.cursor" >/dev/null
 else
   sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 fi
@@ -389,11 +389,11 @@ if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan
 fi
 
 # Symlink rules/local → .growing/rules/local (Cursor glob 加载)
-if [[ -d "$TARGET/.cursor/harness/core/rules" ]]; then
-  CURSOR_LOCAL="$TARGET/.cursor/harness/core/rules/local"
+CURSOR_LOCAL="$TARGET/.cursor/rules/local"
+# .cursor/rules → harness/core/rules 时，symlink 落在 core/rules/，相对路径锚点不同
+if [[ -L "$TARGET/.cursor/rules" ]]; then
   LOCAL_REL="../../../../.growing/rules/local"
 else
-  CURSOR_LOCAL="$TARGET/.cursor/rules/local"
   LOCAL_REL="../../.growing/rules/local"
 fi
 if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
