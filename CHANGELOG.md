@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.5] - 2026-10-26
+
 ### Added
 
 - **growth-meta-ci-dual** — `skills/plan/reference/growth-meta-ci-dual.md`：git SSOT vs `.growing/archive/meta` 双轨 · `sc_growth_archive_available` SKIP/FAIL · verify 脚本索引（`migration-catalog`）
@@ -20,9 +22,13 @@ All notable changes to Super Cursor are documented here.
 - **adaptors** — 四份占位 README 对齐契约 v1（`adaptor-contract:v1` 标记）
 - **harness** — `README.md` · `harness-ide-matrix.md` 链到契约；`migration-catalog` · `verify.mdc` 索引更新
 - **adaptors/dsh** — `docs/layout.md` · README **implemented（core install）**；`config/README.md` adaptor 安装表
-- **platform** — `sc_apply_skills_bundle` 支持第三参数 pack 根（`.dsh`）
+- **platform** — `sc_apply_skills_bundle` 支持第三参数 pack 根（`.dsh` · `.opencode`）
 - **adaptors/kiro · trae** — rules 导出至 `.kiro/` / `.trae/`；`install-super-cursor --adaptor kiro|trae`
 - **adaptors/opencode** — core 安装至 `.opencode/`；`--adaptor opencode`
+
+### 主题（adaptor · meta 双轨）
+
+- **SPRINT-ADAPTOR-CONTRACT** · **SPRINT-SPIKE-CI-DUAL** · **SPRINT-ADAPTOR-DSH** · **SPRINT-ADAPTOR-KIRO-TRAE** · **SPRINT-ADAPTOR-OPENCODE**
 
 ## [5.0.4] - 2026-10-26
 
