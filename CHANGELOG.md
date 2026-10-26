@@ -16,6 +16,12 @@ All notable changes to Super Cursor are documented here.
 - **verify-portability** — 禁止 `mapfile`；`cursor-coherence` 禁止 `< <(`；SSOT 回归自检
 - **文档** — `platforms.md` 补充 mapfile / coherence / packaged rules 表；`verify.mdc` CI 矩阵与三平台阻塞一致
 
+### 主题（SPRINT-CI-ROBUST）
+
+- **CI** — Super Cursor Verify 三平台 success（`b2a6d6a` / run `40266427099`）；push 前 `ci-preflight.sh` 对齐 Actions 矩阵
+- **install / harness** — 分区拷贝 · Windows 门面实体化冒烟 · packaged rules SSOT · 跨平台 portability 门禁
+- **任务** — TASK-001 … TASK-008
+
 ### Fixed
 
 - **CI / VitePress** — `sync-cursor-docs` 从 `adaptors/cursor/docs` 镜像 `cursor-cloud` · `plan-run`；`effective-collaboration` 站内链改为 `plan-run.md`
