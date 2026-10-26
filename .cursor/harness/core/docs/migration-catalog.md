@@ -84,6 +84,23 @@
 
 Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md`）。**未来上架清单**（manifest 扩展 · 提交前门禁）→ `archive/meta/*_SPIKE_marketplace_prep_scope.md` · `bash .cursor/bin/verify-spike-marketplace-prep-scope.sh`。Plugin 与 `core` install **文件树不等价** — 仅文档矩阵对齐。
 
+## Growth meta 归档门禁（`lib/growth-archive.sh`）
+
+语义 SSOT → `skills/plan/reference/growth-meta-ci-dual.md`（`archive/meta` 未引导 → **SKIP**；已引导但缺文件 → **FAIL**）。
+
+| 脚本 | 位置 |
+|------|------|
+| `verify-spike-docs-sync-scope` | `harness/core/bin` |
+| `verify-spike-marketplace-prep-scope` | `harness/core/bin` |
+| `verify-spike-tools-skills-archive` | `harness/core/bin` |
+| `verify-spike-skills-bundle-scope` | `harness/core/bin` |
+| `verify-spike-onekey-bootstrap-scope` | `harness/core/bin` |
+| `verify-spike-mother-hygiene-scope` | `harness/core/bin` |
+| `verify-cursor-platform-contract` | `adaptors/cursor/bin` |
+| `verify-spike-plugin-mvp-scope` | `adaptors/cursor/bin` |
+| `verify-spike-plugin-agents-scope` | `adaptors/cursor/bin` |
+| `verify-spike-plugin-phase2-scope` | `adaptors/cursor/bin` |
+
 ## 母版 verify 索引（`bin/verify-*.sh`）
 
 聚合入口：`bash .cursor/verify-super-cursor.sh`（含接线自检：每个 `bin/verify-*.sh` 须被本脚本或 `template-verify.sh` 调用）。母版 CI：`bash .cursor/template-verify.sh`（先 `harness/link-cursor-ide.sh`）。分区：`verify-harness-layout.sh`（`.cursor/harness/core` + `adaptors`）。
