@@ -27,6 +27,7 @@ Super Cursor 的目标不是「让 Agent 说得更短」，而是 **更快、沿
 | **项目认知沉淀** | 新会话重复解释结构 | `/learn` → `.cursorGrowth/learn/` |
 | **探索与执行分离** | 主会话被检索日志淹没 | explore / spike 子 agent |
 | **可验证才 commit** | 隐性返工 | `verify` · **delivery**（发版前） |
+| **project-profile + adapt** | 误用他栈命令 · verify 全量噪音 | `.cursorGrowth/project-profile.json` · `scaffold adapt --write` · [tech-stacks.md §控制面](tech-stacks.md) |
 
 ## 日常习惯（与母版正交）
 

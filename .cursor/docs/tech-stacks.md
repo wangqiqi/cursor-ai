@@ -92,6 +92,22 @@ CLI：
 
 母版自检仍用 `bash .cursor/bin/template-verify.sh`（与业务 verify 分层无关）。
 
+## 控制面 · profile 与 token（诚实矩阵）
+
+**用这个**：判断「adapt / profile 能帮到哪」；**不是那个**：以为 install 会瘦包、或 profile 会自动卸载 Cursor 里的 rules/skills 文件。
+
+| 控制面 | profile / adapt 已管什么 | 仍靠 Cursor / 习惯 | 对 LLM token 的典型影响 |
+|--------|--------------------------|--------------------|-------------------------|
+| **Verify 执行** | `enabled_tiers` · manifest `stacks` 列过滤 | 业务 `scripts/verify.sh` 内容 | 间接（少跑无关 slice → 少贴日志） |
+| **Hooks** | `run-start` 一行 profile（primary · tiers · slices 计数） | `lite` profile 关 hooks | 小（固定注入） |
+| **`learn/dev-conventions`** | `adapt --write` 同步 `SC_PROFILE_SYNC` 段 + DAILY/LIBRARY 建议 | 人工段仍由 `/learn` 维护 | 中（新会话少重复讲栈） |
+| **`rules/tech/*.mdc`** | SSOT 声明 `tech_rules.mode=globs-only`；同步段列出 DAILY/LIBRARY **建议** | **glob** 按编辑文件注入；离栈 rule 不会自动卸盘 | 中（glob 已省无关栈；习惯上勿 `@` 离栈 rule） |
+| **Skills** | 同步段提示 LIBRARY skill；`disable-model-invocation` 生命周期类不自动加载 | 28 skills 仍在盘；意图命中仍可读 skill | 中（少误载 perf/mcp 等） |
+| **AlwaysApply rules** | 无（母版固定 4 条） | `core` · `workflow` · `cursor-standalone` · `persona` | 固定税 · 勿压缩 |
+| **安装包体积** | **无** — 始终整包 `.cursor/` | `--skills-bundle core` 仅少 5 个 skill 文件 | 略 |
+
+Token 总成本与「少拉扯」→ [effective-collaboration.md](effective-collaboration.md)（含 `project-profile` 交叉引用）。
+
 ## 脚手架 manifest（绿地模板）
 
 `scaffold.sh list` · `.cursor/templates/scaffold/manifest.json` 现含 7 栈：`react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `cpp-cmake`。
