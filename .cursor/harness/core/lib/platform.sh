@@ -251,6 +251,21 @@ PY
   done <<< "$out"
 }
 
+# Stage full .cursor pack into a temp project (runner-smoke · 与 install 同路径).
+sc_stage_cursor_pack() {
+  local src_pack="$1" dest_cursor="$2"
+  mkdir -p "$dest_cursor"
+  if [[ -d "$src_pack/harness/core" ]]; then
+    sc_copy_cursor_pack "$src_pack" "$dest_cursor" "hooks/state/*"
+    local link_sh="$src_pack/harness/link-cursor-ide.sh"
+    if [[ -f "$link_sh" ]]; then
+      bash "$link_sh" "$dest_cursor" >/dev/null
+    fi
+  else
+    sc_copy_tree "$src_pack" "$dest_cursor" "hooks/state/*"
+  fi
+}
+
 # Copy partition-pack .cursor/ (harness + adaptors) without recreating IDE symlinks at pack root.
 # Windows Git Bash: cp -a/rsync -a on a tree full of symlinks often errors; link-cursor-ide.sh rebuilds links.
 sc_copy_cursor_pack() {

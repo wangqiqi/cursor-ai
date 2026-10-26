@@ -4,6 +4,8 @@ set -euo pipefail
 
 CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CURSOR_DIR/.." && pwd)"
+# shellcheck source=../lib/platform.sh
+source "$CURSOR_DIR/lib/platform.sh"
 # shellcheck source=../lib/temp-cleanup.sh
 source "$CURSOR_DIR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
@@ -69,7 +71,7 @@ mk_plan_project() {
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.growing"
-  cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  sc_stage_cursor_pack "$CURSOR_DIR" "$d/.cursor"
   echo "# t" > "$d/README.md"
   {
     echo '<!-- PLANNING: false -->'
@@ -166,7 +168,7 @@ mk_closed_autonomous_plan() {
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.growing"
-  cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  sc_stage_cursor_pack "$CURSOR_DIR" "$d/.cursor"
   echo "# t" > "$d/README.md"
   {
     echo '<!-- PLANNING: false -->'
@@ -198,7 +200,7 @@ mk_closed_no_approval() {
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.growing"
-  cp -a "$CURSOR_DIR/." "$d/.cursor/"
+  sc_stage_cursor_pack "$CURSOR_DIR" "$d/.cursor"
   echo "# t" > "$d/README.md"
   {
     echo '<!-- PLANNING: false -->'
