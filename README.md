@@ -39,11 +39,11 @@
 .cursor/
 ├── harness/    母版 SSOT：core/（rules · skills · bin · config · templates · docs）+ link-cursor-ide.sh
 ├── adaptors/   cursor/（hooks · cursor-only verify）· dsh/kiro/… 占位
-├── template-verify.sh   母版 CI 入口（内部先 assemble）
-└── （assemble 后平铺）skills/ · rules/ · hooks/ · bin/ … — 与 install 到目标项目的形态一致；母版 gitignore
+├── template-verify.sh   母版 CI 入口（内部先 `link-cursor-ide.sh`，无平铺复制）
+└── （symlink 协议路径）skills/ · rules/ · hooks/ · bin/ … — 指向 harness/core + adaptors；**install 后**目标项目为拷贝平铺树
 ```
 
-assemble 后 `skills/` 目录 **28 个** skill（`--skills-bundle core` 为 23 个）；计数由 `verify-doc-super-cursor` 与磁盘对齐。
+协议路径下 `skills/` 目录 **28 个** skill（`--skills-bundle core` 为 23 个）；计数由 `verify-doc-super-cursor` 与磁盘对齐。
 
 **根目录（可直接 clone / 复制）：**
 
@@ -318,7 +318,7 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 ```bash
 bash .cursor/harness/link-cursor-ide.sh      # 母版：补齐 IDE 协议 symlink（非复制）；template-verify 也会调
 bash .cursor/template-verify.sh                # 母版完整自测（CI）
-bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（需先 assemble）
+bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（缺链时先 link-cursor-ide）
 bash .cursor/bin/consumer-smoke.sh             # 目标项目端到端
 bash .cursor/bin/cursor-coherence.sh
 ```

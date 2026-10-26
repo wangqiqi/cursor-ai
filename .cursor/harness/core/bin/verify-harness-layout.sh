@@ -25,8 +25,8 @@ source "$CUR/lib/verify-common.sh" "verify-harness-layout"
 
 echo "=== verify-harness-layout ==="
 
-[[ -f "$HARNESS/README.md" ]] && grep -q 'assemble' "$HARNESS/README.md" \
-  && vc_ok "harness/README.md" || vc_fail "harness/README.md missing or no assemble section"
+[[ -f "$HARNESS/README.md" ]] && grep -q 'link-cursor-ide' "$HARNESS/README.md" \
+  && vc_ok "harness/README.md" || vc_fail "harness/README.md missing or no link-cursor-ide section"
 [[ -f "$MANIFEST" ]] && vc_ok "layout-manifest.json" || vc_fail "missing $MANIFEST"
 [[ -f "$HARNESS/assemble.sh" ]] && vc_ok "harness/assemble.sh present" || vc_fail "harness/assemble.sh missing"
 

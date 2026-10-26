@@ -4,7 +4,7 @@
 
 ## Harness Core × Cursor × 换 IDE
 
-母版 **编辑真源**：`.cursor/harness/core/` + `.cursor/adaptors/`；`install` / IDE 使用的平铺 `.cursor/skills` 等由 **`assemble`** 生成（消费方仓库通常只有平铺树）。
+母版 **编辑真源**：`.cursor/harness/core/` + `.cursor/adaptors/`；根下 `.cursor/skills` 等为 **`link-cursor-ide.sh` 相对 symlink**（非平铺复制）。**install** 到目标项目后为消费者可见的平铺树。
 
 | 层 | 是什么 | 换 IDE 时 |
 |----|--------|-----------|

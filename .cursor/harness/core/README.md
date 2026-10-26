@@ -9,9 +9,9 @@
 | `harness/core/` | rules · skills · agents · config · bin[core] · lib · templates · docs |
 | `adaptors/cursor/` | hooks · hooks.json · cursor-only verify/docs |
 | `adaptors/{dsh,…}/` | 其它 IDE 占位 |
-| `template-verify.sh` | 母版 CI 入口（先 assemble） |
+| `template-verify.sh` | 母版 CI 入口（先 `link-cursor-ide.sh`） |
 
-平铺树（assemble / **install 后**；消费方仅见此形态）：
+协议路径（**symlink** / **install 后**平铺；消费方 install 后通常仅见平铺树）：
 
 | 始终加载（4） | `rules/core.mdc` · `rules/workflow.mdc` · `rules/communication/cursor-standalone.mdc` · `rules/communication/super-cursor-persona.mdc` |
 | 按需 | skills · glob rules · `learn/` |

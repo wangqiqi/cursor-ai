@@ -7,7 +7,7 @@ CUR="$PACK"
 cd "$ROOT"
 
 if [[ ! -f "$CUR/bin/runner.sh" ]]; then
-  echo "FAIL: run .cursor/template-verify.sh or harness/assemble.sh first" >&2
+  echo "FAIL: run .cursor/template-verify.sh or .cursor/harness/link-cursor-ide.sh first" >&2
   exit 1
 fi
 

@@ -12,10 +12,10 @@ never in the shared template.
 
 ```text
 .cursor/
-├── harness/     mother SSOT: core/ + assemble.sh
+├── harness/     mother SSOT: core/ + link-cursor-ide.sh
 ├── adaptors/    cursor/ (hooks) · other IDE placeholders
-├── template-verify.sh   CI entry (assembles flat tree first)
-└── (after assemble) skills/ · rules/ · hooks/ · bin/ … — same shape as install target; gitignored on mother repo
+├── template-verify.sh   CI entry (runs link-cursor-ide first; no flat copy)
+└── (symlink protocol) skills/ · rules/ · hooks/ · bin/ … — point at core/adaptors; install target gets a copied flat tree
 ```
 
 ## Install into any project
@@ -53,7 +53,7 @@ Lost? `/master` routes you via a ≤7-item menu. Everything else is auto-selecte
 The template ships its own gates, and they are wired into CI:
 
 ```bash
-bash .cursor/harness/assemble.sh        # mother: flat tree for IDE (optional if using template-verify)
+bash .cursor/harness/link-cursor-ide.sh # mother: IDE protocol symlinks (template-verify also runs this)
 bash .cursor/template-verify.sh         # mother repo, full suite (CI)
 bash .cursor/bin/consumer-smoke.sh
 bash .cursor/verify-super-cursor.sh

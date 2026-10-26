@@ -96,7 +96,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 | **mother** | 纯母版空仓；或 `SC_VERIFY_LAYOUT=mother` | **必须**满足 |
 | **hybrid** | 根目录有 `scripts/` · `backend/` · `frontend/` 等业务树（自动）；或 `SC_VERIFY_LAYOUT=hybrid` | **SKIP**；改验 `scripts/verify.sh` 存在 |
 
-混合仓日常：**`cursor-coherence.sh`** + **`verify-super-cursor.sh`**；纯母版空仓：**`bash .cursor/template-verify.sh`**（先 assemble）。母版 SSOT → `harness/README.md` · 根 `README.md` §验证。
+混合仓日常：**`cursor-coherence.sh`** + **`verify-super-cursor.sh`**；纯母版空仓：**`bash .cursor/template-verify.sh`**（先 `harness/link-cursor-ide.sh`）。母版 SSOT → `harness/README.md` · 根 `README.md` §验证。
 
 **L0–L3 真源在本文件**；**test** skill 只引用本表，勿另写一份层定义。测试文件细则 → `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。
 
