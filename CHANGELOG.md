@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.25] - 2026-10-26
+
 ### Added
 
 - **docs** — `consumer-refresh.md`（消费方 `--replace` 升级 · 自检 · 排除嵌套 vendor `.cursor`）
