@@ -8,7 +8,7 @@
 4. **Growth boundary** — project learnings in `.cursorGrowth/` only; use `/learn`（见下节「产出 ≠ 母版引用」）。
 5. **Token** — `alwaysApply: true` 只有 **4** 个文件（`core.mdc` · `workflow.mdc` · `communication/cursor-standalone.mdc` · `communication/super-cursor-persona.mdc`）；其余按 glob/描述触发，细则在 skills。改这里要知会 README/AGENTS.md 的常驻数量说明。
 6. **Immutable after install（仅目标项目）** — 母版仓库可自由演进 `.cursor/`；安装到目标项目后 Agent 不得改 `.cursor/**` 除非用户明确授权（见 **cursor-standalone**）。
-7. **Cross-platform** — scripts target Linux · macOS · Git Bash; shared helpers in `.cursor/lib/platform.sh`；静态守护 `verify-portability.sh`（GNU-only · 非 POSIX `\s` · 硬编码 `python3` · shebang）。**技能**的平台作用域另记于 `docs/platforms.md` §技能平台作用域，且与代码双向断言。
+7. **Cross-platform** — scripts target Linux · macOS · Git Bash; shared helpers in `.cursor/lib/platform.sh`；静态守护 `verify-portability.sh`（GNU-only · 非 POSIX `\s` · 硬编码 `python3` · shebang · **reserved bash names** · **xargs -I{}**）。**技能**的平台作用域另记于 `docs/platforms.md` §技能平台作用域；Shell 数组命名见 §Shell 命名与 verify 并行。
 
 不确定从哪开始 → **`/master`**（AskQuestion 路由；无该工具时正文编号选项，见 master「AskQuestion 约定」）。
 

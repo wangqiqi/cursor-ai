@@ -346,4 +346,8 @@ esac
 echo "OK  project-profile manifest stacks filter"
 rm -rf "$PD"
 
+bash "$CURSOR_DIR/bin/verify-portability.sh" >/dev/null \
+  && echo "OK  verify-portability clean" \
+  || { echo "FAIL: verify-portability"; exit 1; }
+
 echo "runner smoke passed."

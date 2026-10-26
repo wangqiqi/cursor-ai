@@ -8,6 +8,8 @@
 #   3. `readlink -f` 无同层回退
 #   4. 硬编码 `python3` 调用（Git Bash 可能只有 `python`）→ 应经 $PYTHON_BIN / sc_python
 #   5. shebang 必须 `#!/usr/bin/env bash`
+#   6. 勿复用 Bash 内置数组名（BASH_CMDS · FUNCNAME · GROUPS 等）
+#   7. 勿用 xargs -I{} + bash -c … {}（多词 command 被拆碎）
 #
 # 自检脚本本身把模式当**数据**用，故排除；`lib/platform.sh` 是解析器，允许 `command -v python3`。
 set -euo pipefail
@@ -29,6 +31,23 @@ cur = Path(sys.argv[2])
 
 # 检查器把模式当数据用，排除自身
 SELF = {"verify-portability.sh", "verify-super-cursor.sh"}
+
+RESERVED_BASH_NAMES = (
+    "BASH_CMDS",
+    "BASH_ARGV",
+    "BASH_ARGC",
+    "BASH_ALIASES",
+    "FUNCNAME",
+    "GROUPS",
+    "PIPESTATUS",
+    "DIRSTACK",
+)
+RESERVED_BASH_RE = re.compile(
+    r"(?<![.\w-])(?:local\s+)?(?:"
+    + "|".join(RESERVED_BASH_NAMES)
+    + r")\s*\+?="
+)
+XARGS_I_BASH_C_RE = re.compile(r"xargs\b.*-I\s*\{\}.*bash\s+-c.*\{\}")
 
 files = []
 files += sorted(p for p in cur.rglob("*.sh") if p.name not in SELF)
@@ -114,6 +133,23 @@ for path in files:
                 )
         if PYTHON3_RE.search(code):
             fails.append(f"{rel}:{i} hardcoded python3 call (use $PYTHON_BIN / sc_python)")
+        if RESERVED_BASH_RE.search(code):
+            fails.append(
+                f"{rel}:{i} reserved bash variable/array name (e.g. BASH_CMDS); "
+                f"use a project prefix like MANIFEST_BASH_CMDS"
+            )
+        if XARGS_I_BASH_C_RE.search(code):
+            fails.append(
+                f"{rel}:{i} xargs -I{{}} with bash -c … {{}} splits multi-word commands; "
+                f"use xargs -0 -n 1 (or portability-allow: xargs-I)"
+            )
+
+# --- linter self-test (must fail on deliberate bad samples) ---
+if not RESERVED_BASH_RE.search("BASH_CMDS+=('x')"):
+    fails.append("selftest: RESERVED_BASH_RE did not match BASH_CMDS+=")
+_bad_xargs = "printf '%s\\0' \"$@\" | xargs -0 -P 4 -I{} bash -c 'run_one \"$1\"' _ {}"
+if not XARGS_I_BASH_C_RE.search(_bad_xargs):
+    fails.append("selftest: XARGS_I_BASH_C_RE did not match fragile parallel idiom")
 
 # --- 行尾策略：Windows autocrlf=true 会把 *.sh 变 CRLF → 脚本秒退 ---
 if (root / "install-super-cursor.sh").is_file():

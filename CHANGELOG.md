@@ -7,20 +7,21 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **verify profile filter** — `manifest.tsv` 可选 `stacks` 列；`run-manifest-tier.sh` 读 `project-profile` 过滤行 · tier 门禁 · `VERIFY_IGNORE_PROFILE=1`
-
-### Fixed
-
-- **run-manifest-tier** — 勿用变量名 `BASH_CMDS`（与 bash 内置冲突致 `[verify] manifest:` 为空）；并行改用 `xargs -n 1`
 - **project-profile** — `.cursorGrowth/project-profile.json` Schema · example · `lib/project-profile.sh`；`scaffold adapt`（探测栈 · `--write` · `--primary=`）
 - **docs** — `tech-stacks.md`（整包安装 · 按需启用 · 绿地/棕地 · verify 阶段）
 - **hooks** — `run-start` 注入 Project profile 一行（primary/detected）
 
 ### Changed
 
+- **verify-portability** — FAIL on reserved bash array names (`BASH_CMDS` · `FUNCNAME` · `GROUPS` 等) and fragile `xargs -I{}` + `bash -c … {}`; docs `platforms.md` §Shell 命名
 - **consumer-refresh** · **quickstart** · **dev-conventions** 模板 — 升级后 `scaffold adapt` 与 profile ↔ learn 对齐
 - **install** — 安装完成提示棕地 `adapt --write`
 - **growth-init** — 种子 `project-profile.example.json` / schema
 - **adapt** — `--write` 保留已有 `verify.enabled_tiers` / `enabled_slices`
+
+### Fixed
+
+- **run-manifest-tier** — 勿用变量名 `BASH_CMDS`（与 bash 内置冲突致 `[verify] manifest:` 为空）；并行改用 `xargs -n 1`
 
 ## [4.29.25] - 2026-10-26
 

@@ -35,6 +35,16 @@ bash .cursor/bin/platform-check.sh
 
 约束：**技能若含 `require_linux`，必须在本表登记**。由 `bash .cursor/bin/verify-portability.sh` 断言（文档声明 ⇔ 代码实际），避免"README 说三平台、技能却只跑 Linux"这类漂移。
 
+## Shell 命名与 verify 并行
+
+| 规则 | 说明 |
+|------|------|
+| **勿用 Bash 内置数组名** | 如 `BASH_CMDS` · `FUNCNAME` · `GROUPS` · `PIPESTATUS` — 赋值/`+=` 会与内置冲突（曾导致 `[verify] manifest:` 为空）。用项目前缀，例：`MANIFEST_BASH_CMDS`。 |
+| **门禁** | `bash .cursor/bin/verify-portability.sh` 对母版 `*.sh` **FAIL** 命中上述名字。 |
+| **manifest 并行** | `run-manifest-tier.sh` 用 `xargs -0 -n 1` 传整条 command；勿 `xargs -I{} bash -c … {}`（除非行内 `portability-allow: xargs-I`）。 |
+
+verify-layers 细节 → bundle 内 `README-verify-layers.md`。
+
 ## Cursor Cloud · MCP
 
 可选 **`.cursor/mcp.json`** · **`.cursor/environment.json`** 模板与复制说明 → **`cursor-cloud.md`**。密钥走 Dashboard / `${env:…}`，勿写入母版模板。
