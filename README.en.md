@@ -31,8 +31,11 @@ SUPER_CURSOR_HOME=$PWD ./install-super-cursor.sh --setup-shell
 | Option | Effect |
 |--------|--------|
 | `--profile full\|lite\|rules-only` | `full` (default, hooks on) · `lite` (no hooks) · `rules-only` (no gate) |
+| `--skills-bundle full\|core` | `full` (28 skills) · `core` (23; no five tool skills) |
 | `--replace` | delete the target `.cursor/` first (recommended for upgrades) |
 | `--copy-plan` | seed `.growing/plan.md` |
+
+**Scaffolds**: 8 stacks (`react-vite-ts` … `java-gradle` · `cpp-cmake`) — `./.cursor/bin/scaffold.sh list`.
 
 Supported on **Linux · macOS · Windows (Git Bash)**. No `rsync` → `cp -a`; no `jq` → `python`
 (forced with `SC_FORCE_PYTHON=1`, which CI exercises). Per-skill platform scope is documented
@@ -55,6 +58,7 @@ The template ships its own gates, and they are wired into CI:
 ```bash
 bash .cursor/harness/link-cursor-ide.sh # mother: IDE protocol symlinks (template-verify also runs this)
 bash .cursor/template-verify.sh         # mother repo, full suite (CI)
+bash .cursor/bin/ci-preflight.sh        # before push: CI matrix legs + docs build
 bash .cursor/bin/consumer-smoke.sh
 bash .cursor/verify-super-cursor.sh
 bash .cursor/bin/cursor-coherence.sh

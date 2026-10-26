@@ -284,6 +284,48 @@ print("OK  relative links in .cursor/docs (%d files)" % len(list(docs_root.rglob
 sys.exit(0)
 PY
 
+# --- README facade: version badge + scaffold count vs CHANGELOG / manifest ---
+changelog_ver="$(grep -m1 -E '^## \[[0-9]+\.[0-9]+\.[0-9]+\]' "$ROOT/CHANGELOG.md" | sed -E 's/^## \[([0-9]+\.[0-9]+\.[0-9]+)\].*/\1/' || true)"
+if [[ -z "$changelog_ver" ]]; then
+  vc_fail "CHANGELOG.md missing released version header"
+elif grep -q "version-${changelog_ver}" "$ROOT/README.md" 2>/dev/null \
+  || grep -q "version-${changelog_ver//./-}" "$ROOT/README.md" 2>/dev/null; then
+  vc_ok "README version badge matches CHANGELOG ($changelog_ver)"
+else
+  vc_fail "README version badge must match latest CHANGELOG ($changelog_ver)"
+fi
+
+manifest_stacks=""
+_py_manifest="$(vc_python 2>/dev/null || true)"
+if [[ -n "$_py_manifest" ]]; then
+  manifest_stacks="$("$_py_manifest" - "$ROOT" <<'PY'
+import json, sys
+from pathlib import Path
+m = Path(sys.argv[1]) / ".cursor/templates/scaffold/manifest.json"
+data = json.loads(m.read_text(encoding="utf-8"))
+ids = [s["id"] for s in data.get("scaffolds", []) if isinstance(s, dict) and s.get("id")]
+print(len(ids))
+PY
+)"
+fi
+unset _py_manifest
+if [[ -z "$manifest_stacks" || "$manifest_stacks" -lt 1 ]]; then
+  vc_fail "could not read scaffold manifest stack count"
+elif grep -qE "scaffolds-${manifest_stacks}%20stacks" "$ROOT/README.md" 2>/dev/null; then
+  vc_ok "README scaffold badge matches manifest ($manifest_stacks stacks)"
+else
+  vc_fail "README scaffold badge must be ${manifest_stacks} stacks (manifest.json)"
+fi
+
+for stale in "7 栈" "7 stacks" "scaffolds-7%20stacks"; do
+  if grep -qF "$stale" "$ROOT/README.md" \
+    || grep -qF "$stale" "$CUR/docs/quickstart.md" \
+    || grep -qF "$stale" "$CUR/docs/training/skills.md" 2>/dev/null; then
+    vc_fail "stale scaffold count ($stale) in README or .cursor/docs facade"
+  fi
+done
+vc_ok "facade docs use current scaffold count (no 7-stack drift)"
+
 # --- v5: runtime dir SSOT is .growing (legacy path only in install + CHANGELOG Breaking) ---
 if git -C "$ROOT" grep -rnE '\.cursorGrowth|templates/cursorGrowth' -- . \
   ':(exclude)install-super-cursor.sh' \

@@ -24,6 +24,7 @@
   go-api/
   rust-axum/
   python-fastapi/
+  java-gradle/
   cpp-cmake/
 ```
 

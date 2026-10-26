@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **doc-facade（SPRINT-DOC-FACADE）** — README 徽章 5.0.5 · 8 stacks · `java-gradle`；§验证对齐 `migration-catalog` + `ci-preflight`；`.cursor/docs` quickstart/training/scaffold；`docs/index.md`；`README.en.md`；`verify-doc-super-cursor` 防版本/7 栈回退
+
 ## [5.0.5] - 2026-10-26
 
 ### Added

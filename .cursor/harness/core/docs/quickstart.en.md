@@ -50,7 +50,7 @@ bash .cursor/bin/platform-check.sh       # environment self-check
 
 | Want to… | Use |
 |----------|-----|
-| start an empty repository | `/scaffold` (7 stacks: React/Vue/Next · Go/Rust/FastAPI · C++) |
+| start an empty repository | `/scaffold` (8 stacks: React/Vue/Next · Go/Rust/Java · Python · C++; see `scaffold.sh list`) |
 | run a long multi-Sprint epic | `/long` |
 | verify before shipping | `/delivery` (7 dimensions) · `/report` (test report) |
 | write a user manual | `/manual` |

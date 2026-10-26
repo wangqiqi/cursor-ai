@@ -20,7 +20,7 @@
 | **plan** | `/plan` · 拆任务 | Sprint · SDD · **AUTONOMOUS 一次 `/run` 连跑** | 写业务代码 |
 | **review** | REV-* · PR 回顾 | Standards/Spec 双轴 · SDD analyze · review agent | 写代码 |
 | **learn** | `/learn` | Growth `learn/` | 改 `.cursor/` |
-| **scaffold** | `/scaffold` | 7 栈骨架 · audit | 未确认覆盖 |
+| **scaffold** | `/scaffold` | 8 栈骨架 · audit | 未确认覆盖 |
 | **git** | commit/push · GitHub 运维 | 提交清单 · **github-ops**（`gh` 有则用） | force-push |
 | **release** | `/release` · merge/PR/打版 | §分支 · §semver/tag · CHANGELOG | 跳过 verify |
 | **security** | 审查 · 支付/webhook | 密钥 · auth · PII · 敏感交易触发 | — |
@@ -75,7 +75,7 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 | 交付后摩擦记录 / 汇总 | `runner.sh friction-log` · `friction-report`（`.growing/logs/friction.jsonl`） |
 | 目标项目端到端自检 | `bash .cursor/bin/consumer-smoke.sh`（install → 闸门 → hook → docs-init → 全绿） |
 | docs 骨架一键搭建 | `runner.sh docs-init [--profile <p>] [--slots 03,04] [--all]`（号位=瀑布阶段） |
-| 母版门禁清单（8 道） | `rules/feedback/verify.mdc` §母版门禁清单 |
+| 母版 verify 索引 | [migration-catalog.md](../migration-catalog.md) §母版 verify · `verify.mdc` §母版门禁清单 |
 
 ### 外网协议吸收（索引）
 
@@ -98,9 +98,9 @@ Agents：**ship**（发版）· **review** · **spike**（后二者只读）
 
 两者均由 `bash .cursor/bin/verify-doc-super-cursor.sh` 断言（母版门面计数纪律的一部分）。
 
-## 7 栈 scaffold
+## 8 栈 scaffold
 
-`react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `cpp-cmake`
+`react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `java-gradle` · `cpp-cmake`
 
 ## install profile
 

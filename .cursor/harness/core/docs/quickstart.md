@@ -33,7 +33,9 @@ cd /path/to/your-project
 
 **已有项目升级 `.cursor/`**（保留 `.growing/`）→ [consumer-refresh.md](consumer-refresh.md)（`--replace` · 自检清单）· 栈与 **按需启用** → [tech-stacks.md](tech-stacks.md)（`scaffold adapt`）。
 
-## 2. 空项目：脚手架（7 栈）
+## 2. 空项目：脚手架（8 栈）
+
+含 `java-gradle`；完整清单 → `scaffold.sh list` · [tech-stacks.md](tech-stacks.md)。
 
 ```
 /master  或  /scaffold

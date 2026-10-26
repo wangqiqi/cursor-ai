@@ -2,12 +2,12 @@
 
 > **English**: [README.en.md](README.en.md) · Quickstart → [quickstart.en.md](.cursor/docs/quickstart.en.md)
 
-[![Version](https://img.shields.io/badge/version-4.29.19-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.0.5-blue?style=flat-square)](CHANGELOG.md)
 [![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
 [![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
 [![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
-[![Scaffolds](https://img.shields.io/badge/scaffolds-7%20stacks-brightgreen?style=flat-square)](.cursor/docs/scaffold.md)
+[![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-brightgreen?style=flat-square)](.cursor/docs/scaffold.md)
 [![Cursor](https://img.shields.io/badge/built%20for-Cursor-000000?style=flat-square)](https://cursor.com)
 
 让 Cursor Agent 像资深同事一样协作：先规划、再执行、可验收、能收尾、能发版。
@@ -221,7 +221,7 @@ flowchart TB
 | 类别 | scaffold id |
 |------|-------------|
 | 前端 | `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` |
-| 后端 | `go-api` · `rust-axum` · `python-fastapi` |
+| 后端 | `go-api` · `rust-axum` · `python-fastapi` · `java-gradle` |
 | 系统 | `cpp-cmake` |
 
 > 各栈依赖与目录 → `scaffold.sh list` · [`scaffold.md`](.cursor/docs/scaffold.md) · `templates/scaffold/manifest.json`（避免在此维护第三份栈清单）。
@@ -330,6 +330,7 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 ```bash
 bash .cursor/harness/link-cursor-ide.sh      # 母版：补齐 IDE 协议 symlink（非复制）；template-verify 也会调
 bash .cursor/template-verify.sh                # 母版完整自测（CI）
+bash .cursor/bin/ci-preflight.sh               # push 前：三矩阵腿 + VitePress（对齐 Actions）
 bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（缺链时先 link-cursor-ide）
 bash .cursor/bin/consumer-smoke.sh             # 目标项目端到端
 bash .cursor/bin/cursor-coherence.sh
@@ -339,7 +340,7 @@ bash .cursor/bin/cursor-coherence.sh
 
 | 组 | 代表脚本 | 守护 |
 |----|----------|------|
-| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · project-onekey 模板 |
+| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · 占位 adaptor 契约 · project-onekey 模板 |
 | **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` SSOT · `--skills-bundle` 冒烟 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / `docs-init` SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep（Defer） |
