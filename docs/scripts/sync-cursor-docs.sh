@@ -109,7 +109,9 @@ sed_rewrite "$DEST/reference/rules-catalog.md" \
 sed_rewrite "$DEST/training/skills.md" \
   -e 's](\.\./\.\./skills/master/routes\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/skills/master/routes.md)]g' \
   -e 's](\.\./quickstart\.md)](/guide/quickstart)]g' \
-  -e 's](\.\./walkthrough\.md)](/guide/walkthrough)]g'
+  -e 's](\.\./walkthrough\.md)](/guide/walkthrough)]g' \
+  -e 's](\.\./migration-catalog\.md)](/reference/migration-catalog)]g' \
+  -e 's](\.\./migration-catalog)](/reference/migration-catalog)]g'
 
 sed_rewrite "$DEST/reference/library-index.md" \
   -e 's](rules-catalog\.md)](/reference/rules-catalog)]g' \
@@ -117,5 +119,11 @@ sed_rewrite "$DEST/reference/library-index.md" \
 
 sed_rewrite "$DEST/reference/migration-catalog.md" \
   -e 's](consumer-refresh\.md)](/guide/consumer-refresh)]g'
+
+# training → reference 链须在镜像后变为站内路径（VitePress dead-link 门禁）
+if grep -qE '\]\(\.\./migration-catalog' "$DEST/training/"*.md 2>/dev/null; then
+  echo "sync-cursor-docs: FAIL unrewritten ../migration-catalog link under docs/training/" >&2
+  exit 1
+fi
 
 echo "sync-cursor-docs: mirrored ${SYNC_COUNT} files from .cursor/docs/ (guide glob + reference list + ${TRAINING_GLOB})"

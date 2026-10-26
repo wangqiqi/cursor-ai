@@ -5,7 +5,7 @@
   "scripts": {
     "docs:sync": "bash docs/scripts/sync-cursor-docs.sh",
     "docs:dev": "npm run docs:sync && vitepress dev docs",
-    "docs:build": "npm run docs:sync && vitepress build docs",
+    "docs:build": "bash docs/scripts/vitepress-build.sh",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {

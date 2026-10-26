@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **doc-site（SPRINT-DOC-SITE）** — `training/skills` → `migration-catalog` 经 `sync-cursor-docs` 改写；`vitepress-build.sh` dead link 失败即红；`building-super-cursor` 触发表
 - **doc-facade（SPRINT-DOC-FACADE）** — README 徽章 5.0.5 · 8 stacks · `java-gradle`；§验证对齐 `migration-catalog` + `ci-preflight`；`.cursor/docs` quickstart/training/scaffold；`docs/index.md`；`README.en.md`；`verify-doc-super-cursor` 防版本/7 栈回退
 
 ## [5.0.5] - 2026-10-26
