@@ -53,7 +53,7 @@
 | Token | 意图 |
 |-------|------|
 | `core` | Harness Core 主体（skills · rules · bin · config 等） |
-| `core_rules_export` | 面向「项目规则」型 IDE 的 rules 导出子集（**待实现**） |
+| `core_rules_export` | 面向 Kiro/Trae 的 rules 导出 → [core-rules-export.md](core-rules-export.md) |
 | `cursor_hooks` | Cursor 专用（仅 `cursor` adaptor） |
 | `cursor_plugin_verify` | Cursor Plugin 冒烟（仅 `cursor` adaptor） |
 

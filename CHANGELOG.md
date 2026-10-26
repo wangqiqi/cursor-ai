@@ -10,6 +10,7 @@ All notable changes to Super Cursor are documented here.
 - **adaptor-contract** — `docs/reference/adaptor-contract.md`：占位 adaptor（dsh · kiro · trae · opencode）README 章节与 `install-map.example.json` 映射
 - **verify-adaptor-contract** — 机器验收四份 README + install-map；接入 `verify-super-cursor.sh`
 - **install-adaptor-dsh** — 将 Harness Core 安装到目标 `.dsh/`；`install-super-cursor.sh --adaptor dsh` · `verify-install-dsh.sh`
+- **core-rules-export** — Kiro/Trae `core_rules_export` SSOT · `install-adaptor-rules-export.sh` · `verify-install-rules-export.sh`
 
 ### Changed
 
@@ -19,6 +20,7 @@ All notable changes to Super Cursor are documented here.
 - **harness** — `README.md` · `harness-ide-matrix.md` 链到契约；`migration-catalog` · `verify.mdc` 索引更新
 - **adaptors/dsh** — `docs/layout.md` · README **implemented（core install）**；`config/README.md` adaptor 安装表
 - **platform** — `sc_apply_skills_bundle` 支持第三参数 pack 根（`.dsh`）
+- **adaptors/kiro · trae** — rules 导出至 `.kiro/` / `.trae/`；`install-super-cursor --adaptor kiro|trae`
 
 ## [5.0.4] - 2026-10-26
 

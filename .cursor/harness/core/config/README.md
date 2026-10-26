@@ -115,8 +115,10 @@ Install profiles（`install-super-cursor.sh --profile`）:
 |---------|--------|------|------|
 | `cursor`（默认） | `.cursor/` | `install-super-cursor.sh` | `install-smoke.sh` · `consumer-smoke.sh` |
 | `dsh` | `.dsh/` | `install-adaptor-dsh.sh` 或 `install-super-cursor.sh --adaptor dsh` | `verify-install-dsh.sh` |
+| `kiro` | `.kiro/` | `install-adaptor-rules-export.sh --adaptor kiro` 或 `--adaptor kiro` | `verify-install-rules-export.sh` |
+| `trae` | `.trae/` | `install-adaptor-rules-export.sh --adaptor trae` 或 `--adaptor trae` | 同上（kiro + trae） |
 
-布局 → `adaptors/dsh/docs/layout.md` · 映射草案 → `install-map.example.json` → `adaptors.dsh`。
+布局 → `adaptors/*/docs/layout.md` · `core_rules_export` SSOT → `docs/reference/core-rules-export.md` · 映射 → `install-map.example.json`。
 
 ## release.json
 

@@ -2,11 +2,11 @@
 
 # adaptor: kiro
 
-Kiro 项目规则占位。
+Kiro 项目规则 · `core_rules_export`。
 
 ## Status
 
-**placeholder** — Kiro 官方 rules layout **待确认**；rules 导出未实现。
+**implemented（rules export）** — 官方 Kiro layout **待确认**；当前导出 [docs/layout.md](docs/layout.md) · SSOT [core-rules-export.md](../../harness/core/docs/reference/core-rules-export.md)。
 
 ## Identity
 
@@ -24,8 +24,17 @@ Kiro 项目规则占位。
 
 ## Includes
 
-- `core_rules_export` — 面向 Kiro 的 rules 子集导出（**待实现**）；语义见 [adaptor-contract.md](../../harness/core/docs/reference/adaptor-contract.md)。
+- `core_rules_export` — `harness/core/rules` 子集 + `RULES.md` 索引；见 [adaptor-contract.md](../../harness/core/docs/reference/adaptor-contract.md)。
+
+## Install
+
+```bash
+bash .cursor/harness/core/bin/install-adaptor-rules-export.sh --adaptor kiro /path/to/project
+install-super-cursor /path/to/project --adaptor kiro
+```
+
+验收：`bash .cursor/bin/verify-install-rules-export.sh`。
 
 ## Next sprint
 
-与 Trae 共用规则导出 → **SPRINT-ADAPTOR-KIRO-TRAE**。
+官方 layout 对齐 · 专有 manifest（待产品文档）。
