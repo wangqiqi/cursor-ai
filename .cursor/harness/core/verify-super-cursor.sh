@@ -417,6 +417,7 @@ if is_mother_repo; then
   bash "$(sc_verify_script verify-cursor-platform-contract.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-tools-skills-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-skills-bundle-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-skill-bundles-ssot.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-docs-sync-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-spike-plugin-mvp-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))

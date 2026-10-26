@@ -85,6 +85,18 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 | `lite` | 个人：plan/run，无 hooks |
 | `rules-only` | 只要 rules/skills，关闭 plan/run 闸门 |
 
+**profile × skills-bundle × 分发轨**（`config/skill-bundles.json` SSOT · 详 `config/README.md`）：
+
+| 组合 | skills | hooks / 闸门 | 典型场景 |
+|------|--------|--------------|----------|
+| `full` + `full`（默认） | 28 | hooks + plan/run | 团队母版 / 完整 SOP |
+| `lite` + `core` | 23（无五工具 skill） | plan/run，无 hooks | 个人机 · 少占盘 |
+| `lite` + `full` | 28 | 无 hooks | 要全 skill 但不要自治 hooks |
+| `rules-only` + `core` | 23 | 关闭 workflow 闸门 | 仅 rules/skills 参考 |
+| **`.cursor-plugin/`** | 5 lifecycle + agents | 依赖已 install 的 `config/` | **第三轨** · 不替代 install → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
+
+栈与 `project-profile` → [.cursor/docs/tech-stacks.md](.cursor/docs/tech-stacks.md) §安装 vs 启用。
+
 支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python`；由 `bash .cursor/bin/verify-portability.sh` 静态守护。**技能另有各自平台作用域**（如 `maintain` 仅 Linux），见 [跨平台说明](.cursor/docs/platforms.md) §技能平台作用域。
 
 ### 全局同步（任意子目录 → Git 项目根）
@@ -328,7 +340,7 @@ bash .cursor/bin/cursor-coherence.sh
 | 组 | 代表脚本 | 守护 |
 |----|----------|------|
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · project-onekey 模板 |
-| **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `--skills-bundle`（full / core）· onekey bootstrap SPIKE |
+| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` SSOT · `--skills-bundle` 冒烟 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / `docs-init` SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep（Defer） |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |

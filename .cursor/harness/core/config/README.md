@@ -13,6 +13,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.growing/`
 | **`schema.json`** | 允许的键与类型声明 —— **改 config 先改这里** | `bin/verify-config.sh` |
 | **`denylist.txt`** | 母版独立禁用词表（作者标识 · 机器路径 · 公司代号 · 凭据） | `verify-super-cursor.sh` |
 | **`docs-layout.json`** | 项目文档体系：`profile` · `slots`（号位=瀑布阶段）· `max_numbered` · 必选号位 | `bin/verify-config.sh` + `bin/verify-docs-layout.sh` |
+| **`skill-bundles.json`** | install 时 `--skills-bundle full\|core` 的 skills 子集 SSOT | `bin/verify-config.sh` · `bin/verify-skill-bundles-ssot.sh` · `bin/verify-install-skills-bundle.sh` |
 
 **为什么有 schema**：写错一个键（如把 `release.mode` 写成 `workflow.release.mode`）不会报错，只会**静默回退默认值**，行为与预期不符却毫无信号。`verify-config.sh` 让未知键/类型错误直接 FAIL。
 
@@ -89,6 +90,24 @@ Install profiles（`install-super-cursor.sh --profile`）:
 跨平台：`bash .cursor/bin/platform-check.sh` · 详见 `docs/platforms.md`。
 
 预设文件：`config/profiles/*.json`
+
+## skill-bundles.json
+
+**与 `profiles/*` 独立**：profile 只改 `workflow.json` 合并层（hooks · 闸门 · task-verify 启发式）；**skills-bundle** 只在 install 时决定拷贝哪些 `skills/<id>/` 目录。
+
+| 键 | 含义 |
+|----|------|
+| `default` | 未传 `--skills-bundle` 时使用（**`full`**） |
+| `bundles.full` | 母版全量 skills（当前与磁盘 skill 目录数一致） |
+| `bundles.core.exclude_skills` | core 安装时**不拷贝**的 skill id 列表 |
+| `tools_skills` | 五工具 skill 名单；**必须与** `bundles.core.exclude_skills` **集合相同**（顺序无关） |
+
+| bundle | skills 数（当前母版） | 说明 |
+|--------|----------------------|------|
+| `full` | 28 | 默认；与历史 install 行为一致 |
+| `core` | 23 | 去掉 `week` · `disk` · `maintain` · `ops-deploy` · `code-stats-viz` |
+
+验收：`bash .cursor/bin/verify-skill-bundles-ssot.sh`（JSON ↔ 磁盘）· `bash .cursor/bin/verify-install-skills-bundle.sh`（临时目录 install 冒烟）。**不是** `.cursor-plugin/`（5 lifecycle）轨。
 
 ## release.json
 

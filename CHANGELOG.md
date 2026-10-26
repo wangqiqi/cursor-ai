@@ -6,12 +6,14 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **verify-skill-bundles-ssot** — `skill-bundles.json` 与母版 `skills/` 计数 · `tools_skills` ↔ `core.exclude_skills`；接入 `verify-super-cursor.sh`
 - **plan** — `reference/task-retention.md`：禁止随意删除 `plan.md` 未完成任务与 `docs/ROADMAP.md` 进行中/计划行；已完项可归档或清理
 - **ci-preflight.sh** — push 前本地跑齐三矩阵腿 + VitePress；`install-smoke` 增加 Windows 门面实体化后重装回归
 - **install-smoke** — 门面重装验收：symlink 或 Windows 等价实体（与 `rules/local` 一致），避免 `-L` 误杀 Git Bash
 
 ### Changed
 
+- **install 矩阵** — `config/README.md` §skill-bundles · 根 README profile×bundle×plugin 表；`verify-install-skills-bundle` 期望数来自 SSOT（`SPRINT-BUNDLE-GEN`）
 - **文档 / harness** — README · AGENTS · harness core 文档与 `verify.mdc` 统一 **symlink** 叙事（`link-cursor-ide.sh`）；门禁与 `install-super-cursor.sh` 帮助文案不再推荐平铺 assemble（`SPRINT-HARNESS-DOC` · TASK-001–004）
 - **跨平台健壮性** — `sc_find_packaged_rules_mdc`（packaged rules SSOT，排除 `rules/local`）；`cursor-coherence` 用 `mktemp` 替代 process substitution（Windows Git Bash）
 - **verify-portability** — 禁止 `mapfile`；`cursor-coherence` 禁止 `< <(`；SSOT 回归自检

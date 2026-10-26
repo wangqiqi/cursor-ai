@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Smoke-test install-super-cursor.sh (temp dirs only; no side effects on repo)
+# skills-bundle full|core 契约 → verify-install-skills-bundle.sh（非本脚本；install 默认 full）
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"

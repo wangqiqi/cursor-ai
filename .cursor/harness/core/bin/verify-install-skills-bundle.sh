@@ -7,6 +7,14 @@ CURSOR_DIR="$ROOT/.cursor"
 source "$CURSOR_DIR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
+# SSOT counts + exclude list (no install)
+_ssot_line="$(bash "$CURSOR_DIR/bin/verify-skill-bundles-ssot.sh" 2>/dev/null | grep '^OK  skill-bundles SSOT:' || true)"
+FULL_EXPECT="$(printf '%s' "$_ssot_line" | sed -n 's/.*full=\([0-9][0-9]*\).*/\1/p')"
+CORE_EXPECT="$(printf '%s' "$_ssot_line" | sed -n 's/.*core=\([0-9][0-9]*\).*/\1/p')"
+[[ -n "$FULL_EXPECT" && -n "$CORE_EXPECT" ]] || {
+  echo "FAIL: could not parse counts from verify-skill-bundles-ssot" >&2
+  exit 1
+}
 sc_mktemp_dir sc-verify-skills-bundle
 TMP="$SC_MKTEMP_LAST"
 
@@ -24,12 +32,12 @@ CORE_DIR="$TMP/core"
 full_n="$(count_skills "$FULL_DIR")"
 core_n="$(count_skills "$CORE_DIR")"
 
-if [[ "$full_n" != "28" ]]; then
-  echo "FAIL: full bundle skills=$full_n (expected 28)" >&2
+if [[ "$full_n" != "$FULL_EXPECT" ]]; then
+  echo "FAIL: full bundle skills=$full_n (expected $FULL_EXPECT from skill-bundles.json)" >&2
   exit 1
 fi
-if [[ "$core_n" != "23" ]]; then
-  echo "FAIL: core bundle skills=$core_n (expected 23)" >&2
+if [[ "$core_n" != "$CORE_EXPECT" ]]; then
+  echo "FAIL: core bundle skills=$core_n (expected $CORE_EXPECT from skill-bundles.json)" >&2
   exit 1
 fi
 for s in week disk maintain ops-deploy code-stats-viz; do
