@@ -4,9 +4,28 @@
 
 ## 技术栈（与 profile 对齐）
 
+<!-- SC_PROFILE_SYNC:BEGIN -->
+<!-- 机器维护：`scaffold adapt --write` 覆盖本节；勿手改。无 profile 时本节为空占位。 -->
+
 | 项 | 本项目 |
 |----|--------|
-| 主栈 | （待填；与 `.cursorGrowth/project-profile.json` → `stacks.primary` 一致） |
+| 主栈 | （运行 `adapt --write` 后自动填入） |
+| adapted_at | — |
+| verify.enabled_tiers | — |
+| verify.enabled_slices | — |
+
+**DAILY**（本会话优先 · 证据：profile primary）
+
+- （待 `adapt --write`）
+
+**LIBRARY**（离栈 · 需要时再 `@` 或 slash）
+
+- （待 `adapt --write`）
+
+<!-- SC_PROFILE_SYNC:END -->
+
+| 项 | 本项目 |
+|----|--------|
 | 适配 | 升级或首次安装后运行：`.cursor/bin/scaffold.sh adapt --write` |
 | 说明 | 整包 `.cursor` · **按需启用** → `.cursor/docs/tech-stacks.md` |
 

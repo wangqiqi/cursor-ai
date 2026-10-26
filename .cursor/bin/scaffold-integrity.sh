@@ -149,6 +149,20 @@ if grep -q '=== scaffold adapt ===' <<<"$adapt_out"; then
 else
   fail "scaffold adapt dry-run"
 fi
+if grep -q 'DAILY rules/tech:' <<<"$adapt_out"; then
+  ok "scaffold adapt dry-run shows DAILY/LIBRARY"
+else
+  fail "scaffold adapt missing DAILY preview"
+fi
+
+echo ""
+echo "=== project-profile learn sync ==="
+grep -q 'SC_PROFILE_SYNC:BEGIN' "$CURSOR_DIR/templates/cursorGrowth/learn/dev-conventions.md" \
+  && ok "dev-conventions template has SC_PROFILE_SYNC markers" \
+  || fail "dev-conventions template missing SC_PROFILE_SYNC"
+grep -q 'sc_profile_sync_dev_conventions' "$CURSOR_DIR/lib/project-profile.sh" \
+  && ok "project-profile.sh defines sync helper" \
+  || fail "missing sc_profile_sync_dev_conventions"
 
 [[ "$FAIL" -eq 0 ]] && exit 0
 echo "$FAIL scaffold check(s) failed." >&2

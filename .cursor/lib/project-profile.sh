@@ -141,17 +141,6 @@ sc_project_profile_hint() {
   path="$(sc_project_profile_path "$root" 2>/dev/null || true)"
   [[ -n "$path" && -f "$path" ]] || return 0
 
-  if command -v jq >/dev/null 2>&1; then
-    local primary detected
-    primary="$(jq -r '[.stacks.primary[]?] | join(",")' "$path" 2>/dev/null || true)"
-    detected="$(jq -r '[.stacks.detected[]?] | join(",")' "$path" 2>/dev/null || true)"
-    if [[ -z "$primary" && -z "$detected" ]]; then
-      return 0
-    fi
-    echo "Project profile: primary=${primary:-?} · detected=${detected:-?} · SSOT=.cursorGrowth/project-profile.json"
-    return 0
-  fi
-
   py="$(sc_python 2>/dev/null || true)"
   [[ -n "$py" ]] || return 0
   "$py" - "$path" <<'PY'
@@ -166,7 +155,154 @@ primary = ",".join(st.get("primary") or [])
 detected = ",".join(st.get("detected") or [])
 if not primary and not detected:
     sys.exit(0)
-print(f"Project profile: primary={primary or '?'} · detected={detected or '?'} · SSOT=.cursorGrowth/project-profile.json")
+ver = d.get("verify") or {}
+tiers = ",".join(ver.get("enabled_tiers") or [])
+slices = ver.get("enabled_slices") or []
+slice_n = len(slices)
+tier_part = f"tiers={tiers or '?'}"
+slice_part = f"slices={slice_n}" if slice_n else "slices=0"
+print(
+    f"Project profile: primary={primary or '?'} · detected={detected or '?'} · "
+    f"{tier_part} · {slice_part} · SSOT=.cursorGrowth/project-profile.json"
+)
+PY
+}
+
+# Print DAILY/LIBRARY preview lines (adapt dry-run / --write)
+sc_profile_print_daily_library() {
+  local py
+  py="$(sc_python 2>/dev/null || true)"
+  [[ -n "$py" ]] || return 0
+  PRIMARY_CSV="${1:-}" "$py" <<'PY'
+import os
+primary = [s.strip() for s in os.environ.get("PRIMARY_CSV", "").replace(",", " ").split() if s.strip()]
+STACK_RULES = {
+    "go": ["go.mdc"],
+    "rust": ["rust.mdc"],
+    "python": ["python.mdc"],
+    "java": ["java.mdc"],
+    "cpp": ["cpp.mdc"],
+    "c": ["c.mdc"],
+    "react": ["react.mdc", "typescript.mdc", "javascript.mdc", "eslint.mdc"],
+    "vue": ["vue.mdc", "typescript.mdc", "javascript.mdc", "eslint.mdc"],
+    "nextjs": ["nextjs.mdc", "react.mdc", "typescript.mdc", "eslint.mdc"],
+    "nodejs": ["javascript.mdc", "typescript.mdc", "eslint.mdc"],
+    "svelte": ["svelte.mdc", "typescript.mdc", "eslint.mdc"],
+}
+ALL_TECH = sorted({
+    "c.mdc", "cpp.mdc", "eslint.mdc", "go.mdc", "java.mdc", "javascript.mdc",
+    "nextjs.mdc", "python.mdc", "react.mdc", "rust.mdc", "svelte.mdc", "typescript.mdc", "vue.mdc",
+})
+daily_rules = []
+for p in primary:
+    for r in STACK_RULES.get(p, []):
+        if r not in daily_rules:
+            daily_rules.append(r)
+library_rules = [r for r in ALL_TECH if r not in daily_rules]
+DAILY_SKILLS = ["plan", "run", "learn", "master", "git"]
+LIBRARY_SKILLS = ["perf", "mcp", "study", "delivery", "debug", "review"]
+print("DAILY rules/tech: " + (", ".join(f"rules/tech/{r}" for r in daily_rules) or "(none)"))
+print("LIBRARY rules/tech: " + (", ".join(f"rules/tech/{r}" for r in library_rules) or "(none)"))
+print("DAILY skills: " + ", ".join(DAILY_SKILLS))
+print("LIBRARY skills (sample): " + ", ".join(LIBRARY_SKILLS))
+PY
+}
+
+# Merge profile into learn/dev-conventions.md (SC_PROFILE_SYNC block)
+sc_profile_sync_dev_conventions() {
+  local root="${1:-}" cursor_dir="${2:-}"
+  [[ -n "$root" && -n "$cursor_dir" ]] || return 1
+  local profile_path learn_path template_path py
+  profile_path="$(sc_project_profile_path "$root")"
+  [[ -f "$profile_path" ]] || return 1
+  learn_path="$root/.cursorGrowth/learn/dev-conventions.md"
+  template_path="$cursor_dir/templates/cursorGrowth/learn/dev-conventions.md"
+  mkdir -p "$root/.cursorGrowth/learn"
+  if [[ ! -f "$learn_path" && -f "$template_path" ]]; then
+    cp "$template_path" "$learn_path"
+  fi
+  [[ -f "$learn_path" ]] || return 1
+  py="$(sc_python 2>/dev/null || true)"
+  [[ -n "$py" ]] || return 1
+  PROFILE_PATH="$profile_path" LEARN_PATH="$learn_path" "$py" <<'PY'
+import json, os, re, sys
+
+profile_path = os.environ["PROFILE_PATH"]
+learn_path = os.environ["LEARN_PATH"]
+d = json.load(open(profile_path, encoding="utf-8"))
+st = d.get("stacks") or {}
+primary = st.get("primary") or []
+detected = st.get("detected") or []
+ver = d.get("verify") or {}
+tiers = ver.get("enabled_tiers") or []
+slices = ver.get("enabled_slices") or []
+adapted = d.get("adapted_at") or "—"
+
+STACK_RULES = {
+    "go": ["go.mdc"], "rust": ["rust.mdc"], "python": ["python.mdc"], "java": ["java.mdc"],
+    "cpp": ["cpp.mdc"], "c": ["c.mdc"],
+    "react": ["react.mdc", "typescript.mdc", "javascript.mdc", "eslint.mdc"],
+    "vue": ["vue.mdc", "typescript.mdc", "javascript.mdc", "eslint.mdc"],
+    "nextjs": ["nextjs.mdc", "react.mdc", "typescript.mdc", "eslint.mdc"],
+    "nodejs": ["javascript.mdc", "typescript.mdc", "eslint.mdc"],
+    "svelte": ["svelte.mdc", "typescript.mdc", "eslint.mdc"],
+}
+ALL_TECH = sorted({
+    "c.mdc", "cpp.mdc", "eslint.mdc", "go.mdc", "java.mdc", "javascript.mdc",
+    "nextjs.mdc", "python.mdc", "react.mdc", "rust.mdc", "svelte.mdc", "typescript.mdc", "vue.mdc",
+})
+daily_rules = []
+for p in primary:
+    for r in STACK_RULES.get(p, []):
+        if r not in daily_rules:
+            daily_rules.append(r)
+library_rules = [r for r in ALL_TECH if r not in daily_rules]
+DAILY_SKILLS = ["plan", "run", "learn", "master", "git"]
+LIBRARY_SKILLS = ["perf", "mcp", "study", "delivery", "debug", "review"]
+
+def bullets(items):
+    if not items:
+        return "- （无）\n"
+    return "".join(f"- {x}\n" for x in items)
+
+daily_rule_lines = [f"rules/tech/{r}" for r in daily_rules]
+library_rule_lines = [f"rules/tech/{r}" for r in library_rules]
+daily_skill_lines = [f"skill {s}" for s in DAILY_SKILLS]
+library_skill_lines = [f"skill {s}" for s in LIBRARY_SKILLS]
+
+block = f"""<!-- SC_PROFILE_SYNC:BEGIN -->
+<!-- 机器维护：`scaffold adapt --write` 覆盖本节；勿手改。 -->
+
+| 项 | 值 |
+|----|-----|
+| 主栈 (primary) | {", ".join(primary) or "—"} |
+| detected | {", ".join(detected) or "—"} |
+| adapted_at | {adapted} |
+| verify.enabled_tiers | {", ".join(tiers) or "—"} |
+| verify.enabled_slices | {", ".join(slices) if slices else "（空 · tier 策略）"} |
+
+**DAILY**（本会话优先 · 证据：profile primary）
+
+{bullets(daily_rule_lines + daily_skill_lines)}
+
+**LIBRARY**（离栈 · 需要时再 `@` 或 slash）
+
+{bullets(library_rule_lines + library_skill_lines)}
+
+<!-- SC_PROFILE_SYNC:END -->"""
+
+text = open(learn_path, encoding="utf-8").read()
+pat = re.compile(
+    r"<!-- SC_PROFILE_SYNC:BEGIN -->.*?<!-- SC_PROFILE_SYNC:END -->",
+    re.DOTALL,
+)
+if not pat.search(text):
+    sys.stderr.write(f"FAIL: missing SC_PROFILE_SYNC markers in {learn_path}\n")
+    sys.exit(1)
+new_text = pat.sub(block.strip(), text, count=1)
+with open(learn_path, "w", encoding="utf-8") as f:
+    f.write(new_text)
+print(f"SYNC {learn_path}")
 PY
 }
 

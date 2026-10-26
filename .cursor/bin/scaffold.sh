@@ -198,8 +198,12 @@ cmd_adapt() {
 
   if [[ "$write" != "true" ]]; then
     echo ""
+    echo "--- DAILY / LIBRARY (from primary; see master/routes.md) ---"
+    sc_profile_print_daily_library "$(IFS=,; echo "${primary_lines[*]}")"
+    echo ""
     echo "hint=确认 primary 无误后: $0 adapt --write"
     echo "hint=多栈仓: $0 adapt --write --primary=java,vue"
+    echo "hint=写入 profile 并同步 learn/dev-conventions.md SC_PROFILE_SYNC 段"
     return 0
   fi
 
@@ -257,6 +261,11 @@ print(f"WRITE {path}")
 PY
 
   echo "OK adapt wrote $profile_path"
+  if sc_profile_sync_dev_conventions "$ROOT" "$CURSOR_DIR"; then
+    echo "OK adapt synced learn/dev-conventions.md (SC_PROFILE_SYNC)"
+  else
+    echo "WARN: adapt wrote profile but dev-conventions sync skipped (missing template/markers?)" >&2
+  fi
 }
 
 cmd_detect() {
