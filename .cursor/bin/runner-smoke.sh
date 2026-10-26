@@ -297,4 +297,53 @@ else
   echo "SKIP  changed-plan unit (no node)"
 fi
 
+# project-profile + manifest stacks filter（夹具仓）
+sc_mktemp_dir sc-runner-smoke-profile
+PD="$SC_MKTEMP_LAST"
+VL="$CURSOR_DIR/templates/scaffold/_bundles/verify-layers/shared/scripts"
+mkdir -p "$PD/.cursor/lib" "$PD/.cursorGrowth" "$PD/scripts/verify"
+cp "$CURSOR_DIR/lib/project-profile.sh" "$CURSOR_DIR/lib/platform.sh" "$PD/.cursor/lib/"
+cp "$VL/verify/run-manifest-tier.sh" "$PD/scripts/verify/"
+cat > "$PD/.cursorGrowth/project-profile.json" <<'JSON'
+{
+  "version": 1,
+  "adapted_at": "2026-10-26T00:00:00+08:00",
+  "stacks": { "detected": ["java"], "primary": ["java"] },
+  "verify": { "enabled_tiers": ["l0", "l1", "l2-core", "l2-domain", "l3"], "enabled_slices": [] },
+  "tech_rules": { "mode": "globs-only" }
+}
+JSON
+# shellcheck source=/dev/null
+source "$PD/.cursor/lib/project-profile.sh"
+sc_profile_stacks_allow_row "$PD" nodejs && {
+  echo "FAIL: java primary must not allow nodejs stacks row"
+  rm -rf "$PD"
+  exit 1
+}
+sc_profile_stacks_allow_row "$PD" java || {
+  echo "FAIL: java primary must allow java stacks row"
+  rm -rf "$PD"
+  exit 1
+}
+sc_profile_stacks_allow_row "$PD" "*" || {
+  echo "FAIL: universal stacks row must always allow"
+  rm -rf "$PD"
+  exit 1
+}
+printf '%s\n' \
+  $'l2-standard\tcommand\techo STACK_NODE\tnodejs' \
+  $'l2-standard\tcommand\techo STACK_JAVA\tjava' \
+  > "$PD/scripts/verify/manifest.tsv"
+out="$( cd "$PD" && VERIFY_SLICE_PARALLEL=1 bash scripts/verify/run-manifest-tier.sh l2-standard 2>&1 )" || true
+case "$out" in
+  *SKIP*nodejs*) ;;
+  *) echo "FAIL: run-manifest-tier expected SKIP nodejs: $out"; rm -rf "$PD"; exit 1 ;;
+esac
+case "$out" in
+  *"manifest tier=l2-standard OK (1 rows)"*) ;;
+  *) echo "FAIL: run-manifest-tier unexpected: $out"; rm -rf "$PD"; exit 1 ;;
+esac
+echo "OK  project-profile manifest stacks filter"
+rm -rf "$PD"
+
 echo "runner smoke passed."

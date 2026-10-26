@@ -227,6 +227,18 @@ primary = [l.strip() for l in os.environ.get("PRIMARY_JSON", "").splitlines() if
 if not primary:
     primary = ["unknown"]
 tiers = os.environ.get("DEFAULT_TIERS", "l0 l1 l2-core").split()
+slices = []
+path = os.environ["OUT_PATH"]
+if os.path.isfile(path):
+    try:
+        old = json.load(open(path, encoding="utf-8"))
+        ov = old.get("verify") or {}
+        if ov.get("enabled_tiers"):
+            tiers = list(ov["enabled_tiers"])
+        if "enabled_slices" in ov:
+            slices = list(ov.get("enabled_slices") or [])
+    except (OSError, json.JSONDecodeError):
+        pass
 
 doc = {
     "version": 1,
@@ -234,11 +246,10 @@ doc = {
     "stacks": {"detected": detected, "primary": primary},
     "verify": {
         "enabled_tiers": tiers,
-        "enabled_slices": [],
+        "enabled_slices": slices,
     },
     "tech_rules": {"mode": "globs-only"},
 }
-path = os.environ["OUT_PATH"]
 with open(path, "w", encoding="utf-8") as f:
     json.dump(doc, f, indent=2, ensure_ascii=False)
     f.write("\n")

@@ -21,6 +21,18 @@ want_rank="$(tier_rank "$TIER")"
 
 [[ -f "$MANIFEST" ]] || { echo "FAIL: missing manifest $MANIFEST" >&2; exit 1; }
 
+PROFILE_LIB="$ROOT/.cursor/lib/project-profile.sh"
+if [[ -f "$PROFILE_LIB" ]]; then
+  # shellcheck source=/dev/null
+  source "$PROFILE_LIB"
+  if declare -f sc_profile_tier_allowed >/dev/null 2>&1; then
+    if ! sc_profile_tier_allowed "$ROOT" "$TIER"; then
+      echo "FAIL: project-profile verify.enabled_tiers blocks tier=${TIER} (or set VERIFY_IGNORE_PROFILE=1)" >&2
+      exit 1
+    fi
+  fi
+fi
+
 load_bundle_commands() {
   local rel="$1"
   local full="$ROOT/scripts/verify/$rel"
@@ -45,12 +57,19 @@ BUNDLE_CMDS=()
 matched=0
 
 for row in "${ROWS[@]}"; do
-  IFS=$'\t' read -r row_tier type target <<< "$row"
+  IFS=$'\t' read -r row_tier type target stacks <<< "$row"
   row_tier="${row_tier//$'\r'/}"
   type="${type//$'\r'/}"
   target="${target//$'\r'/}"
+  stacks="${stacks//$'\r'/}"
   r="$(tier_rank "$row_tier")"
   [[ "$r" -gt 0 && "$r" -le "$want_rank" ]] || continue
+  if declare -f sc_profile_stacks_allow_row >/dev/null 2>&1; then
+    if ! sc_profile_stacks_allow_row "$ROOT" "${stacks:-*}"; then
+      echo "[verify] SKIP profile stacks=${stacks:-*} target=$target"
+      continue
+    fi
+  fi
   matched=$((matched + 1))
   case "$type" in
     bash)
@@ -75,8 +94,9 @@ if [[ "$matched" -eq 0 ]]; then
 fi
 
 run_one() {
-  echo "[verify] manifest: $*"
-  eval "$@"
+  local cmd="$1"
+  echo "[verify] manifest: $cmd"
+  eval "$cmd"
 }
 
 ALL_CMDS=("${BASH_CMDS[@]}" "${BUNDLE_CMDS[@]}")
@@ -87,7 +107,7 @@ fi
 
 if [[ "$PARALLEL" -gt 1 && ${#ALL_CMDS[@]} -gt 1 ]]; then
   export -f run_one
-  printf '%s\0' "${ALL_CMDS[@]}" | xargs -0 -P "$PARALLEL" -I{} bash -c 'run_one "$@"' _ {}
+  printf '%s\0' "${ALL_CMDS[@]}" | xargs -0 -P "$PARALLEL" -I{} bash -c 'run_one "$1"' _ {}
 else
   for cmd in "${ALL_CMDS[@]}"; do
     run_one "$cmd"

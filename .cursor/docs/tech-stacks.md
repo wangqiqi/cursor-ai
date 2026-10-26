@@ -78,14 +78,17 @@ CLI：
 
 `run-start` 在存在 profile 时注入一行 **Project profile: primary=…**（省 token，不展开全栈手册）。
 
-## Verify · 按需启用（阶段）
+## Verify · 按需启用
 
-| 阶段 | 行为 |
+| 机制 | 行为 |
 |------|------|
-| **本版** | profile 契约 + `adapt` 默认 tiers；**文档**约定 `enabled_slices` 语义 |
-| **SPRINT-VERIFY-STACK-FILTER（候选）** | `verify-layers` 注册表 / `apply-bundle` 按 `primary` 只铺相关 slice；runner 跳过未启用 slice |
+| **`verify.enabled_tiers`** | `run-manifest-tier.sh` 启动前检查；请求 tier 高于 profile 允许上限 → **FAIL**（提示扩 tier 或 `VERIFY_IGNORE_PROFILE=1`） |
+| **`manifest.tsv` 第 4 列 `stacks`** | `*` / 空 = 通用；否则与 `stacks.primary[]` 求交，无交 → **SKIP** 该行（日志 `[verify] SKIP profile stacks=…`） |
+| **无 profile** | 不过滤（棕地未 `adapt` 不惩罚） |
+| **`VERIFY_IGNORE_PROFILE=1`** | 跳过 tier / stacks 过滤 |
+| **`enabled_slices[]`** | 契约保留；slice 级白名单跟后续 Sprint（当前以 manifest `stacks` 列为主） |
 
-消费方已有 `scripts/verify.sh` 时：在 `learn/dev-conventions.md` 写 **DAILY** 命令；profile 的 `enabled_tiers` 供后续脚本读取（母版 `lib/project-profile.sh` 可扩展）。
+消费方：`scaffold apply-bundle verify-layers` 后，栈专属 `command` 行保持注释，**按需取消注释**并填写 `stacks` 列。详 bundle 内 `README-verify-layers.md`。
 
 母版自检仍用 `bash .cursor/bin/template-verify.sh`（与业务 verify 分层无关）。
 

@@ -10,7 +10,7 @@
 | **changed-map** | `scripts/verify/changed-map.json` | Agent 按 diff 抬层 + 挂域 slice |
 | **audit-dedup** | `scripts/verify/audit-dedup.config.json` | 测例只登记一次 |
 
-脚手架：`scaffold apply-bundle verify-layers` 一次铺齐；成熟仓从 Growth `learn/` 记栈专属 glob，**勿**写进 `.cursor/`。
+脚手架：`scaffold apply-bundle verify-layers` 一次铺齐；成熟仓从 Growth `learn/` 记栈专属 glob，**勿**写进 `.cursor/`。运行时栈过滤 → `project-profile.json` + `manifest.tsv` **stacks** 列（`VERIFY_IGNORE_PROFILE=1` 可关）。
 
 ## verify:changed · 编排 v2
 

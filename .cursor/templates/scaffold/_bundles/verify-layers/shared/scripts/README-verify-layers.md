@@ -13,7 +13,7 @@
 
 ## 增长纪律（防重复劳动）
 
-1. **SSOT**：`scripts/verify/manifest.tsv` — 每个 tier 一行一入口（`bash` · `command` · `bundle-commands`）。
+1. **SSOT**：`scripts/verify/manifest.tsv` — 每个 tier 一行一入口（`bash` · `command` · `bundle-commands`）；可选第 4 列 **`stacks`**（`*` = 通用）。
 2. **累积 tier**：`l2-standard` 自动包含 `l2-core` 行；`l3` 含全部 tier。勿在 L2 里再抄一遍 L1 命令。
 3. **新能力**：优先 `command` 或 `bundle-commands` 登记已有测试命令；域断言才新建 `slices/verify_<feature>.sh` 并 **只加一行 manifest**。
 4. **禁止双登记**：同一测例文件/命令不得在多个 slice 或 bundle 重复出现 — 复制 `audit-dedup.config.example.json` → `audit-dedup.config.json`，CI 设 `failOnDuplicate: true`。
@@ -33,8 +33,21 @@ sc_pass "verify_<feature>"
 在 `manifest.tsv` 增加一行，例如：
 
 ```text
-l2-standard	bash	slices/verify_<feature>.sh
+l2-standard	bash	slices/verify_<feature>.sh	*
+l2-standard	command	npm run lint	nodejs,react,vue
 ```
+
+## 按需启用（project-profile）
+
+整包 `.cursor` · 运行时过滤（见 `.cursor/docs/tech-stacks.md`）：
+
+| 条件 | `run-manifest-tier.sh` 行为 |
+|------|-----------------------------|
+| 无 `.cursorGrowth/project-profile.json` | 与旧版一致，不过滤 |
+| 有 profile | `verify.enabled_tiers` 限制可跑的 **tier**；`stacks` 列与 `stacks.primary[]` 无交集则 **SKIP** 该行 |
+| `VERIFY_IGNORE_PROFILE=1` | 强制不过滤（排障 / CI） |
+
+`adapt --write` 后栈专属行需**取消注释**并写上正确 `stacks` 列；通用 slice 用 `*`。
 
 登记检查：
 
