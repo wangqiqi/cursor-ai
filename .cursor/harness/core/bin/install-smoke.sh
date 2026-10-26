@@ -105,6 +105,30 @@ onekey_hash="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
 
 # Windows/Git Bash 回归：cp/rsync 把 .cursor 根门面落成实体文件/目录后，二次 install 须恢复 symlink
 # （CI windows 腿多次在此失败：AGENTS.md · agents 等 — 本地先抓，勿直接 push 烧 Actions）
+# 与 rules/local 一致：symlink 优先；Windows 无权限时允许与 harness/core 一致的实体副本
+smoke_facade_resolved() {
+  local proj="$1" name="$2" label="$3"
+  local cur="$proj/.cursor"
+  local core="$cur/harness/core/$name"
+  local path="$cur/$name"
+  if [[ -L "$path" ]]; then
+    ok "$label (symlink)"
+    return 0
+  fi
+  if [[ -f "$core" ]]; then
+    if [[ -f "$path" ]] && diff -q "$path" "$core" >/dev/null 2>&1; then
+      ok "$label (materialized file)"
+      return 0
+    fi
+  elif [[ -d "$core" ]]; then
+    if [[ -d "$path" ]] && diff -qr "$path" "$core" >/dev/null 2>&1; then
+      ok "$label (materialized dir)"
+      return 0
+    fi
+  fi
+  fail "$label (not symlink or equivalent to harness/core)"
+}
+
 smoke_corrupt_ide_facades() {
   local proj="$1"
   local cur="$proj/.cursor"
@@ -128,10 +152,8 @@ smoke_corrupt_ide_facades() {
 }
 smoke_corrupt_ide_facades "$FULL"
 run_install "full: reinstall after Windows-like facade copies" "$TMP_ROOT/full-facade.out" "$FULL" --profile full
-[[ -L "$FULL/.cursor/agents" ]] && ok "full: agents symlink after facade reinstall" \
-  || fail "full: agents not symlink after facade reinstall"
-[[ -L "$FULL/.cursor/AGENTS.md" ]] && ok "full: AGENTS.md symlink after facade reinstall" \
-  || fail "full: AGENTS.md not symlink after facade reinstall"
+smoke_facade_resolved "$FULL" agents "full: agents after facade reinstall"
+smoke_facade_resolved "$FULL" AGENTS.md "full: AGENTS.md after facade reinstall"
 
 run_install "full: reinstall idempotent onekey" "$TMP_ROOT/full-reinstall.out" "$FULL" --profile full
 onekey_hash2="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
