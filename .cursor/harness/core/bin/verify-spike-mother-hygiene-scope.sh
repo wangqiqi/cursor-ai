@@ -8,7 +8,7 @@ ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 # shellcheck source=../lib/growth-archive.sh
 source "$ROOT/.cursor/lib/growth-archive.sh"
 
-count="$(find "$ROOT/.cursor/bin" -maxdepth 1 -name 'verify-*.sh' | wc -l | tr -d ' ')"
+count="$(find -L "$ROOT/.cursor/bin" -maxdepth 1 -name 'verify-*.sh' 2>/dev/null | wc -l | tr -d ' ')"
 [[ "$count" -ge 20 ]] || { echo "FAIL: expected >=20 verify-*.sh, got $count" >&2; exit 1; }
 
 if sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-mother-hygiene-scope"; then

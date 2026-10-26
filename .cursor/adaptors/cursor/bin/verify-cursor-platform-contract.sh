@@ -2,7 +2,9 @@
 # Cursor platform alignment contract (SPRINT-CURSOR-ALIGN + mother lean TASK-001).
 # Replaces verify-spike-cursor-align-archive + verify-task-001..006.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/resolve-root.sh
+source "$(cd "$(dirname "$0")/.." && pwd)/lib/resolve-root.sh"
+ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
 CUR="$ROOT/.cursor"
 TPL="$CUR/templates/growing"
 ARCHIVE_DIR="$ROOT/.growing/archive/meta"
@@ -59,6 +61,7 @@ grep -q "review" "$TPL/BUGBOT.md" || fail "BUGBOT.md missing review skill split"
 
 # --- MCP + Cloud templates ---
 DOC="$CUR/docs/cursor-cloud.md"
+[[ -f "$DOC" ]] || DOC="$CUR/adaptors/cursor/docs/cursor-cloud.md"
 for f in mcp.json.example environment.json.example; do
   [[ -f "$TPL/$f" ]] || fail "missing $TPL/$f"
 done

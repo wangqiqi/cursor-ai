@@ -96,7 +96,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 | **mother** | 纯母版空仓；或 `SC_VERIFY_LAYOUT=mother` | **必须**满足 |
 | **hybrid** | 根目录有 `scripts/` · `backend/` · `frontend/` 等业务树（自动）；或 `SC_VERIFY_LAYOUT=hybrid` | **SKIP**；改验 `scripts/verify.sh` 存在 |
 
-混合仓日常：**`cursor-coherence.sh`** + **`verify-super-cursor.sh`**；纯母版空仓：**`template-verify.sh`** 全量。详见 `.cursor/README.md` §自测。
+混合仓日常：**`cursor-coherence.sh`** + **`verify-super-cursor.sh`**；纯母版空仓：**`bash .cursor/template-verify.sh`**（先 assemble）。母版 SSOT → `harness/README.md` · 根 `README.md` §验证。
 
 **L0–L3 真源在本文件**；**test** skill 只引用本表，勿另写一份层定义。测试文件细则 → `rules/execution/testing.mdc` · 垂直切片层序 → `rules/execution/vibe.mdc`。
 
@@ -119,7 +119,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 
 | 组 | 脚本（`.cursor/bin/`） | 守护什么 | 触发 |
 |----|-------------------------|----------|------|
-| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG 结构 · 门面计数与 doc 链 · project-onekey 模板 | 通用 / 母版 |
+| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · harness/adaptors 分区 · project-onekey 模板 | 通用 / 母版 |
 | **install** | `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `--skills-bundle full/core` 契约 · onekey bootstrap SPIKE 归档 | 母版 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs · `docs-init` SPIKE 归档 | 母版 |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 | 母版 |

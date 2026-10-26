@@ -3,8 +3,26 @@
 set -euo pipefail
 
 _LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=../../lib/platform.sh
-source "$_LIB_DIR/../../lib/platform.sh"
+_hooks_dir="$(cd "$_LIB_DIR/.." && pwd)"
+_w="$_hooks_dir"
+while [[ "$_w" != "/" ]]; do
+  if [[ -f "$_w/lib/platform.sh" && -d "$_w/hooks" ]]; then
+    # shellcheck source=../../lib/platform.sh
+    source "$_w/lib/platform.sh"
+    break
+  fi
+  if [[ -f "$_w/harness/core/lib/platform.sh" ]]; then
+    # shellcheck source=../../../../harness/core/lib/platform.sh
+    source "$_w/harness/core/lib/platform.sh"
+    break
+  fi
+  if [[ -f "$_w/lib/platform.sh" ]]; then
+    # shellcheck source=../../lib/platform.sh
+    source "$_w/lib/platform.sh"
+    break
+  fi
+  _w="$(dirname "$_w")"
+done
 
 _json_py() {
   sc_python 2>/dev/null || true

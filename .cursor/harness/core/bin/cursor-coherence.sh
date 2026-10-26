@@ -27,7 +27,7 @@ for skill_dir in "$CUR"/skills/*/; do
 done
 
 # 2. AGENTS.md Skills line lists every disk skill
-disk_skills="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)"
+disk_skills="$(find -L "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; 2>/dev/null | sort)"
 agents_block="$(sed -n '/^Skills:/p' "$CUR/AGENTS.md")"
 while IFS= read -r sk; do
   [[ -z "$sk" ]] && continue

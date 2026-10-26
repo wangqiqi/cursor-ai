@@ -2,8 +2,29 @@
 # Universal Super Cursor layout check
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+_walk="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT=""
+while [[ "$_walk" != "/" ]]; do
+  if [[ -f "$_walk/install-super-cursor.sh" ]]; then
+    ROOT="$_walk"
+    break
+  fi
+  _walk="$(dirname "$_walk")"
+done
+[[ -n "$ROOT" ]] || { echo "FAIL: install-super-cursor.sh not found above verify-super-cursor.sh" >&2; exit 1; }
 CUR="$ROOT/.cursor"
+CUR_ADAPTOR_BIN="$CUR/adaptors/cursor/bin"
+
+sc_verify_script() {
+  local name="$1"
+  if [[ -f "$CUR/bin/$name" ]]; then
+    echo "$CUR/bin/$name"
+  elif [[ -f "$CUR_ADAPTOR_BIN/$name" ]]; then
+    echo "$CUR_ADAPTOR_BIN/$name"
+  else
+    return 1
+  fi
+}
 
 # shellcheck source=bin/../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-super-cursor"
@@ -76,7 +97,7 @@ check_grep_absent() {
 # Disk skill dirs must match verify-doc-super-cursor.sh (28 · each SKILL.md).
 check_skills_contract() {
   local expected=28 disk missing=0
-  disk="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
+  disk="$(find -L "$CUR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
   if [[ "$disk" != "$expected" ]]; then
     echo "FAIL skills disk count=$disk (expected $expected; sync verify-doc-super-cursor.sh)"
     VC_FAIL=$((VC_FAIL + 1))
@@ -87,7 +108,7 @@ check_skills_contract() {
       echo "FAIL missing $d/SKILL.md"
       missing=$((missing + 1))
     fi
-  done < <(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
+  done < <(find -L "$CUR/skills" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
   if [[ "$missing" -gt 0 ]]; then
     VC_FAIL=$((VC_FAIL + 1))
   else
@@ -399,16 +420,16 @@ bash "$CUR/bin/verify-project-tmp-cleanup.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== mother-only: platform · SPIKE · plugin · hygiene ==="
 if is_mother_repo; then
-  bash "$CUR/bin/verify-cursor-platform-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-cursor-platform-contract.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-tools-skills-archive.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-skills-bundle-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-docs-sync-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-spike-plugin-mvp-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-cursor-plugin-manifest.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-cursor-plugin-mvp.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-spike-plugin-agents-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-spike-plugin-phase2-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-spike-plugin-mvp-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-cursor-plugin-manifest.sh)" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-cursor-plugin-mvp.sh)" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-spike-plugin-agents-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$(sc_verify_script verify-spike-plugin-phase2-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-marketplace-prep-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-mother-hygiene-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-onekey-bootstrap-scope.sh" || VC_FAIL=$((VC_FAIL + 1))

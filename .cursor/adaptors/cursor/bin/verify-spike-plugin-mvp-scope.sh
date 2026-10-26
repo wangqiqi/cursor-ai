@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # SPIKE-002 SPRINT-PLUGIN-MVP: scope matrix archived.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/resolve-root.sh
+source "$(cd "$(dirname "$0")/.." && pwd)/lib/resolve-root.sh"
+ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
 ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
 # 归档为本地私有（.growing/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验

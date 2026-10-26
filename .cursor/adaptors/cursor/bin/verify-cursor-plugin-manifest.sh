@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # TASK-001 SPRINT-PLUGIN-MVP: .cursor-plugin/plugin.json scaffold contract.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/resolve-root.sh
+source "$(cd "$(dirname "$0")/.." && pwd)/lib/resolve-root.sh"
+ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
 CUR="$ROOT/.cursor"
 PLUGIN="$ROOT/.cursor-plugin"
 # shellcheck source=../lib/verify-common.sh

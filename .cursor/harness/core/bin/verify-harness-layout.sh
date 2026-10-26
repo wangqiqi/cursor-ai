@@ -83,6 +83,6 @@ for id in dsh kiro trae opencode; do
   [[ -f "$CUR/adaptors/$id/README.md" ]] && vc_ok "adaptors/$id/README.md" || vc_fail "missing adaptors/$id/README.md"
 done
 
-[[ -f "$CUR/rules/core.mdc" ]] && vc_ok ".cursor assembled (core.mdc)" || vc_fail ".cursor missing — run .cursor/harness/assemble.sh"
+[[ -f "$CUR/rules/core.mdc" ]] && vc_ok ".cursor IDE link (core.mdc)" || vc_fail ".cursor missing core.mdc — run .cursor/harness/link-cursor-ide.sh"
 
 vc_summary "verify-harness-layout passed."

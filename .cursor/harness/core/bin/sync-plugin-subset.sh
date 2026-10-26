@@ -2,7 +2,16 @@
 # Copy Super Cursor MVP subset from .cursor/ → .cursor-plugin/ (SSOT: SPIKE-002 scope matrix).
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+_walk="$(cd "$(dirname "$0")" && pwd)"
+ROOT=""
+while [[ "$_walk" != "/" ]]; do
+  if [[ -f "$_walk/install-super-cursor.sh" ]]; then
+    ROOT="$_walk"
+    break
+  fi
+  _walk="$(dirname "$_walk")"
+done
+[[ -n "$ROOT" ]] || { echo "FAIL: install-super-cursor.sh not found above $(dirname "$0")" >&2; exit 1; }
 SRC="$ROOT/.cursor"
 DEST="$ROOT/.cursor-plugin"
 
@@ -36,6 +45,7 @@ HOOK_SCRIPTS=(
 LIB_SCRIPTS=(
   lib/platform.sh
   lib/onekey-bootstrap.sh
+  lib/project-profile.sh
 )
 
 copy_file() {

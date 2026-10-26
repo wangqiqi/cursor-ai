@@ -57,4 +57,4 @@ Super Cursor 的目标不是「让 Agent 说得更短」，而是 **更快、沿
 
 > **快速按正确方向生成可验证答案 = 真省；单次少说几句但多拉扯几轮 = 假省。**
 
-相关：[plan/run](plan-run.md) · [quickstart](quickstart.md) · [walkthrough](walkthrough.md)
+相关：[plan/run](../../../adaptors/cursor/docs/plan-run.md) · [quickstart](quickstart.md) · [walkthrough](walkthrough.md)

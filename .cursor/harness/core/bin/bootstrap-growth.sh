@@ -27,15 +27,21 @@ if [[ -f "$GROWTH_TEMPLATE/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/loc
   cp "$GROWTH_TEMPLATE/rules/local/README.md" "$GROWTH_DIR/rules/local/README.md"
 fi
 
-CURSOR_LOCAL="$ROOT/.cursor/rules/local"
+if [[ -d "$ROOT/.cursor/harness/core/rules" ]]; then
+  CURSOR_LOCAL="$ROOT/.cursor/harness/core/rules/local"
+  LOCAL_REL="../../../../.growing/rules/local"
+else
+  CURSOR_LOCAL="$ROOT/.cursor/rules/local"
+  LOCAL_REL="../../.growing/rules/local"
+fi
 # Repair mistaken plain-file pointer (must be symlink or directory)
 if [[ -f "$CURSOR_LOCAL" && ! -L "$CURSOR_LOCAL" ]]; then
   rm -f "$CURSOR_LOCAL"
 fi
 if [[ -d "$GROWTH_DIR/rules/local" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]]; then
-    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
-      echo "Linked .cursor/rules/local → .growing/rules/local"
+    if ln -sf "$LOCAL_REL" "$CURSOR_LOCAL" 2>/dev/null; then
+      echo "Linked $CURSOR_LOCAL → .growing/rules/local"
     else
       mkdir -p "$CURSOR_LOCAL"
       cp -f "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \

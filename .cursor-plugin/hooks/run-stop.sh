@@ -3,11 +3,12 @@
 set -euo pipefail
 
 HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CURSOR_DIR="$(cd "$HOOKS_DIR/.." && pwd)"
 # shellcheck source=lib/config-load.sh
 source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
+_pack="$(sc_cursor_pack_from_dir "$HOOKS_DIR")"
+CURSOR_DIR="${_pack:-$(cd "$HOOKS_DIR/../.." && pwd)}"
 
 sc_resolve_project_root "$HOOKS_DIR"
 sc_init_config "$CURSOR_DIR"

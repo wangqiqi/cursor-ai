@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # TASK-002 SPRINT-PLUGIN-MVP: .cursor-plugin subset matches SPIKE-002 scope.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/resolve-root.sh
+source "$(cd "$(dirname "$0")/.." && pwd)/lib/resolve-root.sh"
+ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
 PLUGIN="$ROOT/.cursor-plugin"
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
@@ -62,13 +64,15 @@ if grep -qE '11 道(门禁| · 全部接线)' "$verify_mdc"; then
   fail "plugin verify.mdc still mentions obsolete 11 道 gate count"
 fi
 
-bash "$ROOT/.cursor/bin/verify-cursor-plugin-manifest.sh" || exit 1
+bash "$(cd "$(dirname "$0")" && pwd)/verify-cursor-plugin-manifest.sh" || exit 1
 
 # --- hooks 冒烟：复制到临时项目实跑三个 hook ---
 # 只查「文件存在」看不见两类死法：缺 lib/platform.sh（source 即退 1）、
 # 读不到已安装项目的 .cursor/config（用户配置被静默忽略）。
-# shellcheck source=../lib/temp-cleanup.sh
-source "$(cd "$(dirname "$0")/.." && pwd)/lib/temp-cleanup.sh"
+_tc="$ROOT/.cursor/harness/core/lib/temp-cleanup.sh"
+[[ -f "$_tc" ]] || _tc="$ROOT/.cursor/lib/temp-cleanup.sh"
+# shellcheck source=temp-cleanup.sh
+source "$_tc"
 sc_temp_trap_cleanup
 sc_mktemp_dir sc-verify-plugin-mvp
 smoke_root="$SC_MKTEMP_LAST"

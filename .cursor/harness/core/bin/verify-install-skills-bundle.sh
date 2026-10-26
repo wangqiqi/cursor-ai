@@ -11,7 +11,7 @@ sc_mktemp_dir sc-verify-skills-bundle
 TMP="$SC_MKTEMP_LAST"
 
 count_skills() {
-  find "$1/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' '
+  find -L "$1/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' '
 }
 
 [[ -x "$INSTALL" ]] || { echo "FAIL: install not executable" >&2; exit 1; }

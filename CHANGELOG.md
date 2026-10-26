@@ -6,7 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
-- **Harness 布局（母版）** — SSOT 迁至 `.cursor/harness/core` + `.cursor/adaptors`；平铺 `.cursor/{skills,bin,…}` 改为 `assemble` 生成且 **gitignore**；验收入口 `bash .cursor/template-verify.sh`；`harness/clean-assembled.sh` 减本地冗余
+- **Harness 布局（母版）** — SSOT 在 `.cursor/harness/core` + `.cursor/adaptors`；根下协议路径为 **相对 symlink**（`link-cursor-ide.sh`），整包 `.cursor/` 可拷贝；`assemble.sh` 弃用为 link；install 复制分区树后补链；验收入口 `template-verify.sh` · `clean-assembled.sh` 删误生成实体副本
 - **文档与脚本** — 根/README.en · harness `docs/` · `migration-catalog` · `verify.mdc` · `master/routes` · CI 路径统一为 `template-verify.sh` + harness 编辑说明
 
 ## [5.0.2] - 2026-10-26

@@ -155,7 +155,7 @@ export HOME="$HOME_SAVE"
 # 8. skills-bundle core
 CORE_BUNDLE="$TMP_ROOT/core-bundle"
 run_install "core bundle: install" "$TMP_ROOT/core-bundle.out" "$CORE_BUNDLE" --profile lite --skills-bundle core
-core_n="$(find "$CORE_BUNDLE/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
+core_n="$(find -L "$CORE_BUNDLE/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
 [[ "$core_n" == "23" ]] && ok "core bundle: 23 skills" || fail "core bundle: skills=$core_n (expected 23)"
 assert_absent "$CORE_BUNDLE/.cursor/skills/week/SKILL.md" "core bundle: no week skill"
 

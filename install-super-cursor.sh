@@ -287,7 +287,8 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   fi
 fi
 if [[ -d "$SOURCE/.cursor/harness/core" ]]; then
-  bash "$SOURCE/.cursor/harness/assemble.sh" "$TARGET/.cursor"
+  sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+  bash "$SOURCE/.cursor/harness/link-cursor-ide.sh" "$TARGET/.cursor"
 else
   sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
 fi
@@ -387,15 +388,21 @@ if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan
   fi
 fi
 
-# Symlink .cursor/rules/local → .growing/rules/local (Cursor glob 加载)
-CURSOR_LOCAL="$TARGET/.cursor/rules/local"
+# Symlink rules/local → .growing/rules/local (Cursor glob 加载)
+if [[ -d "$TARGET/.cursor/harness/core/rules" ]]; then
+  CURSOR_LOCAL="$TARGET/.cursor/harness/core/rules/local"
+  LOCAL_REL="../../../../.growing/rules/local"
+else
+  CURSOR_LOCAL="$TARGET/.cursor/rules/local"
+  LOCAL_REL="../../.growing/rules/local"
+fi
 if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]] || { [[ -d "$CURSOR_LOCAL" ]] && \
     [[ "$(find "$CURSOR_LOCAL" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')" -le 1 ]]; }; then
     rm -rf "$CURSOR_LOCAL"
     # Windows / Git Bash 可能无符号链接权限：失败必须降级为真实目录，不能让安装中断（set -e）
-    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
-      echo "已链接 .cursor/rules/local → .growing/rules/local"
+    if ln -sf "$LOCAL_REL" "$CURSOR_LOCAL" 2>/dev/null; then
+      echo "已链接 rules/local → .growing/rules/local"
     else
       mkdir -p "$CURSOR_LOCAL"
       cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null || true
@@ -405,8 +412,13 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
 fi
 
 # 项目根 onekey_start.sh（与 growth-init 同源 · growth.onekey_bootstrap）
-# shellcheck source=.cursor/lib/onekey-bootstrap.sh
-source "$SOURCE/.cursor/lib/onekey-bootstrap.sh"
+if [[ -f "$SOURCE/.cursor/harness/core/lib/onekey-bootstrap.sh" ]]; then
+  # shellcheck source=.cursor/harness/core/lib/onekey-bootstrap.sh
+  source "$SOURCE/.cursor/harness/core/lib/onekey-bootstrap.sh"
+else
+  # shellcheck source=.cursor/lib/onekey-bootstrap.sh
+  source "$SOURCE/.cursor/lib/onekey-bootstrap.sh"
+fi
 _onekey_enabled="true"
 if [[ -f "$TARGET/.cursor/config/workflow.json" ]]; then
   _onekey_enabled="$(json_cfg "$TARGET/.cursor/config/workflow.json" "growth.onekey_bootstrap" "true")"

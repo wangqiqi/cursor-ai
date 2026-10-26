@@ -5,13 +5,19 @@ set -euo pipefail
 INPUT=$(cat)
 
 HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CURSOR_DIR="$(cd "$HOOKS_DIR/.." && pwd)"
 # shellcheck source=lib/config-load.sh
 source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
-# shellcheck source=../lib/onekey-bootstrap.sh
-source "$HOOKS_DIR/../lib/onekey-bootstrap.sh"
+if [[ -f "$HOOKS_DIR/../lib/onekey-bootstrap.sh" ]]; then
+  _core_lib="$(cd "$HOOKS_DIR/.." && pwd)/lib"
+else
+  _core_lib="$(sc_cursor_core_lib_dir "$HOOKS_DIR")"
+fi
+# shellcheck source=onekey-bootstrap.sh
+source "$_core_lib/onekey-bootstrap.sh"
+_pack="$(sc_cursor_pack_from_dir "$HOOKS_DIR")"
+CURSOR_DIR="${_pack:-$(cd "$HOOKS_DIR/../.." && pwd)}"
 
 sc_resolve_project_root "$HOOKS_DIR"
 sc_init_config "$CURSOR_DIR"

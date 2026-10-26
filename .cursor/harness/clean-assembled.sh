@@ -13,4 +13,4 @@ for name in "${remove[@]}"; do
     echo "removed .cursor/$name"
   fi
 done
-echo "OK: flat runtime removed — run .cursor/harness/assemble.sh before IDE or verify"
+echo "OK: duplicate runtime trees removed — run .cursor/harness/link-cursor-ide.sh for IDE symlinks"

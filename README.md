@@ -43,6 +43,8 @@
 └── （assemble 后平铺）skills/ · rules/ · hooks/ · bin/ … — 与 install 到目标项目的形态一致；母版 gitignore
 ```
 
+assemble 后 `skills/` 目录 **28 个** skill（`--skills-bundle core` 为 23 个）；计数由 `verify-doc-super-cursor` 与磁盘对齐。
+
 **根目录（可直接 clone / 复制）：**
 
 ```text
@@ -190,7 +192,7 @@ flowchart TB
 
 发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
 
-**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
+**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** · **user-manual** · **test-report** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
 
 **需显式调用**（`disable-model-invocation: true`，Agent **不会**按关键词自动选用）：**`/week`** · **`/disk`** · **`/maintain`** · **`/ops-deploy`** · **`/code-stats-viz`**。
 

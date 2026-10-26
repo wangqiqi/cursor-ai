@@ -94,7 +94,7 @@ jobs:
         run: bash .cursor/template-verify.sh
 
       - name: Secret scan (tracked files)
-        run: bash .cursor/harness/assemble.sh && bash .cursor/bin/verify-secrets.sh
+        run: bash .cursor/harness/link-cursor-ide.sh && bash .cursor/bin/verify-secrets.sh
 
       - name: Template layout + scaffold + runner + install + consumer smoke
         if: matrix.jq

@@ -2,7 +2,16 @@
 # Doc-coherence checks for Super Cursor mother repo (aggregated by verify-super-cursor.sh).
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+_walk="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT=""
+while [[ "$_walk" != "/" ]]; do
+  if [[ -f "$_walk/install-super-cursor.sh" ]]; then
+    ROOT="$_walk"
+    break
+  fi
+  _walk="$(dirname "$_walk")"
+done
+[[ -n "$ROOT" ]] || { echo "FAIL: repo root not found" >&2; exit 1; }
 CUR="$ROOT/.cursor"
 
 # shellcheck source=../lib/verify-common.sh
@@ -11,7 +20,7 @@ source "$CUR/lib/verify-common.sh" "verify-doc-super-cursor"
 echo "=== verify-doc-super-cursor ==="
 
 # --- README skills count vs disk ---
-disk_skills="$(find "$CUR/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
+disk_skills="$(find -L "$CUR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
 readme_line="$(grep -E 'skills/.*[0-9]+ 个' "$ROOT/README.md" 2>/dev/null | head -1 || true)"
 if [[ -z "$readme_line" ]]; then
   vc_fail "README.md missing skills count line (N 个)"
@@ -27,7 +36,7 @@ fi
 # --- migration-catalog skills/rules counts (optional line) ---
 mc="$CUR/docs/migration-catalog.md"
 if [[ -f "$mc" ]]; then
-  disk_rules="$(find "$CUR/rules" -name '*.mdc' | wc -l | tr -d ' ')"
+  disk_rules="$(find -L "$CUR/rules" -name '*.mdc' 2>/dev/null | wc -l | tr -d ' ')"
   if grep -qE "${disk_skills} skills" "$mc" && grep -qE "${disk_rules} rules" "$mc"; then
     vc_ok "migration-catalog counts skills=$disk_skills rules=$disk_rules"
   else
@@ -86,8 +95,9 @@ vc_ok "slash SSOT (routes.md canonical · README/training no 3-tier duplicate ta
 # --- Plugin MVP docs: install primary + sync/verify commands ---
 platform_learn="$CUR/templates/growing/learn/cursor-platform.md"
 cloud_doc="$CUR/docs/cursor-cloud.md"
+[[ -f "$cloud_doc" ]] || cloud_doc="$CUR/adaptors/cursor/docs/cursor-cloud.md"
 [[ -f "$platform_learn" ]] || vc_fail "missing cursor-platform.md learn template"
-[[ -f "$cloud_doc" ]] || vc_fail "missing cursor-cloud.md"
+[[ -f "$cloud_doc" ]] || vc_fail "missing cursor-cloud.md (core or adaptors/cursor/docs)"
 grep -q "## Plugin MVP" "$platform_learn" || vc_fail "cursor-platform.md missing Plugin MVP section"
 grep -q "install-super-cursor" "$platform_learn" || vc_fail "cursor-platform.md must state install primary path"
 grep -q "sync-plugin-subset" "$platform_learn" || vc_fail "cursor-platform.md missing sync-plugin-subset"
@@ -261,6 +271,7 @@ PY
 if git -C "$ROOT" grep -rnE '\.cursorGrowth|templates/cursorGrowth' -- . \
   ':(exclude)install-super-cursor.sh' \
   ':(exclude)CHANGELOG.md' \
+  ':(exclude).cursor/harness/core/bin/verify-doc-super-cursor.sh' \
   ':(exclude).cursor/bin/verify-doc-super-cursor.sh' \
   2>/dev/null | grep -q .; then
   vc_fail "legacy .cursorGrowth path outside install migration + CHANGELOG (SSOT must be .growing)"

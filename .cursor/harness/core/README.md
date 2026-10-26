@@ -1,6 +1,6 @@
 # Super Cursor — `.cursor/`
 
-通用 SOP 包。**母版仓库** SSOT 在 **`harness/core/`** + **`adaptors/`**（见 [`harness/README.md`](../harness/README.md)）；平铺的 `skills/` · `rules/` · `bin/` 由 **`bash .cursor/harness/assemble.sh`** 生成（母版 gitignore）。安装到目标项目后默认**只读**（见 **cursor-standalone**）。
+通用 SOP 包。**母版仓库** SSOT 在 **`harness/core/`** + **`adaptors/`**（见 [`harness/README.md`](../harness/README.md)）；根下 `skills/` · `rules/` · `hooks/` 等为 **相对 symlink**（`link-cursor-ide.sh`），拷贝整个 `.cursor/` 即可迁移。安装到目标项目后默认**只读**（见 **cursor-standalone**）。
 
 ## 结构（母版 · 编辑真源）
 
@@ -11,13 +11,15 @@
 | `adaptors/{dsh,…}/` | 其它 IDE 占位 |
 | `template-verify.sh` | 母版 CI 入口（先 assemble） |
 
-平铺树（assemble 后，与消费方 install 产物同形）：
+平铺树（assemble / **install 后**；消费方仅见此形态）：
 
 | 始终加载（4） | `rules/core.mdc` · `rules/workflow.mdc` · `rules/communication/cursor-standalone.mdc` · `rules/communication/super-cursor-persona.mdc` |
 | 按需 | skills · glob rules · `learn/` |
+| **agents** | **ship** · review · spike（subagent 委派） |
+| hooks | growth-init · run-start · run-stop（`full` profile） |
 
 ```bash
-bash .cursor/harness/assemble.sh             # 本地 IDE / 单测前（或交给 template-verify）
+bash .cursor/harness/link-cursor-ide.sh      # 缺链时补齐（install / template-verify 也会调）
 bash .cursor/template-verify.sh              # 母版全量（CI 入口）
 bash .cursor/verify-super-cursor.sh          # layout + verify-*.sh 聚合
 bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端

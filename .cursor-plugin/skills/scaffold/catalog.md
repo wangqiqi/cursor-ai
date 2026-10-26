@@ -8,6 +8,7 @@
 | `vue-vite-ts` | frontend | Vitest · `tests/` | 同上 |
 | `nextjs-ts` | frontend | Vitest · App Router | 同上 |
 | `go-api` | backend | `tests/integration` + internal | 同上 |
+| `java-gradle` | backend | `src/test/java` · JDK `/health` | `./gradlew test` · 改 `com.example` 包名 |
 | `rust-axum` | backend | `tests/*.rs` · `app()` | 同上 |
 | `python-fastapi` | backend | unit+integration · pytest | 同上 |
 | `cpp-cmake` | systems | GoogleTest · `tests/` | 同上 |

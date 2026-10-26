@@ -11,6 +11,38 @@ set -euo pipefail
 export PYTHONIOENCODING="${PYTHONIOENCODING:-utf-8}"
 export PYTHONUTF8="${PYTHONUTF8:-1}"
 
+# Super Cursor pack root: harness 分区或 legacy 平铺 .cursor/
+sc_cursor_pack_from_dir() {
+  local start="${1:?}"
+  local w="$start"
+  while [[ "$w" != "/" ]]; do
+    if [[ -d "$w/harness/core" && -d "$w/adaptors" ]]; then
+      echo "$w"
+      return 0
+    fi
+    if [[ -f "$w/config/workflow.json" ]] && { [[ -d "$w/rules" ]] || [[ -L "$w/rules" ]]; }; then
+      echo "$w"
+      return 0
+    fi
+    w="$(dirname "$w")"
+  done
+  return 1
+}
+
+sc_cursor_core_lib_dir() {
+  local pack
+  pack="$(sc_cursor_pack_from_dir "$1")" || return 1
+  if [[ -d "$pack/harness/core/lib" ]]; then
+    echo "$pack/harness/core/lib"
+    return 0
+  fi
+  if [[ -d "$pack/lib" ]]; then
+    echo "$pack/lib"
+    return 0
+  fi
+  return 1
+}
+
 sc_python() {
   if [[ -n "${SC_PYTHON_CMD:-}" ]]; then
     echo "$SC_PYTHON_CMD"

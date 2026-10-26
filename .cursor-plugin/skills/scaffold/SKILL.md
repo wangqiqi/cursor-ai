@@ -71,13 +71,24 @@ disable-model-invocation: true
 - **`/learn`** 写入栈与目录约定到 `.growing/learn/`
 - **Super Cursor 已装时**：按 [master routes §DAILY/LIBRARY](../master/routes.md#外网-skill--daily--librarydeps) 列出本仓 **DAILY**（默认启用的 rules/skills）与 **LIBRARY**（离栈保留）；一句写入 `learn/dev-conventions.md` 可选
 
+## 棕地 · 按需启用（整包 `.cursor`）
+
+`install-super-cursor.sh` **整包**复制母版；运行时启用面由 Growth 元数据决定（省 token · 更快）：
+
+```bash
+./.cursor/bin/scaffold.sh adapt          # 预览
+./.cursor/bin/scaffold.sh adapt --write  # → .growing/project-profile.json
+```
+
+详 `.cursor/docs/tech-stacks.md`。人类叙述同步 **`/learn`** → `learn/dev-conventions.md`（`stacks.primary`）。
+
 ## Super Cursor 安装后裁剪（DAILY / LIBRARY）
 
 `install-super-cursor.sh` 复制全量母版后，**不要**假设每个 `rules/tech/*` 与外网 skill 都该默认加载。
 
 | 步 | 动作 |
 |----|------|
-| 1 | 读栈证据（见 **master** `routes.md` §DAILY/LIBRARY） |
+| 1 | **`scaffold adapt --write`**（机器 SSOT）+ 读栈证据（**master** `routes.md` §DAILY/LIBRARY） |
 | 2 | **DAILY** — 匹配栈的 `rules/tech/*` + 核心 workflow skills（plan · run · learn） |
 | 3 | **LIBRARY** — 离栈 tech rules、偶用 skill（perf · mcp · study 主题）；需要时再手动 `@` 或 slash |
 | 4 | 可选：在 `.growing/learn/dev-conventions.md` 记一行「本仓 DAILY 面」供 **plan**/**run** 引用 |

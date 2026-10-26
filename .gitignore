@@ -5,21 +5,7 @@
 # DSH 运行时生长/会话状态（本地私有，不入 git）
 .dsh/
 .cursor/rules/local
-# 母版：平铺 runtime 由 harness/assemble 生成（SSOT 在 .cursor/harness/core + .cursor/adaptors）
-.cursor/agents/
-.cursor/bin/
-.cursor/config/
-.cursor/docs/
-.cursor/hooks/
-.cursor/hooks.json
-.cursor/lib/
-.cursor/rules/
-.cursor/skills/
-.cursor/templates/
-.cursor/AGENTS.md
-.cursor/README.md
-.cursor/verify-super-cursor.sh
-.cursor/verify-system.sh
+# 母版：SSOT 在 harness/core + adaptors；根下 agents/bin/rules/… 为 git 跟踪的相对 symlink（link-cursor-ide.sh）
 # hooks 运行时状态（源树 adaptors/cursor/hooks/state）
 .cursor/hooks/state/*
 !.cursor/hooks/state/README.md
