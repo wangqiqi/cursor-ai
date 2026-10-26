@@ -234,11 +234,24 @@ print(f"OK  skill metadata (28 files · description <=85 · dmi buckets · run/p
 PY
 
 # --- relative markdown links under .cursor/docs ---
-vc_py "$CUR/docs" <<'PY'
+vc_py "$CUR/docs" "$CUR" <<'PY'
 import re, sys
 from pathlib import Path
+from typing import Optional
 
-docs_root = Path(sys.argv[1])
+docs_root = Path(sys.argv[1]).resolve()
+pack_root = Path(sys.argv[2]).resolve()
+
+def pack_relative_fallback(path_part: str) -> Optional[Path]:
+    """Harness 分区：core/docs 常链到 adaptors/（Windows 下纯 resolve 偶发失败）。"""
+    norm = path_part.replace("\\", "/")
+    while norm.startswith("../"):
+        norm = norm[3:]
+    if not norm or norm.startswith("/"):
+        return None
+    candidate = (pack_root / norm).resolve()
+    return candidate if candidate.is_file() else None
+
 link_re = re.compile(r'\]\(([^)]+)\)')
 skip_prefix = ("http://", "https://", "mailto:", "#")
 broken = []
@@ -254,8 +267,12 @@ for md in sorted(docs_root.rglob("*.md")):
         if not path_part:
             continue
         resolved = (md.parent / path_part).resolve()
-        if not resolved.exists():
-            broken.append(f"{md.relative_to(docs_root).as_posix()} -> {target}")
+        if resolved.exists():
+            continue
+        alt = pack_relative_fallback(path_part)
+        if alt and alt.exists():
+            continue
+        broken.append(f"{md.relative_to(docs_root).as_posix()} -> {target}")
 
 if broken:
     for b in broken[:20]:

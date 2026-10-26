@@ -48,6 +48,8 @@ RESERVED_BASH_RE = re.compile(
     + r")\s*\+?="
 )
 XARGS_I_BASH_C_RE = re.compile(r"xargs\b.*-I\s*\{\}.*bash\s+-c.*\{\}")
+MAPFILE_RE = re.compile(r"\bmapfile\b")
+PROC_SUB_RE = re.compile(r"<\s*<\(")
 
 files = []
 files += sorted(p for p in cur.rglob("*.sh") if p.name not in SELF)
@@ -143,6 +145,30 @@ for path in files:
                 f"{rel}:{i} xargs -I{{}} with bash -c … {{}} splits multi-word commands; "
                 f"use xargs -0 -n 1 (or portability-allow: xargs-I)"
             )
+        if MAPFILE_RE.search(code):
+            fails.append(f"{rel}:{i} mapfile (bash 4+; macOS system bash is 3.2)")
+        # 门禁脚本在 Windows Git Bash 上常因 process substitution 失败；优先 mktemp 重定向
+        if PROC_SUB_RE.search(code) and rel.endswith("bin/cursor-coherence.sh"):
+            fails.append(
+                f"{rel}:{i} process substitution in cursor-coherence "
+                "(use mktemp + file redirect; see docs/platforms.md)"
+            )
+
+# --- packaged rules SSOT regression ---
+coherence = cur / "bin" / "cursor-coherence.sh"
+if coherence.is_file():
+    ct = coherence.read_text(encoding="utf-8", errors="replace")
+    if "sc_find_packaged_rules_mdc" not in ct:
+        fails.append("cursor-coherence.sh must use sc_find_packaged_rules_mdc (platform SSOT)")
+platform_sh = cur / "lib" / "platform.sh"
+if platform_sh.is_file():
+    pt = platform_sh.read_text(encoding="utf-8", errors="replace")
+    if "sc_find_packaged_rules_mdc" not in pt:
+        fails.append("lib/platform.sh missing sc_find_packaged_rules_mdc")
+    if "rules/local" not in pt or "-prune" not in pt:
+        fails.append("sc_find_packaged_rules_mdc must prune rules/local from packaged gates")
+else:
+    fails.append("lib/platform.sh missing (packaged rules SSOT)")
 
 # --- linter self-test (must fail on deliberate bad samples) ---
 if not RESERVED_BASH_RE.search("BASH_CMDS+=('x')"):

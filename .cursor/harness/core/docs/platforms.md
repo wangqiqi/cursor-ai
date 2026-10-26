@@ -42,6 +42,9 @@ bash .cursor/bin/platform-check.sh
 | **勿用 Bash 内置数组名** | 如 `BASH_CMDS` · `FUNCNAME` · `GROUPS` · `PIPESTATUS` — 赋值/`+=` 会与内置冲突（曾导致 `[verify] manifest:` 为空）。用项目前缀，例：`MANIFEST_BASH_CMDS`。 |
 | **门禁** | `bash .cursor/bin/verify-portability.sh` 对母版 `*.sh` **FAIL** 命中上述名字。 |
 | **manifest 并行** | `run-manifest-tier.sh` 用 `xargs -0 -n 1` 传整条 command；勿 `xargs -I{} bash -c … {}`（除非行内 `portability-allow: xargs-I`）。 |
+| **勿用 `mapfile`** | bash 4+ 才有；macOS 系统 bash 3.2 会直接语法错误。用 `while IFS= read -r` + 临时文件或 here-string。 |
+| **`cursor-coherence` 勿用 process substitution** | Windows Git Bash 上 `done < <(cmd)` 不可靠；用 `mktemp` 重定向。`verify-portability` 对该脚本 **FAIL** `< <(`。 |
+| **packaged rules 列表** | 母版门禁统一 `sc_find_packaged_rules_mdc`（`lib/platform.sh`），**排除** `rules/local`（项目私有 · 示例可 `alwaysApply`）。 |
 
 verify-layers 细节 → bundle 内 `README-verify-layers.md`。
 

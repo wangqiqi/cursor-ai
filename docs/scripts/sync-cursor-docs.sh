@@ -4,6 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 SRC="$ROOT/.cursor/docs"
+ADAPTOR_DOCS="$ROOT/.cursor/adaptors/cursor/docs"
 DEST="$ROOT/docs"
 
 # --- Sync layout (edit here; new root *.md → guide/ unless listed in REFERENCE_DOCS) ---
@@ -63,8 +64,17 @@ for src_path in "$SRC"/$TRAINING_GLOB; do
   SYNC_COUNT=$((SYNC_COUNT + 1))
 done
 
+# Harness 分区：cursor-only 文档在 adaptors/cursor/docs（不在 core/docs symlink 树内）
+for adaptor_guide in cursor-cloud.md plan-run.md; do
+  if [[ -f "$ADAPTOR_DOCS/$adaptor_guide" ]]; then
+    mkdir -p "$DEST/guide"
+    cp "$ADAPTOR_DOCS/$adaptor_guide" "$DEST/guide/$adaptor_guide"
+    SYNC_COUNT=$((SYNC_COUNT + 1))
+  fi
+done
+
 [[ -f "$DEST/guide/cursor-cloud.md" ]] || {
-  echo "sync-cursor-docs: FAIL missing guide/cursor-cloud.md (expected from .cursor/docs/cursor-cloud.md)" >&2
+  echo "sync-cursor-docs: FAIL missing guide/cursor-cloud.md (expected adaptors/cursor/docs or .cursor/docs)" >&2
   exit 1
 }
 

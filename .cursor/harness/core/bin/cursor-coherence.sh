@@ -13,8 +13,17 @@ source "$CUR/lib/platform.sh"
 
 echo "=== cursor coherence ==="
 
-# 母版 rules 门禁（不含 rules/local — 项目私有 · 示例可 alwaysApply）
-PACKAGED_RULE_MDC_FIND=(find "$CUR/rules" -path "$CUR/rules/local" -prune -o -name '*.mdc' -print)
+# 母版 rules 门禁列表（Windows Git Bash：避免 process substitution，用临时文件喂 while）
+_packaged_rules="$(mktemp)"
+_routes_refs="$(mktemp)"
+_always_apply="$(mktemp)"
+_agent_names="$(mktemp)"
+cleanup_coherence_tmp() {
+  rm -f "$_packaged_rules" "$_routes_refs" "$_always_apply" "$_agent_names"
+}
+trap cleanup_coherence_tmp EXIT
+
+sc_find_packaged_rules_mdc "$CUR/rules" | sort >"$_packaged_rules"
 
 # 1. skills/*/ directory name = SKILL.md name: field
 for skill_dir in "$CUR"/skills/*/; do
@@ -96,6 +105,7 @@ fi
 # 5. routes.md **name** references resolve to skill dir or agent file
 routes="$CUR/skills/master/routes.md"
 MENU_IDS="fix more style config docs deps pr scaffold plan run learn"
+grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u >"$_routes_refs"
 while IFS= read -r ref; do
   if [[ -d "$CUR/skills/$ref" ]]; then
     ok "routes skill $ref exists"
@@ -106,9 +116,12 @@ while IFS= read -r ref; do
   else
     fail "routes unknown ref **$ref**"
   fi
-done < <(grep -oE '\*\*[a-z][a-z0-9_-]*\*\*' "$routes" | tr -d '*' | sort -u)
+done <"$_routes_refs"
 
 # 6. alwaysApply: true 仅限 core.mdc · workflow.mdc · super-cursor-persona.mdc · cursor-standalone.mdc
+while IFS= read -r mdc; do
+  [[ -f "$mdc" ]] && grep -qE 'alwaysApply:[[:space:]]*true' "$mdc" && printf '%s\n' "$mdc"
+done <"$_packaged_rules" >"$_always_apply"
 while IFS= read -r f; do
   base="$(basename "$f")"
   if [[ "$base" == "core.mdc" || "$base" == "workflow.mdc" || "$base" == "super-cursor-persona.mdc" || "$base" == "cursor-standalone.mdc" ]]; then
@@ -116,9 +129,7 @@ while IFS= read -r f; do
   else
     fail "alwaysApply in unexpected file: $f"
   fi
-done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | while IFS= read -r mdc; do
-  [[ -f "$mdc" ]] && grep -qE 'alwaysApply:[[:space:]]*true' "$mdc" && printf '%s\n' "$mdc"
-done)
+done <"$_always_apply"
 
 # 6b. SDD install seeds ↔ reference templates stay in sync
 for tpl in spec-template tasks-template tech-plan-template principles-template; do
@@ -153,7 +164,7 @@ done
 while IFS= read -r mdc; do
   base="${mdc#"$CUR/rules/"}"
   grep -qE '^description:' "$mdc" && ok "rule $base description" || fail "rule $base missing description"
-done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | sort)
+done <"$_packaged_rules"
 
 # 9. every packaged rules/**/*.mdc basename appears in verify-super-cursor.sh
 verify_sh="$CUR/verify-super-cursor.sh"
@@ -162,7 +173,7 @@ while IFS= read -r mdc; do
   grep -qF "$base" "$verify_sh" \
     && ok "verify registers $base" \
     || fail "verify-super-cursor.sh missing check for $base"
-done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | sort)
+done <"$_packaged_rules"
 
 # 10. docs/training/skills.md lists every disk skill
 training="$CUR/docs/training/skills.md"
@@ -172,13 +183,14 @@ while IFS= read -r sk; do
 done <<< "$disk_skills"
 
 # 11. agent-only names must not appear as skill rows in training/skills.md
+grep -hE '^name:' "$CUR/agents/"*.md 2>/dev/null | sed 's/^name:[[:space:]]*//' >"$_agent_names"
 while IFS= read -r agent; do
   [[ -z "$agent" ]] && continue
   [[ -d "$CUR/skills/$agent" ]] && continue
   grep -qE "^\| \*\*${agent}\*\* \|" "$training" \
     && fail "training lists agent-only $agent as skill row" \
     || ok "training excludes agent-only $agent from skill table"
-done < <(grep -hE '^name:' "$CUR/agents/"*.md 2>/dev/null | sed 's/^name:[[:space:]]*//')
+done <"$_agent_names"
 
 # 12. migration-catalog documents intentional non-migration boundary
 catalog="$CUR/docs/migration-catalog.md"

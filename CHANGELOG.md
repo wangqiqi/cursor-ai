@@ -4,6 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **跨平台健壮性** — `sc_find_packaged_rules_mdc`（packaged rules SSOT，排除 `rules/local`）；`cursor-coherence` 用 `mktemp` 替代 process substitution（Windows Git Bash）
+- **verify-portability** — 禁止 `mapfile`；`cursor-coherence` 禁止 `< <(`；SSOT 回归自检
+- **文档** — `platforms.md` 补充 mapfile / coherence / packaged rules 表；`verify.mdc` CI 矩阵与三平台阻塞一致
+
+### Fixed
+
+- **CI / VitePress** — `sync-cursor-docs` 从 `adaptors/cursor/docs` 镜像 `cursor-cloud` · `plan-run` 到 `docs/guide`
+- **CI / Windows** — `verify-doc` 链检查支持 pack 根 `adaptors/` 回退；`sc_copy_cursor_pack` + `link-cursor-ide` 避免 install 拷贝 symlink 失败
+
 ## [5.0.3] - 2026-10-26
 
 ### Changed

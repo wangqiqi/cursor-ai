@@ -251,6 +251,37 @@ PY
   done <<< "$out"
 }
 
+# Copy partition-pack .cursor/ (harness + adaptors) without recreating IDE symlinks at pack root.
+# Windows Git Bash: cp -a/rsync -a on a tree full of symlinks often errors; link-cursor-ide.sh rebuilds links.
+sc_copy_cursor_pack() {
+  local src="$1" dest="$2"
+  shift 2
+  local excludes=("$@")
+  mkdir -p "$dest"
+  if [[ -d "$src/harness" ]]; then
+    sc_copy_tree "$src/harness" "$dest/harness" ${excludes[@]+"${excludes[@]}"}
+  fi
+  if [[ -d "$src/adaptors" ]]; then
+    sc_copy_tree "$src/adaptors" "$dest/adaptors" ${excludes[@]+"${excludes[@]}"}
+  fi
+  local leaf base
+  for leaf in "$src"/*; do
+    [[ -e "$leaf" ]] || continue
+    base="$(basename "$leaf")"
+    case "$base" in
+      harness | adaptors) continue ;;
+    esac
+    if [[ -L "$leaf" ]]; then
+      continue
+    fi
+    if [[ -d "$leaf" ]]; then
+      sc_copy_tree "$leaf" "$dest/$base" ${excludes[@]+"${excludes[@]}"}
+    elif [[ -f "$leaf" ]]; then
+      cp -a "$leaf" "$dest/$base"
+    fi
+  done
+}
+
 # Copy directory tree; prefers rsync, falls back to cp -a (Git Bash / minimal macOS)
 # Usage: sc_copy_tree <src_dir> <dest_dir> [exclude_glob ...]
 sc_copy_tree() {
@@ -697,4 +728,10 @@ sc_docs_set_profile() {
   else
     _docs_layout_py "$cfg" set_profile "$profile" && rm -f "$tmp"
   fi
+}
+
+# 母版 rules/**/*.mdc（不含 rules/local — 项目私有 · 示例可 alwaysApply）
+sc_find_packaged_rules_mdc() {
+  local rules_dir="${1:?rules dir}"
+  find "$rules_dir" -path "$rules_dir/local" -prune -o -name '*.mdc' -print
 }

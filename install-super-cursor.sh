@@ -287,7 +287,7 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   fi
 fi
 if [[ -d "$SOURCE/.cursor/harness/core" ]]; then
-  sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+  sc_copy_cursor_pack "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
   bash "$SOURCE/.cursor/harness/link-cursor-ide.sh" "$TARGET/.cursor"
 else
   sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
