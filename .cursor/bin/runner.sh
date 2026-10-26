@@ -149,6 +149,17 @@ bump_version() {
 }
 
 release_tag() {
+  # 发版闸门（fail-closed）：tag 前须 verify 绿（与 release skill 一致；可 RELEASE_SKIP_VERIFY=1 显式跳过留痕）
+  local verify_cmd="${RELEASE_VERIFY_CMD:-bash scripts/verify.sh --core}"
+  if [[ "${RELEASE_SKIP_VERIFY:-}" == "1" ]]; then
+    echo "WARN: RELEASE_SKIP_VERIFY=1 —— 此次 tag 未经验证（显式跳过，留痕）" >&2
+  else
+    echo "==> release gate: $verify_cmd"
+    if ! ( cd "$ROOT" && eval "$verify_cmd" ); then
+      echo "BLOCK: 发版前 verify 未通过（fail-closed）—— 修复后重试；确需跳过：RELEASE_SKIP_VERIFY=1" >&2
+      return 1
+    fi
+  fi
   local bump="${RELEASE_BUMP:-$(release_bump_value)}"
   bump="${bump:-patch}"
   local release_config="$CURSOR_DIR/config/release.json"
@@ -340,11 +351,32 @@ plan_check() {
   return 1
 }
 
+# 从验收列提取可执行命令（行首命令，或唯一一对反引号内的命令）
+acceptance_extract_exec_cmd() {
+  local acc="${1:-}"
+  acc="${acc//$'\r'/}"
+  local inner
+  if [[ "$acc" =~ ^[[:space:]]*(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|make |bash ) ]]; then
+    printf '%s' "${acc#"${acc%%[![:space:]]*}"}"
+    return 0
+  fi
+  if [[ "$acc" =~ \`([^\`]+)\` ]]; then
+    inner="${BASH_REMATCH[1]}"
+    inner="${inner#"${inner%%[![:space:]]*}"}"
+    inner="${inner%"${inner##*[![:space:]]}"}"
+    if [[ "$inner" =~ ^(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|make |bash ) ]]; then
+      printf '%s' "$inner"
+      return 0
+    fi
+  fi
+  return 1
+}
+
 # 验收列形态：exec（可执行命令）· manual（显式人工）· prose（不可判定）
 # 单一真源 —— task_verify 与 plan_check 共用，避免两处漂移
 acceptance_kind() {
   local acc="${1:-}"
-  if [[ "$acc" =~ ^(\./|cd |npm |pnpm |npx |pytest |grep |cargo |go test|make |bash ) ]]; then
+  if acceptance_extract_exec_cmd "$acc" >/dev/null 2>&1; then
     echo "exec"
   elif [[ "$acc" == manual:* || "$acc" == "manual" || "$acc" == *"人工验收"* ]]; then
     echo "manual"
@@ -592,11 +624,12 @@ task_verify() {
   echo "验收: ${acc}"
   echo "落点: ${loc}"
 
-  if [[ "$(acceptance_kind "$acc")" == "exec" ]]; then
+  local exec_cmd=""
+  if exec_cmd="$(acceptance_extract_exec_cmd "$acc" 2>/dev/null)"; then
     echo "==> Running acceptance command"
     cd "$ROOT"
     # shellcheck disable=SC2086
-    eval "$acc"
+    eval "$exec_cmd"
     return $?
   fi
 

@@ -112,8 +112,30 @@ smoke_assert "$D" pass "task-verify 可执行命令 PASS" bash .cursor/bin/runne
 smoke_assert "$D" pass "plan-check 可执行验收 PASS（B2）" bash .cursor/bin/runner.sh plan-check
 rm -rf "$D"
 
+D="$(mk_plan_project "node -e 'process.exit(0)'")"
+smoke_assert "$D" pass "task-verify node 行首命令 PASS" bash .cursor/bin/runner.sh task-verify TASK-001
+rm -rf "$D"
+
+D="$(mk_plan_project "同上 · \`node -e 'process.exit(0)'\`")"
+smoke_assert "$D" pass "task-verify 反引号 node 命令 PASS" bash .cursor/bin/runner.sh task-verify TASK-001
+rm -rf "$D"
+
 D="$(mk_plan_project "bash -c 'exit 3'")"
 smoke_assert "$D" fail "task-verify 可执行命令失败时 FAIL" bash .cursor/bin/runner.sh task-verify TASK-001
+rm -rf "$D"
+
+# release-tag 发版闸门：verify 红 → BLOCK
+D="$(mk_plan_project "bash -c 'exit 0'")"
+out="$( cd "$D" && RELEASE_VERIFY_CMD='bash -c "exit 3"' bash .cursor/bin/runner.sh release-tag 2>&1 || true )"
+case "$out" in
+  *"BLOCK: 发版前 verify"*) echo "OK  release-tag verify-red blocks" ;;
+  *) echo "FAIL: release-tag verify 红应 BLOCK: $out"; rm -rf "$D"; exit 1 ;;
+esac
+out="$( cd "$D" && RELEASE_SKIP_VERIFY=1 RELEASE_VERIFY_CMD='bash -c "exit 3"' bash .cursor/bin/runner.sh release-tag 2>&1 || true )"
+case "$out" in
+  *RELEASE_SKIP_VERIFY*) echo "OK  release-tag skip leaves trace (WARN)" ;;
+  *) echo "FAIL: skip 路径无留痕: $out"; rm -rf "$D"; exit 1 ;;
+esac
 rm -rf "$D"
 
 # 摩擦日志（B5）：必须是合法 JSONL，report 可聚合
