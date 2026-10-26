@@ -4,10 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.2] - 2026-10-26
+
 ### Changed
 
 - **`.growing` 卫生** — 历史 CHANGELOG 条目 `growing/README` 命名对齐；`verify-doc-super-cursor` 防旧运行时目录名 SSOT 回退（白名单：`install` 迁移 · v5 Breaking 说明）
-- **SPIKE-HARNESS-IDE** — Harness Core 清点摘要 · `install-map.example.json` · IDE 对照摘要 · `walkthrough`「Harness Core」节（完整表在 `.growing/archive/meta/`）
+- **SPIKE-HARNESS-IDE** — Harness Core 清点摘要 · `config/install-map.example.json` · IDE 对照摘要 · `walkthrough`「Harness Core」节（完整 SPIKE 表在本地 `.growing/archive/meta/`）；决策：`harness/core/` + `adaptors/*`
 
 ## [5.0.1] - 2026-10-26
 
