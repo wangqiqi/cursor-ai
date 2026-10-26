@@ -4,6 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **adaptor-contract** — `docs/reference/adaptor-contract.md`：占位 adaptor（dsh · kiro · trae · opencode）README 章节与 `install-map.example.json` 映射
+- **verify-adaptor-contract** — 机器验收四份 README + install-map；接入 `verify-super-cursor.sh`
+
+### Changed
+
+- **adaptors** — 四份占位 README 对齐契约 v1（`adaptor-contract:v1` 标记）
+- **harness** — `README.md` · `harness-ide-matrix.md` 链到契约；`migration-catalog` · `verify.mdc` 索引更新
+
 ## [5.0.4] - 2026-10-26
 
 ### Added

@@ -11,4 +11,4 @@
 | OpenCode | 产品约定 | 中 | https://opencode.ai/docs |
 | VS Code 系 | `AGENTS.md` 等 | 薄 | https://code.visualstudio.com/docs/copilot |
 
-映射草案：`config/install-map.example.json`。
+映射草案：`config/install-map.example.json`。占位 adaptor 机器验收 → [adaptor-contract.md](adaptor-contract.md)（`verify-adaptor-contract.sh`）。

@@ -18,4 +18,4 @@ bash .cursor/bin/verify-harness-layout.sh
 
 **改文件只动 `harness/core` / `adaptors`**。根下 symlink 让 IDE 仍读 `.cursor/rules` 等默认路径。
 
-映射草案 → `config/install-map.example.json`。
+映射草案 → `config/install-map.example.json`。占位 adaptor 最小契约 → `harness/core/docs/reference/adaptor-contract.md`（`bash .cursor/bin/verify-adaptor-contract.sh`）。
