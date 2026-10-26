@@ -37,7 +37,7 @@
 
 ```text
 .cursor/
-├── harness/    母版 SSOT：core/（rules · skills · bin · config · templates · docs）+ assemble.sh
+├── harness/    母版 SSOT：core/（rules · skills · bin · config · templates · docs）+ link-cursor-ide.sh
 ├── adaptors/   cursor/（hooks · cursor-only verify）· dsh/kiro/… 占位
 ├── template-verify.sh   母版 CI 入口（内部先 assemble）
 └── （assemble 后平铺）skills/ · rules/ · hooks/ · bin/ … — 与 install 到目标项目的形态一致；母版 gitignore
@@ -316,7 +316,7 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 目标项目升级 `.cursor/`（保留 Growth）→ [consumer-refresh](.cursor/docs/consumer-refresh.md)。
 
 ```bash
-bash .cursor/harness/assemble.sh             # 母版：生成平铺 .cursor/（IDE）；或由 template-verify 代劳
+bash .cursor/harness/link-cursor-ide.sh      # 母版：补齐 IDE 协议 symlink（非复制）；template-verify 也会调
 bash .cursor/template-verify.sh                # 母版完整自测（CI）
 bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（需先 assemble）
 bash .cursor/bin/consumer-smoke.sh             # 目标项目端到端

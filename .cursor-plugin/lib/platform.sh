@@ -24,6 +24,33 @@ sc_cursor_pack_from_dir() {
       echo "$w"
       return 0
     fi
+    # Cursor Plugin MVP 轨（.cursor-plugin/ 或 smoke 里的 plugin/）
+    if [[ -d "$w/hooks" && -f "$w/lib/platform.sh" ]] && { [[ -d "$w/skills" ]] || [[ -f "$w/plugin.json" ]]; }; then
+      echo "$w"
+      return 0
+    fi
+    w="$(dirname "$w")"
+  done
+  return 1
+}
+
+# 母版仓或已安装项目根（含 .cursor/harness 分区包）
+sc_repo_root_from_dir() {
+  local start="${1:?}"
+  local w="$start"
+  while [[ "$w" != "/" ]]; do
+    if [[ -f "$w/install-super-cursor.sh" ]]; then
+      echo "$w"
+      return 0
+    fi
+    if [[ -d "$w/harness/core" && -d "$w/adaptors" ]]; then
+      echo "$(cd "$w/.." && pwd)"
+      return 0
+    fi
+    if [[ -d "$w/.cursor/harness/core" ]]; then
+      echo "$w"
+      return 0
+    fi
     w="$(dirname "$w")"
   done
   return 1

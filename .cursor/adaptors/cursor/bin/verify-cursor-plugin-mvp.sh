@@ -78,9 +78,17 @@ sc_mktemp_dir sc-verify-plugin-mvp
 smoke_root="$SC_MKTEMP_LAST"
 cp -a "$PLUGIN" "$smoke_root/plugin"
 mkdir -p "$smoke_root/.cursor/config"
-printf '%s\n' '{"workflow":{"enabled":true,"hooks_enabled":true},"growth":{"enabled":true}}' \
+_gtpl="$ROOT/.cursor/harness/core/templates/growing"
+[[ -d "$_gtpl" ]] || _gtpl="$ROOT/.cursor/templates/growing"
+if [[ -d "$_gtpl" ]]; then
+  mkdir -p "$smoke_root/.cursor/templates"
+  cp -a "$_gtpl" "$smoke_root/.cursor/templates/growing"
+fi
+_oktpl="$PLUGIN/templates/project-onekey"
+[[ -d "$_oktpl" ]] && mkdir -p "$smoke_root/.cursor/templates/project-onekey" && cp -a "$_oktpl/." "$smoke_root/.cursor/templates/project-onekey/"
+printf '%s\n' '{"workflow":{"enabled":true,"hooks_enabled":true},"growth":{"enabled":true,"onekey_bootstrap":true}}' \
   > "$smoke_root/.cursor/config/workflow.json"
-hook_input='{"conversation_id":"verify-plugin","hook_event_name":"sessionStart"}'
+hook_input="{\"conversation_id\":\"verify-plugin\",\"hook_event_name\":\"sessionStart\",\"workspace_roots\":[\"$smoke_root\"]}"
 for hook in growth-init run-start run-stop; do
   if ! hook_out="$(printf '%s' "$hook_input" | bash "$smoke_root/plugin/hooks/$hook.sh" 2>&1)"; then
     fail "$hook.sh exited non-zero: $hook_out"

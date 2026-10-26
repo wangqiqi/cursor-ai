@@ -14,7 +14,7 @@
 
 ## 母版仓 · harness 分区
 
-**SSOT**：`.cursor/harness/core/` + `.cursor/adaptors/`。平铺的 `.cursor/skills` · `rules/` · `bin/` 等由 **`bash .cursor/harness/assemble.sh`** 生成，**不入 git**（根 `.gitignore`）。验收入口：**`bash .cursor/template-verify.sh`**（先 assemble）。
+**SSOT**：`.cursor/harness/core/` + `.cursor/adaptors/`。根下 `skills/` · `rules/` · `hooks/` 等为 **`link-cursor-ide.sh` 相对 symlink**（整包 `.cursor/` 可拷贝）。验收入口：**`bash .cursor/template-verify.sh`**。
 
 ## Growth：产出 ≠ 母版引用
 

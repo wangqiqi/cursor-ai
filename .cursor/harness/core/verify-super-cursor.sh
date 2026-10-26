@@ -2,16 +2,10 @@
 # Universal Super Cursor layout check
 set -euo pipefail
 
-_walk="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT=""
-while [[ "$_walk" != "/" ]]; do
-  if [[ -f "$_walk/install-super-cursor.sh" ]]; then
-    ROOT="$_walk"
-    break
-  fi
-  _walk="$(dirname "$_walk")"
-done
-[[ -n "$ROOT" ]] || { echo "FAIL: install-super-cursor.sh not found above verify-super-cursor.sh" >&2; exit 1; }
+_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/platform.sh
+source "$_script/lib/platform.sh"
+ROOT="$(sc_repo_root_from_dir "$_script")" || { echo "FAIL: repo root not found above verify-super-cursor.sh" >&2; exit 1; }
 CUR="$ROOT/.cursor"
 CUR_ADAPTOR_BIN="$CUR/adaptors/cursor/bin"
 
