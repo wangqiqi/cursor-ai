@@ -1,7 +1,7 @@
 {
   "version": 2,
   "tier": "standard+",
-  "tier_notes": "lint+test+verify+CI+env · 7 stacks · optional bundles",
+  "tier_notes": "lint+test+verify+CI+env · 8 stacks · optional bundles",
   "categories": {
     "frontend": [
       "react-vite-ts",
@@ -11,7 +11,8 @@
     "backend": [
       "go-api",
       "rust-axum",
-      "python-fastapi"
+      "python-fastapi",
+      "java-gradle"
     ],
     "systems": [
       "cpp-cmake"
@@ -128,6 +129,27 @@
       ],
       "test_framework": [
         "cargo test"
+      ]
+    },
+    {
+      "id": "java-gradle",
+      "name": "Java + Gradle (Kotlin DSL)",
+      "category": "backend",
+      "tags": [
+        "java",
+        "gradle",
+        "junit"
+      ],
+      "description": "JDK HttpServer /health · JUnit 5 · src/test/java · CI",
+      "verify": "scripts/verify.sh",
+      "test": "scripts/test.sh",
+      "post_apply": [
+        "./gradlew test",
+        "./scripts/verify.sh"
+      ],
+      "test_framework": [
+        "gradlew",
+        "junit"
       ]
     },
     {

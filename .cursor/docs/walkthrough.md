@@ -70,6 +70,7 @@ CLI 自检：
 | Vue SPA | `vue-vite-ts` |
 | Next.js | `nextjs-ts` |
 | Go API | `go-api` |
+| Java API | `java-gradle` |
 | Rust API | `rust-axum` |
 | Python API | `python-fastapi` |
 | C++ | `cpp-cmake` |

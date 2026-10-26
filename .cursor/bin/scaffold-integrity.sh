@@ -57,6 +57,9 @@ while IFS= read -r id; do
     python-fastapi)
       [[ -d "$dir/tests/unit" && -d "$dir/tests/integration" ]] || fail "$id: missing tests/unit|integration"
       ;;
+    java-gradle)
+      [[ -d "$dir/src/test/java" ]] || fail "$id: missing src/test/java/"
+      ;;
   esac
 
   ok "$id"
@@ -68,7 +71,7 @@ while IFS= read -r id; do
   declared="$(sc_manifest_scaffold_field_join "$MANIFEST" "$id" test_framework 2>/dev/null || true)"; declared="${declared%$'\r'}"
   [[ -z "$declared" || "$declared" == "null" ]] && continue
   hits=0
-  for f in "$TEMPLATE_ROOT/$id/scripts/test.sh" "$TEMPLATE_ROOT/$id/scripts/verify.sh" "$TEMPLATE_ROOT/$id/package.json" "$TEMPLATE_ROOT/$id/pyproject.toml" "$TEMPLATE_ROOT/$id/Cargo.toml" "$TEMPLATE_ROOT/$id/CMakeLists.txt"; do
+  for f in "$TEMPLATE_ROOT/$id/scripts/test.sh" "$TEMPLATE_ROOT/$id/scripts/verify.sh" "$TEMPLATE_ROOT/$id/package.json" "$TEMPLATE_ROOT/$id/pyproject.toml" "$TEMPLATE_ROOT/$id/Cargo.toml" "$TEMPLATE_ROOT/$id/CMakeLists.txt" "$TEMPLATE_ROOT/$id/build.gradle.kts"; do
     [[ -f "$f" ]] || continue
     for kw in $declared; do
       [[ -z "$kw" ]] && continue

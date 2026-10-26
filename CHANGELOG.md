@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **scaffold `java-gradle`** — Gradle Kotlin DSL · JUnit 5 · JDK `HttpServer` `/health` · `gradlew` · manifest 第 8 栈
 - **profile runtime** — `tech-stacks.md` §控制面矩阵；`adapt --write` 同步 `learn/dev-conventions.md` `SC_PROFILE_SYNC`（DAILY/LIBRARY 建议）；dry-run 预览 DAILY
 
 ### Changed

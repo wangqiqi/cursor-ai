@@ -110,12 +110,12 @@ Token 总成本与「少拉扯」→ [effective-collaboration.md](effective-coll
 
 ## 脚手架 manifest（绿地模板）
 
-`scaffold.sh list` · `.cursor/templates/scaffold/manifest.json` 现含 7 栈：`react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `cpp-cmake`。
+`scaffold.sh list` · `.cursor/templates/scaffold/manifest.json` 现含 8 栈：`react-vite-ts` · `vue-vite-ts` · `nextjs-ts` · `go-api` · `rust-axum` · `python-fastapi` · `cpp-cmake` · `java-gradle`。
 
 | 栈 | `rules/tech` | scaffold |
 |----|--------------|----------|
 | Go · Vue · Python · C++ · Node | ✅ | ✅ 对应 id |
-| Java | ✅ `java.mdc` | ❌ 无母版 scaffold → **adapt + local rules + learn** |
+| Java | ✅ `java.mdc` | ✅ `java-gradle`（Gradle KTS · JUnit 5；无 Spring） |
 | Android | ❌ | ❌ → `.cursorGrowth/rules/local` |
 
 ## 交叉引用

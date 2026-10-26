@@ -43,7 +43,7 @@
 ├── hooks/      growth-init · run-start · run-stop（`full` profile）
 ├── config/     workflow.json · release.json · roles.json
 ├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · project-docs（`docs-init` 号位）· 7 栈脚手架 · user-manual / test-report 契约 · verify-layers / design-system bundles
+└── templates/  plan.md · sdd/ · project-docs（`docs-init` 号位）· 8 栈脚手架 · user-manual / test-report 契约 · verify-layers / design-system bundles
 ```
 
 **根目录（可直接 clone / 复制）：**
@@ -151,7 +151,7 @@ flowchart TB
 
 | 场景 | 默认 Agent | Super Cursor |
 |------|-----------|--------------|
-| 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 7 栈标准层（lint/test/verify/CI） |
+| 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
 | 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
 | 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `autopilot`（见 **master** → `git`） |
@@ -197,12 +197,12 @@ flowchart TB
 
 **需显式调用**（`disable-model-invocation: true`，Agent **不会**按关键词自动选用）：**`/week`** · **`/disk`** · **`/maintain`** · **`/ops-deploy`** · **`/code-stats-viz`**。
 
-## 7 栈脚手架
+## 8 栈脚手架
 
 每个栈自带 `scripts/test.sh`（开发循环）+ `scripts/verify.sh`（全量验收），与 plan/run 验收列对齐。
 
 ```bash
-./.cursor/bin/scaffold.sh list                    # 7 栈清单（唯一真源）
+./.cursor/bin/scaffold.sh list                    # 8 栈清单（唯一真源）
 ./.cursor/bin/scaffold.sh apply go-api --dry-run   # 先预览
 ./.cursor/bin/scaffold.sh apply go-api
 ```
