@@ -6,6 +6,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **docs** — `consumer-refresh.md`（消费方 `--replace` 升级 · 自检 · 排除嵌套 vendor `.cursor`）
 - **verify:changed v2** — `buildChangedSteps` 步骤去重 · `VERIFY_CHANGED_MIN_LAYER` / `changed-map` `minLayer`（非法值 FAIL）
 - **test** — `reference/fullstack-verify-split.md`（全栈 mixed verify 叶拆分 · 通用）
 - **api** — `reference/list-pagination-contract.md`（列表分页 JSON 信封）
@@ -22,6 +23,7 @@ All notable changes to Super Cursor are documented here.
 - **verify-growth** — HYGIENE · fullstack-split 互链
 - **maintain** — 默认 `tmp_dev_globs` 移除项目专有前缀（改由 Growth `maintain-config.json`）
 - **母版布局** — 移除根目录 `onekey_start.sh`（SSOT：`templates/project-onekey/`）
+- **plan-conventions 模板** — 可选「Growth 纳入 git」策略表
 
 ## [4.29.24] - 2026-10-26
 

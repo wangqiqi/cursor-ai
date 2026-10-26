@@ -314,6 +314,8 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 
 ## 验证
 
+目标项目升级 `.cursor/`（保留 Growth）→ [consumer-refresh](.cursor/docs/consumer-refresh.md)。
+
 ```bash
 bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .cursorGrowth/rules/local（template-verify 会自动调用）
 bash .cursor/bin/template-verify.sh          # 母版完整自测（CI：verify-super-cursor + coherence + scaffold + runner + install + consumer smoke）

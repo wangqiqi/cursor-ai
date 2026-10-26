@@ -22,6 +22,7 @@ export default defineConfig({
           text: "入门",
           items: [
             { text: "快速开始", link: "/guide/quickstart" },
+            { text: "消费方升级 .cursor", link: "/guide/consumer-refresh" },
             { text: "Quickstart (EN)", link: "/guide/quickstart.en" },
             { text: "Walkthrough", link: "/guide/walkthrough" },
             { text: "plan · run", link: "/guide/plan-run" },

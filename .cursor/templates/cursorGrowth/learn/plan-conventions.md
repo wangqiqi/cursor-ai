@@ -75,10 +75,22 @@
 | 进行中 | `Active sprint` · `活跃 Sprint` |
 | 已闭合 | `Completed sprint` · `已完成 Sprint` |
 
+## Growth 与 git（团队可选）
+
+安装模板默认 **`.cursorGrowth/` gitignore**（plan · archive · learn · session）。若团队要把协作资产纳入仓库：
+
+| 策略 | 适用 | 动作 |
+|------|------|------|
+| **默认** | 个人机本地 plan/认知 | 保持 gitignore；换机靠 `/learn` 重建 |
+| **纳入 git** | 多人共享 learn · plan · local rules | 从 `.gitignore` 移除对应路径（或 `!/.cursorGrowth/learn/**` 等）；**仍勿**提交 `session/` · 密钥 |
+| **仅 rules** | 只共享门禁 | 只跟踪 `.cursorGrowth/rules/local/` |
+
+纳入 git 后：`plan.md` 冲突用 Git 合并；敏感草稿仍放 `archive/` 或私人分支。母版说明 → `.cursor/docs/consumer-refresh.md`。
+
 ## 与母版分工
 
 | 层 | 内容 |
 |----|------|
 | `.cursor/` | 通用机制：`SPRINT_STATUS` · Done when · TASK ✅ · reconciliation 清单 |
-| 本文件 | 域表 · 归档命名 · docs 编号与上限 · 可选段落类型 · 标题用语 |
+| 本文件 | 域表 · 归档命名 · docs 编号与上限 · 可选段落类型 · 标题用语 · Growth/git 策略 |
 

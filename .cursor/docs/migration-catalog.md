@@ -102,6 +102,8 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 
 ## 目标项目升级（install 后）
 
+详 playbook → [consumer-refresh.md](consumer-refresh.md)。
+
 | 步 | 动作 |
 |----|------|
 | 1 | 备份 `.cursor/` → `.cursorGrowth/archive/pre-super-cursor-YYYYMMDD/`（可选） |
