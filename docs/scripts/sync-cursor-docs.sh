@@ -91,6 +91,13 @@ for f in "$DEST/guide"/*.md; do
   rewrite_guide_links "$f"
 done
 
+# core 文档链到 adaptors/plan-run；镜像到 guide/ 后改为同目录 plan-run.md（VitePress 死链门禁）
+if [[ -f "$DEST/guide/effective-collaboration.md" ]]; then
+  sed_rewrite "$DEST/guide/effective-collaboration.md" \
+    -e 's](\.\./\.\./\.\./adaptors/cursor/docs/plan-run\.md)](plan-run.md)]g' \
+    -e 's](\.\./\.\./\.\./adaptors/cursor/docs/plan-run)](plan-run.md)]g'
+fi
+
 sed_rewrite "$DEST/guide/walkthrough.md" \
   -e 's](\.\./\.\./README\.md)](https://github.com/wangqiqi/cursor-ai)]g' \
   -e 's](\.\./README\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/README.md)]g'

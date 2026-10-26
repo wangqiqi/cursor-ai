@@ -258,8 +258,9 @@ sc_copy_cursor_pack() {
   shift 2
   local excludes=("$@")
   mkdir -p "$dest"
+  local -a pack_excludes=(core/rules/local)
   if [[ -d "$src/harness" ]]; then
-    sc_copy_tree "$src/harness" "$dest/harness" ${excludes[@]+"${excludes[@]}"}
+    sc_copy_tree "$src/harness" "$dest/harness" ${pack_excludes[@]+"${pack_excludes[@]}"} ${excludes[@]+"${excludes[@]}"}
   fi
   if [[ -d "$src/adaptors" ]]; then
     sc_copy_tree "$src/adaptors" "$dest/adaptors" ${excludes[@]+"${excludes[@]}"}
@@ -295,7 +296,7 @@ sc_copy_tree() {
   mkdir -p "$dest"
 
   if command -v rsync >/dev/null 2>&1; then
-    local -a args=(-a)
+    local -a args=(-aL)
     local ex
     for ex in ${excludes[@]+"${excludes[@]}"}; do
       args+=(--exclude "$ex")
@@ -304,7 +305,12 @@ sc_copy_tree() {
     return 0
   fi
 
-  cp -a "${src}/." "${dest}/"
+  # Git Bash：无法创建 symlink 时 cp -a 会非零退出；-L 跟随为实体文件/目录
+  if cp -aL "${src}/." "${dest}/" 2>/dev/null; then
+    :
+  else
+    cp -rL "${src}/." "${dest}/" 2>/dev/null || cp -a "${src}/." "${dest}/"
+  fi
   local ex
   for ex in ${excludes[@]+"${excludes[@]}"}; do
     case "$ex" in
