@@ -4,6 +4,15 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **profile runtime** — `tech-stacks.md` §控制面矩阵；`adapt --write` 同步 `learn/dev-conventions.md` `SC_PROFILE_SYNC`（DAILY/LIBRARY 建议）；dry-run 预览 DAILY
+
+### Changed
+
+- **run-start** — profile hint 含 `enabled_tiers` · `slices` 计数
+- **consumer-refresh** — 升级后核对 `SC_PROFILE_SYNC` 段
+
 ## [4.29.26] - 2026-10-26
 
 ### Added

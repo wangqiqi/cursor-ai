@@ -55,7 +55,7 @@ install-super-cursor --replace
 |------|-------------|------|
 | 布局 | `bash .cursor/verify-super-cursor.sh` | hybrid 混合仓自动 SKIP 母版专属项 |
 | **栈适配** | `.cursor/bin/scaffold.sh adapt` → `adapt --write` | 写入 `.cursorGrowth/project-profile.json`（**按需启用**，非瘦安装） |
-| profile | `stacks.primary` · `verify.enabled_tiers` | 人读镜像 → `learn/dev-conventions.md` |
+| profile | `stacks.primary` · `verify.enabled_tiers` | 机器镜像 → `learn/dev-conventions.md` **`SC_PROFILE_SYNC`** 段（含 DAILY/LIBRARY 建议） |
 | 平台 | `bash .cursor/bin/platform-check.sh` | 工具链 |
 | 业务 | `./scripts/verify.sh` | 见 learn |
 
@@ -99,8 +99,8 @@ tar -czf ".cursorGrowth/archive/pre-cursor-$(date +%Y%m%d).tar.gz" -C /path/to/t
 ## 升级后建议
 
 1. 打开 Cursor → 确认 rules/skills 加载无报错。  
-2. **`scaffold adapt --write`** → 核对 `project-profile.json` 与真实栈一致（多栈用 `--primary=a,b`）。  
-3. 跑一次 `/learn` 增量核对 `dev-conventions.md` 命令是否与现网一致。  
+2. **`scaffold adapt --write`** → 核对 `project-profile.json` 与 **`learn/dev-conventions.md` 的 `SC_PROFILE_SYNC` 段**（主栈 · tiers · DAILY/LIBRARY）；多栈用 `--primary=a,b`。  
+3. 跑一次 `/learn` 增量核对 `dev-conventions.md` **人工段**（verify 命令 · 分支）是否与现网一致。  
 4. 有问题：保留 **install 命令 · verify 输出 · hybrid/mother** 结论，回母版排查。
 
 ## 交叉引用
