@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **Harness 布局（母版）** — SSOT 迁至 `.cursor/harness/core` + `.cursor/adaptors`；平铺 `.cursor/{skills,bin,…}` 改为 `assemble` 生成且 **gitignore**；验收入口 `bash .cursor/template-verify.sh`
+
 ## [5.0.2] - 2026-10-26
 
 ### Changed

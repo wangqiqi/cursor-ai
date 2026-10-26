@@ -38,17 +38,17 @@ EOF
 resolve_source_root() {
   local script_dir dir candidate
   for candidate in "${SUPER_CURSOR_HOME:-}" "${CURSOR_AI_HOME:-}"; do
-    if [[ -n "$candidate" && -d "$candidate/.cursor" ]]; then
+    if [[ -n "$candidate" && ( -d "$candidate/.cursor/harness/core" || -d "$candidate/.cursor" ) ]]; then
       echo "$candidate"
       return 0
     fi
   done
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  if [[ -d "$script_dir/.cursor" ]]; then
+  if [[ -d "$script_dir/.cursor/harness/core" || -d "$script_dir/.cursor" ]]; then
     echo "$script_dir"
     return 0
   fi
-  echo "错误: 未找到母版 .cursor/；设置 SUPER_CURSOR_HOME 为 cursor-ai 仓库根" >&2
+  echo "错误: 未找到母版 .cursor/harness/core 或 .cursor/；设置 SUPER_CURSOR_HOME 为 cursor-ai 仓库根" >&2
   return 1
 }
 
@@ -247,13 +247,18 @@ case "$SKILLS_BUNDLE" in
     ;;
 esac
 
-if [[ ! -d "$SOURCE/.cursor" ]]; then
-  echo "错误: 未找到 $SOURCE/.cursor" >&2
+if [[ ! -d "$SOURCE/.cursor/harness/core" && ! -d "$SOURCE/.cursor" ]]; then
+  echo "错误: 未找到 $SOURCE/.cursor/harness/core 或 .cursor" >&2
   exit 1
 fi
 
-# shellcheck source=.cursor/lib/platform.sh
-source "$SOURCE/.cursor/lib/platform.sh"
+if [[ -f "$SOURCE/.cursor/harness/core/lib/platform.sh" ]]; then
+  # shellcheck source=.cursor/harness/core/lib/platform.sh
+  source "$SOURCE/.cursor/harness/core/lib/platform.sh"
+else
+  # shellcheck source=.cursor/lib/platform.sh
+  source "$SOURCE/.cursor/lib/platform.sh"
+fi
 
 # 防自毁（P0-4）：源与目标同一仓库时，--replace 会先 rm -rf 源 .cursor/，
 # 随后 sc_copy_tree 的 mkdir -p 让 rsync/cp 自拷空目录 → 母版被清空。
@@ -281,7 +286,11 @@ if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
     exit 1
   fi
 fi
-sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+if [[ -d "$SOURCE/.cursor/harness/core" ]]; then
+  bash "$SOURCE/.cursor/harness/assemble.sh" "$TARGET/.cursor"
+else
+  sc_copy_tree "$SOURCE/.cursor" "$TARGET/.cursor" "hooks/state/*"
+fi
 sc_apply_skills_bundle "$TARGET" "$SKILLS_BUNDLE" || exit 1
 
 # 运行态/本地私有路径与母版 .gitignore 对齐：漏了会在消费方仓库留下 untracked 噪音

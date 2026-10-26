@@ -199,6 +199,7 @@ check "$CUR/docs/platforms.md"
 check "$ROOT/.cursorignore"
 check "$CUR/templates/scaffold/_shared.cursorignore"
 check "$CUR/bin/template-verify.sh"
+check_mother_only "$CUR/template-verify.sh" "template-verify wrapper"
 check_absent_mother_only "$ROOT/scripts"
 check_absent "$ROOT/examples"
 check_verify_workflow
@@ -379,6 +380,9 @@ echo "=== doc + growth-layout + rules-globs 子验证（母版专属）==="
 if is_mother_repo; then
   bash "$CUR/bin/verify-doc-super-cursor.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-growth-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
+  if [[ -d "$ROOT/.cursor/harness/core" ]]; then
+    bash "$CUR/bin/verify-harness-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
+  fi
 else
   echo "SKIP  non-mother: verify-doc / verify-growth-layout（母版门面计数检查）"
 fi

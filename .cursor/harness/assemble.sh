@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Assemble harness/core + adaptors/cursor → destination .cursor tree (default: repo root .cursor/)
+# Assemble .cursor/harness/core + .cursor/adaptors/cursor → flat .cursor/ runtime tree.
 set -euo pipefail
 
-HARNESS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$(cd "$HARNESS/.." && pwd)"
-DEST="${1:-$ROOT/.cursor}"
-CORE="$HARNESS/core"
-ADAPTOR="$ROOT/adaptors/cursor"
+HARNESS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURSOR_ROOT="$(cd "$HARNESS_DIR/.." && pwd)"
+DEST="${1:-$CURSOR_ROOT}"
+CORE="$HARNESS_DIR/core"
+ADAPTOR="$CURSOR_ROOT/adaptors/cursor"
 
 if [[ ! -d "$CORE" ]]; then
   echo "错误: 缺少 $CORE（先完成 harness 分区搬迁）" >&2

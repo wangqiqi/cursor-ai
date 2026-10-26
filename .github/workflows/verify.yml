@@ -91,14 +91,14 @@ jobs:
         if: ${{ !matrix.jq }}
         env:
           SC_FORCE_PYTHON: '1'
-        run: bash .cursor/bin/template-verify.sh
+        run: bash .cursor/template-verify.sh
 
       - name: Secret scan (tracked files)
-        run: bash .cursor/bin/verify-secrets.sh
+        run: bash .cursor/harness/assemble.sh && bash .cursor/bin/verify-secrets.sh
 
       - name: Template layout + scaffold + runner + install + consumer smoke
         if: matrix.jq
-        run: bash .cursor/bin/template-verify.sh
+        run: bash .cursor/template-verify.sh
 
       - uses: actions/setup-node@v4
         if: matrix.docs

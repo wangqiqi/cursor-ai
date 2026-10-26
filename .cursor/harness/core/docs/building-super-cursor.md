@@ -12,6 +12,10 @@
 
 不确定从哪开始 → **`/master`**（AskQuestion 路由；无该工具时正文编号选项，见 master「AskQuestion 约定」）。
 
+## 母版仓 · harness 分区
+
+**SSOT**：`.cursor/harness/core/` + `.cursor/adaptors/`。平铺的 `.cursor/skills` · `rules/` · `bin/` 等由 **`bash .cursor/harness/assemble.sh`** 生成，**不入 git**（根 `.gitignore`）。验收入口：**`bash .cursor/template-verify.sh`**（先 assemble）。
+
 ## Growth：产出 ≠ 母版引用
 
 | | `.cursor/`（母版） | `.growing/`（产出） |

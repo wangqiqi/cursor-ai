@@ -5,9 +5,26 @@
 # DSH 运行时生长/会话状态（本地私有，不入 git）
 .dsh/
 .cursor/rules/local
-# hooks 运行时状态（state/README.md 入 git，其余不入）
+# 母版：平铺 runtime 由 harness/assemble 生成（SSOT 在 .cursor/harness/core + .cursor/adaptors）
+.cursor/agents/
+.cursor/bin/
+.cursor/config/
+.cursor/docs/
+.cursor/hooks/
+.cursor/hooks.json
+.cursor/lib/
+.cursor/rules/
+.cursor/skills/
+.cursor/templates/
+.cursor/AGENTS.md
+.cursor/README.md
+.cursor/verify-super-cursor.sh
+.cursor/verify-system.sh
+# hooks 运行时状态（源树 adaptors/cursor/hooks/state）
 .cursor/hooks/state/*
 !.cursor/hooks/state/README.md
+.cursor/adaptors/cursor/hooks/state/*
+!.cursor/adaptors/cursor/hooks/state/README.md
 archive/
 *.log
 .DS_Store
