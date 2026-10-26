@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.4] - 2026-10-26
+
 ### Added
 
 - **verify-skill-bundles-ssot** — `skill-bundles.json` 与母版 `skills/` 计数 · `tools_skills` ↔ `core.exclude_skills`；接入 `verify-super-cursor.sh`
