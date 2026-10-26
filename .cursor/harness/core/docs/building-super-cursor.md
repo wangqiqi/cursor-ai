@@ -16,6 +16,17 @@
 
 **SSOT**：`.cursor/harness/core/` + `.cursor/adaptors/`。根下 `skills/` · `rules/` · `hooks/` 等为 **`link-cursor-ide.sh` 相对 symlink**（整包 `.cursor/` 可拷贝）。验收入口：**`bash .cursor/template-verify.sh`**。
 
+**非 Cursor adaptor 布局**（安装脚本已落地；官方目录多 **待确认**）：
+
+| id | layout 文档 |
+|----|-------------|
+| dsh | [adaptors/dsh/docs/layout.md](../../adaptors/dsh/docs/layout.md) |
+| kiro | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
+| trae | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
+| opencode | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
+
+对照表 → [harness-ide-matrix.md](reference/harness-ide-matrix.md) · 契约 → [adaptor-contract.md](reference/adaptor-contract.md)。
+
 ## Growth：产出 ≠ 母版引用
 
 | | `.cursor/`（母版） | `.growing/`（产出） |

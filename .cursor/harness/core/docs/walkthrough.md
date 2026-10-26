@@ -10,7 +10,7 @@
 |----|--------|-----------|
 | **Harness Core** | `harness/core/` 内 skills · rules · runner · config · Growth 种子 | 尽量保留语义 |
 | **Cursor 能力** | `adaptors/cursor/`（hooks · 部分 docs/verify） | 留在 cursor adaptor |
-| **IDE Adaptor** | `adaptors/dsh` 等占位 · 未来装到 `.dsh` / `.kiro` | `config/install-map.example.json` · `docs/reference/harness-ide-matrix.md` |
+| **IDE Adaptor** | `adaptors/dsh` · `kiro` · `trae` · `opencode`（core 或 rules export）→ `.dsh/` 等；布局见各 [adaptors/*/docs/layout.md](../adaptors/dsh/docs/layout.md) | `config/install-map.example.json` · [harness-ide-matrix.md](reference/harness-ide-matrix.md) |
 
 SPIKE 归档 → `.growing/archive/meta/` · 摘要 → `skills/plan/reference/harness-core-inventory.md`。
 
