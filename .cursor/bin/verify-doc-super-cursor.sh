@@ -257,4 +257,15 @@ print("OK  relative links in .cursor/docs (%d files)" % len(list(docs_root.rglob
 sys.exit(0)
 PY
 
+# --- v5: runtime dir SSOT is .growing (legacy path only in install + CHANGELOG Breaking) ---
+if git -C "$ROOT" grep -rnE '\.cursorGrowth|templates/cursorGrowth' -- . \
+  ':(exclude)install-super-cursor.sh' \
+  ':(exclude)CHANGELOG.md' \
+  ':(exclude).cursor/bin/verify-doc-super-cursor.sh' \
+  2>/dev/null | grep -q .; then
+  vc_fail "legacy .cursorGrowth path outside install migration + CHANGELOG (SSOT must be .growing)"
+else
+  vc_ok "no legacy .cursorGrowth path outside install/CHANGELOG"
+fi
+
 vc_summary "verify-doc-super-cursor passed."
