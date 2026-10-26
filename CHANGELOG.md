@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.26] - 2026-10-26
+
 ### Added
 
 - **verify profile filter** — `manifest.tsv` 可选 `stacks` 列；`run-manifest-tier.sh` 读 `project-profile` 过滤行 · tier 门禁 · `VERIFY_IGNORE_PROFILE=1`
