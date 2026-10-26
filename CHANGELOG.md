@@ -6,11 +6,14 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
+- **growth-meta-ci-dual** — `skills/plan/reference/growth-meta-ci-dual.md`：git SSOT vs `.growing/archive/meta` 双轨 · `sc_growth_archive_available` SKIP/FAIL · verify 脚本索引（`migration-catalog`）
 - **adaptor-contract** — `docs/reference/adaptor-contract.md`：占位 adaptor（dsh · kiro · trae · opencode）README 章节与 `install-map.example.json` 映射
 - **verify-adaptor-contract** — 机器验收四份 README + install-map；接入 `verify-super-cursor.sh`
 
 ### Changed
 
+- **growth-layout** — `meta/` 域行 · 链双轨 SSOT；`verify-growth-layout` 断言双轨文档
+- **README** · **building-super-cursor** · **verify.mdc** — 一句指向 growth-meta-ci-dual
 - **adaptors** — 四份占位 README 对齐契约 v1（`adaptor-contract:v1` 标记）
 - **harness** — `README.md` · `harness-ide-matrix.md` 链到契约；`migration-catalog` · `verify.mdc` 索引更新
 

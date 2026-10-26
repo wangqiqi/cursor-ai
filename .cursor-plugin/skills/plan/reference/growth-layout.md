@@ -25,6 +25,7 @@
 |----|--------|------|
 | `sprint` | Sprint 闭合摘要 · TASK 汇总 | `sprint/<YYYYMMDD>_<HHMMSS>_SPRINT-NN_闭合.md` |
 | `spike` | SPIKE 结论 · 调研 ADR | `spike/<YYYYMMDD>_<HHMMSS>_<topic>_SPIKE-NN.md` |
+| `meta` | 母版 SPIKE **门禁证据**（`.growing/archive/meta/` · 长表 · 差距矩阵；**不入 git**） | `archive/meta/*_SPIKE_<topic>.md` — 双轨与 CI SKIP → [growth-meta-ci-dual.md](growth-meta-ci-dual.md) |
 | `release` | 发版笔记 · tag 说明 | `release/<YYYYMMDD>_<HHMMSS>_v<X.Y.Z>.md` |
 | `doc` | 文档 Sprint · doc 收敛 | `doc/<YYYYMMDD>_<HHMMSS>_DOC-NN.md` |
 | `ops` | 运维 · 数据 · verify 分层 · 可观测 | `ops/<YYYYMMDD>_<HHMMSS>_<topic>.md` |
@@ -44,7 +45,7 @@
 | 时机 | 路径 |
 |------|------|
 | Sprint 收尾（**run**） | `{archive_dir}/{domain}/` — `domain` 取 Sprint Theme 或 TASK 主域 |
-| SPIKE 归档 | `spike/` |
+| SPIKE 归档 | `spike/`（摘要）· 母版门禁长文另见 `meta/`（[growth-meta-ci-dual.md](growth-meta-ci-dual.md)） |
 | 发版叙事（非 CHANGELOG 条目） | `release/` |
 | 不确定域 | AskQuestion 或暂 `doc/`，并在 plan-conventions 登记 |
 

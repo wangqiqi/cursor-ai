@@ -11,7 +11,22 @@ source "$CUR/lib/verify-common.sh" "verify-growth-layout"
 echo "=== verify-growth-layout ==="
 
 SSOT="$CUR/skills/plan/reference/growth-layout.md"
+META_SSOT="$CUR/skills/plan/reference/growth-meta-ci-dual.md"
 [[ -f "$SSOT" ]] && vc_ok "growth-layout.md exists" || vc_fail "missing $SSOT"
+[[ -f "$META_SSOT" ]] && vc_ok "growth-meta-ci-dual.md exists" || vc_fail "missing $META_SSOT"
+if [[ -f "$META_SSOT" ]] \
+  && grep -q 'sc_growth_archive_available' "$META_SSOT" \
+  && grep -q 'archive/meta' "$META_SSOT" \
+  && grep -q 'SKIP' "$META_SSOT"; then
+  vc_ok "growth-meta-ci-dual documents meta SKIP semantics"
+else
+  vc_fail "growth-meta-ci-dual missing meta/SKIP/sc_growth_archive_available"
+fi
+if [[ -f "$SSOT" ]] && grep -q 'archive/meta' "$SSOT" && grep -q 'growth-meta-ci-dual' "$SSOT"; then
+  vc_ok "growth-layout links meta domain to dual-track SSOT"
+else
+  vc_fail "growth-layout missing archive/meta or growth-meta-ci-dual link"
+fi
 
 need_ref=(
   "$CUR/rules/execution/doc-hygiene.mdc"
