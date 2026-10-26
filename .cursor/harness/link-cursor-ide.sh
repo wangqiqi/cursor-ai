@@ -19,13 +19,10 @@ link_rel() {
     local cur
     cur="$(readlink "$path")"
     [[ "$cur" == "$target" ]] || ln -sfn "$target" "$path" || { echo "FAIL: ln $name" >&2; exit 1; }
-  elif [[ -d "$path" && ! -L "$path" ]]; then
-    # 重装 / Windows 无 symlink 权限时的目录副本 → 替换为相对 symlink
+  elif [[ -e "$path" && ! -L "$path" ]]; then
+    # 重装 / Windows 降级副本（目录或普通文件）→ 替换为相对 symlink
     rm -rf "$path"
     ln -sfn "$target" "$path" || { echo "FAIL: ln $name" >&2; exit 1; }
-  elif [[ -e "$path" ]]; then
-    echo "FAIL: $path exists and is not a symlink (remove duplicate tree or run clean-assembled.sh)" >&2
-    exit 1
   else
     ln -sfn "$target" "$path" || { echo "FAIL: ln $name" >&2; exit 1; }
   fi
