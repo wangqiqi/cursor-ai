@@ -2,6 +2,18 @@
 
 跟着做一遍，约 **15 分钟** 走完安装 → 脚手架 → 规划 → 执行 → 验收。默认用 **go-api**；其他栈替换 scaffold id 即可。
 
+## Harness Core × Cursor × 换 IDE
+
+Super Cursor 母版当前以 **`.cursor/`** 为安装包根，语义上分三层：
+
+| 层 | 是什么 | 换 IDE 时 |
+|----|--------|-----------|
+| **Harness Core** | `skills/` · `rules/` · `bin/runner.sh` · `config/` · Growth 种子 — 通用 SOP 与验收 | 尽量保留语义，只改落盘路径 |
+| **Cursor 能力** | `hooks.json` · Cloud 模板 · Bugbot · Automations · Plan Mode 对照 | 留在 Cursor 环境或 **cursor** adaptor |
+| **IDE Adaptor** | 装到 `.cursor` / `.dsh` / `.kiro` / `.trae` 等 | 见 `config/install-map.example.json` · `docs/reference/harness-ide-matrix.md` |
+
+清点与安装映射 SPIKE 归档在本地 **`.growing/archive/meta/`**；母版摘要见 `skills/plan/reference/harness-core-inventory.md`。后续 Sprint：**HARNESS-LAYOUT**（物理分区）→ **HARNESS-INSTALL**（`--adaptor`）。
+
 ## 0. 安装
 
 ```bash

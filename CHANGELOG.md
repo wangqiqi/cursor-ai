@@ -4,6 +4,11 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **`.growing` 卫生** — 历史 CHANGELOG 条目 `growing/README` 命名对齐；`verify-doc-super-cursor` 防旧运行时目录名 SSOT 回退（白名单：`install` 迁移 · v5 Breaking 说明）
+- **SPIKE-HARNESS-IDE** — Harness Core 清点摘要 · `install-map.example.json` · IDE 对照摘要 · `walkthrough`「Harness Core」节（完整表在 `.growing/archive/meta/`）
+
 ## [5.0.1] - 2026-10-26
 
 ### Fixed
@@ -1148,7 +1153,7 @@ All notable changes to Super Cursor are documented here.
 ### Changed
 
 - Docs sync: 8-stack scaffold（skill · scaffold.md · catalog）· `core.mdc` 补 security/api · README §10 nextjs/rust
-- **master** description · `building-super-cursor.md` · `plan-run.md` · `cursorGrowth/README` 补 `/master` 与 cursorignore 说明
+- **master** description · `building-super-cursor.md` · `plan-run.md` · `growing/README` 补 `/master` 与 cursorignore 说明
 - `runner.sh` · `scaffold.sh` · `scaffold-integrity.sh` · hooks · `install-super-cursor.sh` — 统一 `platform.sh`
 - `verify-super-cursor.sh` — platform.sh · platforms.md · git/security/api · nextjs.mdc · AGENTS.md · cursorignore；禁止 `date -Iseconds`
 
