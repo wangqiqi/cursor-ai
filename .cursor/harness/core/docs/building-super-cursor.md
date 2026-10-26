@@ -131,3 +131,5 @@ bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册
 细则 → `rules/execution/doc-hygiene.mdc` §门面计数。
 
 **Layout 模式**（`verify-super-cursor.sh`）：**mother** = 含 `install-super-cursor.sh` 的母版仓；**hybrid** = `.cursor/` 与业务树共存（自动检测 `scripts/` · `backend/` · `frontend/`）；两者皆非 = 已安装的目标项目（母版专属项自动 SKIP，通用门禁照跑）。见 `rules/feedback/verify.mdc`。
+
+**Growth meta 双轨**：git 内 SSOT vs `.growing/archive/meta/` 私有 SPIKE 证据 · `sc_growth_archive_available` SKIP/FAIL → `skills/plan/reference/growth-meta-ci-dual.md`。

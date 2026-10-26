@@ -349,6 +349,8 @@ bash .cursor/bin/cursor-coherence.sh
 
 全表与三轨分发 → [migration-catalog](.cursor/docs/migration-catalog.md) §母版 verify 索引。语义（含 `task-verify` fail-closed）→ [verify.mdc](.cursor/rules/feedback/verify.mdc) §母版门禁清单。
 
+母版 SPIKE 证据在本地 `.growing/archive/meta/`（不入 git）；fresh clone / CI 对 meta 门禁 **SKIP**、目录存在则严格校验 → [growth-meta-ci-dual](.cursor/skills/plan/reference/growth-meta-ci-dual.md)。
+
 ## 参与
 
 如果 Super Cursor 帮你省了重复教 Agent 的时间 —— 欢迎 [**Star**](https://github.com/wangqiqi/cursor-ai/stargazers) 支持，或用 [Issue](https://github.com/wangqiqi/cursor-ai/issues)/PR 反馈缺口。
