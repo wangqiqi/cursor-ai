@@ -20,6 +20,7 @@ usage() {
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
+  --adaptor dsh                    额外安装 Harness Core → 目标 .dsh/（见 adaptors/dsh/docs/layout.md）
   --copy-plan                      复制 templates/plan.md → .growing/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
@@ -142,6 +143,7 @@ COPY_PLAN="false"
 REPLACE="false"
 USE_HERE="false"
 SETUP_SHELL="false"
+ADAPTOR_DSH="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -179,6 +181,15 @@ while [[ $# -gt 0 ]]; do
     --replace)
       REPLACE="true"
       shift
+      ;;
+    --adaptor)
+      if [[ $# -lt 2 || "${2:-}" != "dsh" ]]; then
+        echo "错误: --adaptor 当前仅支持 dsh（例: --adaptor dsh）" >&2
+        usage
+        exit 1
+      fi
+      ADAPTOR_DSH="true"
+      shift 2
       ;;
     --)
       shift
@@ -425,6 +436,18 @@ if [[ -f "$TARGET/.cursor/config/workflow.json" ]]; then
 fi
 sc_bootstrap_onekey_start "$TARGET" "$TARGET/.cursor" "$_onekey_enabled"
 
+if [[ "$ADAPTOR_DSH" == "true" ]]; then
+  _dsh_install="$SOURCE/.cursor/harness/core/bin/install-adaptor-dsh.sh"
+  if [[ ! -f "$_dsh_install" ]]; then
+    _dsh_install="$SOURCE/.cursor/bin/install-adaptor-dsh.sh"
+  fi
+  if [[ -x "$_dsh_install" ]]; then
+    "$_dsh_install" "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
+  else
+    bash "$_dsh_install" "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
+  fi
+fi
+
 # Detect empty-ish project for hints
 file_count=0
 if [[ -d "$TARGET" ]]; then
@@ -439,6 +462,7 @@ echo "║  Super Cursor 已安装 → $TARGET"
 echo "╚══════════════════════════════════════════════════╝"
 echo "  profile: $PROFILE"
 echo "  skills-bundle: $SKILLS_BUNDLE"
+[[ "$ADAPTOR_DSH" == "true" ]] && echo "  adaptor: dsh → $TARGET/.dsh/"
 echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"
