@@ -4,6 +4,25 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **verify:changed v2** — `buildChangedSteps` 步骤去重 · `VERIFY_CHANGED_MIN_LAYER` / `changed-map` `minLayer`（非法值 FAIL）
+- **test** — `reference/fullstack-verify-split.md`（全栈 mixed verify 叶拆分 · 通用）
+- **api** — `reference/list-pagination-contract.md`（列表分页 JSON 信封）
+- **plan** — `reference/harness-skill-packaging.md`（技能包目录模式卡）
+- **Growth 模板** — `learn/ui-reference` · `dual-dialect` · `release-tag-datetime` 示例；`rules/local/agent-verify` · `dual-dialect` 示例
+- **verify-layers** — `slices/verify_code_comments.example.sh`（注释卫生示例切片）
+
+### Changed
+
+- **doc-hygiene** — 代码注释卫生 · HYGIENE 对称清扫
+- **ia** / **ia** skill — 权限 UX P1–P2（可点须可用 · 不静默吞鉴权失败）
+- **data-list** — 链列表分页契约 reference
+- **learn** skill — 大型仓可选 `learn/` 子目录说明
+- **verify-growth** — HYGIENE · fullstack-split 互链
+- **maintain** — 默认 `tmp_dev_globs` 移除项目专有前缀（改由 Growth `maintain-config.json`）
+- **母版布局** — 移除根目录 `onekey_start.sh`（SSOT：`templates/project-onekey/`）
+
 ## [4.29.24] - 2026-10-26
 
 ### Added

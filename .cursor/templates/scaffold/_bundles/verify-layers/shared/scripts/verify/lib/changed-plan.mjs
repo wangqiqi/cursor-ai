@@ -11,6 +11,30 @@ const MAP_PATH = path.join(ROOT, 'scripts/verify/changed-map.json');
 // Copy from changed-map.example.json on first customize.
 
 const LAYER_RANK = { l1: 1, 'l2-core': 2, 'l2-standard': 3 };
+const VALID_LAYERS = ['l1', 'l2-core', 'l2-standard'];
+
+/** @param {Record<string, unknown>} [map] */
+export function resolveMinLayer(map = {}) {
+  const env = process.env.VERIFY_CHANGED_MIN_LAYER?.trim();
+  const fromMap = typeof map.minLayer === 'string' ? map.minLayer.trim() : '';
+  const raw = env || fromMap;
+  if (!raw) return null;
+  if (!VALID_LAYERS.includes(raw)) {
+    throw new Error(
+      `VERIFY_CHANGED_MIN_LAYER 无效: "${raw}"（允许: ${VALID_LAYERS.join(', ')}）`,
+    );
+  }
+  return raw;
+}
+
+/** @param {{ layer: string }} plan @param {string|null} minLayer */
+export function applyMinLayer(plan, minLayer) {
+  if (!minLayer) return plan;
+  if ((LAYER_RANK[minLayer] || 0) > (LAYER_RANK[plan.layer] || 0)) {
+    return { ...plan, layer: minLayer };
+  }
+  return plan;
+}
 
 export function loadMap(mapPath = MAP_PATH) {
   return JSON.parse(fs.readFileSync(mapPath, 'utf8'));
@@ -52,13 +76,14 @@ export function planForChangedFiles(files, map = loadMap()) {
     layer = 'l1';
   }
 
-  return {
+  const plan = {
     layer,
     bash: [...bash],
     unmatched,
     files: files.length,
     layerOrder: order,
   };
+  return applyMinLayer(plan, resolveMinLayer(map));
 }
 
 function resolveChangedBase(base, root) {
@@ -103,4 +128,26 @@ export function layerToVerifyArg(layer) {
     default:
       return ['--core'];
   }
+}
+
+/** @param {{ layer: string, bash?: string[] }} plan */
+export function buildChangedSteps(plan) {
+  const layerArgs = layerToVerifyArg(plan.layer);
+  const steps = [];
+  const seen = new Set();
+  const add = (cmd, args) => {
+    const key = JSON.stringify([cmd, args]);
+    if (seen.has(key)) return;
+    seen.add(key);
+    steps.push([cmd, args]);
+  };
+  if (layerArgs.length) {
+    add('bash', ['scripts/verify.sh', ...layerArgs]);
+  } else {
+    add('bash', ['scripts/verify.sh']);
+  }
+  for (const rel of plan.bash || []) {
+    add('bash', [rel]);
+  }
+  return steps;
 }

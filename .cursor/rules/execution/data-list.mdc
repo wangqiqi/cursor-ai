@@ -55,3 +55,4 @@ alwaysApply: false
 - 批量 ID / IN 分块 → **data-batch**
 - 上传后轮询列表刷新 → **async-progress** · **long-running-ui**
 - 项目 pager 工具类名 → `.cursorGrowth/learn/dev-conventions.md`
+- 列表 `GET` JSON 信封（`items` · `total` · `next_cursor`）→ **api** skill `reference/list-pagination-contract.md`

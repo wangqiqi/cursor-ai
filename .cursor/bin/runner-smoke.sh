@@ -253,4 +253,48 @@ case "$out" in
   *) echo "FAIL: verify:changed no-node unexpected: $out"; exit 1 ;;
 esac
 
+# changed-plan：去重 + VERIFY_CHANGED_MIN_LAYER（Node 单元，不跑真实 verify.sh）
+if command -v node >/dev/null 2>&1; then
+  ( cd "$VL_SCRIPTS" && node --input-type=module -e "
+import {
+  planForChangedFiles,
+  buildChangedSteps,
+  resolveMinLayer,
+} from './verify/lib/changed-plan.mjs';
+
+const map = {
+  version: 1,
+  layerOrder: ['l1', 'l2-core', 'l2-standard'],
+  defaultLayer: 'l2-core',
+  prefixRules: [{ prefix: 'frontend/', layer: 'l1', bash: ['scripts/verify/slices/dup.sh', 'scripts/verify/slices/dup.sh'] }],
+};
+
+const p = planForChangedFiles(['frontend/a.ts'], map);
+if (p.bash.length !== 1) throw new Error('bash Set dedupe expected 1 got ' + p.bash.length);
+
+const steps = buildChangedSteps({ layer: 'l1', bash: ['scripts/verify.sh', 'scripts/verify.sh'] });
+if (steps.length !== 1) throw new Error('buildChangedSteps dedupe expected 1 got ' + steps.length);
+
+process.env.VERIFY_CHANGED_MIN_LAYER = 'l2-core';
+const p2 = planForChangedFiles(['frontend/a.ts'], { ...map, prefixRules: [{ prefix: 'frontend/', layer: 'l1' }] });
+if (p2.layer !== 'l2-core') throw new Error('min layer expected l2-core got ' + p2.layer);
+
+delete process.env.VERIFY_CHANGED_MIN_LAYER;
+try {
+  process.env.VERIFY_CHANGED_MIN_LAYER = 'bogus';
+  resolveMinLayer({});
+  throw new Error('invalid min layer should throw');
+} catch (e) {
+  if (!String(e.message).includes('无效')) throw e;
+} finally {
+  delete process.env.VERIFY_CHANGED_MIN_LAYER;
+}
+
+console.log('changed-plan unit OK');
+" ) || { echo "FAIL: changed-plan unit"; exit 1; }
+  echo "OK  changed-plan unit (dedupe + minLayer)"
+else
+  echo "SKIP  changed-plan unit (no node)"
+fi
+
 echo "runner smoke passed."

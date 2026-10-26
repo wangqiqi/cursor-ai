@@ -18,7 +18,7 @@ description: REST/OpenAPI 设计审查。
 
 - [ ] 稳定 error code / error type（非仅自由文本 message）
 - [ ] HTTP 状态码语义正确（401 vs 403、404 vs 410）
-- [ ] 分页一种风格（cursor **或** offset，不混用）
+- [ ] 分页一种风格（cursor **或** offset，不混用）；列表信封见 `reference/list-pagination-contract.md`
 - [ ] 日期/时间 ISO-8601；枚举与 OpenAPI schema 一致
 
 ## 安全与校验

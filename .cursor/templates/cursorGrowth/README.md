@@ -32,6 +32,17 @@
 | `learn/acceptance.md` | （可选）delivery 验收路径 |
 | `learn/cursor-platform.md` | Cursor 官方配置面对齐摘要 |
 
+可选复制（`*.example.md` / `*.example.mdc`，按需改名去掉 `.example`）：
+
+| 模板 | 用途 |
+|------|------|
+| `learn/ui-reference.example.md` | 跨仓库只读 UI 参考记录 |
+| `learn/dual-dialect.example.md` | 双方言数据访问摘要 |
+| `learn/release-tag-datetime.example.md` | 时间戳 tag 发版变体 |
+| `rules/local/agent-verify.example.mdc` | Agent 分层验收 |
+| `rules/local/dual-dialect.example.mdc` | 双方言查询纪律 |
+| `temp-cleanup.example.json` | 测试 `/tmp` glob 契约 |
+
 ### Bugbot（可选 · 不进 `.cursorGrowth/`）
 
 PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：

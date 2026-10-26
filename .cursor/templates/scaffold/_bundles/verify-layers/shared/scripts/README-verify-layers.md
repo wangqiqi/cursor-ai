@@ -43,12 +43,18 @@ bash scripts/verify/slices/verify_layers_registry.sh
 VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_layers_registry.sh
 ```
 
+## 全栈 mixed 叶
+
+单仓 **frontend + backend** 共用 verify 且存在混合断言脚本时，见 **test** skill `reference/fullstack-verify-split.md`（物理拆分 · `resolve_leaf` · shim）。
+
 ## 增量验收（verify:changed）
 
 1. 默认 `changed-map.json` 的 `prefixRules` 为空 — 复制 `changed-map.example.json` 中的示例规则，或按仓库目录自建 `prefixRules`。
 2. `VERIFY_CHANGED_DRY=1 ./scripts/verify.sh --changed`
 3. `VERIFY_CHANGED_BASE=master`（无 `origin/main` 时）
 4. **无 Node**：与 registry slice 一致，不跑 `changed-plan.mjs`；回退 `VERIFY_CHANGED_FALLBACK`（默认 `--core`）并打印说明。全功能增量规划需 Node + git。
+5. **最低层**：`VERIFY_CHANGED_MIN_LAYER=l2-core` 或 `changed-map.json` 的 `minLayer`（抬升计划层，不降低）。
+6. **去重**：`run-changed.mjs` 经 `buildChangedSteps` — 完全相同的命令行只跑一次。
 
 ## 并行
 

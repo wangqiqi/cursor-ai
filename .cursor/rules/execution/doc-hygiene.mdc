@@ -49,6 +49,26 @@ Sprint 闭合：**archive 一篇摘要**（**至少一级域子目录**，SSOT �
 
 验收：`bash .cursor/bin/cursor-coherence.sh` · `verify-doc-super-cursor.sh` · `verify-config.sh`（门禁清单 → `rules/feedback/verify.mdc`）。
 
+## 代码注释卫生（应用源码）
+
+| 写在代码里 | 不写进代码 |
+|------------|------------|
+| 模块职责 · 行为 · 配置含义 · 边界条件 | `TASK-*` · `SPRINT-*` · `SPIKE-*` 等追溯编号 |
+| 通用语义（「deferred flush」） | 立项叙事（→ `CHANGELOG` · `archive/`） |
+
+可选门禁：复制 verify-layers `slices/verify_code_comments.example.sh` → 项目 `verify_code_comments.sh` 并登记 manifest（**example only**，母版不强制 L1）。
+
+## 对称清扫（HYGIENE Sprint）
+
+| 原则 | 说明 |
+|------|------|
+| **对称** | 契约变更后同步 docs · 类型/客户端生成物 · OpenAPI · verify 锚点 |
+| **不改行为** | 卫生 Sprint 默认 **Out of scope**：HTTP 路由 · 响应结构（除非独立 Breaking Sprint） |
+| **删前 grep** | 无生产引用的 export/类型，若仍被 verify 脚本引用 → 先改脚本再删 |
+| **FE 门禁** | 删类型/分支前全树 `rg` + typecheck + 项目 FE verify 切片 |
+
+细节与 verify 增长 → **test** skill `reference/verify-growth.md` · 全栈 mixed 叶 → `reference/fullstack-verify-split.md`。
+
 ## 禁止
 
 - 第三个「对齐 doc/ROADMAP/README」hotfix 而不 `/plan` 文档收敛 TASK（见 **bugfix** §Follow-up）

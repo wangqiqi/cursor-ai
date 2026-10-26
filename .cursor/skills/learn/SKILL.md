@@ -54,6 +54,8 @@ disable-model-invocation: true
 | `last-sync.md` | 本次同步时间、来源、待确认项 |
 | `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill |
 
+**大型仓库（可选）**：可在 `learn/` 下分子目录（例：`core/` · `api/` · `ux/` · `perf/`），根目录仍保留上表 7 个种子或链到 `core/`。母版不强制深度；复制 `templates/cursorGrowth/learn/*.example.md` 作专题起点。
+
 **摩擦趋势**（若 `.cursorGrowth/logs/friction.jsonl` 存在）→ 运行 `./.cursor/bin/runner.sh friction-report`，把一行结论写进 `dev-conventions.md`（例：`avg_rounds=2.3 · verify_fail=1/8 — 验收列偏描述性`）。这是**唯一**衡量"少拉扯"是否真的改善的证据。
 
 **实验 / 批跑坐标**（通用闭环见 **spike** agent §experiment-loop）→ 写入 `dev-conventions.md` 或 `learn/` 专节：产物根目录 · 报告命名 · 索引 README · gate 脚本路径。**勿**把项目路径写进 `.cursor/` 母版。

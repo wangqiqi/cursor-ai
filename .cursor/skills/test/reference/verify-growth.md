@@ -12,6 +12,14 @@
 
 脚手架：`scaffold apply-bundle verify-layers` 一次铺齐；成熟仓从 Growth `learn/` 记栈专属 glob，**勿**写进 `.cursor/`。
 
+## verify:changed · 编排 v2
+
+| 机制 | 说明 |
+|------|------|
+| **步骤去重** | `buildChangedSteps` — 相同 `bash` + argv 只执行一次 |
+| **最低层** | `VERIFY_CHANGED_MIN_LAYER`（`l1` \| `l2-core` \| `l2-standard`）或 `changed-map.json` → `minLayer`；非法值 **FAIL** |
+| **无 Node** | `changed-fallback.sh` + `VERIFY_CHANGED_FALLBACK`（不变） |
+
 ## 工具链依赖（矩阵）
 
 | 能力 | bash | git | Node |
@@ -39,6 +47,12 @@
 | `bash` | `slices/verify_*.sh` | 域断言、组合检查、registry |
 | `command` | 单行 shell（`npm run test:unit` · `go test ./pkg/...`） | 已有脚本即可 |
 | `bundle-commands` | `bundles/*.txt` 每行一条命令 | 批量集成测、多包 |
+
+## HYGIENE · 对称清扫
+
+契约/类型/OpenAPI 变更时 **同 PR** 更新 docs · 生成物 · verify 锚点。卫生 Sprint **不改** HTTP 语义。详见 **doc-hygiene.mdc** §对称清扫。
+
+全栈 mixed verify 叶拆分 → `reference/fullstack-verify-split.md`。
 
 ## 反模式
 
