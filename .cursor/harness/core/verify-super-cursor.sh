@@ -398,6 +398,7 @@ if is_mother_repo; then
   if [[ -d "$ROOT/.cursor/harness/core" ]]; then
     bash "$CUR/bin/verify-harness-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
     bash "$CUR/bin/verify-adaptor-contract.sh" || VC_FAIL=$((VC_FAIL + 1))
+    bash "$CUR/bin/verify-mother-root-bin.sh" || VC_FAIL=$((VC_FAIL + 1))
   fi
 else
   echo "SKIP  non-mother: verify-doc / verify-growth-layout（母版门面计数检查）"

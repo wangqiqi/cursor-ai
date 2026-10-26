@@ -116,6 +116,8 @@ install-super-cursor --replace          # 同步母版 .cursor/ 到 Git 项目�
 super-cursor-sync --replace             # 同上（PATH 包装）
 ```
 
+母版仓库须保留根目录 **`bin/super-cursor-sync`**（`verify-mother-root-bin.sh` 门禁）；勿删该文件，否则 `--setup-shell` 后 PATH 同步会断。
+
 手动配置（等价于 `--setup-shell`）：
 
 ```bash
@@ -340,7 +342,7 @@ bash .cursor/bin/cursor-coherence.sh
 
 | 组 | 代表脚本 | 守护 |
 |----|----------|------|
-| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · 占位 adaptor 契约 · project-onekey 模板 |
+| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-mother-root-bin` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · 占位 adaptor 契约 · 母版根 `bin/super-cursor-sync` · project-onekey 模板 |
 | **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` SSOT · `--skills-bundle` 冒烟 |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / `docs-init` SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep（Defer） |

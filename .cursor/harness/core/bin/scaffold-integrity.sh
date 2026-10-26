@@ -62,6 +62,12 @@ while IFS= read -r id; do
       ;;
     java-gradle)
       [[ -d "$dir/src/test/java" ]] || fail "$id: missing src/test/java/"
+      wrapper="$dir/gradle/wrapper/gradle-wrapper.jar"
+      if [[ -f "$wrapper" ]]; then
+        [[ -r "$wrapper" ]] || fail "java-gradle: gradle-wrapper.jar not readable (install/adaptor rsync needs -r)"
+      else
+        fail "java-gradle: missing gradle/wrapper/gradle-wrapper.jar"
+      fi
       ;;
   esac
 
