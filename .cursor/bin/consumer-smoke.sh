@@ -132,6 +132,7 @@ for v in verify-super-cursor.sh bin/cursor-coherence.sh bin/verify-config.sh bin
     ok "target $v exits 0"
   else
     fail "target $v failed"
+    echo "$v_out" | grep -E '^FAIL ' | head -15 | sed 's/^/  | /' >&2 || true
     echo "  ---- $v (tail) ----" >&2
     echo "$v_out" | tail -25 | sed 's/^/  | /' >&2
     echo "  -------------------" >&2
