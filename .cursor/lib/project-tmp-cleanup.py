@@ -41,13 +41,27 @@ def path_under_allowed_roots(p: Path, roots: list[Path]) -> bool:
     return False
 
 
+def _pattern_probe_path(pattern: str) -> Path | None:
+    """Resolve literal prefix of a glob (macOS: /tmp → /private/tmp)."""
+    if ".." in pattern or not pattern.startswith("/"):
+        return None
+    fixed = pattern.split("*", 1)[0].rstrip("/") or "/"
+    try:
+        if "*" not in pattern:
+            return Path(pattern).resolve()
+        parent = fixed if fixed != "/" else "/"
+        return Path(parent).resolve()
+    except OSError:
+        return None
+
+
 def glob_pattern_allowed(pattern: str, roots: list[Path]) -> bool:
     if ".." in pattern:
         return False
-    # 必须显式落在 tmp 根下（支持 $TMPDIR 展开后的绝对 glob）
-    if pattern.startswith("/"):
-        return any(pattern == str(r) or pattern.startswith(str(r) + os.sep) for r in roots)
-    return False
+    probe = _pattern_probe_path(pattern)
+    if probe is None:
+        return False
+    return path_under_allowed_roots(probe, roots)
 
 
 def rule_applies(rule: dict, phase: str) -> bool:

@@ -98,4 +98,7 @@ sed_rewrite "$DEST/reference/library-index.md" \
   -e 's](rules-catalog\.md)](/reference/rules-catalog)]g' \
   -e 's](rules-catalog)](/reference/rules-catalog)]g'
 
+sed_rewrite "$DEST/reference/migration-catalog.md" \
+  -e 's](consumer-refresh\.md)](/guide/consumer-refresh)]g'
+
 echo "sync-cursor-docs: mirrored ${SYNC_COUNT} files from .cursor/docs/ (guide glob + reference list + ${TRAINING_GLOB})"

@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.28] - 2026-10-26
+
+### Fixed
+
+- **CI tmp-cleanup** — `project-tmp-cleanup.py` 用 resolve 校验 glob 前缀（macOS `/tmp` → `/private/tmp`）；`verify-project-tmp-cleanup` 用 `$TMPDIR` 而非硬编码 `/tmp`（Windows 腿）
+- **VitePress** — `sync-cursor-docs` 将 `reference/migration-catalog` 内 `consumer-refresh` 链到 `/guide/consumer-refresh`（消除 dead link）
+
 ## [4.29.27] - 2026-10-26
 
 ### Added
