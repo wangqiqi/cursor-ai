@@ -225,11 +225,11 @@
         "shared": "shared"
       },
       "post_apply": [
-        "Read scripts/README-verify-layers.md",
-        "Register new slices in scripts/lib/verify-layers.sh (CORE · STANDARD · HEAVY · TASK)",
+        "Read scripts/README-verify-layers.md and .cursor/skills/test/reference/verify-growth.md",
+        "Register entries in scripts/verify/manifest.tsv (not verify-layers.sh arrays)",
         "L1: ./scripts/verify.sh",
         "Registry: bash scripts/verify/slices/verify_layers_registry.sh",
-        "CI: VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_layers_registry.sh"
+        "CI: VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_manifest_integrity.sh"
       ]
     },
     {

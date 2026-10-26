@@ -1,0 +1,7 @@
+# tier	type	target
+# manifest.tsv = 分层验收 SSOT（一行一入口 · 禁止同一测例多行登记）
+# tier 累积：l2-standard 含 l2-core 行；l3 含全部 tier
+# type: bash | command | bundle-commands
+l2-core	bash	slices/verify_manifest_integrity.sh
+l2-core	bash	slices/verify_layers_registry.sh
+l2-standard	bash	slices/verify_example_health.sh

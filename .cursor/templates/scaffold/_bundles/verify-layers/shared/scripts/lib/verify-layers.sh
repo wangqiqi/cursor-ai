@@ -1,21 +1,8 @@
 #!/usr/bin/env bash
-# Layered verify registry (L1–L3). Sourced by scripts/verify.sh.
-
-# L2-core: P0 merge gate. Must be subset of VERIFY_SLICES_STANDARD.
-VERIFY_SLICES_CORE=(
-  "slices/verify_layers_registry.sh"
-)
-
-# L2 standard: register domain slices here.
-VERIFY_SLICES_STANDARD=(
-  "slices/verify_layers_registry.sh"
-  "slices/verify_example_health.sh"
-)
-
-# L3 heavy: E2E · perf · docker — run only with --full.
+# Layered verify (L1–L3). L2+ 切片 SSOT：scripts/verify/manifest.tsv（见 README-verify-layers.md）
+VERIFY_SLICES_CORE=()
+VERIFY_SLICES_STANDARD=()
 VERIFY_SLICES_HEAVY=()
-
-# Task-only: explicit register; not in L2/L3 runners by default.
 VERIFY_SLICES_TASK=()
 
 sc_verify_usage() {
@@ -86,25 +73,28 @@ sc_verify_l1() {
   sc_pass "verify (L1)"
 }
 
+sc_verify_run_manifest() {
+  local tier="$1"
+  bash "$(dirname "${BASH_SOURCE[0]}")/../verify/run-manifest-tier.sh" "$tier"
+}
+
 sc_verify_l2_core() {
   sc_section "L2-core"
   sc_verify_l1_fast
-  sc_verify_run_slices "${VERIFY_SLICES_CORE[@]}"
+  sc_verify_run_manifest "l2-core"
   sc_pass "verify (L2-core)"
 }
 
 sc_verify_l2() {
   sc_section "L2 · standard"
   sc_verify_l1_fast
-  sc_verify_run_slices "${VERIFY_SLICES_STANDARD[@]}"
+  sc_verify_run_manifest "l2-standard"
   sc_pass "verify (L2)"
 }
 
 sc_verify_l3() {
   sc_section "L3 · full"
   sc_verify_l1_fast
-  sc_verify_run_slices \
-    "${VERIFY_SLICES_STANDARD[@]}" \
-    "${VERIFY_SLICES_HEAVY[@]}"
+  sc_verify_run_manifest "l3"
   sc_pass "verify (L3)"
 }

@@ -54,8 +54,8 @@ Walkthrough 若用于**说明书配图**（非仅冒烟）→ 与 **user-manual*
 - 新功能域：**优先** L1 进 `task-verify`；L3 进 Sprint Done when 或 nightly
 - 红测停在 L1 即可标 🔧；**勿**为 ✅ 跳过 L1 直接跑 L3
 - 项目路径坐标 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进 `.cursor/`；聚合脚本仅编排（见 verify.mdc）
-- 新项目 Day-1 骨架 → **scaffold** `apply-bundle verify-layers`（注册表 · 示例 slice · `VERIFY_REGISTRY_STRICT`）
-
+- 新项目 Day-1 骨架 → **scaffold** `apply-bundle verify-layers`（manifest SSOT · 示例 slice · `VERIFY_REGISTRY_STRICT`）
+- 增长纪律（防重复验收）→ [reference/verify-growth.md](reference/verify-growth.md)
 
 ### Agent 终端 · 分层优先
 
