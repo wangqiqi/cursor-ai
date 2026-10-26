@@ -19,8 +19,23 @@
       "includes": ["core"],
       "hooks_manifest": null
     },
-    "kiro": { "install_dir": ".kiro", "growth_dir": ".growing", "includes": ["core_rules_export"] },
-    "trae": { "install_dir": ".trae", "growth_dir": ".growing", "includes": ["core_rules_export"] },
-    "opencode": { "install_dir": ".opencode", "growth_dir": ".growing", "includes": ["core"] }
+    "kiro": {
+      "install_dir": ".kiro",
+      "growth_dir": ".growing",
+      "includes": ["core_rules_export"],
+      "hooks_manifest": null
+    },
+    "trae": {
+      "install_dir": ".trae",
+      "growth_dir": ".growing",
+      "includes": ["core_rules_export"],
+      "hooks_manifest": null
+    },
+    "opencode": {
+      "install_dir": ".opencode",
+      "growth_dir": ".growing",
+      "includes": ["core"],
+      "hooks_manifest": null
+    }
   }
 }

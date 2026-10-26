@@ -20,7 +20,7 @@ OpenCode · Harness Core 安装到 `.opencode/`。
 |------|-----|
 | `install_dir` | `.opencode` |
 | `growth_dir` | `.growing` |
-| `hooks_manifest` | **未定义**（map 未列） |
+| `hooks_manifest` | **null** |
 
 ## Includes
 
@@ -33,8 +33,8 @@ bash .cursor/harness/core/bin/install-adaptor-opencode.sh /path/to/project
 install-super-cursor /path/to/project --adaptor opencode
 ```
 
-验收：`bash .cursor/bin/verify-install-opencode.sh`。
+布局 SSOT → [docs/layout.md](docs/layout.md) · 验收 `bash .cursor/bin/verify-install-opencode.sh`。
 
 ## Next sprint
 
-官方 OpenCode 配置对齐（待产品文档）。
+OpenCode 官方安装根钉死后：对照 SPIKE 差距表更新 `layout.md` / `install-adaptor-opencode.sh`（另开 Sprint；当前与 dsh 同 core 平铺假设）。

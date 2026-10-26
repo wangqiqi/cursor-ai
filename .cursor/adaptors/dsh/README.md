@@ -38,4 +38,4 @@ install-super-cursor /path/to/project --adaptor dsh
 
 ## Next sprint
 
-DeepSeek 专有配置 / 官方 layout 对齐（待产品文档）· hooks 若有则另开 Sprint。
+DeepSeek 官方 harness 目录公开后：对照 SPIKE 差距表更新本 `layout.md` 与 `install-adaptor-dsh.sh`（另开 Sprint；无 Breaking 假设前保持当前 core 平铺）。
