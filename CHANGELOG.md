@@ -7,6 +7,7 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **plan** — `reference/task-retention.md`：禁止随意删除 `plan.md` 未完成任务与 `docs/ROADMAP.md` 进行中/计划行；已完项可归档或清理
+- **ci-preflight.sh** — push 前本地跑齐三矩阵腿 + VitePress；`install-smoke` 增加 Windows 门面实体化后重装回归
 
 ### Changed
 

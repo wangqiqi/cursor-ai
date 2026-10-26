@@ -102,6 +102,37 @@ assert_file "$FULL/onekey_start.sh" "full: onekey_start.sh bootstrapped at insta
 [[ -x "$FULL/onekey_start.sh" ]] && ok "full: onekey_start.sh executable" \
   || fail "full: onekey_start.sh not executable"
 onekey_hash="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
+
+# Windows/Git Bash 回归：cp/rsync 把 .cursor 根门面落成实体文件/目录后，二次 install 须恢复 symlink
+# （CI windows 腿多次在此失败：AGENTS.md · agents 等 — 本地先抓，勿直接 push 烧 Actions）
+smoke_corrupt_ide_facades() {
+  local proj="$1"
+  local cur="$proj/.cursor"
+  local core="$cur/harness/core"
+  local name
+  for name in agents bin config docs lib rules skills templates; do
+    [[ -e "$cur/$name" || -L "$cur/$name" ]] || continue
+    rm -rf "$cur/$name"
+    cp -a "$core/$name" "$cur/$name"
+  done
+  for name in AGENTS.md README.md verify-super-cursor.sh verify-system.sh; do
+    [[ -e "$cur/$name" || -L "$cur/$name" ]] || continue
+    rm -f "$cur/$name"
+    cp -a "$core/$name" "$cur/$name"
+  done
+  if [[ -d "$cur/adaptors/cursor/hooks" ]]; then
+    rm -rf "$cur/hooks" "$cur/hooks.json"
+    cp -a "$cur/adaptors/cursor/hooks" "$cur/hooks"
+    cp -a "$cur/adaptors/cursor/hooks.json" "$cur/hooks.json"
+  fi
+}
+smoke_corrupt_ide_facades "$FULL"
+run_install "full: reinstall after Windows-like facade copies" "$TMP_ROOT/full-facade.out" "$FULL" --profile full
+[[ -L "$FULL/.cursor/agents" ]] && ok "full: agents symlink after facade reinstall" \
+  || fail "full: agents not symlink after facade reinstall"
+[[ -L "$FULL/.cursor/AGENTS.md" ]] && ok "full: AGENTS.md symlink after facade reinstall" \
+  || fail "full: AGENTS.md not symlink after facade reinstall"
+
 run_install "full: reinstall idempotent onekey" "$TMP_ROOT/full-reinstall.out" "$FULL" --profile full
 onekey_hash2="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
 [[ "$onekey_hash" == "$onekey_hash2" ]] && ok "full: reinstall does not overwrite onekey_start.sh" \
