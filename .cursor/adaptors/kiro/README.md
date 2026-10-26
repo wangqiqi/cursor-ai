@@ -20,7 +20,7 @@ Kiro 项目规则 · `core_rules_export`。
 |------|-----|
 | `install_dir` | `.kiro` |
 | `growth_dir` | `.growing` |
-| `hooks_manifest` | **未定义**（map 未列；实现 Sprint 再补） |
+| `hooks_manifest` | **null** |
 
 ## Includes
 
@@ -37,4 +37,4 @@ install-super-cursor /path/to/project --adaptor kiro
 
 ## Next sprint
 
-官方 layout 对齐 · 专有 manifest（待产品文档）。
+Kiro 官方规则目录公开后：SPIKE 差距表驱动 `layout.md` / 导出范围（另开 Sprint）。
