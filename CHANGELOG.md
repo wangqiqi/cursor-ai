@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **plan** — `reference/task-retention.md`：禁止随意删除 `plan.md` 未完成任务与 `docs/ROADMAP.md` 进行中/计划行；已完项可归档或清理
+
 ### Changed
 
 - **跨平台健壮性** — `sc_find_packaged_rules_mdc`（packaged rules SSOT，排除 `rules/local`）；`cursor-coherence` 用 `mktemp` 替代 process substitution（Windows Git Bash）

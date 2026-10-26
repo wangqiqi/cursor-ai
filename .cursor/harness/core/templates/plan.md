@@ -1,4 +1,5 @@
 <!-- 工作副本：.growing/plan.md（gitignore）· 模板 .cursor/templates/plan.md -->
+<!-- 纪律：禁止删除 ⬜/🔧/⚠️ TASK · 见 skills/plan/reference/task-retention.md -->
 <!-- PLANNING: false -->
 <!-- SPRINT: (none) -->
 <!-- PLAN_APPROVED: (none) -->

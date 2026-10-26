@@ -20,4 +20,12 @@
 |------|------|------|
 | | | |
 
-**纪律**：不把大量已完成项长期堆在这里冒充待办；Sprint 状态在 `.growing/plan.md`（gitignore）。
+**纪律**：
+
+| 用这个 | 不是那个 |
+|--------|----------|
+| **进行中 / 计划中** 保留未交付行，只更新状态与依赖 | Agent 或人为「整理」时 **删除** 未完成任务 |
+| 已交付迁到 **已完成** 或 `.growing/archive/{domain}/`，可定期删 **已完成** 旧行 | 把未完成项当已完成清理掉 |
+| 长期主题在 ROADMAP；当前 Sprint TASK 在 `.growing/plan.md` | 在 ROADMAP 堆整表替代 plan |
+
+母版 SSOT → `skills/plan/reference/task-retention.md`。

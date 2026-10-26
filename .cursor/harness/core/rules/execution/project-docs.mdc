@@ -82,7 +82,7 @@ alwaysApply: false
 | 内容 | 去处 |
 |------|------|
 | 对外持久文档（需求/设计/契约/手册/报告/运维/调优） | `docs/NN_*.md` |
-| 长期计划 | `docs/ROADMAP.md` |
+| 长期计划 | `docs/ROADMAP.md`（**进行中/计划中** 未交付行不得随意删；已完成迁出或归档 — 见 **plan** `reference/task-retention.md`） |
 | 项目本地认知（模块地图 · 发版节奏 · 踩坑） | `.growing/learn/`（gitignore） |
 | 已交付长叙事 | `.growing/archive/{domain}/` |
 | 安全与威胁模型 | 并入 `02_架构设计`（不单独占号） |
