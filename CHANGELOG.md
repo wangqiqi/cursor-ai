@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.30] - 2026-10-26
+
+### Fixed
+
+- **CI Windows tmp-cleanup** — fixture 用 `mktemp` 绝对路径 + Python 写 JSON（避免 heredoc/反斜杠）；非 Unix 跳过 `/etc/passwd` 负例
+- **CI macOS verify** — `run-manifest-tier` 空 `BUNDLE_CMDS` 在 bash 3.2 + `set -u` 下安全拼接
+
 ## [4.29.29] - 2026-10-26
 
 ### Fixed

@@ -106,7 +106,13 @@ run_one() {
   eval "$cmd"
 }
 
-ALL_CMDS=("${MANIFEST_BASH_CMDS[@]}" "${BUNDLE_CMDS[@]}")
+ALL_CMDS=()
+if ((${#MANIFEST_BASH_CMDS[@]} > 0)); then
+  ALL_CMDS+=("${MANIFEST_BASH_CMDS[@]}")
+fi
+if ((${#BUNDLE_CMDS[@]} > 0)); then
+  ALL_CMDS+=("${BUNDLE_CMDS[@]}")
+fi
 if [[ ${#ALL_CMDS[@]} -eq 0 ]]; then
   echo "FAIL: no commands collected for tier=$TIER" >&2
   exit 1
