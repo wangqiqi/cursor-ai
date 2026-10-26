@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Bootstrap .cursorGrowth/ for mother-repo dev or repair broken rules/local symlink.
+# Bootstrap .growing/ for mother-repo dev or repair broken rules/local symlink.
 # Idempotent — safe to run before template-verify or on first clone.
 set -euo pipefail
 
 CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
-GROWTH_TEMPLATE="$CUR/templates/cursorGrowth"
-GROWTH_DIR="$ROOT/.cursorGrowth"
+GROWTH_TEMPLATE="$CUR/templates/growing"
+GROWTH_DIR="$ROOT/.growing"
 
 [[ -d "$GROWTH_TEMPLATE" ]] || { echo "FAIL bootstrap-growth: missing $GROWTH_TEMPLATE"; exit 1; }
 
@@ -34,8 +34,8 @@ if [[ -f "$CURSOR_LOCAL" && ! -L "$CURSOR_LOCAL" ]]; then
 fi
 if [[ -d "$GROWTH_DIR/rules/local" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]]; then
-    if ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
-      echo "Linked .cursor/rules/local → .cursorGrowth/rules/local"
+    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+      echo "Linked .cursor/rules/local → .growing/rules/local"
     else
       mkdir -p "$CURSOR_LOCAL"
       cp -f "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \
@@ -44,7 +44,7 @@ if [[ -d "$GROWTH_DIR/rules/local" ]]; then
     fi
   elif [[ -L "$CURSOR_LOCAL" && ! -e "$CURSOR_LOCAL" ]]; then
     rm -f "$CURSOR_LOCAL"
-    if ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
       echo "Repaired .cursor/rules/local symlink"
     else
       mkdir -p "$CURSOR_LOCAL"
@@ -55,4 +55,4 @@ if [[ -d "$GROWTH_DIR/rules/local" ]]; then
   fi
 fi
 
-echo "OK  bootstrap-growth: .cursorGrowth ready ($GROWTH_DIR)"
+echo "OK  bootstrap-growth: .growing ready ($GROWTH_DIR)"

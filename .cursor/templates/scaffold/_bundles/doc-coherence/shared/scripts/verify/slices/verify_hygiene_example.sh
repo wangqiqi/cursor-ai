@@ -8,8 +8,8 @@ fail() { echo "FAIL: $*"; exit 1; }
 
 # Do not commit local agent growth paths into tracked docs
 if [[ -d docs ]]; then
-  if grep -rq '\.cursorGrowth' docs 2>/dev/null; then
-    fail 'docs/ must not reference .cursorGrowth (local-only paths)'
+  if grep -rq '\.growing' docs 2>/dev/null; then
+    fail 'docs/ must not reference .growing (local-only paths)'
   fi
 fi
 

@@ -46,7 +46,7 @@ else
 fi
 
 [[ -f "$PROJ/.cursor/verify-super-cursor.sh" ]] && ok "target has .cursor/" || fail "target missing .cursor/"
-[[ -f "$PROJ/.cursorGrowth/plan.md" ]] && ok "target has .cursorGrowth/plan.md" || fail "target missing plan.md"
+[[ -f "$PROJ/.growing/plan.md" ]] && ok "target has .growing/plan.md" || fail "target missing plan.md"
 grep -q '/learn' "$TMP/install.out" && ok "install points at /learn first-run" || fail "install output lacks /learn"
 
 run_in_proj() { ( cd "$PROJ" && "$@" ); }
@@ -103,8 +103,8 @@ esac
 sed -e 's/<!-- PLAN_APPROVED: (none) -->/<!-- PLAN_APPROVED: 2026-09-23 -->/' \
     -e 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-001 -->/' \
     -e 's/<!-- SPRINT_STATUS: closed -->/<!-- SPRINT_STATUS: active -->/' \
-    "$PROJ/.cursorGrowth/plan.md" > "$TMP/plan.new"
-mv "$TMP/plan.new" "$PROJ/.cursorGrowth/plan.md"
+    "$PROJ/.growing/plan.md" > "$TMP/plan.new"
+mv "$TMP/plan.new" "$PROJ/.growing/plan.md"
 run_in_proj bash .cursor/bin/runner.sh gate-check >/dev/null 2>&1 && ok "gate-check passes once approved" || fail "gate-check still blocks after approval"
 out="$(printf '{"conversation_id":"c1","workspace_roots":["%s"]}' "$PROJ" | run_in_proj bash .cursor/hooks/run-start.sh 2>/dev/null || true)"
 case "$out" in

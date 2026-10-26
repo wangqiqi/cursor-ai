@@ -32,7 +32,7 @@ readonly: true
 | 6 门禁 | 可选 `verify_<experiment>.sh`（L1/L3 见 verify.mdc） |
 | 7 总览 | 新版总览 doc 顶链「已被取代」链旧版 |
 
-领域专用长流程（如某垂直 Prompt 矩阵）→ 目标项目私有 **skill**（`.cursorGrowth/` 或项目内安装）可扩展本表，母版 **spike** 保持只读。
+领域专用长流程（如某垂直 Prompt 矩阵）→ 目标项目私有 **skill**（`.growing/` 或项目内安装）可扩展本表，母版 **spike** 保持只读。
 
 ## 禁止
 

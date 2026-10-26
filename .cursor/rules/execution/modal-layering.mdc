@@ -29,7 +29,7 @@ alwaysApply: false
 
 ## 改前
 
-- Read 项目 `zIndex*` / design token 文件（路径 → `.cursorGrowth/learn/acceptance.md`）
+- Read 项目 `zIndex*` / design token 文件（路径 → `.growing/learn/acceptance.md`）
 - grep 新增 overlay 的 `z-index` / `zIndex.`
 
 ## 禁止

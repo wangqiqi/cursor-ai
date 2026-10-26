@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 | 条件 | 动作 |
 |------|------|
-| 预估 / 已列 **todolist 或 TASK 超过 5 条** | **先**写入 / 更新 `.cursorGrowth/plan.md`（Goal · Done when · TASK 表），**等用户确认**后再 `/run` 编码 |
+| 预估 / 已列 **todolist 或 TASK 超过 5 条** | **先**写入 / 更新 `.growing/plan.md`（Goal · Done when · TASK 表），**等用户确认**后再 `/run` 编码 |
 | 大改动、跨模块、不确定选型 | 同上；必要时先 `SPIKE-*` |
 | ≤5 且范围清晰的小修 | 可直述执行；仍建议 gate-check |
 
@@ -29,15 +29,15 @@ Sprint **Goal 必须是能力/模块交付**；打 tag · merge · 归档等**�
 
 ## 必读
 
-`.cursorGrowth/plan.md` 元数据 · **未完成** Sprint/TASK · `.cursorGrowth/archive/` · `learn/plan-conventions.md` · grep 落点（**不写代码**）
+`.growing/plan.md` 元数据 · **未完成** Sprint/TASK · `.growing/archive/` · `learn/plan-conventions.md` · grep 落点（**不写代码**）
 
-**`.cursorGrowth/` 不纳入 git**：`plan.md` · `archive/` · `learn/` · `rules/local` 均在此；安装时由 `templates/plan.md` 复制到 `.cursorGrowth/plan.md`。
+**`.growing/` 不纳入 git**：`plan.md` · `archive/` · `learn/` · `rules/local` 均在此；安装时由 `templates/plan.md` 复制到 `.growing/plan.md`。
 
 空仓库 / 用户要「新建项目」：在 `PLANNING:true` 用 **AskQuestion** 确认栈 → 预览 `scaffold.sh apply --dry-run` → 用户确认后 apply 或写入 `TASK-001`（见 **scaffold** skill）。**不写业务代码**直至用户确认脚手架范围。
 
 ## plan.md 正文卫生（未完成优先）
 
-**目标**：`plan.md` 是**执行面板**，不是历史档案。团队细则 → `.cursorGrowth/learn/plan-conventions.md`。
+**目标**：`plan.md` 是**执行面板**，不是历史档案。团队细则 → `.growing/learn/plan-conventions.md`。
 
 ### 保留在 plan.md
 
@@ -52,7 +52,7 @@ Sprint **Goal 必须是能力/模块交付**；打 tag · merge · 归档等**�
 
 | 不放 | 放哪里 |
 |------|--------|
-| 已闭合 Sprint 全文（Done when · TASK ✅） | `.cursorGrowth/archive/` 一篇摘要 |
+| 已闭合 Sprint 全文（Done when · TASK ✅） | `.growing/archive/` 一篇摘要 |
 | ROADMAP 全表（含大量 `done` 行） | 运行时 `archive/` · 项目 `docs/ROADMAP.md` |
 | **历史 Sprint** 长链接列表 | `archive/` 目录即可 |
 | 设计拍板长文 · 多段 archive 互链 | `learn/` · `docs/` |

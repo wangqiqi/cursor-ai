@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 项目 /tmp 契约清理 — 配置 SSOT：.cursorGrowth/temp-cleanup.json（见 workflow.json temp_cleanup）
+# 项目 /tmp 契约清理 — 配置 SSOT：.growing/temp-cleanup.json（见 workflow.json temp_cleanup）
 set -euo pipefail
 
 usage() {
@@ -35,7 +35,7 @@ done
 ROOT="$(cd "$ROOT" && pwd)"
 WF="$ROOT/.cursor/config/workflow.json"
 if [[ -z "$CONFIG" && -f "$WF" ]]; then
-  CONFIG="$(json_cfg "$WF" "temp_cleanup.config" ".cursorGrowth/temp-cleanup.json")"
+  CONFIG="$(json_cfg "$WF" "temp_cleanup.config" ".growing/temp-cleanup.json")"
 fi
 [[ -n "$CONFIG" ]] || exit 0
 [[ "$CONFIG" != /* ]] && CONFIG="$ROOT/$CONFIG"

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "protected_dirs": [
-    ".cursorGrowth",
+    ".growing",
     "~/.cache/ms-playwright",
     "~/.cache/ms-playwright-go"
   ],

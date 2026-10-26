@@ -70,7 +70,7 @@ alwaysApply: false
 | 层级 | 做法 |
 |------|------|
 | **测例内** | `fixture` / `afterAll` / `try/finally` **删除**自建目录；嵌入式 DB 用 `:memory:` 或 `tmp_path` + 不 `keepdb` 长期留盘 |
-| **项目契约** | 复制 `templates/cursorGrowth/temp-cleanup.example.json` → `.cursorGrowth/temp-cleanup.json`；按项目登记 `/tmp/yourapp-*`（**勿**写进母版 `workflow.json`） |
+| **项目契约** | 复制 `templates/growing/temp-cleanup.example.json` → `.growing/temp-cleanup.json`；按项目登记 `/tmp/yourapp-*`（**勿**写进母版 `workflow.json`） |
 | **tier** | `ephemeral`：`test` / `verify` / `task-verify` 成功后自动删；`persistent`：仅 `sweep` 且超过 `max_age_hours`（默认由 `runner.sh verify` 与 `scripts/verify.sh` 触发） |
 | **Shell smoke** | 母版 `.cursor/lib/temp-cleanup.sh`：`sc_mktemp_dir label` → `$SC_MKTEMP_LAST`（**禁止** `$(sc_mktemp_dir …)`）+ `sc_temp_trap_cleanup` |
 | **test.sh** | 末尾 `sc_project_tmp_cleanup test`（`scripts/lib/_common.sh`） |

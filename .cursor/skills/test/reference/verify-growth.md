@@ -35,7 +35,7 @@
 
 | 件 | 路径 |
 |----|------|
-| 契约 | `.cursorGrowth/temp-cleanup.json`（模板 `templates/cursorGrowth/temp-cleanup.example.json`） |
+| 契约 | `.growing/temp-cleanup.json`（模板 `templates/growing/temp-cleanup.example.json`） |
 | 执行器 | `.cursor/lib/project-tmp-cleanup.sh` · `workflow.json` → `temp_cleanup` |
 
 `ephemeral` 规则在 `task-verify` / `scripts/verify.sh` / `test.sh`（`sc_project_tmp_cleanup`）成功后清理；`persistent` 靠 `max_age_hours` + `sweep`（Sprint `runner.sh verify` 末尾）。

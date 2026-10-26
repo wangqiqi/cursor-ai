@@ -56,9 +56,9 @@ SKILL_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 CURSOR_ROOT="$(cd "$SKILL_ROOT/../.." && pwd)"
 PROJECT_ROOT="$(cd "$CURSOR_ROOT/.." && pwd)"
 DISK_COLLECT="${CURSOR_ROOT}/skills/disk/scripts/collect-disk.py"
-DISK_SNAPSHOT_DIR="${PROJECT_ROOT}/.cursorGrowth/disk-snapshots"
+DISK_SNAPSHOT_DIR="${PROJECT_ROOT}/.growing/disk-snapshots"
 CONFIG_DEFAULT="${SKILL_ROOT}/config/default-protected.json"
-CONFIG_OVERRIDE="${PROJECT_ROOT}/.cursorGrowth/maintain-config.json"
+CONFIG_OVERRIDE="${PROJECT_ROOT}/.growing/maintain-config.json"
 INSTALLER_DIRS_JSON='[]'
 PROTECTED_DIRS=()
 CACHE_DIRS=()
@@ -168,7 +168,7 @@ is_critical_user_data() {
 
 expand_path() {
     local p=$1
-    if [[ "$p" == .cursorGrowth* ]]; then
+    if [[ "$p" == .growing* ]]; then
         echo "${PROJECT_ROOT}/${p}"
         return
     fi
@@ -516,7 +516,7 @@ diagnose_system() {
     echo "   • 系统：APT 缓存、旧内核、journal/旧日志"
     echo "   • 用户：npm/pip/浏览器缩略图/IDE 缓存、回收站、ccache、/tmp 开发测试残留"
     echo ""
-    echo "🔒 受保护目录见 config/default-protected.json 与 .cursorGrowth/maintain-config.json"
+    echo "🔒 受保护目录见 config/default-protected.json 与 .growing/maintain-config.json"
     echo ""
     echo "🔒 无需升级系统版本，22.04 LTS 已足够稳定且长期支持！"
 
@@ -1019,7 +1019,7 @@ clean_system() {
 
     echo -e "\n${YELLOW}🎯 后续建议：${NC}"
     echo "1. 手动检查大目录：du -h ~ | sort -hr | head -n 20"
-    echo "2. 受保护目录见 .cursorGrowth/maintain-config.json（交互模式可确认清理安装包）"
+    echo "2. 受保护目录见 .growing/maintain-config.json（交互模式可确认清理安装包）"
     echo "3. 查看 Conda 环境：conda env list"
     echo "4. 查看 Docker 使用：docker system df"
 

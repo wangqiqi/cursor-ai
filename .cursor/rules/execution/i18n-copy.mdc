@@ -25,7 +25,7 @@ alwaysApply: false
    - 动态键用窄类型（如 `MessagePath`）；新增键 **所有** 活跃 locale 同步，或显式 fallback 策略写清。
 
 2. **术语与禁词**
-   - 产品禁词表 / 术语表 → `.cursorGrowth/learn/acceptance.md` 或项目 docs；改 copy 前 grep 禁词。
+   - 产品禁词表 / 术语表 → `.growing/learn/acceptance.md` 或项目 docs；改 copy 前 grep 禁词。
    - 同概念全站统一称谓（如「批次」vs「batch」混用 → 一次 Sprint 收敛，非逐页 hotfix）。
 
 3. **E2E / 说明书 / a11y 锚点**
@@ -52,4 +52,4 @@ alwaysApply: false
 
 - Bug 文案回归 → **bugfix** §Follow-up · **debug**
 - UX 分层 → **ux** · **delivery**
-- 项目 token/库路径 → `.cursorGrowth/learn/acceptance.md`
+- 项目 token/库路径 → `.growing/learn/acceptance.md`

@@ -1,6 +1,6 @@
 ---
 name: week
-description: 周报（关键词）：扫工作区 CHANGELOG.md，按年内第 N 周归纳，写入 .cursorGrowth/week-report/。说「周报」「本周总结」时用。
+description: 周报（关键词）：扫工作区 CHANGELOG.md，按年内第 N 周归纳，写入 .growing/week-report/。说「周报」「本周总结」时用。
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 **工具技能**（无 slash · 非 plan/run 主路径）。**用这个**：汇总多仓 CHANGELOG 周报。**不是那个**：单项目任务/驾驶舱周报（目标项目自建 skill）；本仓约定沉淀 → **`/learn`**；打版 → **`/release`**。
 
-扫描工作区各仓库 **CHANGELOG.md**，归纳后写入 **`.cursorGrowth/week-report/第{N}周任务总结.md`**（本地、**不提交 git**）。
+扫描工作区各仓库 **CHANGELOG.md**，归纳后写入 **`.growing/week-report/第{N}周任务总结.md`**（本地、**不提交 git**）。
 
 ## 何时进入
 
@@ -41,10 +41,10 @@ python3 .cursor/skills/week/scripts/collect-week.py --format raw
 ### 2. 归纳并写入
 
 ```bash
-mkdir -p .cursorGrowth/week-report
+mkdir -p .growing/week-report
 ```
 
-输出：`.cursorGrowth/week-report/第{N}周任务总结.md`（同周已存在则覆盖）。
+输出：`.growing/week-report/第{N}周任务总结.md`（同周已存在则覆盖）。
 
 **不要**只粘贴 CHANGELOG 原文。结构：
 
@@ -73,10 +73,10 @@ mkdir -p .cursorGrowth/week-report
 ### 3. 确认
 
 ```bash
-git status   # .cursorGrowth/ 不应出现在待提交列表
+git status   # .growing/ 不应出现在待提交列表
 ```
 
-**禁止** `git add .cursorGrowth/week-report/`。
+**禁止** `git add .growing/week-report/`。
 
 ## 与 release 的关系
 

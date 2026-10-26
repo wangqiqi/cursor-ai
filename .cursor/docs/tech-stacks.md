@@ -1,6 +1,6 @@
 # 技术栈 · 整包安装与按需启用
 
-Super Cursor **不按语言拆安装包**：`install-super-cursor.sh` 始终 **整包复制** 母版 `.cursor/`。项目差异通过 **`.cursorGrowth/project-profile.json`** 控制 **运行时启用哪些面**（更快、少占 token），而不是 install 时删减文件。
+Super Cursor **不按语言拆安装包**：`install-super-cursor.sh` 始终 **整包复制** 母版 `.cursor/`。项目差异通过 **`.growing/project-profile.json`** 控制 **运行时启用哪些面**（更快、少占 token），而不是 install 时删减文件。
 
 ## 术语
 
@@ -38,7 +38,7 @@ flowchart LR
 |------|------|
 | **空仓** | `scaffold apply <id>` → 建议 `scaffold adapt --write` 写入 profile |
 | **已有代码** | **禁止**盲目全量 `apply` → `scaffold audit` · **`scaffold adapt`** · `/learn` |
-| **升级 `.cursor` 后** | 保留 `.cursorGrowth` → **`scaffold adapt`** 刷新探测 → 核对 `learn/dev-conventions.md` |
+| **升级 `.cursor` 后** | 保留 `.growing` → **`scaffold adapt`** 刷新探测 → 核对 `learn/dev-conventions.md` |
 
 ## 四层：安装 vs 启用
 
@@ -65,14 +65,14 @@ Skills 不按栈裁剪。profile 的作用是：让 **run-start** 与 **learn** 
 
 模板与 JSON Schema：
 
-- `.cursor/templates/cursorGrowth/project-profile.example.json`
-- `.cursor/templates/cursorGrowth/project-profile.schema.json`
+- `.cursor/templates/growing/project-profile.example.json`
+- `.cursor/templates/growing/project-profile.schema.json`
 
 CLI：
 
 ```bash
 .cursor/bin/scaffold.sh adapt              # 预览（默认 dry-run）
-.cursor/bin/scaffold.sh adapt --write      # 写入 .cursorGrowth/project-profile.json
+.cursor/bin/scaffold.sh adapt --write      # 写入 .growing/project-profile.json
 .cursor/bin/scaffold.sh adapt --write --primary=java,vue
 ```
 
@@ -116,10 +116,10 @@ Token 总成本与「少拉扯」→ [effective-collaboration.md](effective-coll
 |----|--------------|----------|
 | Go · Vue · Python · C++ · Node | ✅ | ✅ 对应 id |
 | Java | ✅ `java.mdc` | ✅ `java-gradle`（Gradle KTS · JUnit 5；无 Spring） |
-| Android | ❌ | ❌ → `.cursorGrowth/rules/local` |
+| Android | ❌ | ❌ → `.growing/rules/local` |
 
 ## 交叉引用
 
 - 消费方升级 → [consumer-refresh.md](consumer-refresh.md)
 - 脚手架 skill → `scaffold` · [scaffold.md](scaffold.md)
-- Growth 目录 → `templates/cursorGrowth/README.md`
+- Growth 目录 → `templates/growing/README.md`

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://super-cursor.local/schemas/project-profile.schema.json",
   "title": "Super Cursor project profile",
-  "description": "Machine-readable stack and verify enablement for .cursorGrowth (整包 .cursor · 按需启用).",
+  "description": "Machine-readable stack and verify enablement for .growing (整包 .cursor · 按需启用).",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "adapted_at", "stacks", "verify", "tech_rules"],

@@ -16,7 +16,7 @@ Then open the target project in your editor. Everything below is said to the **a
 ## 2. First five minutes
 
 ```text
-/learn    # 1) let the agent learn this repo -> .cursorGrowth/learn/
+/learn    # 1) let the agent learn this repo -> .growing/learn/
 /plan     # 2) freeze Goal + Done when, then split into TASK rows with executable acceptance
 /run      # 3) implement the ACTIVE task; task-verify then commit
 ```
@@ -35,8 +35,8 @@ Notes that save round-trips:
 | Path | Meaning |
 |------|---------|
 | `.cursor/` | the installed workflow (rules · skills · hooks · config) — treat as read-only |
-| `.cursorGrowth/` | your project's knowledge and artifacts (git-ignored): `plan.md` · `learn/` · `archive/` |
-| `.cursor/rules/local/` | your team's private rules (symlink to `.cursorGrowth/rules/local/`) |
+| `.growing/` | your project's knowledge and artifacts (git-ignored): `plan.md` · `learn/` · `archive/` |
+| `.cursor/rules/local/` | your team's private rules (symlink to `.growing/rules/local/`) |
 
 ## 4. Check the installation
 

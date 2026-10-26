@@ -1,7 +1,7 @@
 # 双方言数据访问（项目特化 · 示例）
 
 > 开发/测试用 **方言 A**，生产用 **方言 B**（常见：SQLite + PostgreSQL）。  
-> 复制到 `.cursorGrowth/learn/` 并链 `rules/local/dual-dialect.example.mdc`（若采用）。
+> 复制到 `.growing/learn/` 并链 `rules/local/dual-dialect.example.mdc`（若采用）。
 
 ## 原则
 
@@ -15,5 +15,5 @@
 | 项 | 路径 |
 |----|------|
 | 翻译/注册 | `server/lib/db.*`（示例名） |
-| 规则 | `.cursorGrowth/rules/local/dual-dialect.example.mdc` |
+| 规则 | `.growing/rules/local/dual-dialect.example.mdc` |
 | 证据 | CHANGELOG · archive |

@@ -15,9 +15,9 @@ from typing import Any
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG = SKILL_DIR / "config" / "default-paths.json"
-DEFAULT_SNAPSHOT_DIR = Path(".cursorGrowth/disk-snapshots")
+DEFAULT_SNAPSHOT_DIR = Path(".growing/disk-snapshots")
 TIMESTAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}_\d{6}\.json$")
-GROWTH_OVERRIDE = Path(".cursorGrowth/disk-paths.json")
+GROWTH_OVERRIDE = Path(".growing/disk-paths.json")
 
 
 def resolve_path(raw: str, home: Path, project_dir: Path, relative: bool = False) -> Path:
@@ -287,7 +287,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--snapshot-dir",
         default=str(DEFAULT_SNAPSHOT_DIR),
-        help="[可选] 快照目录（默认 .cursorGrowth/disk-snapshots/）",
+        help="[可选] 快照目录（默认 .growing/disk-snapshots/）",
     )
     parser.add_argument("--format", choices=["json", "meta", "report", "diff"], help="[可选] 输出格式")
     parser.add_argument("--before", help="[可选] diff 较早快照")

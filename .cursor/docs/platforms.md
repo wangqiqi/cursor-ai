@@ -73,7 +73,7 @@ verify-layers 细节 → bundle 内 `README-verify-layers.md`。
 | 探索期只读环境 | — | hooks **尚未**运行；可写环境后才执行 |
 | 企业 | — | 可叠加团队/企业托管 hooks |
 
-Cloud 不读 `.cursorGrowth/plan.md`；验收命令写进 `environment.json` 的 `install` 或 PR 说明。详 **cursor-cloud.md** · 官方 **hooks**（Cloud agent support 矩阵）。
+Cloud 不读 `.growing/plan.md`；验收命令写进 `environment.json` 的 `install` 或 PR 说明。详 **cursor-cloud.md** · 官方 **hooks**（Cloud agent support 矩阵）。
 
 ### Tab hooks（IDE · 默认未启用）
 

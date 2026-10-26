@@ -42,10 +42,10 @@ alwaysApply: false
 - [ ] UI/功能对外交付：规格与实现一致；冲突走 **`/delivery`** · **`Decision needed`**（见 **delivery** skill）
 - [ ] 大文档拆分后：ROADMAP / 归档 / CHANGELOG 职责清晰（见上表）
 
-## 与 .cursorGrowth 的分工
+## 与 .growing 的分工
 
 - **通用写法 SOP** → 本 rule（留在 `.cursor/`）
-- **本项目术语、模块地图、历史决策摘要** → `/learn` 写入 `.cursorGrowth/learn/`（git 忽略）
+- **本项目术语、模块地图、历史决策摘要** → `/learn` 写入 `.growing/learn/`（git 忽略）
 
 ## 文档自洽（doc-coherence）
 

@@ -39,4 +39,4 @@ alwaysApply: false
 
 ## 项目特化
 
-具体上限数字、配置键名 → `.cursorGrowth/learn/`，**勿**写进本 rule。
+具体上限数字、配置键名 → `.growing/learn/`，**勿**写进本 rule。

@@ -18,7 +18,7 @@
 
 ## 一句话
 
-把「怎么和 Agent 协作」从聊天里的口头约定，变成 **rules + skills + hooks + config** —— 装一次，每个仓库都能用；项目特化知识进 `.cursorGrowth/`（git 忽略），**不污染通用模板**。
+把「怎么和 Agent 协作」从聊天里的口头约定，变成 **rules + skills + hooks + config** —— 装一次，每个仓库都能用；项目特化知识进 `.growing/`（git 忽略），**不污染通用模板**。
 
 > **Roo Code 兼容** — `.cursor/` 内的所有内容**也可以整体复制到 `.roo/`**（`cp -r .cursor .roo` 即可），既支持 **Roo Code** 模式，也兼容 **Cursor 内遵循相同 skills/rules 协议** 的 Agent；详见 [§ 兼容 Roo Code](#兼容-roo-code)。
 
@@ -59,7 +59,7 @@
 ```bash
 git clone https://github.com/wangqiqi/cursor-ai.git
 cd cursor-ai
-bash .cursor/bin/bootstrap-growth.sh          # 母版 clone 后首次：补 .cursorGrowth/rules/local
+bash .cursor/bin/bootstrap-growth.sh          # 母版 clone 后首次：补 .growing/rules/local
 
 ./install-super-cursor.sh /path/to/your-project
 # 或已配置 SUPER_CURSOR_HOME + PATH 后，在仓库任意子目录：
@@ -72,7 +72,7 @@ bash .cursor/bin/platform-check.sh            # 可选：环境自检
 |------|------|
 | `--profile full\|lite\|rules-only` | 工作流档位（默认 `full`） |
 | `--replace` | 先删目标 `.cursor/` 再拷贝（**升级/迁移推荐**） |
-| `--copy-plan` | 复制 `templates/plan.md` → `.cursorGrowth/plan.md` |
+| `--copy-plan` | 复制 `templates/plan.md` → `.growing/plan.md` |
 | `--skills-bundle full\|core` | skills 子集（默认 **full**=28；**core**=23，不含五工具 skill） |
 
 | 分发 | 说明 |
@@ -144,7 +144,7 @@ flowchart TB
 - **任务 ID** — `TASK-*` 实现（`/run` 主路径）· `REV-*` 回顾 · `SPIKE-*` 调研 · `DOC-*` 文档；`next-task` 自动跳过后三者
 - **发版节奏** — `release.mode`：`patch-per-task`（默认，Sprint 收尾打 tag）或 `tag-per-commit`（每 TASK 一 tag；见 `config/workflow.json`）
 - **SDD（可选）** — 大特性可走 **plan** §SDD + `templates/sdd/`（吸收 [spec-kit](https://github.com/github/spec-kit)）
-- **沉淀** — 项目路径、模块地图、发版节奏 → `/learn` 写入 `.cursorGrowth/learn/`
+- **沉淀** — 项目路径、模块地图、发版节奏 → `/learn` 写入 `.growing/learn/`
 - **边界** — 安装后 `.cursor/` 默认只读；团队差异用 `config/*.json` 或 `.cursor/rules/local/`（社区 rules → [rules-catalog](.cursor/docs/rules-catalog.md)）
 
 ## 和「只用 Cursor 默认 Agent」的差别
@@ -153,7 +153,7 @@ flowchart TB
 |------|-----------|--------------|
 | 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
 | 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
-| 新会话 | 重新解释项目结构 | `/learn` 读过 `.cursorGrowth/learn/` |
+| 新会话 | 重新解释项目结构 | `/learn` 读过 `.growing/learn/` |
 | 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `autopilot`（见 **master** → `git`） |
 | 合并前 | 靠人想起来查安全/API | **review** · **security** · **api** · **delivery** · **git** skills |
 | 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
@@ -232,7 +232,7 @@ Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次�
 | `/plan` · `gate-check` | 先对齐 Goal，避免想到哪改到哪 |
 | `task-verify` · Acceptance | 可验证才 commit，防假完成 |
 | glob 按需 rules | 固定开销可控（仅 `core` · `workflow` · `cursor-standalone` · `super-cursor-persona` 4 条常驻） |
-| `/learn` · `.cursorGrowth/` | 新会话少重复讲项目结构 |
+| `/learn` · `.growing/` | 新会话少重复讲项目结构 |
 
 日常习惯：**一事一对话** · 模糊先 `/plan` · 关键决策用强模型 · `@文件` 精准投喂。详述 → [效果型效率](.cursor/docs/effective-collaboration.md)
 
@@ -240,7 +240,7 @@ Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次�
 
 1. **Universal only** — 母版不含公司路径，任何仓库都能装
 2. **Config over fork** — 行为开关在 `config/*.json`，不必 fork 母版
-3. **Growth boundary** — 项目认知只进 `.cursorGrowth/`，模板保持干净
+3. **Growth boundary** — 项目认知只进 `.growing/`，模板保持干净
 4. **Immutable after install** — Agent 默认不改 `.cursor/`，除非你明确要求
 5. **Protocol-agnostic** — `.cursor/` 用业界**开放的 skills/rules 协议**，整体复制到 `.roo/` 即可被 Roo Code 加载，详见下节
 6. **Effectiveness over verbosity** — 结构防拉扯优先于压 token；见上节与 [effective-collaboration](.cursor/docs/effective-collaboration.md)
@@ -262,14 +262,14 @@ cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
 |------|------|
 | `.cursor/` | Cursor Agent 加载（rules / skills / hooks / config） |
 | `.roo/` | **可选**：Roo Code 加载同源内容（`cp -r .cursor .roo`） |
-| `.cursorGrowth/` | 共享，**无需重复**（两边 Agent 都按 `learn/` 读序） |
+| `.growing/` | 共享，**无需重复**（两边 Agent 都按 `learn/` 读序） |
 
 **设计要点**：
 
 - 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `config/*.json` — 由 **`bash .cursor/bin/verify-roo-compat.sh`** 断言（frontmatter 键 ⊆ 开放协议白名单，出现编辑器私有键即 FAIL）
 - **不**依赖 `.cursorrules` 单文件等旧式约定；核心 plan/run 闸门靠 rules + skills + `config/*.json`，**不绑** Cursor 私有 API
 - **hooks**（`run-start` / `run-stop`）为 Cursor **自治 Sprint 增强**；Roo 或无需连跑时用 `--profile lite` / `rules-only` 即可降级
-- `.cursorGrowth/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移
+- `.growing/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移
 - 装一次、两端都用 —— 适合团队混用编辑器，或同时上 Cursor + Roo Code 的项目
 
 > 协议细节见 [Roo Code 文档](https://docs.roocode.com) 与 Cursor 官方 `rules` / `skills` 加载机制。
@@ -300,7 +300,7 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 
 | 上游项目 | 许可 | 维护方 | 母版落点（摘要） |
 |----------|------|--------|------------------|
-| [wangqiqi/cursor-ai-rules](https://github.com/wangqiqi/cursor-ai-rules) | MIT | wangqiqi | Super Cursor 前身：三公理 · `.cursorGrowth/` 双目录 · core skills · VIBE · [migration-catalog](.cursor/docs/migration-catalog.md) |
+| [wangqiqi/cursor-ai-rules](https://github.com/wangqiqi/cursor-ai-rules) | MIT | wangqiqi | Super Cursor 前身：三公理 · `.growing/` 双目录 · core skills · VIBE · [migration-catalog](.cursor/docs/migration-catalog.md) |
 | [anthropics/skills](https://github.com/anthropics/skills) | 各 skill 自有（见 `LICENSE-anthropics.txt`） | Anthropic | **mcp** Eval · **test** E2E · **delivery** 反模板/PDF · **plan/run** 协作文档 |
 | [github/spec-kit](https://github.com/github/spec-kit) | MIT | GitHub | **plan** SDD · **review** analyze · **run** converge · `templates/sdd/` |
 | SkillsMP 社区协议 | protocol only | 见 CHANGELOG | **review** 双轴 · **run** closeout · **debug** 内省 · **test** factory · **master** LIBRARY · **security** · **git** |
@@ -317,7 +317,7 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 目标项目升级 `.cursor/`（保留 Growth）→ [consumer-refresh](.cursor/docs/consumer-refresh.md)。
 
 ```bash
-bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .cursorGrowth/rules/local（template-verify 会自动调用）
+bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .growing/rules/local（template-verify 会自动调用）
 bash .cursor/bin/template-verify.sh          # 母版完整自测（CI：verify-super-cursor + coherence + scaffold + runner + install + consumer smoke）
 bash .cursor/verify-super-cursor.sh          # layout + 全量 bin/verify-*.sh 聚合（含接线自检；混合仓 hybrid）
 bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 BLOCK → hook → 批准放行 → 全绿

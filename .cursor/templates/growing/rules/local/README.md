@@ -1,6 +1,6 @@
 # Local rules（项目特化）
 
-**Canonical 路径**：`.cursorGrowth/rules/local/`（随 `.cursorGrowth/` gitignore）。
+**Canonical 路径**：`.growing/rules/local/`（随 `.growing/` gitignore）。
 
 安装后 `.cursor/rules/local` 通常为**符号链接**指向本目录，以便 Cursor 按 glob 加载 `.mdc`。
 
@@ -11,7 +11,7 @@
 示例：
 
 ```
-.cursorGrowth/rules/local/
+.growing/rules/local/
   naming.mdc
   internal-api.mdc
 ```

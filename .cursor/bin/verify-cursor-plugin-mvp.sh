@@ -82,8 +82,8 @@ for hook in growth-init run-start run-stop; do
     fail "$hook.sh exited non-zero: $hook_out"
   fi
 done
-# growth.enabled=true 必须真被读到：配置路径读错时 growth-init 提前返回，不会建 .cursorGrowth
-[[ -d "$smoke_root/.cursorGrowth" ]] \
+# growth.enabled=true 必须真被读到：配置路径读错时 growth-init 提前返回，不会建 .growing
+[[ -d "$smoke_root/.growing" ]] \
   || fail "plugin hooks ignored .cursor/config/workflow.json (growth.enabled not applied)"
 [[ -f "$smoke_root/onekey_start.sh" && -x "$smoke_root/onekey_start.sh" ]] \
   || fail "plugin growth-init did not bootstrap onekey_start.sh from bundled template"

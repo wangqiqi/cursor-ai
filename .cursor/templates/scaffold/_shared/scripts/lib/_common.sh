@@ -40,7 +40,7 @@ sc_summary() {
   return 1
 }
 
-# test.sh 末尾调用：sc_project_tmp_cleanup test（配置见 .cursorGrowth/temp-cleanup.json）
+# test.sh 末尾调用：sc_project_tmp_cleanup test（配置见 .growing/temp-cleanup.json）
 sc_project_tmp_cleanup() {
   local phase="${1:-test}"
   sc_root

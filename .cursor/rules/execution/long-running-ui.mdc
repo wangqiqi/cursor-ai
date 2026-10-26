@@ -45,4 +45,4 @@ alwaysApply: false
 - [ ]  决策弹窗挡进度时仍可操作确认
 - [ ]  **delivery** §8 四问（若 UI Sprint）
 
-项目特有字段名 → `.cursorGrowth/learn/`，不写本 rule。
+项目特有字段名 → `.growing/learn/`，不写本 rule。

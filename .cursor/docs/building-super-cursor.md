@@ -5,7 +5,7 @@
 1. **Universal only** — rules/skills must work in any repo; no hardcoded org paths. Guarded by `config/denylist.txt` + `verify-super-cursor.sh`（作者标识 / 机器路径 / 公司代号 / 凭据，逐行 ERE 扫全树）。
 2. **Config over fork** — behavior toggles live in `.cursor/config/*.json`；新增/改键须同步 `config/schema.json`（`verify-config.sh` 校验，未知键即 FAIL）。
 3. **Three pillars** — `rules/communication/` · `rules/execution/` · `rules/feedback/`.
-4. **Growth boundary** — project learnings in `.cursorGrowth/` only; use `/learn`（见下节「产出 ≠ 母版引用」）。
+4. **Growth boundary** — project learnings in `.growing/` only; use `/learn`（见下节「产出 ≠ 母版引用」）。
 5. **Token** — `alwaysApply: true` 只有 **4** 个文件（`core.mdc` · `workflow.mdc` · `communication/cursor-standalone.mdc` · `communication/super-cursor-persona.mdc`）；其余按 glob/描述触发，细则在 skills。改这里要知会 README/AGENTS.md 的常驻数量说明。
 6. **Immutable after install（仅目标项目）** — 母版仓库可自由演进 `.cursor/`；安装到目标项目后 Agent 不得改 `.cursor/**` 除非用户明确授权（见 **cursor-standalone**）。
 7. **Cross-platform** — scripts target Linux · macOS · Git Bash; shared helpers in `.cursor/lib/platform.sh`；静态守护 `verify-portability.sh`（GNU-only · 非 POSIX `\s` · 硬编码 `python3` · shebang · **reserved bash names** · **xargs -I{}**）。**技能**的平台作用域另记于 `docs/platforms.md` §技能平台作用域；Shell 数组命名见 §Shell 命名与 verify 并行。
@@ -14,7 +14,7 @@
 
 ## Growth：产出 ≠ 母版引用
 
-| | `.cursor/`（母版） | `.cursorGrowth/`（产出） |
+| | `.cursor/`（母版） | `.growing/`（产出） |
 |--|-------------------|-------------------------|
 | 进 git | ✅ | ❌ gitignore |
 | 角色 | 通用 SOP · 路径**约定** | 本项目 plan · learn · archive · session |
@@ -27,7 +27,7 @@
 
 - **`.cursorignore`**（仓库根）— Agent / Tab / `@` **硬排除**；安装脚本与 scaffold apply 会写入/合并（含 `node_modules/` · `.venv/` · `target/` 等）
 - **`.gitignore`** — 主要管 git 与索引；**不能**替代 `.cursorignore` 拦 Agent 读 `.env`
-- **`.cursorGrowth/learn/`** — **不要** ignore；`logs/` · `perception/` 可 ignore
+- **`.growing/learn/`** — **不要** ignore；`logs/` · `perception/` 可 ignore
 
 ## Add a rule
 
@@ -52,14 +52,14 @@ Create `.cursor/skills/<name>/SKILL.md` with `name` + `description`.
 After install, a project may add:
 
 ```
-.cursor/rules/local/     # symlink → .cursorGrowth/rules/local/
+.cursor/rules/local/     # symlink → .growing/rules/local/
 ```
 
 Never commit company-specific paths into the **template** repository.
 
 ### Mother repo dev bootstrap
 
-母版仓库 `.cursor/rules/local` 为符号链接，目标在 **gitignore** 的 `.cursorGrowth/rules/local/`。首次 clone 或链接悬空时：
+母版仓库 `.cursor/rules/local` 为符号链接，目标在 **gitignore** 的 `.growing/rules/local/`。首次 clone 或链接悬空时：
 
 ```bash
 bash .cursor/bin/bootstrap-growth.sh

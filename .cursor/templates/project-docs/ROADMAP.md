@@ -14,10 +14,10 @@
 |------|------|------|------|
 | | | | |
 
-## 已完成（近 N 项 · 长叙事进 `.cursorGrowth/archive/{domain}/`）
+## 已完成（近 N 项 · 长叙事进 `.growing/archive/{domain}/`）
 
 | 主题 | 结论 | 归档 |
 |------|------|------|
 | | | |
 
-**纪律**：不把大量已完成项长期堆在这里冒充待办；Sprint 状态在 `.cursorGrowth/plan.md`（gitignore）。
+**纪律**：不把大量已完成项长期堆在这里冒充待办；Sprint 状态在 `.growing/plan.md`（gitignore）。

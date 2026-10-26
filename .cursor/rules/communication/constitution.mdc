@@ -20,4 +20,4 @@ alwaysApply: false
 ## 认知可审计
 
 - Decisions in local `plan.md`（gitignore）/ `archive/`; user-visible changes in CHANGELOG.
-- Project facts → `/learn` → `.cursorGrowth/learn/` — not `.cursor/`.
+- Project facts → `/learn` → `.growing/learn/` — not `.cursor/`.

@@ -53,4 +53,4 @@ alwaysApply: false
 
 ## 项目特化
 
-具体 store 类名、Redis key、task_id 前缀 → `.cursorGrowth/learn/dev-conventions.md`，**勿**写进本 rule。
+具体 store 类名、Redis key、task_id 前缀 → `.growing/learn/dev-conventions.md`，**勿**写进本 rule。

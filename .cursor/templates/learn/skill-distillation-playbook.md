@@ -30,7 +30,7 @@
 
 ## 禁止
 
-- 把 `.cursorGrowth/` 或本机绝对路径写进 bundled 正文
+- 把 `.growing/` 或本机绝对路径写进 bundled 正文
 - 无 verify slice 就标 tier 闭合
 - 只读角色看见写操作 Skill（除非产品刻意开放）
 

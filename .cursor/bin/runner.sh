@@ -34,9 +34,9 @@ sc_config_join() {
   echo "$default"
 }
 
-PLAN_REL="$(sc_config '.plan_file' '.cursorGrowth/plan.md')"
+PLAN_REL="$(sc_config '.plan_file' '.growing/plan.md')"
 PLAN="$ROOT/$PLAN_REL"
-# Legacy: root plan.md before .cursorGrowth migration
+# Legacy: root plan.md before .growing migration
 if [[ ! -f "$PLAN" && -f "$ROOT/plan.md" ]]; then
   PLAN="$ROOT/plan.md"
   PLAN_REL="plan.md"
@@ -57,7 +57,7 @@ source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
 
 cmd="${1:-status}"
 
-# 项目 /tmp 契约（.cursorGrowth/temp-cleanup.json）— 测试/验收成功后回收 ephemeral；verify 后可 sweep persistent
+# 项目 /tmp 契约（.growing/temp-cleanup.json）— 测试/验收成功后回收 ephemeral；verify 后可 sweep persistent
 project_tmp_cleanup() {
   local phase="$1"
   local flag dry rel script
@@ -74,7 +74,7 @@ project_tmp_cleanup() {
   esac
   script="$CURSOR_DIR/lib/project-tmp-cleanup.sh"
   [[ -f "$script" ]] || return 0
-  rel="$(sc_config '.temp_cleanup.config' '.cursorGrowth/temp-cleanup.json')"
+  rel="$(sc_config '.temp_cleanup.config' '.growing/temp-cleanup.json')"
   [[ -f "$ROOT/$rel" ]] || return 0
   dry=0
   [[ "$(sc_config '.temp_cleanup.dry_run' 'false')" == "true" ]] && dry=1
@@ -276,7 +276,7 @@ plan_check() {
   local issues=0
   echo "=== plan / run plan-check ==="
   if [[ ! -f "$PLAN" ]]; then
-    echo "FAIL: plan 不存在（config plan_file 或 .cursorGrowth/plan.md）"
+    echo "FAIL: plan 不存在（config plan_file 或 .growing/plan.md）"
     return 1
   fi
   if ! grep -q '| ⬜ |' "$PLAN" 2>/dev/null && ! grep -q '| 🔧 |' "$PLAN" 2>/dev/null; then
@@ -345,7 +345,7 @@ plan_check() {
       issues=$((issues + 1))
     fi
     if grep -qE '^##[[:space:]]+(活跃[[:space:]]+[Ss]print|Active[[:space:]]+[Ss]print)' "$PLAN" 2>/dev/null; then
-      echo "WARN: Sprint 标题仍为「进行中」— 收尾时改为 Completed/已完成（见 .cursorGrowth/learn/plan-conventions.md）"
+      echo "WARN: Sprint 标题仍为「进行中」— 收尾时改为 Completed/已完成（见 .growing/learn/plan-conventions.md）"
       issues=$((issues + 1))
     fi
     if [[ "$(plan_sprint_status)" != "closed" ]]; then
@@ -427,7 +427,7 @@ json_escape() {
 # archive 域分层门禁：根目录 flat 文件超阈值即 FAIL（growth-layout §Archive 布局）
 archive_check() {
   local rel dir max flat
-  rel="$(sc_config '.archive_dir' '.cursorGrowth/archive')"
+  rel="$(sc_config '.archive_dir' '.growing/archive')"
   dir="$ROOT/$rel"
   max="$(sc_config '.growth.archive_flat_max' '5')"
   [[ "$max" =~ ^[0-9]+$ ]] || max=5
@@ -606,7 +606,7 @@ friction_log() {
   done
   [[ "$rounds" =~ ^[0-9]+$ ]] || rounds=0
   [[ "$rework" =~ ^[0-9]+$ ]] || rework=0
-  local dir="$ROOT/.cursorGrowth/logs"
+  local dir="$ROOT/.growing/logs"
   mkdir -p "$dir"
   printf '{"ts":"%s","task":"%s","sprint":"%s","rounds":%s,"rework":%s,"verify":"%s","note":"%s"}\n' \
     "$(iso8601_now)" \
@@ -619,7 +619,7 @@ friction_log() {
 }
 
 friction_report() {
-  local f="$ROOT/.cursorGrowth/logs/friction.jsonl"
+  local f="$ROOT/.growing/logs/friction.jsonl"
   if [[ ! -f "$f" ]]; then
     echo "（无 friction 记录：交付后用 runner.sh friction-log 记一行）"
     return 0
@@ -868,7 +868,7 @@ case "$cmd" in
   friction-log  记一行摩擦数据（--task --rounds --rework --verify --note）
   friction-report  汇总摩擦数据（tasks · verify 通过率 · 平均轮次/返工）
   archive-check archive 域分层检查（根目录 flat 文件超阈值即 FAIL）
-  tmp-cleanup      按 .cursorGrowth/temp-cleanup.json 回收 /tmp（phase: test|verify|task-verify|sweep）
+  tmp-cleanup      按 .growing/temp-cleanup.json 回收 /tmp（phase: test|verify|task-verify|sweep）
   docs-init     按 profile 铺 docs/ 文档骨架（号位=瀑布阶段；默认只铺必选号位）
 
 环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:

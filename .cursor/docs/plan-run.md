@@ -2,7 +2,7 @@
 
 > **效果型效率**：`/plan` 与 `gate-check` 的价值在于减少纠偏轮次，而非压短单次回复。总成本 = 固定开销 + 轮次 × token + 返工 → [effective-collaboration.md](effective-collaboration.md)
 
-迷路或刚安装 → **`/master`** · 日常 **`/run` ↔ `/plan`** · `/learn` → `.cursorGrowth/learn/`
+迷路或刚安装 → **`/master`** · 日常 **`/run` ↔ `/plan`** · `/learn` → `.growing/learn/`
 
 1. `config/workflow.json` · 复制 `templates/plan.md` → **`plan_file` 所指工作副本**（默认在 Growth 目录；**gitignore，不提交**；安装/bootstrap 会引导）
 2. **`/plan`** — 先总后分：Goal · Done when → 再拆 TASK · **执行顺序**（**无 ACTIVE 时用**）

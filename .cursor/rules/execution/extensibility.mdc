@@ -40,4 +40,4 @@ alwaysApply: false
 
 ## 项目特化
 
-具体 slot 名、官方扩展列表 → `.cursorGrowth/learn/`，不写本 rule。
+具体 slot 名、官方扩展列表 → `.growing/learn/`，不写本 rule。

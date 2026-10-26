@@ -48,7 +48,7 @@
 ## 与 Super Cursor 边界
 
 - 脚手架文件写入**仓库根**（业务代码），不是 `.cursor/`
-- 项目特化约定 → `/learn` → `.cursorGrowth/learn/`
+- 项目特化约定 → `/learn` → `.growing/learn/`
 - 新栈母版贡献须用户明确要求（`.cursor/` 不可变原则）
 
 ## 共享层 `_shared/`

@@ -9,7 +9,7 @@ MANIFEST="$TEMPLATE_ROOT/manifest.json"
 # shellcheck source=../lib/platform.sh
 source "$CURSOR_DIR/lib/platform.sh"
 
-IGNORE_DIRS='^\.(git|cursor|cursorGrowth)|^node_modules$|^dist$|^build$|^\.venv$|^target$|^bin$'
+IGNORE_DIRS='^\.(git|cursor|growing|dsh)|^node_modules$|^dist$|^build$|^\.venv$|^target$|^bin$'
 
 usage() {
   cat <<EOF
@@ -22,7 +22,7 @@ usage() {
   apply <id>        应用脚手架到仓库根目录
   apply-bundle <id> 应用可选附加包（如 user-manual · test-report）
   audit             审计已有项目，输出改进建议
-  adapt             探测技术栈，生成/预览 .cursorGrowth/project-profile.json（按需启用）
+  adapt             探测技术栈，生成/预览 .growing/project-profile.json（按需启用）
   files <id>        仅列出将创建的文件（等同 apply --dry-run）
 
 选项（apply）:
@@ -106,7 +106,7 @@ count_project_files() {
   done < <(find "$ROOT" -mindepth 1 -maxdepth 3 \( \
     -path "$ROOT/.git/*" -o \
     -path "$ROOT/.cursor/*" -o \
-    -path "$ROOT/.cursorGrowth/*" -o \
+    -path "$ROOT/.growing/*" -o \
     -name node_modules -o \
     -name .venv -o \
     -name build -o \
@@ -179,7 +179,7 @@ cmd_adapt() {
     primary_lines=("unknown")
   fi
 
-  local profile_path="$ROOT/.cursorGrowth/project-profile.json"
+  local profile_path="$ROOT/.growing/project-profile.json"
   local adapted_at
   adapted_at="$(iso8601_now)"
 
@@ -207,7 +207,7 @@ cmd_adapt() {
     return 0
   fi
 
-  mkdir -p "$ROOT/.cursorGrowth"
+  mkdir -p "$ROOT/.growing"
   local py
   py="$(sc_python 2>/dev/null || true)"
   if [[ -z "$py" ]]; then
@@ -509,9 +509,9 @@ cmd_audit() {
   echo "--- Essentials ---"
   audit_check "verify script" "scripts/verify.sh" "添加可执行验收脚本，或在 plan.md 设 VERIFY"
   audit_check "README" "README.md" "补充安装、运行、验证说明"
-  audit_check "gitignore" ".gitignore" "排除 .cursorGrowth/ · 构建产物与密钥"
+  audit_check "gitignore" ".gitignore" "排除 .growing/ · 构建产物与密钥"
   audit_check "cursorignore" ".cursorignore" "硬拦 Agent 读 .env 等；scaffold apply 会生成"
-  audit_check "plan" ".cursorGrowth/plan.md" "可选：install --copy-plan 或 cp templates/plan.md → .cursorGrowth/plan.md"
+  audit_check "plan" ".growing/plan.md" "可选：install --copy-plan 或 cp templates/plan.md → .growing/plan.md"
   echo ""
   echo "--- Stack signals ---"
   audit_check "package.json" "package.json" "前端/Node 项目"
@@ -528,13 +528,13 @@ cmd_audit() {
   if [[ ! -f "$ROOT/scripts/verify.sh" ]]; then
     echo "  → 用 /scaffold 补 scripts/verify.sh，或从模板 manifest 选相近栈"
   fi
-  if [[ ! -f "$ROOT/.cursorGrowth/plan.md" && -f "$ROOT/.cursor/templates/plan.md" ]]; then
-    echo "  → mkdir -p .cursorGrowth && cp .cursor/templates/plan.md .cursorGrowth/plan.md 后 /plan"
+  if [[ ! -f "$ROOT/.growing/plan.md" && -f "$ROOT/.cursor/templates/plan.md" ]]; then
+    echo "  → mkdir -p .growing && cp .cursor/templates/plan.md .growing/plan.md 后 /plan"
   fi
   if [[ "$stack" != "none "* && "$stack" != "none" ]]; then
     echo "  → 已有栈检测：$stack — 运行 /learn 沉淀约定，勿盲目 apply 全量脚手架"
   fi
-  if [[ ! -d "$ROOT/.cursorGrowth/learn" || -z "$(ls -A "$ROOT/.cursorGrowth/learn" 2>/dev/null || true)" ]]; then
+  if [[ ! -d "$ROOT/.growing/learn" || -z "$(ls -A "$ROOT/.growing/learn" 2>/dev/null || true)" ]]; then
     echo "  → 运行 /learn 写入 dev-conventions 与 module-map"
   fi
 }

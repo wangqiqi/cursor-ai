@@ -1,4 +1,4 @@
-<!-- 工作副本：.cursorGrowth/plan.md（gitignore）· 模板 .cursor/templates/plan.md -->
+<!-- 工作副本：.growing/plan.md（gitignore）· 模板 .cursor/templates/plan.md -->
 <!-- PLANNING: false -->
 <!-- SPRINT: (none) -->
 <!-- PLAN_APPROVED: (none) -->

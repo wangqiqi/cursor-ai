@@ -14,7 +14,7 @@ disable-model-invocation: true
 
 - 用户 **`/long <Epic 目标>`**
 - 「自动规划并做到底」「长程开发」「跨天任务」「像程序员一样自己 plan run」
-- **`/long resume`** — 读 `.cursorGrowth/long-state.json` 续跑
+- **`/long resume`** — 读 `.growing/long-state.json` 续跑
 - `/master` 关键词命中（见 **master** `routes.md`）
 
 **已有单 Sprint ACTIVE** 且用户只说 `/run` → **不要**拦截，走 **run**。
@@ -24,7 +24,7 @@ disable-model-invocation: true
 | 层 | 上限 | 载体 |
 |----|------|------|
 | Epic → Sprint | ≤5 | `long-state.json` · plan 候选表 |
-| Sprint → Task | ≤5 | `.cursorGrowth/plan.md` |
+| Sprint → Task | ≤5 | `.growing/plan.md` |
 | Task 深度 | 仅 L2 | 禁止 Task 子 ID |
 
 超限 → 合并抽象或拆多个 Epic，**禁止**加深层级。详 `reference/hierarchy.md`。
@@ -34,7 +34,7 @@ disable-model-invocation: true
 ### 1. Epic 立项（L0）
 
 1. 读 `learn/` · 现有 plan 候选表 · 用户目标
-2. 写/更新 `.cursorGrowth/long-state.json`（schema → `reference/pacing-checkpoint.md`）
+2. 写/更新 `.growing/long-state.json`（schema → `reference/pacing-checkpoint.md`）
 3. 拆 **≤5** 个 Sprint（各一句 Goal + 依赖），**AskQuestion** 确认（≤4 项；不可用 → 正文编号）
 4. `status: active` · `active_sprint_index: 0`
 

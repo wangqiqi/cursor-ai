@@ -1,6 +1,6 @@
 # SPIKE · 症状簇回归（模板）
 
-> 复制到 `.cursorGrowth/archive/` 或 SPIKE 产出。命名：`YYYYMMDD_HHMMSS_SPIKE-<id>_<symptom>_regression.md`
+> 复制到 `.growing/archive/` 或 SPIKE 产出。命名：`YYYYMMDD_HHMMSS_SPIKE-<id>_<symptom>_regression.md`
 
 ## 症状簇（一句话）
 
@@ -36,4 +36,4 @@
 
 ## 项目符号（仅 Growth，SPIKE 正文可引用）
 
-（progress store 类名、stage 枚举、verify 脚本路径 — 来自 `.cursorGrowth/learn/`）
+（progress store 类名、stage 枚举、verify 脚本路径 — 来自 `.growing/learn/`）

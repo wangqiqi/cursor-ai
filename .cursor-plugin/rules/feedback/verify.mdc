@@ -1,7 +1,7 @@
 ---
 description: 验收命令与分层 — gate-check · task-verify · verify 脚本；编辑 plan VERIFY 或 scripts/ 时加载
 globs:
-  - .cursorGrowth/plan.md
+  - .growing/plan.md
   - plan.md
   - scripts/verify.sh
   - scripts/test.sh
@@ -66,7 +66,7 @@ Cursor Agent 跑验收时对齐上表 **L0–L3**，**勿**把 Sprint/打版层�
 | **runner** | `scripts/verify/run-manifest-tier.sh` | 累积 tier；空 tier / 空 bundle **FAIL** |
 | **去重** | `audit-dedup.config.json` + `audit-dedup.mjs` | 测例只登记一次 |
 | **增量** | `changed-map.json` + `verify:changed` | 按 diff 最小层 |
-| **/tmp 契约** | `.cursorGrowth/temp-cleanup.json` + `project-tmp-cleanup.sh` | 测试后删 `ephemeral`；`persistent` 靠 `max_age_hours` + `sweep` |
+| **/tmp 契约** | `.growing/temp-cleanup.json` + `project-tmp-cleanup.sh` | 测试后删 `ephemeral`；`persistent` 靠 `max_age_hours` + `sweep` |
 
 大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，新增能力 **只加 manifest 一行** 或 `scripts/verify/slices/verify_<feature>.sh`。栈专属坐标 → Growth `learn/`。
 
@@ -134,7 +134,7 @@ plan **验收列**写可执行命令（如 `bash scripts/verify_<feature>.sh`）
 ## 跨平台与 CI
 
 - **目标项目**：无 `install-super-cursor.sh` 时 `verify-super-cursor.sh` **SKIP** 母版块（Growth SPIKE · plugin · hygiene · `install-smoke` 路径）；通用 core 门禁仍跑
-- **SPIKE 归档门禁（母版）**：`.cursorGrowth/archive/meta/` 是本地私有（`.cursorGrowth/` 不入 git）。该目录**不存在**（新克隆 / CI）时归档段 `SKIP` 放行并打印原因；目录存在但目标归档缺失 → 仍 **FAIL**（本地证据回归）。公因子 → `lib/growth-archive.sh`
+- **SPIKE 归档门禁（母版）**：`.growing/archive/meta/` 是本地私有（`.growing/` 不入 git）。该目录**不存在**（新克隆 / CI）时归档段 `SKIP` 放行并打印原因；目录存在但目标归档缺失 → 仍 **FAIL**（本地证据回归）。公因子 → `lib/growth-archive.sh`
 - 无 `jq` 时走 python 回退；`SC_FORCE_PYTHON=1` 可**强制**该路径（CI 用它覆盖非 jq 分支）
 - CI 矩阵：ubuntu（+jq，含文档构建）· macos（BSD 工具链）· windows/Git Bash（非阻塞观察中）
 - 平台作用域与技能限制 → `docs/platforms.md` §技能平台作用域

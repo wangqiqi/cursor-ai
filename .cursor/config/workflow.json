@@ -1,7 +1,7 @@
 {
   "profile": "full",
-  "plan_file": ".cursorGrowth/plan.md",
-  "archive_dir": ".cursorGrowth/archive",
+  "plan_file": ".growing/plan.md",
+  "archive_dir": ".growing/archive",
   "verify_default": "./scripts/verify.sh",
   "version_line_meta": "VERSION_LINE",
   "version_tag_glob_env": "VERSION_TAG_GLOB",
@@ -12,12 +12,12 @@
   },
   "growth": {
     "enabled": true,
-    "dir": ".cursorGrowth",
+    "dir": ".growing",
     "learn_dir": "learn",
     "learn_sources": [
       "CHANGELOG.md",
-      ".cursorGrowth/archive/",
-      ".cursorGrowth/plan.md"
+      ".growing/archive/",
+      ".growing/plan.md"
     ],
     "archive_flat_max": 5,
     "onekey_bootstrap": true
@@ -84,7 +84,7 @@
   },
   "temp_cleanup": {
     "enabled": true,
-    "config": ".cursorGrowth/temp-cleanup.json",
+    "config": ".growing/temp-cleanup.json",
     "after_test": true,
     "after_verify": true,
     "after_task_verify": true,

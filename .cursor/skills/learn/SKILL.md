@@ -1,12 +1,12 @@
 ---
 name: learn
-description: 学习项目（/learn）：CHANGELOG/git/archive→.cursorGrowth/learn/。不写 .cursor。
+description: 学习项目（/learn）：CHANGELOG/git/archive→.growing/learn/。不写 .cursor。
 disable-model-invocation: true
 ---
 
 # learn
 
-**用这个**：沉淀**本仓库**约定 → `.cursorGrowth/learn/`。**不是那个**：学 Rust/新框架等通用技术 → **study**（可写 `SPIKE-*`）。
+**用这个**：沉淀**本仓库**约定 → `.growing/learn/`。**不是那个**：学 Rust/新框架等通用技术 → **study**（可写 `SPIKE-*`）。
 
 边界见 **cursor-standalone** · `workflow.json` → `growth.learn_sources`
 
@@ -16,16 +16,16 @@ disable-model-invocation: true
 
 | 层 | 规则 |
 |----|------|
-| **写入** | 本 skill 只产出 `.cursorGrowth/learn/`（及 `/plan`·`/run` 写 plan · archive） |
+| **写入** | 本 skill 只产出 `.growing/learn/`（及 `/plan`·`/run` 写 plan · archive） |
 | **读取** | `/run` 可**按需**读已有 `learn/`；`/learn` 可吸收本地 `archive/` · `plan` — **仅本机项目上下文** |
 | **母版禁止** | `.cursor/` 文档**不得**链具体 archive 文件名；对外发版由 **release** 写仓库根发版文件（母版正文不链） |
 | **不是** | 把 archive 当安装包内容；把 Growth 路径写进母版业务代码 |
 
-## 输出（仅 `.cursorGrowth/learn/`）
+## 输出（仅 `.growing/learn/`）
 
 **自动引导**（无需等用户说 `/learn`）：
 
-1. **`install-super-cursor.sh`** — 复制 `templates/cursorGrowth/` → 目标 `.cursorGrowth/`
+1. **`install-super-cursor.sh`** — 复制 `templates/growing/` → 目标 `.growing/`
 2. **`hooks/growth-init.sh`**（`beforeSubmitPrompt`）— 若目录缺失则创建；**按文件**种子 `learn/*.md`（已存在的不覆盖）
 
 首次 **`/learn`** 在种子文件上**增量填写**「待填」项，并吸收 CHANGELOG / archive / plan。
@@ -54,9 +54,9 @@ disable-model-invocation: true
 | `last-sync.md` | 本次同步时间、来源、待确认项 |
 | `acceptance.md` | （可选）design tokens · i18n · OpenAPI — 供 **delivery** skill |
 
-**大型仓库（可选）**：可在 `learn/` 下分子目录（例：`core/` · `api/` · `ux/` · `perf/`），根目录仍保留上表 7 个种子或链到 `core/`。母版不强制深度；复制 `templates/cursorGrowth/learn/*.example.md` 作专题起点。
+**大型仓库（可选）**：可在 `learn/` 下分子目录（例：`core/` · `api/` · `ux/` · `perf/`），根目录仍保留上表 7 个种子或链到 `core/`。母版不强制深度；复制 `templates/growing/learn/*.example.md` 作专题起点。
 
-**摩擦趋势**（若 `.cursorGrowth/logs/friction.jsonl` 存在）→ 运行 `./.cursor/bin/runner.sh friction-report`，把一行结论写进 `dev-conventions.md`（例：`avg_rounds=2.3 · verify_fail=1/8 — 验收列偏描述性`）。这是**唯一**衡量"少拉扯"是否真的改善的证据。
+**摩擦趋势**（若 `.growing/logs/friction.jsonl` 存在）→ 运行 `./.cursor/bin/runner.sh friction-report`，把一行结论写进 `dev-conventions.md`（例：`avg_rounds=2.3 · verify_fail=1/8 — 验收列偏描述性`）。这是**唯一**衡量"少拉扯"是否真的改善的证据。
 
 **实验 / 批跑坐标**（通用闭环见 **spike** agent §experiment-loop）→ 写入 `dev-conventions.md` 或 `learn/` 专节：产物根目录 · 报告命名 · 索引 README · gate 脚本路径。**勿**把项目路径写进 `.cursor/` 母版。
 
@@ -75,7 +75,7 @@ disable-model-invocation: true
 
 ## 经验捕获（任务中 · 可选）
 
-**用这个**：可复用教训写入 `.cursorGrowth/learn/`。**不是那个**：改母版 `.cursor/`（须 plan 授权 + TASK）。
+**用这个**：可复用教训写入 `.growing/learn/`。**不是那个**：改母版 `.cursor/`（须 plan 授权 + TASK）。
 
 | 类型 | 写什么 | 默认落点 |
 |------|--------|----------|
@@ -101,7 +101,7 @@ disable-model-invocation: true
 | archive · plan Out of scope | 一行「本仓不做什么」 | `learn/plan-conventions.md` 或 `dev-conventions.md` |
 | 命名/目录/verify 命令 | 可执行约定 | `learn/dev-conventions.md` |
 | 模块边界 | 依赖方向一句 | `learn/module-map.md` |
-| 团队特化门禁（仍属本仓） | 短 rule | `.cursorGrowth/rules/local/`（链 `.cursor/rules/local`） |
+| 团队特化门禁（仍属本仓） | 短 rule | `.growing/rules/local/`（链 `.cursor/rules/local`） |
 | 母版 SOP 缺口 | **仅建议 + 等授权** | **禁止**日常写入 `.cursor/` |
 
 ### 输出格式（写给用户确认）
@@ -123,25 +123,25 @@ disable-model-invocation: true
 1. 读 `CHANGELOG.md` 最近 7/30 天（或用户指定窗口）
 2. grep 症状关键词簇（进度/上传/弹窗/刷新/error_message/检测器/死代码…）
 3. 对照 `.cursor/rules/execution/async-progress.mdc` 等 **通用根因类型** 归类
-4. 更新 `.cursorGrowth/learn/changelog-insights.md` §重复工作模式（**只写项目符号与版本**）
+4. 更新 `.growing/learn/changelog-insights.md` §重复工作模式（**只写项目符号与版本**）
 5. 建议 plan 候选：合并 Sprint · SPIKE · 关闭多余 follow-up
 
-模板：`.cursor/templates/cursorGrowth/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`
+模板：`.cursor/templates/growing/learn/changelog-insights.md` · SPIKE：`.cursor/templates/spike-regression-cluster.md`
 
 ## 合并原则
 
 - **增量合并**：保留旧条目，标 `（已废弃）` 而非直接删
 - **不确定** → `（待确认）`，不写入 `.cursor/`
-- **不 commit** `.cursorGrowth/`（git 忽略）
+- **不 commit** `.growing/`（git 忽略）
 - 读序仍为：rules → config → **learn/**（覆盖项目默认）
 
 ## 演进循环
 
 | 变更类型 | 去向 | 谁可写 |
 |----------|------|--------|
-| 项目约定、模块地图 | `.cursorGrowth/learn/` | **learn** |
+| 项目约定、模块地图 | `.growing/learn/` | **learn** |
 | 母版 `.cursor/` SOP | 须用户明确授权 + plan 任务 | 非日常 learn |
-| Sprint 决策 | `.cursorGrowth/archive/` + plan 索引 | **plan** 收尾 |
+| Sprint 决策 | `.growing/archive/` + plan 索引 | **plan** 收尾 |
 
 - 母版与项目边界：见 `rules/feedback/evolution.mdc`
 - 增量合并 learn；标 `（已废弃）` 而非静默删除

@@ -15,7 +15,7 @@ description: PR/代码结构化回顾（无 slash · REV-*）— 双轴清单；
 
 | 轴 | 问什么 | 证据来源 |
 |----|--------|----------|
-| **Standards** | 是否符合**本仓**已文档化规范？ | `rules/tech/*.mdc` · `.cursorGrowth/learn/dev-conventions.md` · 同目录既有代码风格 |
+| **Standards** | 是否符合**本仓**已文档化规范？ | `rules/tech/*.mdc` · `.growing/learn/dev-conventions.md` · 同目录既有代码风格 |
 | **Spec** | 是否满足** originating issue / PRD / plan Goal**？ | PR 描述 · linked issue · `plan.md` Target · 验收命令 |
 
 每轴输出：**通过 / 疑点 / Blocker** + `file:line` + 一句依据。两轴结论冲突时（规范过但偏离需求，或反之）标 **`Decision needed`**。

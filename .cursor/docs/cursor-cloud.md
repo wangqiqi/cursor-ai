@@ -8,15 +8,15 @@ Super Cursor **默认不**把 MCP / Cloud 配置写入 install 复制的 `.curso
 
 | 模板（install 后路径） | 目标 |
 |------------------------|------|
-| `.cursor/templates/cursorGrowth/mcp.json.example` | `.cursor/mcp.json` |
-| `.cursor/templates/cursorGrowth/environment.json.example` | `.cursor/environment.json`（**默认仅 `install`**） |
-| `.cursor/templates/cursorGrowth/environment.docker.json.example` | 合并进 `.cursor/environment.json`（**有 Dockerfile 时**） |
+| `.cursor/templates/growing/mcp.json.example` | `.cursor/mcp.json` |
+| `.cursor/templates/growing/environment.json.example` | `.cursor/environment.json`（**默认仅 `install`**） |
+| `.cursor/templates/growing/environment.docker.json.example` | 合并进 `.cursor/environment.json`（**有 Dockerfile 时**） |
 
 ```bash
-cp .cursor/templates/cursorGrowth/mcp.json.example .cursor/mcp.json
-cp .cursor/templates/cursorGrowth/environment.json.example .cursor/environment.json
+cp .cursor/templates/growing/mcp.json.example .cursor/mcp.json
+cp .cursor/templates/growing/environment.json.example .cursor/environment.json
 # 需要 Docker Build 时：把 environment.docker.json.example 里的 "build" 段合并进 environment.json
-# 或整文件替换：cp .cursor/templates/cursorGrowth/environment.docker.json.example .cursor/environment.json
+# 或整文件替换：cp .cursor/templates/growing/environment.docker.json.example .cursor/environment.json
 ```
 
 ## MCP（`.cursor/mcp.json`）
@@ -38,8 +38,8 @@ cp .cursor/templates/cursorGrowth/environment.json.example .cursor/environment.j
 
 ## 与 Super Cursor 闸门
 
-- 本地 Sprint 仍靠 `.cursorGrowth/plan.md` + `runner.sh gate-check`。
-- Cloud 跑 agent **不**读取你本机 `.cursorGrowth/`；把验收命令写进 `install` 或 PR 描述。
+- 本地 Sprint 仍靠 `.growing/plan.md` + `runner.sh gate-check`。
+- Cloud 跑 agent **不**读取你本机 `.growing/`；把验收命令写进 `install` 或 PR 描述。
 
 ## Plugin MVP（本地加载 · 非 Marketplace）
 
@@ -50,7 +50,7 @@ bash .cursor/bin/sync-plugin-subset.sh    # 母版维护者：从 .cursor/ 刷�
 bash .cursor/bin/verify-cursor-plugin-mvp.sh
 ```
 
-范围与 install 差异 → `templates/cursorGrowth/learn/cursor-platform.md` §Plugin MVP · `archive/meta/*_SPIKE_plugin_mvp_scope.md`（Growth 运行时路径）。
+范围与 install 差异 → `templates/growing/learn/cursor-platform.md` §Plugin MVP · `archive/meta/*_SPIKE_plugin_mvp_scope.md`（Growth 运行时路径）。
 
 ### Hooks · config（Plugin 必读）
 

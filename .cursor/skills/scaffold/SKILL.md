@@ -68,7 +68,7 @@ disable-model-invocation: true
 - 跑 `./scripts/verify.sh` 或更新 `config/workflow.json` → `verify_default`
 - `cp .cursor/templates/plan.md ./plan.md` → **`/plan`** 拆首个 Sprint（`plan.md` 已在 `.gitignore`，不提交）
 - 可选 Greenfield：创建 `docs/specs/`（或 `workflow.json` `sdd.specs_dir`）· 模板见 `.cursor/templates/sdd/` · **`/plan`** §SDD
-- **`/learn`** 写入栈与目录约定到 `.cursorGrowth/learn/`
+- **`/learn`** 写入栈与目录约定到 `.growing/learn/`
 - **Super Cursor 已装时**：按 [master routes §DAILY/LIBRARY](../master/routes.md#外网-skill--daily--librarydeps) 列出本仓 **DAILY**（默认启用的 rules/skills）与 **LIBRARY**（离栈保留）；一句写入 `learn/dev-conventions.md` 可选
 
 ## 棕地 · 按需启用（整包 `.cursor`）
@@ -77,7 +77,7 @@ disable-model-invocation: true
 
 ```bash
 ./.cursor/bin/scaffold.sh adapt          # 预览
-./.cursor/bin/scaffold.sh adapt --write  # → .cursorGrowth/project-profile.json
+./.cursor/bin/scaffold.sh adapt --write  # → .growing/project-profile.json
 ```
 
 详 `.cursor/docs/tech-stacks.md`。人类叙述同步 **`/learn`** → `learn/dev-conventions.md`（`stacks.primary`）。
@@ -91,7 +91,7 @@ disable-model-invocation: true
 | 1 | **`scaffold adapt --write`**（机器 SSOT）+ 读栈证据（**master** `routes.md` §DAILY/LIBRARY） |
 | 2 | **DAILY** — 匹配栈的 `rules/tech/*` + 核心 workflow skills（plan · run · learn） |
 | 3 | **LIBRARY** — 离栈 tech rules、偶用 skill（perf · mcp · study 主题）；需要时再手动 `@` 或 slash |
-| 4 | 可选：在 `.cursorGrowth/learn/dev-conventions.md` 记一行「本仓 DAILY 面」供 **plan**/**run** 引用 |
+| 4 | 可选：在 `.growing/learn/dev-conventions.md` 记一行「本仓 DAILY 面」供 **plan**/**run** 引用 |
 
 **禁止**：为裁剪再装 ECC/OpenClaw 等第二套 bundle CLI；母版路径保持 `.cursor/` + 可选个人 `~/.cursor/skills/`。
 

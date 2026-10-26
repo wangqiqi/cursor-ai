@@ -27,7 +27,7 @@ flowchart LR
 | `autonomous.confirm_before` | 同上 | 须用户确认的高风险动作 |
 | `autonomous.interrupt_on` | 同上 | 停跑问人的决策类型 |
 | `role.default` | 同上 | 默认人格 id（`roles.json`） |
-| `<!-- AUTONOMOUS: ... -->` | `.cursorGrowth/plan.md` | 运行时覆盖（Sprint 级） |
+| `<!-- AUTONOMOUS: ... -->` | `.growing/plan.md` | 运行时覆盖（Sprint 级） |
 | `<!-- MAX_LOOPS: ... -->` | plan | run-stop 循环上限 |
 
 ## CLI / hooks 触点

@@ -21,7 +21,7 @@
 
 ### 2. 国际化（i18n）
 
-> 项目路径/库名 → `.cursorGrowth/learn/acceptance.md`（模板见 `templates/cursorGrowth/learn/acceptance.md`）。
+> 项目路径/库名 → `.growing/learn/acceptance.md`（模板见 `templates/growing/learn/acceptance.md`）。
 
 **何时跳过（须在走查报告写明）**：纯内部 CLI/库、无用户可见 UI、或团队书面确认「本版不交付多语言」。跳过 ≠ 忽略：单语产品仍检查**无硬编码散落**与术语一致。
 

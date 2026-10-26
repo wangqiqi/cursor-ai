@@ -919,7 +919,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 # 默认排除的目录（仅影响「目录过滤」与统计，可与 --exclude-dir 叠加）
 DEFAULT_EXCLUDE_DIRS = frozenset({
-    '.git', '.cursor', '.cursorGrowth', '.github', '3rdparty',
+    '.git', '.cursor', '.growing', '.github', '3rdparty',
     '__pycache__', 'node_modules', 'dist', 'build', '.pytest_cache',
     '.mypy_cache', 'logs', 'uploads', 'temp', 'tmp', '.coverage',
     'htmlcov', '.tox', '.venv', 'venv', 'env', 'ENV', '.idea', 'idea'

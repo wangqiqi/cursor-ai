@@ -1,6 +1,6 @@
 # Configuration
 
-Project behavior here — not in rules/skills. Learned knowledge → `.cursorGrowth/` via `/learn`.
+Project behavior here — not in rules/skills. Learned knowledge → `.growing/` via `/learn`.
 
 ## 本目录文件
 
@@ -23,8 +23,8 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | Key | Default | Purpose |
 |-----|---------|---------|
 | `profile` | `full` | 安装 profile 标记（`full` · `lite` · `rules-only`） |
-| `plan_file` | `.cursorGrowth/plan.md` | Plan path（**gitignore**，本地工作副本；根 `plan.md` 为 legacy，install 会迁入 Growth） |
-| `archive_dir` | `.cursorGrowth/archive` | Sprint 归档目录（域子目录见 growth-layout） |
+| `plan_file` | `.growing/plan.md` | Plan path（**gitignore**，本地工作副本；根 `plan.md` 为 legacy，install 会迁入 Growth） |
+| `archive_dir` | `.growing/archive` | Sprint 归档目录（域子目录见 growth-layout） |
 | `verify_default` | `./scripts/verify.sh` | 全量验收（plan 内 `VERIFY` 元数据可覆盖） |
 | `workflow.enabled` | `true` | plan/run SOP |
 | `workflow.hooks_enabled` | `true` | run-start / run-stop |
@@ -37,7 +37,7 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `task_verify_heuristics.fallback_test_script` | `./scripts/test.sh` | 开发任务默认验收 |
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
 | `temp_cleanup.enabled` | `true` | 是否启用项目 `/tmp` 契约清理 |
-| `temp_cleanup.config` | `.cursorGrowth/temp-cleanup.json` | 规则文件（Growth · 每项目自填 glob） |
+| `temp_cleanup.config` | `.growing/temp-cleanup.json` | 规则文件（Growth · 每项目自填 glob） |
 | `temp_cleanup.after_*` | `true` | `test` / `verify` / `task-verify` 成功后跑 ephemeral 规则 |
 | `temp_cleanup.sweep_after_verify` | `true` | Sprint `runner.sh verify` 成功后跑 `persistent` 的 `sweep` |
 | `temp_cleanup.dry_run` | `false` | 只打印不删 |
@@ -71,8 +71,8 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 - 默认 id：`professional`（见 `config/roles.json`）
 - **字段**：`role_name` · `nicknames[]` · `given_name`（**用户点名**，Agent 禁止开场自报）· `voice_cues` · `emotion_cues`（成功/卡住/决策/长跑）· `personality` · `tone` · `attitude` · `intensity` · `speech_examples`（≥4）· `skills`（全员 `full`）
 - **辨识度**：靠 `voice_cues` + `emotion_cues` + `tone` + 例句；**不靠** Agent 喊 `given_name`
-- **呼叫**：会话内「呼叫 X」→ `resolve-role.sh` → 写 `.cursorGrowth/session/persona.json`；多命中须消歧
-- **Growth 覆盖**：可选 `.cursorGrowth/session/aliases.json`（`称呼 → persona_id`）优先于母版 nicknames
+- **呼叫**：会话内「呼叫 X」→ `resolve-role.sh` → 写 `.growing/session/persona.json`；多命中须消歧
+- **Growth 覆盖**：可选 `.growing/session/aliases.json`（`称呼 → persona_id`）优先于母版 nicknames
 - **会话态优先**：`run-start` 读 Growth `session/persona.json` 的 `persona_id`，覆盖 `role.default` 注入 hint
 - **持久切换**：编辑 `config/workflow.json` → `role.default` 为 persona `id`（可选）
 - **生效**：`run-start` 注入 `id`/`tone`/`voice_cues`/`emotion_cues`/`speech_examples`；能力不减，只改语气
@@ -102,7 +102,7 @@ Install profiles（`install-super-cursor.sh --profile`）:
 | `bump.default` | `patch` | `release-tag` 默认 bump |
 | `bump.auto_minor` / `auto_major` | `false` | minor/major 须 `RELEASE_ALLOW_*` |
 | `version_source` | plan meta + git tag | `VERSION_LINE` · `VERSION_DEFAULT` · `RELEASE_BUMP` |
-| `archive_dir` | `.cursorGrowth/archive` |
+| `archive_dir` | `.growing/archive` |
 
 ### 发版环境变量（公开）
 
@@ -125,8 +125,8 @@ Install profiles（`install-super-cursor.sh --profile`）:
 
 ## Templates
 
-- `templates/plan.md` → 复制到 `.cursorGrowth/plan.md`（**`.cursorGrowth/` 在 .gitignore，不提交**；须含 **`**执行顺序**`** 行）
-- `templates/cursorGrowth/` → bootstrap on first prompt
+- `templates/plan.md` → 复制到 `.growing/plan.md`（**`.growing/` 在 .gitignore，不提交**；须含 **`**执行顺序**`** 行）
+- `templates/growing/` → bootstrap on first prompt
 
 ## Local overrides
 

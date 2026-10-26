@@ -1,5 +1,5 @@
 ---
-description: 示例 — 双方言 SQL/查询纪律（复制到 .cursorGrowth/rules/local/ 并改 globs）
+description: 示例 — 双方言 SQL/查询纪律（复制到 .growing/rules/local/ 并改 globs）
 alwaysApply: false
 globs:
   - "**/services/**"
@@ -8,7 +8,7 @@ globs:
 
 # 双方言数据访问（项目特化 · 示例）
 
-背景摘要 → `.cursorGrowth/learn/dual-dialect.example.md`。
+背景摘要 → `.growing/learn/dual-dialect.example.md`。
 
 ## 必须
 

@@ -121,7 +121,7 @@ if not numbered:
 
 # --- 已 bootstrap：全部断言生效 ---
 if len(numbered) > max_numbered:
-    fail(f"{len(numbered)} numbered docs > max_numbered={max_numbered} — 合并同类或下沉 .cursorGrowth/")
+    fail(f"{len(numbered)} numbered docs > max_numbered={max_numbered} — 合并同类或下沉 .growing/")
 
 seen = {}
 for p in numbered:

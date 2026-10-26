@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# project-profile.sh — read .cursorGrowth/project-profile.json (按需启用元数据)
+# project-profile.sh — read .growing/project-profile.json (按需启用元数据)
 set -euo pipefail
 
 _SC_PP_LIB="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -9,7 +9,7 @@ source "$_SC_PP_LIB/platform.sh"
 sc_project_profile_path() {
   local root="${1:-}"
   [[ -n "$root" ]] || return 1
-  echo "$root/.cursorGrowth/project-profile.json"
+  echo "$root/.growing/project-profile.json"
 }
 
 sc_profile_ignore() {
@@ -163,7 +163,7 @@ tier_part = f"tiers={tiers or '?'}"
 slice_part = f"slices={slice_n}" if slice_n else "slices=0"
 print(
     f"Project profile: primary={primary or '?'} · detected={detected or '?'} · "
-    f"{tier_part} · {slice_part} · SSOT=.cursorGrowth/project-profile.json"
+    f"{tier_part} · {slice_part} · SSOT=.growing/project-profile.json"
 )
 PY
 }
@@ -215,9 +215,9 @@ sc_profile_sync_dev_conventions() {
   local profile_path learn_path template_path py
   profile_path="$(sc_project_profile_path "$root")"
   [[ -f "$profile_path" ]] || return 1
-  learn_path="$root/.cursorGrowth/learn/dev-conventions.md"
-  template_path="$cursor_dir/templates/cursorGrowth/learn/dev-conventions.md"
-  mkdir -p "$root/.cursorGrowth/learn"
+  learn_path="$root/.growing/learn/dev-conventions.md"
+  template_path="$cursor_dir/templates/growing/learn/dev-conventions.md"
+  mkdir -p "$root/.growing/learn"
   if [[ ! -f "$learn_path" && -f "$template_path" ]]; then
     cp "$template_path" "$learn_path"
   fi

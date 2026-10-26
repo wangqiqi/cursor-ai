@@ -17,7 +17,7 @@
 | docx · pptx · xlsx | **未纳入**整包 | 建议用户自行安装 upstream 或 MCP |
 | 创意/企业类 | **master** `routes.md` §LIBRARY | 按需 |
 
-运行时可选矩阵副本 → `.cursorGrowth/learn/`（`/learn` 吸收，非母版必读）。
+运行时可选矩阵副本 → `.growing/learn/`（`/learn` 吸收，非母版必读）。
 
 ## 母版原生（非外网吸收）
 
@@ -62,7 +62,7 @@
 | code-style · code-guidelines | **scope** `scope.mdc` § 命名与可读性 |
 | git-conventions | **git** skill § Conventional Commits |
 
-审计摘要 → `.cursorGrowth/archive/`（项目本地，勿链具体文件名）。
+审计摘要 → `.growing/archive/`（项目本地，勿链具体文件名）。
 
 ## SpaceZephyr/pm-skills（协议已吸收 · MIT）
 
@@ -112,12 +112,12 @@
 | Rules | `rules` | `.cursor/rules/*.mdc` |
 | Subagents | `subagents` | `.cursor/agents/` |
 | Hooks | `hooks` | `hooks.json` · `platforms.md` |
-| MCP | `mcp` | `templates/cursorGrowth/mcp.json.example` · `cursor-cloud.md` |
+| MCP | `mcp` | `templates/growing/mcp.json.example` · `cursor-cloud.md` |
 | Cloud Agents | `cloud-agent` | `environment.json.example` · `cursor-cloud.md` |
 | Automations | `cloud-agent/automations` | 用户 `/automate`（全局） |
 | Bugbot | `bugbot` | TASK-002 `BUGBOT.md` / `bugbot.yaml` 模板 |
 
-差距矩阵归档 → `.cursorGrowth/archive/meta/`（`verify-cursor-platform-contract.sh`）。
+差距矩阵归档 → `.growing/archive/meta/`（`verify-cursor-platform-contract.sh`）。
 
 ## 安装外网 skill 前
 

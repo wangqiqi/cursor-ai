@@ -2,9 +2,9 @@
 # SPIKE-002 SPRINT-PLUGIN-MVP: scope matrix archived.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
+ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
-# 归档为本地私有（.cursorGrowth/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验
+# 归档为本地私有（.growing/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验
 # shellcheck source=../lib/growth-archive.sh
 source "$ROOT/.cursor/lib/growth-archive.sh"
 sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-plugin-mvp-scope" || exit 0

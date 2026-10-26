@@ -1,6 +1,6 @@
 # Growth · dev-conventions §Deploy 字段
 
-项目安装 Super Cursor 后，由 **`/learn`** 填写 `.cursorGrowth/learn/dev-conventions.md` §Deploy。
+项目安装 Super Cursor 后，由 **`/learn`** 填写 `.growing/learn/dev-conventions.md` §Deploy。
 
 ## 建议表格
 
@@ -18,4 +18,4 @@
 - 把具体项目 IP/域名写进母版 `.cursor/skills/ops-deploy/`
 - 在 learn 里复制整份 nginx — 只记路径与端口真源
 
-模板真源：`.cursor/templates/cursorGrowth/learn/dev-conventions.md` §Deploy
+模板真源：`.cursor/templates/growing/learn/dev-conventions.md` §Deploy

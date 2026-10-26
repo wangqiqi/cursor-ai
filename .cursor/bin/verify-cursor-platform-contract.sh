@@ -4,10 +4,10 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 CUR="$ROOT/.cursor"
-TPL="$CUR/templates/cursorGrowth"
-ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
+TPL="$CUR/templates/growing"
+ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
-# 归档为本地私有（.cursorGrowth/ 不入 git）→ 未引导时跳过归档段，其余契约检查照跑
+# 归档为本地私有（.growing/ 不入 git）→ 未引导时跳过归档段，其余契约检查照跑
 # shellcheck source=../lib/growth-archive.sh
 source "$ROOT/.cursor/lib/growth-archive.sh"
 archive_ready=false

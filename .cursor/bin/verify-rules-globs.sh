@@ -126,10 +126,10 @@ PLAN_GATE = [
     "rules/execution/ux.mdc",
 ]
 for rel in PLAN_GATE:
-    if ".cursorGrowth/plan.md" in rules.get(rel, []):
-        ok(f"{rel} globs .cursorGrowth/plan.md")
+    if ".growing/plan.md" in rules.get(rel, []):
+        ok(f"{rel} globs .growing/plan.md")
     else:
-        fail(f"{rel} does not glob .cursorGrowth/plan.md (plan gate never attaches)")
+        fail(f"{rel} does not glob .growing/plan.md (plan gate never attaches)")
 
 # 2. 禁用已被证伪的宽 glob
 BANNED = ("**/src/**", "**/app/**", "**/*List*")

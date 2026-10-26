@@ -60,7 +60,7 @@ disable-model-invocation: true
 
 ## 与 learn
 
-项目特化路径（compose 文件名 · nginx 实际路径 · 端口表）→ `.cursorGrowth/learn/dev-conventions.md` §Deploy — **勿**写进母版 `.cursor/` 正文。
+项目特化路径（compose 文件名 · nginx 实际路径 · 端口表）→ `.growing/learn/dev-conventions.md` §Deploy — **勿**写进母版 `.cursor/` 正文。
 
 ## 参考
 

@@ -41,7 +41,7 @@ alwaysApply: false
 ## 4. 反馈
 
 - 用户可见修复写入 CHANGELOG `### Fixed`（见 `rules/feedback/changelog.mdc`）。
-- 若暴露流程/约定缺口，运行 **`/learn`** 更新 `.cursorGrowth/learn/`（通用规则缺口 → 用户授权后补 `.cursor/rules/`）
+- 若暴露流程/约定缺口，运行 **`/learn`** 更新 `.growing/learn/`（通用规则缺口 → 用户授权后补 `.cursor/rules/`）
 
 ## 5. 与 run
 

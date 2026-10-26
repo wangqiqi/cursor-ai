@@ -89,4 +89,4 @@ Sprint 闭合：**archive 一篇摘要**（**至少一级域子目录**，SSOT �
 - 写法与 API 契约 → **docs.mdc**
 - 文案/i18n 锚点 → **i18n-copy.mdc**
 - verify 脚本复用 → **verify.mdc**
-- 项目路径与 doc 索引 → `.cursorGrowth/learn/dev-conventions.md`
+- 项目路径与 doc 索引 → `.growing/learn/dev-conventions.md`

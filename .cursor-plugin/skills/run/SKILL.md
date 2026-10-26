@@ -59,8 +59,8 @@ git status && git diff --stat    # commit 前：无密钥、无意外文件
 | 时机 | 规则 |
 |------|------|
 | **每个 TASK / DOC / SPIKE 归档任务 ✅** | 同轮 **必须** `git commit`（**不含** `plan.md`）；`tag-per-commit` 时同轮 **`release-tag`** |
-| **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `.cursorGrowth/archive/` |
-| **仅改 `.cursorGrowth/plan.md`** | **勿** commit（`.cursorGrowth/` gitignore） |
+| **Sprint 全部 ✅ 收尾** | CHANGELOG / 已跟踪文件更新后 commit；Sprint 笔记进 `.growing/archive/` |
+| **仅改 `.growing/plan.md`** | **勿** commit（`.growing/` gitignore） |
 | **push** | 默认 **不** push；用户说 push 或 **ship** / **release** §分支 再推 |
 
 Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`type(scope): summary (ID)`。
@@ -82,7 +82,7 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 失败自修 ≤2 轮（须按 **debug** 循环：复现→假设→隔离→验证；**禁止无复现盲改**）· 仍失败 `⚠️` → `/plan` · 打版读 **release** skill
 
-**经验沉淀**：用户纠正或 `⚠️` 且根因已定位时，回复中**提议** `/learn` 记一条（**ERRORS** / **LEARNINGS**，见 **learn** §经验捕获）；不自动写 `.cursorGrowth/`。
+**经验沉淀**：用户纠正或 `⚠️` 且根因已定位时，回复中**提议** `/learn` 记一条（**ERRORS** / **LEARNINGS**，见 **learn** §经验捕获）；不自动写 `.growing/`。
 
 ## 按需细则（reference/）
 
@@ -92,7 +92,7 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 ## plan 维护（单任务 · 不提交）
 
-`.cursorGrowth/plan.md` 在 **`.gitignore`** — 只更新本地，**禁止** `git add .cursorGrowth/`。
+`.growing/plan.md` 在 **`.gitignore`** — 只更新本地，**禁止** `git add .growing/`。
 
 `task-verify` 与审计通过后、**commit 前**更新本地 plan：
 
@@ -103,7 +103,7 @@ Message 须含任务 ID（`TASK-003` · `DOC-001` · `SPIKE-002`）。格式：`
 
 **禁止**只改 `LAST_DONE` / `ACTIVE` 而留 **Done when** 未勾、TASK 表无 ✅、可选基线段落仍写「未交付」——头部与正文须同步（见 **Sprint 收尾 · plan 正文 reconciliation**）。
 
-勿把长叙事写进 plan；细节进 CHANGELOG 或 `.cursorGrowth/archive/`。
+勿把长叙事写进 plan；细节进 CHANGELOG 或 `.growing/archive/`。
 
 ## 与 plan 分工
 

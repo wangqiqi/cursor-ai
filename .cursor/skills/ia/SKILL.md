@@ -11,7 +11,7 @@ description: 信息架构（IA）规划与审查（skill-only）：工作流正�
 
 **普遍性原则**：`rules/execution/ia.mdc`（母版 · 跨项目）  
 **项目实例文档**：`docs/design/<产品>-ia.md` 或 `docs/design/*信息架构*` / `*information-architecture*`（仓库内约定）  
-**项目认知摘要**：`/learn` → `.cursorGrowth/learn/`（可选）
+**项目认知摘要**：`/learn` → `.growing/learn/`（可选）
 
 ## 何时进入
 
@@ -68,7 +68,7 @@ description: 信息架构（IA）规划与审查（skill-only）：工作流正�
 | 产出 | 路径 |
 |------|------|
 | 讨论稿 / ASCII / 线框 | `docs/design/<产品>-ia.md` |
-| 验收用例 | `.cursorGrowth/learn/` 或 plan Done when |
+| 验收用例 | `.growing/learn/` 或 plan Done when |
 | 实现 | 用户确认后 **`/plan`** — **ia** 默认不直接大改代码 |
 
 ## 审查清单

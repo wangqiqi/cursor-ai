@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""按 .cursorGrowth/temp-cleanup.json 回收项目 /tmp 残留（仅声明的 glob · 仅限 /tmp 系目录）。"""
+"""按 .growing/temp-cleanup.json 回收项目 /tmp 残留（仅声明的 glob · 仅限 /tmp 系目录）。"""
 from __future__ import annotations
 
 import argparse

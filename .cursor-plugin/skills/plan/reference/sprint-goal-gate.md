@@ -7,7 +7,7 @@
 | 层 | 必须交付什么 | 典型载体 |
 |----|--------------|----------|
 | **Epic** | 多 Sprint 的大主题 | `/long` · `long-state.json` |
-| **Sprint** | **一块能力 / 模块 / 用户可见增量** | `.cursorGrowth/plan.md` Active |
+| **Sprint** | **一块能力 / 模块 / 用户可见增量** | `.growing/plan.md` Active |
 | **Task** | 一次可验证、可提交的增量 | `TASK-*` 表 |
 | **Steps** | commit · 单文件改 · 命令一步 | Task 内部，无新 ID |
 | **Sprint 出口** | merge · tag · push | **`/release`**（**不是** Sprint） |

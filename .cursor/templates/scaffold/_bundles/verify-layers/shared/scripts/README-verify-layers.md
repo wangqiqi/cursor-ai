@@ -43,7 +43,7 @@ l2-standard	command	npm run lint	nodejs,react,vue
 
 | 条件 | `run-manifest-tier.sh` 行为 |
 |------|-----------------------------|
-| 无 `.cursorGrowth/project-profile.json` | 与旧版一致，不过滤 |
+| 无 `.growing/project-profile.json` | 与旧版一致，不过滤 |
 | 有 profile | `verify.enabled_tiers` 限制可跑的 **tier**；`stacks` 列与 `stacks.primary[]` 无交集则 **SKIP** 该行 |
 | `VERIFY_IGNORE_PROFILE=1` | 强制不过滤（排障 / CI） |
 

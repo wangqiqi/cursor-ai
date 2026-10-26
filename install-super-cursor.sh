@@ -20,7 +20,7 @@ usage() {
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
-  --copy-plan                      复制 templates/plan.md → .cursorGrowth/plan.md
+  --copy-plan                      复制 templates/plan.md → .growing/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
 
@@ -31,7 +31,7 @@ usage() {
   $0 /path/to/my-app --profile lite --copy-plan
   super-cursor-sync --replace      # 若已将 \$SUPER_CURSOR_HOME/bin 加入 PATH
 
-项目特化与产出 → .cursorGrowth/（plan · archive · learn · rules/local）
+项目特化与产出 → .growing/（plan · archive · learn · rules/local）
 EOF
 }
 
@@ -286,7 +286,7 @@ sc_apply_skills_bundle "$TARGET" "$SKILLS_BUNDLE" || exit 1
 
 # 运行态/本地私有路径与母版 .gitignore 对齐：漏了会在消费方仓库留下 untracked 噪音
 SC_IGNORE_LINES=(
-  '.cursorGrowth/'
+  '.growing/'
   '.cursor/rules/local'
   '.cursor/hooks/state/*'
   '!.cursor/hooks/state/README.md'
@@ -329,13 +329,20 @@ fi
 
 sc_chmod_scripts "$TARGET/.cursor"
 
-# Bootstrap .cursorGrowth (plan · archive · learn · rules — gitignored on target)
-GROWTH_TEMPLATE="$SOURCE/.cursor/templates/cursorGrowth"
-GROWTH_DIR="$TARGET/.cursorGrowth"
+# Bootstrap .growing (plan · archive · learn · rules — gitignored on target)
+GROWTH_TEMPLATE="$SOURCE/.cursor/templates/growing"
+GROWTH_DIR="$TARGET/.growing"
+LEGACY_GROWTH="$TARGET/.cursorGrowth"
+if [[ -d "$LEGACY_GROWTH" && ! -e "$GROWTH_DIR" ]]; then
+  mv "$LEGACY_GROWTH" "$GROWTH_DIR"
+  echo "已迁移 .cursorGrowth/ → .growing/"
+elif [[ -d "$LEGACY_GROWTH" && -d "$GROWTH_DIR" && ! "$LEGACY_GROWTH" -ef "$GROWTH_DIR" ]]; then
+  echo "WARN: 同时存在 .cursorGrowth/ 与 .growing/ — 请手动合并后删除 .cursorGrowth/" >&2
+fi
 if [[ -d "$GROWTH_TEMPLATE" ]]; then
   if [[ ! -d "$GROWTH_DIR" ]]; then
     sc_copy_tree "$GROWTH_TEMPLATE" "$GROWTH_DIR"
-    echo "已引导 .cursorGrowth/（项目特化与产出，git 忽略）"
+    echo "已引导 .growing/（项目特化与产出，git 忽略）"
   else
     mkdir -p "$GROWTH_DIR/learn" "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" \
       "$GROWTH_DIR/logs" "$GROWTH_DIR/perception"
@@ -353,33 +360,33 @@ if [[ -d "$GROWTH_TEMPLATE" ]]; then
 fi
 mkdir -p "$GROWTH_DIR/archive" "$GROWTH_DIR/rules/local" 2>/dev/null || true
 
-# Legacy: root plan.md / archive/ → .cursorGrowth/
+# Legacy: root plan.md / archive/ → .growing/
 if [[ -f "$TARGET/plan.md" && ! -f "$GROWTH_DIR/plan.md" ]]; then
   mv "$TARGET/plan.md" "$GROWTH_DIR/plan.md"
-  echo "已迁移 plan.md → .cursorGrowth/plan.md"
+  echo "已迁移 plan.md → .growing/plan.md"
 fi
 if [[ -d "$TARGET/archive" && ! -d "$GROWTH_DIR/archive" ]]; then
   mv "$TARGET/archive" "$GROWTH_DIR/archive"
-  echo "已迁移 archive/ → .cursorGrowth/archive/"
+  echo "已迁移 archive/ → .growing/archive/"
 fi
 
-# Auto-copy plan into .cursorGrowth for full profile
+# Auto-copy plan into .growing for full profile
 if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan.md" ) ]]; then
   if [[ -f "$TARGET/.cursor/templates/plan.md" ]]; then
     cp "$TARGET/.cursor/templates/plan.md" "$GROWTH_DIR/plan.md"
-    echo "已复制 .cursorGrowth/plan.md（profile=${PROFILE}）"
+    echo "已复制 .growing/plan.md（profile=${PROFILE}）"
   fi
 fi
 
-# Symlink .cursor/rules/local → .cursorGrowth/rules/local (Cursor glob 加载)
+# Symlink .cursor/rules/local → .growing/rules/local (Cursor glob 加载)
 CURSOR_LOCAL="$TARGET/.cursor/rules/local"
 if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
   if [[ ! -e "$CURSOR_LOCAL" ]] || { [[ -d "$CURSOR_LOCAL" ]] && \
     [[ "$(find "$CURSOR_LOCAL" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')" -le 1 ]]; }; then
     rm -rf "$CURSOR_LOCAL"
     # Windows / Git Bash 可能无符号链接权限：失败必须降级为真实目录，不能让安装中断（set -e）
-    if ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
-      echo "已链接 .cursor/rules/local → .cursorGrowth/rules/local"
+    if ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+      echo "已链接 .cursor/rules/local → .growing/rules/local"
     else
       mkdir -p "$CURSOR_LOCAL"
       cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null || true
@@ -401,7 +408,7 @@ sc_bootstrap_onekey_start "$TARGET" "$TARGET/.cursor" "$_onekey_enabled"
 file_count=0
 if [[ -d "$TARGET" ]]; then
   file_count="$(find "$TARGET" -mindepth 1 -maxdepth 2 \
-    ! -path "$TARGET/.cursor/*" ! -path "$TARGET/.git/*" ! -name .cursorGrowth \
+    ! -path "$TARGET/.cursor/*" ! -path "$TARGET/.git/*" ! -name .growing \
     -type f 2>/dev/null | wc -l | tr -d ' ')"
 fi
 
@@ -427,5 +434,5 @@ echo "  5. 验收 → ./scripts/verify.sh（scaffold 后会生成）"
 echo ""
 echo "  环境自检: bash .cursor/bin/platform-check.sh"
 echo "  文档: .cursor/docs/quickstart.md · .cursor/docs/platforms.md"
-echo "  可选 Bugbot/MCP/Cloud: 见 .cursor/templates/cursorGrowth/README.md · .cursor/docs/cursor-cloud.md"
+echo "  可选 Bugbot/MCP/Cloud: 见 .cursor/templates/growing/README.md · .cursor/docs/cursor-cloud.md"
 echo "  注意: Agent 默认不得修改 .cursor/；完善模板须你明确要求"

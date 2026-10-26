@@ -12,7 +12,7 @@ alwaysApply: true
 | 场景 | `.cursor/` | 项目特化 |
 |------|------------|----------|
 | **母版仓库**（本仓） | **可自由演进** — Sprint 直接改 rules/skills/config | — |
-| **安装到目标项目** | 默认 **只读**；用户明确授权才可改母版 | `.cursorGrowth/` · `rules/local` |
+| **安装到目标项目** | 默认 **只读**；用户明确授权才可改母版 | `.growing/` · `rules/local` |
 
 日常 `/plan` `/run` 在**目标项目**不得擅自改 `.cursor/`；**母版仓库**不受此限。
 

@@ -1,5 +1,5 @@
 ---
-description: 示例 — Agent 验收分层（复制到 .cursorGrowth/rules/local/ 并按项目改命令）
+description: 示例 — Agent 验收分层（复制到 .growing/rules/local/ 并按项目改命令）
 alwaysApply: true
 ---
 

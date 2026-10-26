@@ -7,8 +7,8 @@
 
 ```bash
 mkdir -p .cursor/config
-cp .cursor/templates/cursorGrowth/BUGBOT.md .cursor/BUGBOT.md
-cp .cursor/templates/cursorGrowth/config/bugbot.yaml.example .cursor/config/bugbot.yaml
+cp .cursor/templates/growing/BUGBOT.md .cursor/BUGBOT.md
+cp .cursor/templates/growing/config/bugbot.yaml.example .cursor/config/bugbot.yaml
 # 编辑后 commit 到默认分支（Bugbot 读 base 分支上的配置）
 ```
 
@@ -17,7 +17,7 @@ cp .cursor/templates/cursorGrowth/config/bugbot.yaml.example .cursor/config/bugb
 1. **安全** — 无密钥/PII 入日志；auth 写路径有校验（见 **security** skill 要点）。
 2. **API** — 公开契约与文档/OpenAPI 一致；破坏性变更须在 CHANGELOG 标明。
 3. **测试** — 行为变更应有可执行验收（`scripts/verify*.sh` / 单测），勿仅「目测通过」。
-4. **Super Cursor 消费方** — 若改 `.cursor/`：须 `verify-super-cursor` / `cursor-coherence` 绿；项目特化只进 `.cursorGrowth/`。
+4. **Super Cursor 消费方** — 若改 `.cursor/`：须 `verify-super-cursor` / `cursor-coherence` 绿；项目特化只进 `.growing/`。
 
 ## 忽略 / 降噪
 

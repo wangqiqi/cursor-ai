@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Growth SPIKE 归档门禁公因子。
 #
-# `.cursorGrowth/` 是本地私有目录（`.gitignore`，不入 git），因此 SPIKE 归档在
+# `.growing/` 是本地私有目录（`.gitignore`，不入 git），因此 SPIKE 归档在
 # 新克隆 / CI 里**必然不存在**。门禁语义（勿改，CI 绿依赖它）：
 #   - `archive/meta/` 目录不存在 → 归档从未引导 → SKIP（本地证据无从校验，放行）
 #   - 目录存在但目标归档缺失 → 真回归（误删 / 未归档）→ 调用方 FAIL
@@ -17,6 +17,6 @@ sc_growth_archive_available() {
   if [[ -d "$dir" ]]; then
     return 0
   fi
-  echo "SKIP  ${label}: .cursorGrowth/archive/meta 未引导（本地私有 · 不入 git）— fresh clone / CI 跳过 SPIKE 归档门禁"
+  echo "SKIP  ${label}: .growing/archive/meta 未引导（本地私有 · 不入 git）— fresh clone / CI 跳过 SPIKE 归档门禁"
   return 1
 }

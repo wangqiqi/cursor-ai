@@ -70,8 +70,8 @@ CMakeCache.txt
 Thumbs.db
 
 # --- 项目认知（learn/ 保留可索引）---
-.cursorGrowth/logs/
-.cursorGrowth/perception/
+.growing/logs/
+.growing/perception/
 
 # --- 敏感 ---
 .env

@@ -22,7 +22,7 @@
 
 | 项 | 本项目 |
 |----|--------|
-| 目录 | `.cursorGrowth/archive/{domain}/` — **至少一级域目录** |
+| 目录 | `.growing/archive/{domain}/` — **至少一级域目录** |
 | 格式 | `YYYYMMDD_HHMMSS_<topic>_<module>.md` |
 | 门禁 | `runner.sh archive-check`（根目录 flat 文件 > `growth.archive_flat_max` 即 FAIL） |
 | 说明 | `<topic>` / `<module>` 用英文或拼音缩写，避免空格 |
@@ -53,18 +53,18 @@
 
 **docs vs Growth 边界**：
 
-| 进 `docs/`（入 git · 对外 · 持久） | 进 `.cursorGrowth/learn/`（gitignore · 本地认知） |
+| 进 `docs/`（入 git · 对外 · 持久） | 进 `.growing/learn/`（gitignore · 本地认知） |
 |-------------------------------------|--------------------------------------------------|
 | 使用者需要的说明、契约、报告 | 本仓约定、模块地图、发版节奏、踩坑记录 |
 | 与版本一起演进 | 换人/换机可重建，不进发布物 |
 
 ## Plan 可选段落（若有）
 
-团队在 plan 中使用的**额外**基线段落（差距表、审查笔记等）在此登记；Sprint 收尾须与 `.cursorGrowth/archive/` 对齐：
+团队在 plan 中使用的**额外**基线段落（差距表、审查笔记等）在此登记；Sprint 收尾须与 `.growing/archive/` 对齐：
 
 | 段落类型（团队自定） | 收尾动作 |
 |----------------------|----------|
-| （待填） | 改 **交付态**，或链 `.cursorGrowth/archive/...` 作历史快照 |
+| （待填） | 改 **交付态**，或链 `.growing/archive/...` 作历史快照 |
 
 ## Sprint 区块标题
 
@@ -77,13 +77,13 @@
 
 ## Growth 与 git（团队可选）
 
-安装模板默认 **`.cursorGrowth/` gitignore**（plan · archive · learn · session）。若团队要把协作资产纳入仓库：
+安装模板默认 **`.growing/` gitignore**（plan · archive · learn · session）。若团队要把协作资产纳入仓库：
 
 | 策略 | 适用 | 动作 |
 |------|------|------|
 | **默认** | 个人机本地 plan/认知 | 保持 gitignore；换机靠 `/learn` 重建 |
-| **纳入 git** | 多人共享 learn · plan · local rules | 从 `.gitignore` 移除对应路径（或 `!/.cursorGrowth/learn/**` 等）；**仍勿**提交 `session/` · 密钥 |
-| **仅 rules** | 只共享门禁 | 只跟踪 `.cursorGrowth/rules/local/` |
+| **纳入 git** | 多人共享 learn · plan · local rules | 从 `.gitignore` 移除对应路径（或 `!/.growing/learn/**` 等）；**仍勿**提交 `session/` · 密钥 |
+| **仅 rules** | 只共享门禁 | 只跟踪 `.growing/rules/local/` |
 
 纳入 git 后：`plan.md` 冲突用 Git 合并；敏感草稿仍放 `archive/` 或私人分支。母版说明 → `.cursor/docs/consumer-refresh.md`。
 

@@ -8,9 +8,9 @@
 
 1. `./.cursor/bin/runner.sh verify` — **须满足 Sprint Done when**（母版含 `cursor-coherence.sh` · README 与 CHANGELOG 对齐）
    - **可选** — Done when 含「测试报告」/ QA benchmark / 持久化 `docs/test-report.md` → **`/report`**（**test-report**；步骤 1 刚跑完 verify 时优先 **from-logs**；见 `reference/regen-gates.md` §sprint）
-2. 将本 Sprint 笔记写入 **`.cursorGrowth/archive/{domain}/`** — **至少一级域目录**（域表 · scripts 树 → **plan** `reference/growth-layout.md`；命名见 `learn/plan-conventions.md`）
+2. 将本 Sprint 笔记写入 **`.growing/archive/{domain}/`** — **至少一级域目录**（域表 · scripts 树 → **plan** `reference/growth-layout.md`；命名见 `learn/plan-conventions.md`）
 2b. `./.cursor/bin/runner.sh archive-check` — 归档域分层（根目录 flat 超阈值即 FAIL；域表 → `learn/plan-conventions.md`）
-3. **plan 正文 reconciliation**（与 archive 一致；**必做**，仅 `.cursorGrowth/plan.md`）：
+3. **plan 正文 reconciliation**（与 archive 一致；**必做**，仅 `.growing/plan.md`）：
    - [ ] `<!-- SPRINT_STATUS: closed -->` · `<!-- ACTIVE: (none) -->` · `<!-- NEXT: (none) -->`
    - [ ] **从 plan 删除整个已闭合 Active Sprint 区块**（Goal · Done when · TASK 表）— **勿**改标题留「已闭合」正文
    - [ ] **勿**在 plan 补 ROADMAP `done` 表或「历史 Sprint」链接列表
@@ -22,10 +22,10 @@
    ```bash
    ./.cursor/bin/runner.sh friction-log --task <TASK-ID> --rounds <本任务交互轮次> --rework <返工次数> --verify <pass|fail>
    ```
-   写入 `.cursorGrowth/logs/friction.jsonl`（gitignore）；`friction-report` 汇总。**/learn** 时把趋势写进 `learn/dev-conventions.md`。
+   写入 `.growing/logs/friction.jsonl`（gitignore）；`friction-report` 汇总。**/learn** 时把趋势写进 `learn/dev-conventions.md`。
 6. **`git commit`（必做）** — 仅已跟踪文件；message 例：`docs: close SPRINT-NN readme sync (DOC-00N)`
-7. **`/learn`** — 吸收 archive / CHANGELOG / `friction-report` 到 `.cursorGrowth/learn/`（**建议**）
+7. **`/learn`** — 吸收 archive / CHANGELOG / `friction-report` 到 `.growing/learn/`（**建议**）
 8. `./.cursor/bin/runner.sh plan-check` — plan 内无已闭合 Sprint 正文
-9. 确认 `git status` 无意外脏文件（`.cursorGrowth/` 改动可存在且不必提交）
+9. 确认 `git status` 无意外脏文件（`.growing/` 改动可存在且不必提交）
 
 Sprint 收尾后若需 **merge/PR 或打 tag** → **`/release`**；新开 Sprint → **`/plan`**（设 `<!-- SPRINT_STATUS: active -->`）。

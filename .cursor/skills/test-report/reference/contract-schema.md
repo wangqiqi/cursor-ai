@@ -3,7 +3,7 @@
 项目真源（优先级）：
 
 1. `config/test-report.yaml`（可提交 · 适合 CI）
-2. `.cursorGrowth/learn/test-report.md`（gitignore · Agent 会话友好）
+2. `.growing/learn/test-report.md`（gitignore · Agent 会话友好）
 3. 均无 → AskQuestion 起草 · 模板 `templates/test-report-contract.example.yaml`
 
 ## 顶层

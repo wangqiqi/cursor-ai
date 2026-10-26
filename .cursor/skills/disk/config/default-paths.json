@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Default disk snapshot paths. Copy to .cursorGrowth/disk-paths.json to customize.",
+  "description": "Default disk snapshot paths. Copy to .growing/disk-paths.json to customize.",
   "paths": [
     {
       "key": "disk.root",

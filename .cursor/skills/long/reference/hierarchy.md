@@ -6,8 +6,8 @@ Epic 级长程任务的**固定三层**；禁止第四层任务 ID。与 **plan*
 
 | 层 | ID 形态 | 载体 | 作用 | 同级上限 |
 |----|---------|------|------|----------|
-| **L0 Epic** | `EPIC-*` 或自然语言标题 | `.cursorGrowth/long-state.json` + 候选表（可选） | 总 Goal · 总 Done when · Sprint 列表 | **≤5** Sprint |
-| **L1 Sprint** | `SPRINT-*` | `.cursorGrowth/plan.md` Active 区块 | 单迭代 Goal · TASK 表 · 执行顺序 | **≤5** TASK |
+| **L0 Epic** | `EPIC-*` 或自然语言标题 | `.growing/long-state.json` + 候选表（可选） | 总 Goal · 总 Done when · Sprint 列表 | **≤5** Sprint |
+| **L1 Sprint** | `SPRINT-*` | `.growing/plan.md` Active 区块 | 单迭代 Goal · TASK 表 · 执行顺序 | **≤5** TASK |
 
 Sprint Goal 须为**能力交付**；打 tag/merge 等出口 → **`/release`**（`plan/reference/sprint-goal-gate.md`）。
 | **L2 Task** | `TASK-*` | plan TASK 表 | 可验收增量 · 一次 commit | **≤5**（规模门禁） |

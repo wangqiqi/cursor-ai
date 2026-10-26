@@ -1,6 +1,6 @@
 # Growth 目录分级（archive · scripts）
 
-**用这个**：`.cursorGrowth/archive/` 与项目 `scripts/` 的**一级功能分级** SSOT。**不是那个**：Growth 坐标键名 → `config/workflow.json` · `archive_dir` · `growth.*`；验收分层 L0–L3 → `rules/feedback/verify.mdc`。
+**用这个**：`.growing/archive/` 与项目 `scripts/` 的**一级功能分级** SSOT。**不是那个**：Growth 坐标键名 → `config/workflow.json` · `archive_dir` · `growth.*`；验收分层 L0–L3 → `rules/feedback/verify.mdc`。
 
 ## 原则
 
@@ -8,14 +8,14 @@
 |------|------|
 | **至少一级域目录** | 新产出不得长期堆在 `archive/` 或 `scripts/` 根目录 |
 | **根目录只留入口** | `scripts/` 根：聚合 orchestrator · `test.sh` · 兼容转发；非新实现默认落子目录 |
-| **项目可扩展** | 域表在 `.cursorGrowth/learn/plan-conventions.md` 登记团队增量；母版给推荐桶 |
+| **项目可扩展** | 域表在 `.growing/learn/plan-conventions.md` 登记团队增量；母版给推荐桶 |
 | **命名不变** | archive 文件名仍 `YYYYMMDD_HHMMSS_<topic>_<module>.md`（见 plan-conventions 模板） |
 
 ## Archive 布局
 
 路径：`{archive_dir}/{domain}/YYYYMMDD_HHMMSS_<topic>_<module>.md`
 
-默认 `archive_dir` → `.cursorGrowth/archive/`（`workflow.json`）。
+默认 `archive_dir` → `.growing/archive/`（`workflow.json`）。
 
 ### 推荐域（`domain`）
 

@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 核心
 
-`.cursor/`=通用SOP · `.cursorGrowth/`=项目特化与产出（plan·archive·learn·rules，git忽略）· 读序：rules → config → `.cursorGrowth/`
+`.cursor/`=通用SOP · `.growing/`=项目特化与产出（plan·archive·learn·rules，git忽略）· 读序：rules → config → `.growing/`
 
 | 场景 | 入口 |
 |------|------|
@@ -40,7 +40,7 @@ alwaysApply: true
 | 场景 | `.cursor/` |
 |------|------------|
 | **母版仓库**（Super Cursor 模板仓等） | **可自由演进** — 直接改 rules/skills/config/templates |
-| **安装到目标项目** | 默认 **只读** SOP；特化 → `.cursorGrowth/`（见下节） |
+| **安装到目标项目** | 默认 **只读** SOP；特化 → `.growing/`（见下节） |
 
 引用纪律 · 文风 → **cursor-standalone** · `docs/library-index.md`。
 
@@ -52,8 +52,8 @@ alwaysApply: true
 
 | 禁止（默认） | 允许去向 |
 |--------------|----------|
-| 主动/自动改 `rules/` `skills/` `agents/` `hooks/` `bin/` `config/` `templates/` | 项目特化 → `.cursorGrowth/`（plan · learn · archive · rules/local） |
-| 「顺便优化」模板、补 skill、改 config | 团队 rules → `.cursorGrowth/rules/local/`（链 `.cursor/rules/local`） |
+| 主动/自动改 `rules/` `skills/` `agents/` `hooks/` `bin/` `config/` `templates/` | 项目特化 → `.growing/`（plan · learn · archive · rules/local） |
+| 「顺便优化」模板、补 skill、改 config | 团队 rules → `.growing/rules/local/`（链 `.cursor/rules/local`） |
 | 因业务任务顺带改 hooks 或 workflow | 行为开关 → 用户自行编辑 `config/*.json`，或明确授权后由 Agent 改 |
 
 发现缺口：**说明 + 建议**，等用户确认后再动 **目标项目**的 `.cursor/`。母版仓库日常 Sprint **可直接改**。目标项目 `/master` `/plan` `/run` `/learn` **不得**触发对 `.cursor/` 的写入。

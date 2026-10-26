@@ -26,14 +26,14 @@
 ## Checkpoint（Sprint 结束时必做）
 
 1. `./.cursor/bin/runner.sh verify`（满足当前 Sprint Done when）
-2. Sprint 笔记 → `.cursorGrowth/archive/`（`YYYYMMDD_HHMMSS_功能_模块.md`）
+2. Sprint 笔记 → `.growing/archive/`（`YYYYMMDD_HHMMSS_功能_模块.md`）
 3. 更新 **long-state.json**（见下）
 4. **plan 正文 reconciliation**（删已闭合 Active 区块，见 **run** §Sprint 收尾）
 5. （可选）短 sleep 或结束会话，下一 Sprint 新上下文启动
 
 ## long-state.json
 
-路径：**`.cursorGrowth/long-state.json`**（gitignore，与 plan 同级）。
+路径：**`.growing/long-state.json`**（gitignore，与 plan 同级）。
 
 ```json
 {
@@ -73,7 +73,7 @@
 推荐（跨天 / 易断连）：
 
 ```text
-/loop 3m "读 .cursorGrowth/long-state.json：
+/loop 3m "读 .growing/long-state.json：
 若 status=active 且 plan 有 ⬜/🔧 → 执行 /run 推进；
 若当前 Sprint 已闭合 → long checkpoint 并 plan 下一 Sprint；
 若 status=completed → 停止 loop。"

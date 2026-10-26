@@ -84,7 +84,7 @@ fi
 vc_ok "slash SSOT (routes.md canonical · README/training no 3-tier duplicate tables)"
 
 # --- Plugin MVP docs: install primary + sync/verify commands ---
-platform_learn="$CUR/templates/cursorGrowth/learn/cursor-platform.md"
+platform_learn="$CUR/templates/growing/learn/cursor-platform.md"
 cloud_doc="$CUR/docs/cursor-cloud.md"
 [[ -f "$platform_learn" ]] || vc_fail "missing cursor-platform.md learn template"
 [[ -f "$cloud_doc" ]] || vc_fail "missing cursor-cloud.md"
@@ -155,7 +155,7 @@ vc_ok "onekey bootstrap docs (config · catalog · README · building · scaffol
 
 tpl_07="$CUR/templates/project-docs/07_用户手册.md"
 tpl_08="$CUR/templates/project-docs/08_测试报告.md"
-learn_pc="$CUR/templates/cursorGrowth/learn/plan-conventions.md"
+learn_pc="$CUR/templates/growing/learn/plan-conventions.md"
 [[ -f "$tpl_07" ]] || vc_fail "templates/project-docs/07_用户手册.md missing"
 [[ -f "$tpl_08" ]] || vc_fail "templates/project-docs/08_测试报告.md missing"
 grep -qF "generated: manual" "$tpl_07" || vc_fail "07 template missing manual generated marker"

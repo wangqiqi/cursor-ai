@@ -73,13 +73,13 @@ echo "=== install smoke ==="
 # 1. full · empty target
 FULL="$TMP_ROOT/full-empty"
 run_install "full: install into empty target" "$TMP_ROOT/full.out" "$FULL" --profile full
-assert_file "$FULL/.cursorGrowth/plan.md" "full: .cursorGrowth/plan.md copied"
-assert_file "$FULL/.cursorGrowth/learn/plan-conventions.md" "full: learn seeds"
+assert_file "$FULL/.growing/plan.md" "full: .growing/plan.md copied"
+assert_file "$FULL/.growing/learn/plan-conventions.md" "full: learn seeds"
 # B4：安装输出必须把「首次必做 /learn」讲清楚，否则闸门与验收会空转
 assert_grep "$TMP_ROOT/full.out" '/learn' "full: output points at /learn first-run"
-assert_grep "$FULL/.gitignore" 'cursorGrowth' "full: gitignore .cursorGrowth/"
+assert_grep "$FULL/.gitignore" '.growing/' "full: gitignore .growing/"
 assert_absent "$FULL/plan.md" "full: no root plan.md"
-assert_grep "$FULL/.cursorGrowth/plan.md" '执行顺序' "full: plan template 执行顺序"
+assert_grep "$FULL/.growing/plan.md" '执行顺序' "full: plan template 执行顺序"
 # Windows/Git Bash 的 ln -s 可能退化为复制 → 断言「可达」而非「必须是符号链接」
 if [[ -L "$FULL/.cursor/rules/local" ]] || [[ -e "$FULL/.cursor/rules/local/README.md" ]]; then
   ok "full: rules/local resolvable"
@@ -110,13 +110,13 @@ onekey_hash2="$(sha256sum "$FULL/onekey_start.sh" | awk '{print $1}')"
 # 2. lite · no --copy-plan
 LITE="$TMP_ROOT/lite-no-plan"
 run_install "lite: install" "$TMP_ROOT/lite.out" "$LITE" --profile lite
-assert_absent "$LITE/.cursorGrowth/plan.md" "lite: no plan without --copy-plan"
-assert_grep "$LITE/.gitignore" 'cursorGrowth' "lite: gitignore .cursorGrowth/"
+assert_absent "$LITE/.growing/plan.md" "lite: no plan without --copy-plan"
+assert_grep "$LITE/.gitignore" '.growing/' "lite: gitignore .growing/"
 
 # 3. lite · --copy-plan
 LITE_COPY="$TMP_ROOT/lite-copy"
 run_install "lite --copy-plan: install" "$TMP_ROOT/lite-copy.out" "$LITE_COPY" --profile lite --copy-plan
-assert_file "$LITE_COPY/.cursorGrowth/plan.md" "lite --copy-plan: .cursorGrowth/plan.md"
+assert_file "$LITE_COPY/.growing/plan.md" "lite --copy-plan: .growing/plan.md"
 
 # 4. merge existing .gitignore
 EXISTING="$TMP_ROOT/existing"
@@ -124,10 +124,10 @@ mkdir -p "$EXISTING"
 echo 'node_modules/' >"$EXISTING/.gitignore"
 run_install "merge: install onto existing .gitignore" "$TMP_ROOT/existing.out" "$EXISTING" --profile full
 assert_grep "$EXISTING/.gitignore" 'node_modules' "merge: keeps node_modules/"
-assert_grep "$EXISTING/.gitignore" 'cursorGrowth' "merge: adds .cursorGrowth/"
+assert_grep "$EXISTING/.gitignore" '.growing/' "merge: adds .growing/"
 
-# 5. .cursorGrowth not tracked after git init
-assert_git_ignored "$FULL" ".cursorGrowth/plan.md" "full: .cursorGrowth/plan.md gitignored"
+# 5. .growing not tracked after git init
+assert_git_ignored "$FULL" ".growing/plan.md" "full: .growing/plan.md gitignored"
 
 # 6. --here / auto git root from subdirectory
 HERE_ROOT="$TMP_ROOT/here-project"

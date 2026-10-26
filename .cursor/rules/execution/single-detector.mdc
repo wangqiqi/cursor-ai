@@ -30,4 +30,4 @@ alwaysApply: false
 - 在 API 路由里复制一份 `if ext in (...)` 与 service 层不一致
 - 「preview 认、upload 不认」的分叉（历史高频重复劳动源）
 
-项目具体格式列表 → `.cursorGrowth/learn/`，不写本 rule。
+项目具体格式列表 → `.growing/learn/`，不写本 rule。

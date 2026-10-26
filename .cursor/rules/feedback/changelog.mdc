@@ -2,9 +2,9 @@
 description: 反馈规范 — CHANGELOG 结构与 plan 分工
 globs:
   - CHANGELOG.md
-  - .cursorGrowth/plan.md
+  - .growing/plan.md
   - plan.md
-  - .cursorGrowth/archive/**/*
+  - .growing/archive/**/*
   - archive/**/*
 alwaysApply: false
 ---
@@ -29,7 +29,7 @@ alwaysApply: false
 
 - 用户可见行为、API 变更、修复、breaking changes
 - 有 issue/PR 则链接
-- 长进度叙事放 `.cursorGrowth/plan.md` 或 `.cursorGrowth/archive/`，勿堆进 CHANGELOG
+- 长进度叙事放 `.growing/plan.md` 或 `.growing/archive/`，勿堆进 CHANGELOG
 
 ### Sprint 小节结构（可选 · 业务仓库）
 
@@ -50,9 +50,9 @@ alwaysApply: false
 
 ## 与 plan
 
-- **`.cursorGrowth/plan.md`**：本地 Sprint 状态 · **gitignore** · 不 commit
+- **`.growing/plan.md`**：本地 Sprint 状态 · **gitignore** · 不 commit
 - **CHANGELOG**：对外发布说明
-- 归档用 `.cursorGrowth/archive/` 时间戳文件名；plan ROADMAP 留本地索引
+- 归档用 `.growing/archive/` 时间戳文件名；plan ROADMAP 留本地索引
 
 ## 打版前
 
@@ -60,4 +60,4 @@ alwaysApply: false
 - [ ] 版本顺序正确
 - [ ] 行为变更已更新文档
 
-CHANGELOG 供 **`/learn`** 输入；摘要仅 `.cursorGrowth/learn/`。
+CHANGELOG 供 **`/learn`** 输入；摘要仅 `.growing/learn/`。

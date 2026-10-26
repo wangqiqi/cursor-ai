@@ -68,7 +68,7 @@ mk_plan_project() {
   local acc="$1" d
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
-  mkdir -p "$d/.cursor" "$d/.cursorGrowth"
+  mkdir -p "$d/.cursor" "$d/.growing"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
   {
@@ -83,7 +83,7 @@ mk_plan_project() {
     echo '| ID | Task | Priority | Status | Acceptance | Target |'
     echo '|----|------|----------|--------|------------|--------|'
     echo "| TASK-001 | t | P0 | ⬜ | ${acc} | src/ |"
-  } > "$d/.cursorGrowth/plan.md"
+  } > "$d/.growing/plan.md"
   printf '%s' "$d"
 }
 
@@ -146,9 +146,9 @@ rm -rf "$D"
 D="$(mk_plan_project "bash -c 'exit 0'")"
 ( cd "$D" && bash .cursor/bin/runner.sh friction-log --task TASK-001 --rounds 2 --rework 0 --verify pass --note 'x"y' ) >/dev/null 2>&1
 ( cd "$D" && bash .cursor/bin/runner.sh friction-log --task TASK-002 --rounds 4 --rework 1 --verify fail ) >/dev/null 2>&1
-if [[ -f "$D/.cursorGrowth/logs/friction.jsonl" ]] && "$PYTHON_BIN" -c "
+if [[ -f "$D/.growing/logs/friction.jsonl" ]] && "$PYTHON_BIN" -c "
 import json,sys
-[json.loads(l) for l in open(sys.argv[1])]" "$D/.cursorGrowth/logs/friction.jsonl" 2>/dev/null; then
+[json.loads(l) for l in open(sys.argv[1])]" "$D/.growing/logs/friction.jsonl" 2>/dev/null; then
   echo "OK  friction.jsonl is valid JSONL"
 else
   echo "FAIL: friction.jsonl invalid"; rm -rf "$D"; exit 1
@@ -165,7 +165,7 @@ mk_closed_autonomous_plan() {
   local d
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
-  mkdir -p "$d/.cursor" "$d/.cursorGrowth"
+  mkdir -p "$d/.cursor" "$d/.growing"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
   {
@@ -182,7 +182,7 @@ mk_closed_autonomous_plan() {
     echo '| ID | Task | Priority | Status | Acceptance | Target |'
     echo '|----|------|----------|--------|------------|--------|'
     echo '| TASK-007 | done | P0 | ✅ | bash -c true | src/ |'
-  } > "$d/.cursorGrowth/plan.md"
+  } > "$d/.growing/plan.md"
   printf '%s' "$d"
 }
 
@@ -197,7 +197,7 @@ mk_closed_no_approval() {
   local d
   sc_mktemp_dir sc-runner-smoke
   d="$SC_MKTEMP_LAST"
-  mkdir -p "$d/.cursor" "$d/.cursorGrowth"
+  mkdir -p "$d/.cursor" "$d/.growing"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
   {
@@ -207,7 +207,7 @@ mk_closed_no_approval() {
     echo '<!-- SPRINT_STATUS: closed -->'
     echo '<!-- ACTIVE: (none) -->'
     echo '| TASK-007 | done | P0 | ✅ | bash -c true | src/ |'
-  } > "$d/.cursorGrowth/plan.md"
+  } > "$d/.growing/plan.md"
   printf '%s' "$d"
 }
 D="$(mk_closed_no_approval)"
@@ -227,8 +227,8 @@ rm -rf "$D"
 # closed 但 ACTIVE 仍指向旧 ID → run-start 勿注入 Sprint 连跑
 D="$(mk_closed_autonomous_plan)"
 sed 's/<!-- ACTIVE: (none) -->/<!-- ACTIVE: TASK-007 -->/' \
-  "$D/.cursorGrowth/plan.md" > "$D/.cursorGrowth/plan.md.tmp"
-mv "$D/.cursorGrowth/plan.md.tmp" "$D/.cursorGrowth/plan.md"
+  "$D/.growing/plan.md" > "$D/.growing/plan.md.tmp"
+mv "$D/.growing/plan.md.tmp" "$D/.growing/plan.md"
 out="$( ( cd "$D" && printf '%s' '{"conversation_id":"c1"}' | bash .cursor/hooks/run-start.sh ) )"
 case "$out" in
   *"autonomous"*) echo "FAIL: run-start must not chain when closed idle: $out"; rm -rf "$D"; exit 1 ;;
@@ -301,10 +301,10 @@ fi
 sc_mktemp_dir sc-runner-smoke-profile
 PD="$SC_MKTEMP_LAST"
 VL="$CURSOR_DIR/templates/scaffold/_bundles/verify-layers/shared/scripts"
-mkdir -p "$PD/.cursor/lib" "$PD/.cursorGrowth" "$PD/scripts/verify"
+mkdir -p "$PD/.cursor/lib" "$PD/.growing" "$PD/scripts/verify"
 cp "$CURSOR_DIR/lib/project-profile.sh" "$CURSOR_DIR/lib/platform.sh" "$PD/.cursor/lib/"
 cp "$VL/verify/run-manifest-tier.sh" "$PD/scripts/verify/"
-cat > "$PD/.cursorGrowth/project-profile.json" <<'JSON'
+cat > "$PD/.growing/project-profile.json" <<'JSON'
 {
   "version": 1,
   "adapted_at": "2026-10-26T00:00:00+08:00",

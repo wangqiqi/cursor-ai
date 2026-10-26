@@ -5,7 +5,7 @@
 ## 落点（读取顺序）
 
 1. `config/manual.yaml`（可提交 · 适合 CI regen）
-2. `.cursorGrowth/learn/user-manual.md`（gitignore · Agent 会话友好）
+2. `.growing/learn/user-manual.md`（gitignore · Agent 会话友好）
 3. 均无 → AskQuestion 起草 · 模板 `templates/manual-contract.example.yaml`
 
 ## 顶层结构

@@ -1,6 +1,6 @@
 ---
 name: disk
-description: 磁盘快照（关键词 · 跨平台）：采集 HOME 与可配置路径占用 → .cursorGrowth/disk-snapshots/，并与上次对比。
+description: 磁盘快照（关键词 · 跨平台）：采集 HOME 与可配置路径占用 → .growing/disk-snapshots/，并与上次对比。
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 **工具技能**（无 slash · 非 plan/run 主路径）。**用这个**：占用快照与对比。**不是那个**：业务代码清理重构 → **refactor**；系统清理流程 → **maintain** skill。
 
-结构化采集磁盘占用，写入 **`.cursorGrowth/disk-snapshots/`**（本地、**不提交 git**），支持对比两次快照的变动。
+结构化采集磁盘占用，写入 **`.growing/disk-snapshots/`**（本地、**不提交 git**），支持对比两次快照的变动。
 
 ## 何时进入
 
@@ -27,8 +27,8 @@ python3 .cursor/skills/disk/scripts/collect-disk.py snapshot
 
 - `--home ~` — HOME 目录（默认 `~`）
 - `--project-dir .` — 相对路径类条目（`./build` 等）的基准目录
-- `--snapshot-dir .cursorGrowth/disk-snapshots`（默认已是）
-- `--config .cursorGrowth/disk-paths.json` — 自定义采集表（见模板 `templates/cursorGrowth/disk-paths.example.json`）
+- `--snapshot-dir .growing/disk-snapshots`（默认已是）
+- `--config .growing/disk-paths.json` — 自定义采集表（见模板 `templates/growing/disk-paths.example.json`）
 
 ### 2. 对比变动（需 ≥2 份快照）
 
@@ -36,7 +36,7 @@ python3 .cursor/skills/disk/scripts/collect-disk.py snapshot
 python3 .cursor/skills/disk/scripts/collect-disk.py diff
 ```
 
-输出 `.cursorGrowth/disk-snapshots/diff-latest.md`，并打印 Markdown 对比表。
+输出 `.growing/disk-snapshots/diff-latest.md`，并打印 Markdown 对比表。
 
 ### 3. 查看
 
@@ -48,10 +48,10 @@ python3 .cursor/skills/disk/scripts/collect-disk.py report
 ### 4. 确认
 
 ```bash
-git status   # .cursorGrowth/ 不应出现在待提交列表
+git status   # .growing/ 不应出现在待提交列表
 ```
 
-**禁止** `git add .cursorGrowth/disk-snapshots/`。
+**禁止** `git add .growing/disk-snapshots/`。
 
 ## 快照结构
 
@@ -64,7 +64,7 @@ git status   # .cursorGrowth/ 不应出现在待提交列表
 | IDE | `ide.cursor` · `ide.cursor_state` · `ide.vscode` |
 | 当前项目 | `pkg.build` · `pkg.node_modules` · `pkg.target`（相对 `--project-dir`） |
 
-对比时按 **变动绝对值** 排序。可在 `.cursorGrowth/disk-paths.json` 增删路径，**勿写入个人信息**。
+对比时按 **变动绝对值** 排序。可在 `.growing/disk-paths.json` 增删路径，**勿写入个人信息**。
 
 ## 与 maintain 的分工
 

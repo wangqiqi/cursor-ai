@@ -210,7 +210,7 @@ if [[ -n "$facade_readme" ]]; then
   done
 fi
 
-# 15. rules/local symlink resolves (.cursorGrowth/rules/local)
+# 15. rules/local symlink resolves (.growing/rules/local)
 repo_root="$(cd "$CUR/.." && pwd)"
 local_link="$CUR/rules/local"
 if [[ -L "$local_link" ]]; then

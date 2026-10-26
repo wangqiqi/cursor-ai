@@ -106,9 +106,9 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 
 | 步 | 动作 |
 |----|------|
-| 1 | 备份 `.cursor/` → `.cursorGrowth/archive/pre-super-cursor-YYYYMMDD/`（可选） |
+| 1 | 备份 `.cursor/` → `.growing/archive/pre-super-cursor-YYYYMMDD/`（可选） |
 | 2 | `install-super-cursor.sh <目标> --profile full --replace` |
-| 3 | 业务 rules → `.cursorGrowth/rules/local/`（安装脚本会链 `rules/local`） |
+| 3 | 业务 rules → `.growing/rules/local/`（安装脚本会链 `rules/local`） |
 | 4 | 验收：skills/agents 与母版 `diff` 空（若用 `--skills-bundle core` 则 skills 为 23）· `rules/local` 有效 · `platform-check.sh` 绿 · 根目录 `onekey_start.sh`（`growth.onekey_bootstrap` 默认开；已有文件不覆盖） |
 | （可选） | 持久文档号位：`runner.sh docs-init` · `bash .cursor/bin/verify-docs-layout.sh`（契约见 `config/docs-layout.json`） |
 
@@ -120,9 +120,9 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 |----------|----------|------|
 | Rules / Skills 2.4+ | 已对齐；slash **仅 skill**（`commands/` 已退役） | `skills/` · `training/skills.md` |
 | Hooks + Cloud | Repo command hooks；Cloud 不跑用户 `~/.cursor/hooks` | `hooks.json` · `platforms.md` |
-| MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/cursorGrowth/`（TASK-002/003） |
+| MCP · Cloud env · Bugbot | **可选模板**，不默认 install | `templates/growing/`（TASK-002/003） |
 | Plugins Marketplace | **install 主路径**；Plugin 为可选第三轨（**Defer 上架** · 三轨 `*_SPIKE_plugin_phase2_scope.md` · 清单 `*_SPIKE_marketplace_prep_scope.md`） | `learn/cursor-platform.md` · `cursor-cloud.md` §Marketplace · `.cursor-plugin/README.md` |
 | Automations | 用户全局 `/automate`；母版不嵌密钥 | `cursor-platform.md` |
-| 嵌套 `AGENTS.md` · skill `paths` | 大仓消费方指南 | `.cursorGrowth/learn/cursor-platform.md` |
+| 嵌套 `AGENTS.md` · skill `paths` | 大仓消费方指南 | `.growing/learn/cursor-platform.md` |
 
 详矩阵 → `archive/meta/*_SPIKE_cursor_official_align.md` · 维护摘要 → `learn/cursor-platform.md`（install 后路径相同）。

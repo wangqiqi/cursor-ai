@@ -79,8 +79,8 @@ CMakeCache.txt
 Thumbs.db
 
 # --- Super Cursor（learn/ 不忽略 — Agent 需读项目认知）---
-.cursorGrowth/logs/
-.cursorGrowth/perception/
+.growing/logs/
+.growing/perception/
 
 # --- 敏感 ---
 .env

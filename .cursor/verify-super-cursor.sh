@@ -141,8 +141,8 @@ check "$CUR/rules/communication/collaboration.mdc"
 check "$CUR/rules/execution/docs.mdc"
 check "$CUR/rules/execution/commit.mdc"
 check "$CUR/rules/execution/bugfix.mdc"
-check "$CUR/templates/cursorGrowth/README.md"
-check "$CUR/templates/cursorGrowth/learn/plan-conventions.md"
+check "$CUR/templates/growing/README.md"
+check "$CUR/templates/growing/learn/plan-conventions.md"
 check "$CUR/hooks/growth-init.sh"
 check "$CUR/hooks/run-start.sh"
 check "$CUR/hooks/run-stop.sh"
@@ -257,7 +257,7 @@ source "$CUR/lib/platform.sh"
 ts="$(iso8601_now)"
 [[ -n "$ts" ]] && echo "OK  iso8601_now=$ts" || { echo "FAIL iso8601_now"; VC_FAIL=$((VC_FAIL + 1)); }
 pf="$(json_cfg "$CUR/config/workflow.json" plan_file __missing__)"
-[[ "$pf" == ".cursorGrowth/plan.md" ]] && echo "OK  json_cfg plan_file=$pf" || { echo "FAIL json_cfg plan_file=$pf"; VC_FAIL=$((VC_FAIL + 1)); }
+[[ "$pf" == ".growing/plan.md" ]] && echo "OK  json_cfg plan_file=$pf" || { echo "FAIL json_cfg plan_file=$pf"; VC_FAIL=$((VC_FAIL + 1)); }
 we="$(json_cfg "$CUR/config/workflow.json" workflow.enabled __missing__)"
 [[ "$we" == "true" ]] && echo "OK  json_cfg workflow.enabled=$we" || { echo "FAIL json_cfg workflow.enabled=$we"; VC_FAIL=$((VC_FAIL + 1)); }
 

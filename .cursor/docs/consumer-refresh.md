@@ -38,11 +38,11 @@ install-super-cursor --replace
 
 | 路径 | 行为 |
 |------|------|
-| `.cursorGrowth/` | **保留**；仅缺失时 bootstrap（plan · learn · archive · `rules/local`） |
+| `.growing/` | **保留**；仅缺失时 bootstrap（plan · learn · archive · `rules/local`） |
 | 已有 `onekey_start.sh` | **不覆盖**（`growth.onekey_bootstrap`） |
 | 业务代码 · `scripts/verify.sh` | 不在 install 包内，不受影响 |
 
-项目特化规则写在 **`.cursorGrowth/rules/local/`**（安装后链到 `.cursor/rules/local`）。
+项目特化规则写在 **`.growing/rules/local/`**（安装后链到 `.cursor/rules/local`）。
 
 ## 不要覆盖的对象
 
@@ -54,7 +54,7 @@ install-super-cursor --replace
 | 步骤 | 命令 / 产物 | 说明 |
 |------|-------------|------|
 | 布局 | `bash .cursor/verify-super-cursor.sh` | hybrid 混合仓自动 SKIP 母版专属项 |
-| **栈适配** | `.cursor/bin/scaffold.sh adapt` → `adapt --write` | 写入 `.cursorGrowth/project-profile.json`（**按需启用**，非瘦安装） |
+| **栈适配** | `.cursor/bin/scaffold.sh adapt` → `adapt --write` | 写入 `.growing/project-profile.json`（**按需启用**，非瘦安装） |
 | profile | `stacks.primary` · `verify.enabled_tiers` | 机器镜像 → `learn/dev-conventions.md` **`SC_PROFILE_SYNC`** 段（含 DAILY/LIBRARY 建议） |
 | 平台 | `bash .cursor/bin/platform-check.sh` | 工具链 |
 | 业务 | `./scripts/verify.sh` | 见 learn |
@@ -83,17 +83,17 @@ bash .cursor/bin/platform-check.sh
 |------|----------|
 | 缺大量文件 vs 母版 | 未 `--replace`，仍是旧安装 |
 | `commands/` 仍存在 | 未 `--replace` |
-| `rules/local` 不生效 | 检查 `.cursor/rules/local` → `.cursorGrowth/rules/local` 符号链接 |
+| `rules/local` 不生效 | 检查 `.cursor/rules/local` → `.growing/rules/local` 符号链接 |
 | 母版 `cursor-coherence` 要求根 README 技能表 | **仅母版仓库**；消费方不必满足 |
 
 ## 可选：团队将 Growth 纳入 git
 
-默认 `.cursorGrowth/` 在目标项目 **gitignore**。若团队要把 `learn/` · `plan.md` · `rules/local` 纳入版本库，见安装后 `learn/plan-conventions.md` §Growth 与 git。
+默认 `.growing/` 在目标项目 **gitignore**。若团队要把 `learn/` · `plan.md` · `rules/local` 纳入版本库，见安装后 `learn/plan-conventions.md` §Growth 与 git。
 
 ## 可选备份
 
 ```bash
-tar -czf ".cursorGrowth/archive/pre-cursor-$(date +%Y%m%d).tar.gz" -C /path/to/target-project .cursor
+tar -czf ".growing/archive/pre-cursor-$(date +%Y%m%d).tar.gz" -C /path/to/target-project .cursor
 ```
 
 ## 升级后建议

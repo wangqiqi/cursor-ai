@@ -1,4 +1,4 @@
-# .cursorGrowth
+# .growing
 
 **Git 不跟踪。** 项目特化与 Agent 产出**统一放此目录**，与通用 `.cursor/` SOP 分离。
 
@@ -45,28 +45,28 @@
 | `rules/local/dual-dialect.example.mdc` | 双方言查询纪律 |
 | `temp-cleanup.example.json` | 测试 `/tmp` glob 契约 |
 
-### Bugbot（可选 · 不进 `.cursorGrowth/`）
+### Bugbot（可选 · 不进 `.growing/`）
 
 PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：
 
 | 模板 | 复制到 |
 |------|--------|
-| `templates/cursorGrowth/BUGBOT.md` | `.cursor/BUGBOT.md` |
-| `templates/cursorGrowth/config/bugbot.yaml.example` | `.cursor/config/bugbot.yaml` |
+| `templates/growing/BUGBOT.md` | `.cursor/BUGBOT.md` |
+| `templates/growing/config/bugbot.yaml.example` | `.cursor/config/bugbot.yaml` |
 
 启用：Dashboard 连接仓库 · Automations 打开 Bugbot。本地 `REV-*` 仍用 **review** skill。
 
-### MCP · Cloud（可选 · 不进 `.cursorGrowth/`）
+### MCP · Cloud（可选 · 不进 `.growing/`）
 
 | 模板 | 复制到 |
 |------|--------|
-| `templates/cursorGrowth/mcp.json.example` | `.cursor/mcp.json` |
-| `templates/cursorGrowth/environment.json.example` | `.cursor/environment.json`（仅 `install`） |
-| `templates/cursorGrowth/environment.docker.json.example` | 可选：合并 `build` 段或整文件替换 |
+| `templates/growing/mcp.json.example` | `.cursor/mcp.json` |
+| `templates/growing/environment.json.example` | `.cursor/environment.json`（仅 `install`） |
+| `templates/growing/environment.docker.json.example` | 可选：合并 `build` 段或整文件替换 |
 
 详述 → `.cursor/docs/cursor-cloud.md` · 部署面 → **ops-deploy** skill。
 
-种子：`.cursor/templates/cursorGrowth/` · **`/learn`** 在已有文件上增量更新
+种子：`.cursor/templates/growing/` · **`/learn`** 在已有文件上增量更新
 
 ## 如何更新
 
@@ -85,5 +85,5 @@ PR 自动化审查配置在 **`.cursor/`**（非本目录）。模板：
 ## 注意
 
 - 勿把 learn / plan / archive 内容复制进 `.cursor/` 再提交
-- 团队共享认知用 wiki/docs；不要 commit `.cursorGrowth/`
+- 团队共享认知用 wiki/docs；不要 commit `.growing/`
 - `.cursorignore` 可排除 `logs/` · `perception/`；**勿** ignore 整个 `learn/` 或 `plan.md`

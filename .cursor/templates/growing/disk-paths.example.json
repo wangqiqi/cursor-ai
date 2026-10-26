@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Optional override. Copy to .cursorGrowth/disk-paths.json and edit paths for your machine.",
+  "description": "Optional override. Copy to .growing/disk-paths.json and edit paths for your machine.",
   "paths": [
     {
       "key": "disk.root",

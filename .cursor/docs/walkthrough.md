@@ -25,7 +25,7 @@ go mod tidy
 ## 2. 学习 + 规划
 
 ```text
-/learn     → 写入模块路径、verify 命令到 .cursorGrowth/learn/
+/learn     → 写入模块路径、verify 命令到 .growing/learn/
 /plan      → 在 `plan_file`（Growth 工作副本）上拆真实 Sprint
 ```
 

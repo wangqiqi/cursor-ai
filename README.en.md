@@ -5,7 +5,7 @@
 
 Super Cursor turns "how to work with an AI agent" from chat conventions into an installable,
 reusable, evolvable workflow master: **rules + skills + hooks + config**, installed once and
-usable in every repository. Project-specific knowledge lives in `.cursorGrowth/` (git-ignored),
+usable in every repository. Project-specific knowledge lives in `.growing/` (git-ignored),
 never in the shared template.
 
 ## What you get
@@ -34,7 +34,7 @@ SUPER_CURSOR_HOME=$PWD ./install-super-cursor.sh --setup-shell
 |--------|--------|
 | `--profile full\|lite\|rules-only` | `full` (default, hooks on) · `lite` (no hooks) · `rules-only` (no gate) |
 | `--replace` | delete the target `.cursor/` first (recommended for upgrades) |
-| `--copy-plan` | seed `.cursorGrowth/plan.md` |
+| `--copy-plan` | seed `.growing/plan.md` |
 
 Supported on **Linux · macOS · Windows (Git Bash)**. No `rsync` → `cp -a`; no `jq` → `python`
 (forced with `SC_FORCE_PYTHON=1`, which CI exercises). Per-skill platform scope is documented
@@ -74,7 +74,7 @@ bash .cursor/bin/cursor-coherence.sh    # skills/agents/rules registration
 
 1. **Universal only** — no company paths; any repository can install it.
 2. **Config over fork** — behaviour switches live in `config/*.json`, validated by `config/schema.json`.
-3. **Growth boundary** — project knowledge only in `.cursorGrowth/`.
+3. **Growth boundary** — project knowledge only in `.growing/`.
 4. **Immutable after install** — the agent does not edit `.cursor/` unless you ask.
 5. **Protocol-agnostic** — open skills/rules protocol; `.cursor/` can be copied to `.roo/`.
 6. **Effectiveness over verbosity** — fewer round-trips beats shorter replies.

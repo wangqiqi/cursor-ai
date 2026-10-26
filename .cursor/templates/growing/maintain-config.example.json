@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Optional override. Copy to .cursorGrowth/maintain-config.json and edit for your machine.",
+  "description": "Optional override. Copy to .growing/maintain-config.json and edit for your machine.",
   "protected_dirs": [
     "~/vendor",
     "~/models"
@@ -18,5 +18,5 @@
   "build_artifact_tmp_globs": [
     "/tmp/my-app-test-*"
   ],
-  "_note_temp_cleanup": "测试后立即回收请用 temp-cleanup.example.json → .cursorGrowth/temp-cleanup.json（ephemeral/persistent 分层）；本文件偏 maintain --clean 周期清扫"
+  "_note_temp_cleanup": "测试后立即回收请用 temp-cleanup.example.json → .growing/temp-cleanup.json（ephemeral/persistent 分层）；本文件偏 maintain --clean 周期清扫"
 }

@@ -39,5 +39,5 @@ alwaysApply: false
 ## 交叉引用
 
 - 脚手架新建项目 → **scaffold** · `reference/ops-env-contract.md`
-- 项目路径坐标 → `.cursorGrowth/learn/dev-conventions.md` §Deploy
+- 项目路径坐标 → `.growing/learn/dev-conventions.md` §Deploy
 - 上传 limit 与 nginx `client_max_body_size` → **input-bounds**

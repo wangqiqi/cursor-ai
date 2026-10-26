@@ -2,9 +2,9 @@
 # SPIKE-007 SPRINT-MOTHER-HYGIENE: facade drift audit archived.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-ARCHIVE_DIR="$ROOT/.cursorGrowth/archive/meta"
+ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
-# 归档为本地私有（.cursorGrowth/ 不入 git）→ 未引导时只跳过归档段，计数门禁仍跑
+# 归档为本地私有（.growing/ 不入 git）→ 未引导时只跳过归档段，计数门禁仍跑
 # shellcheck source=../lib/growth-archive.sh
 source "$ROOT/.cursor/lib/growth-archive.sh"
 

@@ -24,7 +24,7 @@ features:
   - title: 可守护
     details: 8 道门禁接入 CI —— 规则 glob · 可移植性 · config schema · 协议字段 · 密钥扫描 · 文档一致性 · 消费方端到端。
   - title: 可演进
-    details: 项目特化进 .cursorGrowth/（gitignore），母版 .cursor/ 保持通用 SOP。
+    details: 项目特化进 .growing/（gitignore），母版 .cursor/ 保持通用 SOP。
   - title: 三指令日常
     details: /plan 拆 Sprint · /run 执行 · /master 迷路路由；生命周期 scaffold · learn · release。
 ---

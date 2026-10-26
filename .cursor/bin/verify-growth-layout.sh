@@ -19,7 +19,7 @@ need_ref=(
   # run 的 Sprint 收尾细则已移入 reference/（C5 去重）→ 引用跟着落点走
   "$CUR/skills/run/reference/sprint-closeout.md"
   "$CUR/skills/scaffold/SKILL.md"
-  "$CUR/templates/cursorGrowth/learn/plan-conventions.md"
+  "$CUR/templates/growing/learn/plan-conventions.md"
 )
 
 for f in "${need_ref[@]}"; do
@@ -30,8 +30,8 @@ for f in "${need_ref[@]}"; do
   fi
 done
 
-if [[ -f "$CUR/templates/cursorGrowth/learn/plan-conventions.md" ]] \
-  && grep -q 'archive/{domain}/' "$CUR/templates/cursorGrowth/learn/plan-conventions.md"; then
+if [[ -f "$CUR/templates/growing/learn/plan-conventions.md" ]] \
+  && grep -q 'archive/{domain}/' "$CUR/templates/growing/learn/plan-conventions.md"; then
   vc_ok "plan-conventions template uses archive/{domain}/"
 else
   vc_fail "plan-conventions template missing archive/{domain}/"

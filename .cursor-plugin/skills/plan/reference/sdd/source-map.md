@@ -17,7 +17,7 @@
 | 词 | spec-kit | Super Cursor | 吸收用法 |
 |----|----------|--------------|----------|
 | **constitution** | 项目开发原则 | `rules/communication/constitution.mdc` **协作三公理** | 母版用 **principles** · `principles-template.md` |
-| **plan** | 技术实现计划 | Sprint `.cursorGrowth/plan.md` | 技术计划 = `tech-plan-template.md` · 目录内 `plan.md` |
+| **plan** | 技术实现计划 | Sprint `.growing/plan.md` | 技术计划 = `tech-plan-template.md` · 目录内 `plan.md` |
 | **spec** | 功能需求文档 | 常指 OpenAPI | 功能 spec = `spec-template.md` · `spec.md` |
 
 ## 命令 → 母版映射（无新 slash）
@@ -28,7 +28,7 @@
 | `/speckit.specify` | **plan** Greenfield | `{specs_dir}/<id>/spec.md` |
 | `/speckit.clarify` | **plan** 阶段 1 | `clarifications.md` 或 spec 内 Clarifications 节 |
 | `/speckit.plan` | **plan** 阶段 1–2 | `{specs_dir}/<id>/plan.md` |
-| `/speckit.tasks` | **plan** 阶段 2 | `tasks.md` → 导入 `.cursorGrowth/plan.md` TASK 表 |
+| `/speckit.tasks` | **plan** 阶段 2 | `tasks.md` → 导入 `.growing/plan.md` TASK 表 |
 | `/speckit.analyze` | **review** §SDD analyze | 只读 |
 | `/speckit.implement` | **run** | 已有 |
 | `/speckit.converge` | **run** 收尾 | 差距 → 新 TASK |
@@ -40,7 +40,7 @@
 
 | 模式 | 何时 | 工件 |
 |------|------|------|
-| **Sprint 增量** | 默认 · 已有代码迭代 | 仅 `.cursorGrowth/plan.md` |
+| **Sprint 增量** | 默认 · 已有代码迭代 | 仅 `.growing/plan.md` |
 | **Greenfield** | 新功能从 0→1 | principles → spec → clarify → tech plan → tasks → plan TASK |
 | **Brownfield** | 存量增强 | 读代码 + 增量 `spec.md` · 不强制新目录 |
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bootstrap .cursorGrowth from template — see config growth.enabled
+# Bootstrap .growing from template — see config growth.enabled
 set -euo pipefail
 
 INPUT=$(cat)
@@ -30,9 +30,9 @@ if [[ "$PROJECT_ROOT" == *"/.cursor" || "$(basename "$PROJECT_ROOT")" == ".curso
   PROJECT_ROOT="$(cd "$PROJECT_ROOT/.." && pwd)"
 fi
 
-GROWTH_DIR="$PROJECT_ROOT/.cursorGrowth"
+GROWTH_DIR="$PROJECT_ROOT/.growing"
 # 插件轨不含 templates/ → 回退到已安装项目的母版模板（否则 Growth 只是空目录）
-TEMPLATE_DIR="${SC_CURSOR_DIR:-$CURSOR_DIR}/templates/cursorGrowth"
+TEMPLATE_DIR="${SC_CURSOR_DIR:-$CURSOR_DIR}/templates/growing"
 
 if [[ ! -d "$GROWTH_DIR" ]]; then
   mkdir -p "$GROWTH_DIR"
@@ -104,7 +104,7 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
     rm -rf "$CURSOR_LOCAL"
     mkdir -p "$(dirname "$CURSOR_LOCAL")"
     # Windows / Git Bash 可能无符号链接权限：失败必须降级为目录副本，不能让 hook 中断（set -e）
-    if ! ln -sf "../../.cursorGrowth/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
+    if ! ln -sf "../../.growing/rules/local" "$CURSOR_LOCAL" 2>/dev/null; then
       mkdir -p "$CURSOR_LOCAL"
       cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \
         || cp "$TEMPLATE_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null \

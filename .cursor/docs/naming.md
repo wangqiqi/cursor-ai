@@ -91,7 +91,7 @@ hooks/      会话：growth-init · plan 上下文注入
 ## 项目认知
 
 - **不得**把 CHANGELOG 摘要等写入 `.cursor/`
-- 统一 → `.cursorGrowth/learn/`（git 忽略），入口 **`/learn`**
+- 统一 → `.growing/learn/`（git 忽略），入口 **`/learn`**
 
 ## 验证
 

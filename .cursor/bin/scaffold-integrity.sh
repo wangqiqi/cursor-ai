@@ -130,8 +130,8 @@ fi
 
 echo ""
 echo "=== project-profile template ==="
-pp_example="$CURSOR_DIR/templates/cursorGrowth/project-profile.example.json"
-pp_schema="$CURSOR_DIR/templates/cursorGrowth/project-profile.schema.json"
+pp_example="$CURSOR_DIR/templates/growing/project-profile.example.json"
+pp_schema="$CURSOR_DIR/templates/growing/project-profile.schema.json"
 if [[ -f "$pp_example" ]]; then
   ok "project-profile.example.json present"
   if command -v jq >/dev/null 2>&1; then
@@ -160,7 +160,7 @@ fi
 
 echo ""
 echo "=== project-profile learn sync ==="
-grep -q 'SC_PROFILE_SYNC:BEGIN' "$CURSOR_DIR/templates/cursorGrowth/learn/dev-conventions.md" \
+grep -q 'SC_PROFILE_SYNC:BEGIN' "$CURSOR_DIR/templates/growing/learn/dev-conventions.md" \
   && ok "dev-conventions template has SC_PROFILE_SYNC markers" \
   || fail "dev-conventions template missing SC_PROFILE_SYNC"
 grep -q 'sc_profile_sync_dev_conventions' "$CURSOR_DIR/lib/project-profile.sh" \

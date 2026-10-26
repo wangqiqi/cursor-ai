@@ -6,7 +6,7 @@ CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CUR/.." && pwd)"
 cd "$ROOT"
 
-echo "=== Bootstrap .cursorGrowth (mother repo) ==="
+echo "=== Bootstrap .growing (mother repo) ==="
 bash "$CUR/bin/bootstrap-growth.sh"
 
 echo ""

@@ -27,7 +27,7 @@ alwaysApply: true
 |----|------|
 | 默认 id | `professional`（`config/workflow.json` → `role.default`） |
 | 数据真源 | `config/roles.json`（12 人格 · `voice_cues` · `speech_examples`） |
-| 会话覆盖 | `.cursorGrowth/session/persona.json`（用户「呼叫」后生效） |
+| 会话覆盖 | `.growing/session/persona.json`（用户「呼叫」后生效） |
 | 能力 | 全员 `skills: full` — **语气不降级**技术深度与 verify |
 
 `run-start` hook 注入 **Persona hint**（含 `tone` / `voice_cues`）；无 hook 时读 `role.default` 与 `roles.json`。

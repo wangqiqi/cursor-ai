@@ -34,4 +34,4 @@ alwaysApply: false
 
 ## 与安全清单
 
-勾选 → **security** skill「Prompt / Agent」节。项目特化拒绝词表 → `.cursorGrowth/learn/`，勿写本 rule。
+勾选 → **security** skill「Prompt / Agent」节。项目特化拒绝词表 → `.growing/learn/`，勿写本 rule。

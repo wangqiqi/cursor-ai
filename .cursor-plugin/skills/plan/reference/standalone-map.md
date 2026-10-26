@@ -7,7 +7,7 @@
 | 层 | 路径 | 角色 |
 |----|------|------|
 | **母版 SOP** | `.cursor/` | 独立、可演进；**正文不依赖**外网 URL / 根目录叙事 |
-| **运行时产出** | `.cursorGrowth/` | plan · learn · archive · session（gitignore） |
+| **运行时产出** | `.growing/` | plan · learn · archive · session（gitignore） |
 | **仓库发版** | 根目录 `CHANGELOG` · `README` | **release** 执行时更新；**.cursor 正文不链** |
 
 ## 引用分类

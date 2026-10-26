@@ -87,7 +87,7 @@ sed_rewrite "$DEST/guide/walkthrough.md" \
 
 # rules/local 为 gitignore 的符号链接，指向母版会 404；改指已跟踪的模板
 sed_rewrite "$DEST/reference/rules-catalog.md" \
-  -e 's](\.\./templates/cursorGrowth/rules/local/README\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/templates/cursorGrowth/rules/local/README.md)]g'
+  -e 's](\.\./templates/growing/rules/local/README\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/templates/growing/rules/local/README.md)]g'
 
 sed_rewrite "$DEST/training/skills.md" \
   -e 's](\.\./\.\./skills/master/routes\.md)](https://github.com/wangqiqi/cursor-ai/blob/master/.cursor/skills/master/routes.md)]g' \

@@ -1,7 +1,7 @@
 ---
 description: 信息架构（IA）普遍性原则 — 工作流正交、角色逐级放权、分支点；项目路由矩阵见 docs/design/ 或 learn/
 globs:
-  - .cursorGrowth/plan.md
+  - .growing/plan.md
   - plan.md
   - docs/design/**
   - docs/**/IA*.md
@@ -18,7 +18,7 @@ alwaysApply: false
 
 > **UX · 结构层特化** — IA ⊂ UX（Garrett 结构层 + 部分骨架）。UX 总览与分流 → `rules/execution/ux.mdc` · **ux** skill。表现层 / i18n 走 **delivery**。
 
-通用原则在本文。**项目专属**（路由表、角色矩阵、线框）→ `docs/design/<产品>-ia.md`（或团队约定路径）· `/learn` → `.cursorGrowth/learn/`。**不**把业务路由、角色名、菜单文案写进 `.cursor/` 母版。
+通用原则在本文。**项目专属**（路由表、角色矩阵、线框）→ `docs/design/<产品>-ia.md`（或团队约定路径）· `/learn` → `.growing/learn/`。**不**把业务路由、角色名、菜单文案写进 `.cursor/` 母版。
 
 完整清单与规划流程 → **ia** skill。
 

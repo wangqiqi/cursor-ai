@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-10-26
+
+### Breaking
+
+- **运行时目录** — 项目特化与产出目录由 **`.cursorGrowth/`** 重命名为 **`.growing/`**（`workflow.json` · `release.json` · install 种子 `templates/growing/` · 全仓文档与脚本）。升级：`mv .cursorGrowth .growing` 或重新 `install-super-cursor.sh`（自动迁移）。
+
 ## [4.29.34] - 2026-10-26
 
 ### Fixed
@@ -68,7 +74,7 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **verify profile filter** — `manifest.tsv` 可选 `stacks` 列；`run-manifest-tier.sh` 读 `project-profile` 过滤行 · tier 门禁 · `VERIFY_IGNORE_PROFILE=1`
-- **project-profile** — `.cursorGrowth/project-profile.json` Schema · example · `lib/project-profile.sh`；`scaffold adapt`（探测栈 · `--write` · `--primary=`）
+- **project-profile** — `.growing/project-profile.json` Schema · example · `lib/project-profile.sh`；`scaffold adapt`（探测栈 · `--write` · `--primary=`）
 - **docs** — `tech-stacks.md`（整包安装 · 按需启用 · 绿地/棕地 · verify 阶段）
 - **hooks** — `run-start` 注入 Project profile 一行（primary/detected）
 
@@ -111,7 +117,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **项目 /tmp 契约** — `.cursorGrowth/temp-cleanup.json`（`ephemeral` 测试后删 · `persistent` + `max_age_hours` + `sweep`）；`project-tmp-cleanup.sh` · `runner.sh tmp-cleanup` · `task-verify`/`verify`/`scripts/verify.sh` 挂钩
+- **项目 /tmp 契约** — `.growing/temp-cleanup.json`（`ephemeral` 测试后删 · `persistent` + `max_age_hours` + `sweep`）；`project-tmp-cleanup.sh` · `runner.sh tmp-cleanup` · `task-verify`/`verify`/`scripts/verify.sh` 挂钩
 - **Runner** — `release-tag` 发版前默认跑 `RELEASE_VERIFY_CMD`（fail-closed；`RELEASE_SKIP_VERIFY=1` 显式跳过留痕）；验收列支持 `node`/`vitest` 行首与反引号内命令（`runner-smoke` 回归）
 - **verify-layers scaffold** — `verify:changed` · `changed-map` 示例 · `changed-plan.mjs` / `run-changed.mjs`
 
@@ -152,11 +158,11 @@ All notable changes to Super Cursor are documented here.
 
 - **onekey 文档** — `quickstart` · `scaffold` · `building-super-cursor` 触发表 · `migration-catalog` / 根 README / `verify.mdc` verify 索引 · `_shared/scripts/README` 契约 · `.cursor-plugin/README` bundled 模板 · `verify-doc-super-cursor` 接线断言
 - **母版 hygiene** — 根 `.gitignore` 忽略本地试跑生成的 `/onekey_start.sh`（目标项目仍由 install/growth-init/scaffold 铺设）
-- **文档对齐磁盘** — 常驻 rules 为 **4** 个（`core` · `workflow` · `cursor-standalone` · `super-cursor-persona`），根 `README.md` · `rules-catalog.md` · `effective-collaboration.md` 原写「2 个」；`config/README.md` 的 `plan_file` / `archive_dir` 默认值与 `workflow.json` 对齐（`.cursorGrowth/…`）· 键表碎片归位 · Templates 落点更正；`migration-catalog.md` 补 **E2E** 组行；`.cursor/AGENTS.md` execution 行修未闭合加粗并补 5 个 rule；`scaffold.md` 表格恢复连续；`README.en.md` 规则计数与重复 `skills/` 行；VitePress 移除指向不存在 favicon 的 `head`
+- **文档对齐磁盘** — 常驻 rules 为 **4** 个（`core` · `workflow` · `cursor-standalone` · `super-cursor-persona`），根 `README.md` · `rules-catalog.md` · `effective-collaboration.md` 原写「2 个」；`config/README.md` 的 `plan_file` / `archive_dir` 默认值与 `workflow.json` 对齐（`.growing/…`）· 键表碎片归位 · Templates 落点更正；`migration-catalog.md` 补 **E2E** 组行；`.cursor/AGENTS.md` execution 行修未闭合加粗并补 5 个 rule；`scaffold.md` 表格恢复连续；`README.en.md` 规则计数与重复 `skills/` 行；VitePress 移除指向不存在 favicon 的 `head`
 
 ### Fixed
 
-- **CI 可复现** — 母版 `template-verify` 此前只在作者本机绿：SPIKE 归档门禁依赖 gitignore 的 `.cursorGrowth/archive/meta/*`，任何新克隆 / CI 必挂 9 项。现改为「`archive/meta/` 未引导 → `SKIP` 放行；目录存在但目标归档缺失 → 仍 `FAIL`」，公因子 `.cursor/lib/growth-archive.sh`；`verify.yml` paths 补 `.cursor-plugin/**` · `bin/**` · `README.en.md`（插件子集改动此前不触发 CI）
+- **CI 可复现** — 母版 `template-verify` 此前只在作者本机绿：SPIKE 归档门禁依赖 gitignore 的 `.growing/archive/meta/*`，任何新克隆 / CI 必挂 9 项。现改为「`archive/meta/` 未引导 → `SKIP` 放行；目录存在但目标归档缺失 → 仍 `FAIL`」，公因子 `.cursor/lib/growth-archive.sh`；`verify.yml` paths 补 `.cursor-plugin/**` · `bin/**` · `README.en.md`（插件子集改动此前不触发 CI）
 - **plugin 轨 hooks 全哑** — `.cursor-plugin/hooks/lib/*.sh` source `../../lib/platform.sh`，但子集从不发 `lib/` → 三个 hook 一进 `source` 就退 1，而 MVP 门禁只查文件存在。`sync-plugin-subset` 补发 `lib/platform.sh`；插件轨 hooks 回退读**已安装项目**的 `.cursor/config` 与 `templates/`（此前读插件内永不存在的路径，用户配置被静默忽略）；`verify-cursor-plugin-mvp` 增加 hook 冒烟（临时项目实跑三个 hook，并断言 `growth.enabled` 真的生效）
 - **hooks 状态 JSON** — `plan_pending_count` 在 plan 无待办时输出两行 `0`，把 `.cursor/hooks/state/run.json` 写成非法 JSON；`run-start` 手拼 JSON 改为经 `json_string` 转义；`json_string` 去掉 here-string 引入的尾换行
 - **release 版本解析** — `templates/plan.md` 里 `VERSION_LINE` 的占位说明被当版本号：`runner.sh next_version` 产出 `(optional · …).0`，`release-tag` 会拿非法 tag 名去 `git tag`。`VERSION_LINE` / `VERSION_DEFAULT` / `RELEASE_BUMP` 现做取值归一 + 数字校验，非法一律视为未设置
@@ -281,8 +287,8 @@ All notable changes to Super Cursor are documented here.
 
 - **脚手架 `_shared/` 共享层（E3）** — `templates/scaffold/_shared/scripts/` 提供项目脚本骨架：`README.md`（分层矩阵 SSOT）· `lib/_common.sh`（`sc_root`/`sc_step`/`sc_ok`/`sc_fail`/`sc_require_cmd`/`sc_summary`）· `lib/_frontend.sh`（`sc_frontend_verify`）· `verify/{domain,tier}` + `ops` + `dev` 占位。`scaffold.sh apply` 改为**先铺共享层再铺栈文件**（栈可覆盖）→ 新项目从第一天就是分层结构；7 栈 `test.sh`/`verify.sh` 的前导统一为 source 公因子
 - **`bin/verify-scripts-layout.sh`（E4）** — 脚本分层与**重复块检测**门禁：≥4 行连续相同 → 要求提取到 `lib/_*.sh`；另查 `scripts/README.md` 矩阵 · 根脚本体量/数量 · shebang。有 `scripts/` 时按**项目模式**，母版无 `scripts/` 时按**模板模式**查 scaffold（因此自身也被 CI 覆盖）。该门禁首次运行即抓出前端三栈重复的 4 行验收逻辑 → 已提取为 `sc_frontend_verify`
-- **archive 域分层骨架 + 门禁（F1/F2）** — `templates/cursorGrowth/archive/{sprint,spike,release,doc,ops}/` 骨架 + `archive/README.md` 域表；新增 `runner.sh archive-check`（根目录 flat 文件数 > `workflow.json` → `growth.archive_flat_max`（默认 5）即 FAIL，并列出应归入的域），已聚合进 `verify-growth-layout.sh`；`run` §Sprint 收尾 增一步。**本仓自己的 archive 同步分层**：23 个 flat 文件 → `sprint/`(12) · `doc/`(7) · `ops/`(5)，根目录 flat 归零
-- **域表 + docs 编号约定（F3）** — `templates/cursorGrowth/learn/plan-conventions.md` 成为**项目侧唯一登记表**（archive/scripts/docs 三处共用）：域表 · 归档命名与门禁 · **docs `NN_中文功能.md` 硬上限 10** · 序号纪律（不重用/留空/追加）· `ROADMAP.md` **例外不加序号** · 预留 **`07_用户手册.md`（`/manual` 自动生成）** 与 **`08_测试报告.md`（`/report` 自动生成）** + 生成标记 `<!-- generated: … · regenerate: … -->` · docs ↔ Growth 边界判定
+- **archive 域分层骨架 + 门禁（F1/F2）** — `templates/growing/archive/{sprint,spike,release,doc,ops}/` 骨架 + `archive/README.md` 域表；新增 `runner.sh archive-check`（根目录 flat 文件数 > `workflow.json` → `growth.archive_flat_max`（默认 5）即 FAIL，并列出应归入的域），已聚合进 `verify-growth-layout.sh`；`run` §Sprint 收尾 增一步。**本仓自己的 archive 同步分层**：23 个 flat 文件 → `sprint/`(12) · `doc/`(7) · `ops/`(5)，根目录 flat 归零
+- **域表 + docs 编号约定（F3）** — `templates/growing/learn/plan-conventions.md` 成为**项目侧唯一登记表**（archive/scripts/docs 三处共用）：域表 · 归档命名与门禁 · **docs `NN_中文功能.md` 硬上限 10** · 序号纪律（不重用/留空/追加）· `ROADMAP.md` **例外不加序号** · 预留 **`07_用户手册.md`（`/manual` 自动生成）** 与 **`08_测试报告.md`（`/report` 自动生成）** + 生成标记 `<!-- generated: … · regenerate: … -->` · docs ↔ Growth 边界判定
 - **测试框架选型（优先成熟开源）（G1–G4）** — `rules/execution/testing.mdc` 新增**§框架选型**表：TS/JS **Vitest** · React/Next/Vue/Svelte **Vitest + Testing Library** · E2E **Playwright** · Python **pytest**（+hypothesis 按需）· Go **go test** · Rust **cargo test** · C/C++ **CTest + Catch2/GoogleTest** · Java **JUnit 5** · BDD **Cucumber**；并给出"何时不引入"。纪律：优先宽松许可的活跃开源 · **一套到底**不混两套 runner · 跟随既有 lockfile 不迁移。`javascript`/`typescript`/`react`/`nextjs`/`svelte` 五条 tech rule 补默认框架指向（此前只有 react/java/python/go/rust/c/cpp/vue 写了）；`oss-first.mdc` 增「测试框架选型」段。`manifest.json` 7 栈新增 `test_framework` 声明，`scaffold-integrity.sh` **校验脚本/依赖里确实调用了它**（`platform.sh` 另加 `sc_manifest_scaffold_field_join` 以正确解析数组字段）
 - **项目文档体系（D · 瀑布式号位）** — `config/docs-layout.json` + `rules/execution/project-docs.mdc` + `templates/project-docs/`（10 号位骨架 + `ROADMAP.md` + 名称映射索引）+ `bin/verify-docs-layout.sh`：
   - **号位 = 瀑布阶段（不可变）**：`01` 需求 · `02` 架构 · `03` 数据/契约 · `04` 接口/算法 · `05` 详细设计 · `06` 工程规范 · `07` 使用⚙ · `08` 测试⚙ · `09` 发布 · `10` 调优；**名称按 profile 替换**，跨项目号位可对齐
@@ -346,7 +352,7 @@ All notable changes to Super Cursor are documented here.
 - **根 `AGENTS.md`（C6）** — Cursor 官方支持项目根 `AGENTS.md`，此前只有 `.cursor/AGENTS.md`；新增母版根入口（指向 `.cursor/AGENTS.md` + 改仓纪律 + 验收命令），`verify-super-cursor.sh` 断言其存在且指向正确（母版专属，不随 `.cursor/` 复制）
 - **`bin/consumer-smoke.sh`（C2）** — 目标项目**端到端**回归，补齐 CI 只验母版自身的盲区：临时 git 项目 → `install --profile full` → 未批准时 `gate-check`/`plan-check` 必须 BLOCK → 3 个 hook 均 exit 0 且 stderr 干净 → 批准后闸门放行且 `run-start` 注入自治上下文 → 5 个 universal 验证器在消费方仓库全绿 → 母版门面项正确 SKIP。已纳入 `template-verify.sh`
 - **`config/schema.json` + `bin/verify-config.sh`（C1）** — 声明 6 个 config 文件的允许键与类型；未知键（如把 `release.mode` 误写成 `workflow.release.mode`）与类型错误现在**直接 FAIL**，不再静默回退默认值。已纳入 `verify-super-cursor.sh` 与接线自检
-- **摩擦可观测（B5）** — `runner.sh friction-log --task --rounds --rework --verify --note` 追加一行到 `.cursorGrowth/logs/friction.jsonl`（自实现 JSON 转义，不依赖 jq），`friction-report` 聚合 `tasks · verify_pass/fail · avg_rounds · avg_rework`；**run** skill 每任务收尾记一行、**learn** skill 把趋势写进 `dev-conventions.md`。这是"少拉扯"是否真的改善的**唯一**可回归证据
+- **摩擦可观测（B5）** — `runner.sh friction-log --task --rounds --rework --verify --note` 追加一行到 `.growing/logs/friction.jsonl`（自实现 JSON 转义，不依赖 jq），`friction-report` 聚合 `tasks · verify_pass/fail · avg_rounds · avg_rework`；**run** skill 每任务收尾记一行、**learn** skill 把趋势写进 `dev-conventions.md`。这是"少拉扯"是否真的改善的**唯一**可回归证据
 - **首次闭环（B4）** — 安装输出把「首次必做 → `/learn`」提到第 0 步并说明"不做则闸门/验收会空转"；**learn** skill 新增「空模板最小采集」：`learn/` 全为待填时只问 3 个问题（开发/测试命令 · 代码分层与入口 · 发版节奏），其余按需补，**不通读全仓**
 - **平台作用域单一真源（A4）** — `docs/platforms.md` 新增「技能平台作用域」表（技能层 ≠ 母版脚本层，不可互相推断）；`verify-portability.sh` 双向断言 **文档声明 ⇔ 代码实际**：含 `require_linux` 的技能必须登记为 Linux-only，登记为 Linux-only 的必须确有 `require_linux`
 - **`bin/verify-portability.sh`（A3）** — 发布脚本可移植性静态门禁：GNU-only 构造（`sed -i` 无后缀 · `find -printf` · `stat -c` · `sort -h` · `du --max-depth` · `date -d/-Iseconds` · `grep -P` · `xargs -r` · `tac`）· 非 POSIX `\s` 正则 · `readlink -f` 缺回退 · 硬编码 `python3` · shebang 非 `env bash`；扫描 57 个脚本，已纳入 `verify-super-cursor.sh` 与接线自检（含 `portability-allow` 单行豁免机制）
@@ -391,9 +397,9 @@ All notable changes to Super Cursor are documented here.
 - **验证器接线** — `verify-doc-super-cursor.sh` 与 `verify-growth-layout.sh` 此前**从未被任何验证器或 CI 调用**（`doc-hygiene.mdc`、CHANGELOG 4.29.0/4.29.5 均声称已聚合），doc 坏链与计数漂移因此长期无人发现；现已接入 `verify-super-cursor.sh`，并新增**接线自检**：任何 `bin/verify-*.sh` 未被聚合即 FAIL
 - **文档** — `migration-catalog.md` 结构计数 `27 skills · 46 rules` → `28 skills · 53 rules`；补齐 4 处 `growth-layout` 交叉引用（`verify.mdc` · **run** · **scaffold** · `plan-conventions` 模板 `archive/{domain}/`）
 - **文档站链接** — `sync-cursor-docs.sh` 替换串多写一个 `(`（`]((/guide/x)`），markdown-it 判为非法链接并**渲染成纯文本**，且 VitePress 不报错：**12 处站内链接（5 个镜像页）**失效；同时改为「临时文件就地重写」以兼容 BSD/macOS `sed`（原 `sed -i` 无后缀为 GNU only）
-- **rules/local 链接** — `rules-catalog.md` 原链指向 gitignore 的符号链接，镜像后改写出的 GitHub URL **404**；改指已跟踪的 `templates/cursorGrowth/rules/local/README.md`
+- **rules/local 链接** — `rules-catalog.md` 原链指向 gitignore 的符号链接，镜像后改写出的 GitHub URL **404**；改指已跟踪的 `templates/growing/rules/local/README.md`
 - **runner.sh help** — heredoc 未转义反引号触发命令替换：stderr 输出 `version_*_env: 未找到命令`、帮助文本被污染；`runner-smoke` 增加 help 干净度与「模板闸门必须 BLOCK」回归
-- **rules glob 校准** — 5 条 plan 闸门规则（`verify` · `changelog` · `ia` · `delivery` · `ux`）glob `plan.md`，但真 plan 在 `.cursorGrowth/plan.md`（Cursor glob 无斜杠模式**仅匹配根目录**）→ 编辑真 plan 时**永不加载**，闸门规则形同不存在；现同时 glob 两处，`archive/**/*` 同理补 `.cursorGrowth/archive/**/*`
+- **rules glob 校准** — 5 条 plan 闸门规则（`verify` · `changelog` · `ia` · `delivery` · `ux`）glob `plan.md`，但真 plan 在 `.growing/plan.md`（Cursor glob 无斜杠模式**仅匹配根目录**）→ 编辑真 plan 时**永不加载**，闸门规则形同不存在；现同时 glob 两处，`archive/**/*` 同理补 `.growing/archive/**/*`
 - **rules glob 误命中** — `tech/nextjs.mdc` `**/app/**` 命中 python-fastapi `src/app/main.py` 与 cpp-cmake `include/app/greet.hpp`；`ux.mdc`/`delivery.mdc` `**/src/**` 命中 rust-axum/cpp-cmake；`data-list.mdc` `**/*List*` 命中 `CMakeLists.txt`；`eslint.mdc` 挂到所有 JS/TS 源文件 → 全部收窄为语言/框架专属模式
 - **rules glob 零命中** — `api.mdc` · `error-context.mdc` 在自带后端栈命中为 0（go-api 用 `internal/handler/` 单数）· `cpp.mdc` 不覆盖 `.h` 头文件 → 补齐；brace glob（`**/*.{ts,tsx}`）为 Cursor 未文档化写法，展开为逐扩展名
 - **新增 `bin/verify-rules-globs.sh`** — frontmatter/键校验 · 禁 brace glob · plan 闸门 glob 断言 · 7 栈真实文件命中/误命中回归；已纳入聚合与接线自检
@@ -427,7 +433,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **plan** `reference/growth-layout.md` — `.cursorGrowth/archive/{domain}/` 与 `scripts/` 一级功能分级 SSOT（archive 域表 · verify/domain · lib · ops · dev）
+- **plan** `reference/growth-layout.md` — `.growing/archive/{domain}/` 与 `scripts/` 一级功能分级 SSOT（archive 域表 · verify/domain · lib · ops · dev）
 - **verify-growth-layout.sh** — 母版 SOP 引用与布局文档自检（纳入 `verify-super-cursor.sh`）
 
 ### Changed
@@ -473,7 +479,7 @@ All notable changes to Super Cursor are documented here.
 
 - **skills/** — 28 个 SKILL `description` cap ≤85 字；`disable-model-invocation` 主路径/工具 vs 分流分桶（SPRINT-SKILL-META）
 - **training/skills.md** — §disable-model-invocation 策略脚注
-- **templates/cursorGrowth/learn/dev-conventions.md** — Skill 元数据指针
+- **templates/growing/learn/dev-conventions.md** — Skill 元数据指针
 - **core.mdc** — 入口表瘦身至 9 行 + 外链 `routes.md` · `training/skills.md`（SPRINT-RULE-SLIM）
 - **routes.md** — LIBRARY 大表外链 `library-index.md`；删「扩展 skill 路由」重复节；关键词索引 canonical；注册 **doc-hygiene**；~288→~180 行
 - **building-super-cursor.md** — alwaysApply 更正为四件（~244 行）及 token 说明
@@ -528,7 +534,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **code-stats-viz** skill（无 slash）：Git 代码行数/语言分布/提交日历 → 交互式 HTML 仪表板；`scripts/code_stats_viz.py` · 产出 `.cursorGrowth/code-stats/`
+- **code-stats-viz** skill（无 slash）：Git 代码行数/语言分布/提交日历 → 交互式 HTML 仪表板；`scripts/code_stats_viz.py` · 产出 `.growing/code-stats/`
 - **master/routes** · **AGENTS** · **training/skills** · **README** — 注册 code-stats-viz 工具技能（27 skills）
 
 ## [4.26.3] - 2026-08-04
@@ -770,8 +776,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **roles Growth aliases**：`.cursorGrowth/session/aliases.json`（称呼→persona_id，优先于母版 nicknames）
-- **roles 会话态**：`.cursorGrowth/session/persona.json`（模板 + growth-init 种子）；`run-start` 优先注入
+- **roles Growth aliases**：`.growing/session/aliases.json`（称呼→persona_id，优先于母版 nicknames）
+- **roles 会话态**：`.growing/session/persona.json`（模板 + growth-init 种子）；`run-start` 优先注入
 - **roles**：每人补齐 `role_name` · `nicknames[]` · `given_name` · `personality` · `skills: full`；`bin/resolve-role.sh` 按称呼解析
 - **roles speech_examples**：12 人各 ≥2 句口吻样例（coherence 校验）
 - **呼叫约定**：id / 角色名 / 昵称 / 具体名字均可切换；多命中须消歧（见 master routes）
@@ -875,7 +881,7 @@ All notable changes to Super Cursor are documented here.
 ### Changed
 
 - **bugfix** · **vibe** · **changelog** · **release** · **core** · **AGENTS** · **verify-super-cursor** — 对齐 follow-up 闸门与 5 条 execution rules
-- **templates/cursorGrowth/learn/changelog-insights.md** — 重复工作模式表 + 建议下一 Sprint
+- **templates/growing/learn/changelog-insights.md** — 重复工作模式表 + 建议下一 Sprint
 - **.cursor/README.md** — 扩展 skills 列表（disk · maintain · week）
 
 ### Fixed
@@ -886,7 +892,7 @@ All notable changes to Super Cursor are documented here.
 
 ### Added
 
-- **README** — **兼容 Roo Code** 章节：`.cursor/` 整体可复制到 `.roo/`，共享 `.cursorGrowth/`，双方都用开放 skills/rules 协议
+- **README** — **兼容 Roo Code** 章节：`.cursor/` 整体可复制到 `.roo/`，共享 `.growing/`，双方都用开放 skills/rules 协议
 - **commands/plan.md** — 补回 verify 注册的 `/plan` command 占位（与 `plan` skill 配套）
 
 ### Fixed
@@ -899,13 +905,13 @@ All notable changes to Super Cursor are documented here.
 
 - **commands** — 9 个 slash 入口：`run` · `plan` · `master` · `scaffold` · `learn` · `release` · `delivery` · `ux` · `ia`；description 标注 **【日常】/【生命周期】/【高级】**
 - **release** skill — 吸收原 **finish**（§分支 4 选 1 + §打版）；`/release` command
-- **bootstrap-growth.sh** — 母版 dev 补全 `.cursorGrowth/rules/local`；`template-verify` 验收前自动调用
+- **bootstrap-growth.sh** — 母版 dev 补全 `.growing/rules/local`；`template-verify` 验收前自动调用
 
 ### Changed
 
 - **master** · **run** · **plan** · **routes** — slash 三层 UX；`/run` 为默认做事入口；master 勿滥用
 - **plan** · **run** · **git** · **delivery** · **walkthrough** · **collaboration** · rules — `finish` → **release** 全链对齐
-- **rules/local** — 安装后 symlink → `.cursorGrowth/rules/local/`（删除母版内静态 README）
+- **rules/local** — 安装后 symlink → `.growing/rules/local/`（删除母版内静态 README）
 - **cursor-coherence.sh** — 校验 `rules/local` symlink 可解析
 - **runner-smoke.sh** — 与 plan 模板默认空 ACTIVE 对齐（smoke fixture）
 - **review** skill · **naming.md** — 与全局 `skills-cursor/review`（Bugbot/Security）区分
@@ -943,38 +949,38 @@ All notable changes to Super Cursor are documented here.
 ### Added
 
 - **maintain** skill — `/maintain` Linux 开发环境诊断与安全清理；`dev-maintain.sh` · `load-config.py` · 可配置受保护目录
-- **templates/cursorGrowth/maintain-config.example.json** — 本机覆盖模板
+- **templates/growing/maintain-config.example.json** — 本机覆盖模板
 
 ### Changed
 
-- **disk** skill — 与 maintain 分工说明；快照目录统一 `.cursorGrowth/disk-snapshots/`
+- **disk** skill — 与 maintain 分工说明；快照目录统一 `.growing/disk-snapshots/`
 - **master** routes · **AGENTS.md** · **docs/training/skills.md** · **README** — 注册 maintain（23 skills）
 
 ## [4.15.0] - 2026-06-15
 
 ### Added
 
-- **week** skill — `/week` 跨仓 CHANGELOG 周报；`collect-week.py` 采集 · 写入 `.cursorGrowth/week-report/`
-- **disk** skill — `/disk` 磁盘快照与历史 diff；`collect-disk.py` · `config/default-paths.json` · `templates/cursorGrowth/disk-paths.example.json`
+- **week** skill — `/week` 跨仓 CHANGELOG 周报；`collect-week.py` 采集 · 写入 `.growing/week-report/`
+- **disk** skill — `/disk` 磁盘快照与历史 diff；`collect-disk.py` · `config/default-paths.json` · `templates/growing/disk-paths.example.json`
 
 ### Changed
 
 - **master** routes · **AGENTS.md** · **docs/training/skills.md** · **README** — 注册 week · disk（22 skills）
-- **templates/cursorGrowth/README.md** — 说明 `week-report/` · `disk-snapshots/` · 可选 `disk-paths.json`
+- **templates/growing/README.md** — 说明 `week-report/` · `disk-snapshots/` · 可选 `disk-paths.json`
 
 ## [4.14.0] - 2026-06-12
 
 ### Added
 
-- **templates/cursorGrowth/learn/** — `plan-conventions.md` 等 7 个种子文件；项目特化**不再写进 rules/skills 正文**
-- **templates/cursorGrowth/rules/local/** — 团队 rules canonical 路径；安装后链 `.cursor/rules/local`
-- **install-super-cursor.sh** · **growth-init.sh** — 自动引导 `.cursorGrowth/`（plan · archive · learn · rules）
+- **templates/growing/learn/** — `plan-conventions.md` 等 7 个种子文件；项目特化**不再写进 rules/skills 正文**
+- **templates/growing/rules/local/** — 团队 rules canonical 路径；安装后链 `.cursor/rules/local`
+- **install-super-cursor.sh** · **growth-init.sh** — 自动引导 `.growing/`（plan · archive · learn · rules）
 
 ### Changed
 
-- **Breaking（路径）** — `plan.md` · `archive/` · `rules/local` 统一迁入 **`.cursorGrowth/`**；`workflow.json` `plan_file` → `.cursorGrowth/plan.md`
+- **Breaking（路径）** — `plan.md` · `archive/` · `rules/local` 统一迁入 **`.growing/`**；`workflow.json` `plan_file` → `.growing/plan.md`
 - **plan** · **run** · **core** · **commit** · **changelog** — 对齐新路径；遗留根 `plan.md` 自动迁移
-- **scaffold** `.gitignore` — 仅 `.cursorGrowth/`（移除独立 `plan.md` 行）
+- **scaffold** `.gitignore` — 仅 `.growing/`（移除独立 `plan.md` 行）
 - **learn** skill — Sprint 收尾建议 `/learn`；团队约定读 `learn/plan-conventions.md`
 
 ## [4.13.0] - 2026-06-12
@@ -1015,7 +1021,7 @@ All notable changes to Super Cursor are documented here.
 
 - **delivery** skill — `/delivery` 7 维交付验收（视觉 · i18n · 文档对齐 · 后端对接 · 组件 · 可维护性 · 生产就绪）；**finish** 前建议走查
 - **delivery.mdc** — 执行规则 · glob 触发 · 与 verify/run 分工
-- **acceptance.md** 模板 — `templates/cursorGrowth/learn/acceptance.md` 供项目 `/learn` 特化
+- **acceptance.md** 模板 — `templates/growing/learn/acceptance.md` 供项目 `/learn` 特化
 - **install-smoke.sh** — `install-super-cursor.sh` 回归；挂入 `template-verify.sh`
 - **bugfix-smoke.sh** — bugfix 流程最小 smoke 脚本
 
@@ -1244,7 +1250,7 @@ All notable changes to Super Cursor are documented here.
 
 - `config/workflow.json` and `config/release.json` for workflow and release settings
 - Hooks: `growth-init.sh`, `run-start.sh`, `run-stop.sh`
-- Templates: `plan.md`, `.cursorGrowth/README.md`
+- Templates: `plan.md`, `.growing/README.md`
 - Docs: `plan-run.md`; updated training guides for agents, rules, skills
 - `verify-super-cursor.sh` layout checks for new structure
 

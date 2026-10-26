@@ -80,7 +80,7 @@ alwaysApply: false
 
 ## 禁止写进本 rule
 
-具体产品功能表、具体包名清单、某一仓库的债务队列 → 项目 `docs/` 或 `.cursorGrowth/learn/`。
+具体产品功能表、具体包名清单、某一仓库的债务队列 → 项目 `docs/` 或 `.growing/learn/`。
 
 ## 测试框架选型
 

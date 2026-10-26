@@ -49,7 +49,7 @@ description: UX 总入口与分流（skill-only）：IA 为结构层特化。说
 |------|------|
 | IA 讨论稿 | `docs/design/<产品>-ia.md` |
 | 视觉 / 壳型 | 项目 `设计规范` 或 `docs/design/` |
-| 验收约定 | `.cursorGrowth/learn/acceptance.md` |
+| 验收约定 | `.growing/learn/acceptance.md` |
 
 ## 禁止
 

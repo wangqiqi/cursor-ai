@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 基于 `git ls-files`（默认）扫描代码行数，用 ECharts 生成交互式 HTML：**语言饼图/柱状图** · **提交日历热力图** · **小时/周分布** · **可过滤目录与文件类型**。
 
-产出写入 **`.cursorGrowth/code-stats/`**（本地、**不提交 git**）。
+产出写入 **`.growing/code-stats/`**（本地、**不提交 git**）。
 
 ## 何时进入
 
@@ -29,10 +29,10 @@ disable-model-invocation: true
 ### 1. 生成仪表板
 
 ```bash
-mkdir -p .cursorGrowth/code-stats
+mkdir -p .growing/code-stats
 python3 .cursor/skills/code-stats-viz/scripts/code_stats_viz.py \
   --dir . \
-  --output ".cursorGrowth/code-stats/$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")_code_stats.html" \
+  --output ".growing/code-stats/$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")_code_stats.html" \
   --open
 ```
 
@@ -43,7 +43,7 @@ python3 .cursor/skills/code-stats-viz/scripts/code_stats_viz.py \
 | 项 | 默认 |
 |----|------|
 | 文件范围 | 仅 **git 跟踪** 文件（`git ls-files`） |
-| 排除目录 | `.git` `.cursor` `.cursorGrowth` `node_modules` `venv` `3rdparty` 等（见脚本 `DEFAULT_EXCLUDE_DIRS`） |
+| 排除目录 | `.git` `.cursor` `.growing` `node_modules` `venv` `3rdparty` 等（见脚本 `DEFAULT_EXCLUDE_DIRS`） |
 | 跳过后缀 | 模型/二进制/媒体（`.onnx` `.pt` 图片音视频等） |
 | 提交统计 | **当前分支** · 最近 **365 天** |
 | 子模块 | 自动排除 git submodule 内文件 |
@@ -68,10 +68,10 @@ python3 .cursor/skills/code-stats-viz/scripts/code_stats_viz.py --dir . --exclud
 
 ```bash
 bash .cursor/skills/code-stats-viz/scripts/verify_code_stats_viz.sh
-git status   # .cursorGrowth/code-stats/ 不应出现在待提交列表
+git status   # .growing/code-stats/ 不应出现在待提交列表
 ```
 
-**禁止** `git add .cursorGrowth/code-stats/`。
+**禁止** `git add .growing/code-stats/`。
 
 ## 与 disk / week 分工
 

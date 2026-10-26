@@ -61,4 +61,4 @@ rg '\.in_\(|IN\s*\(' --glob '*.{py,sql,ts,js}'
 
 ## 项目特化
 
-具体 chunk 常量、表名、ORM 封装 → `.cursorGrowth/learn/dev-conventions.md`，**勿**写进本 rule。
+具体 chunk 常量、表名、ORM 封装 → `.growing/learn/dev-conventions.md`，**勿**写进本 rule。

@@ -1,7 +1,7 @@
 ---
 description: 交付验收触发时机 — 7 维清单见 delivery skill；项目路径见 learn/acceptance.md 与 rules/local/
 globs:
-  - .cursorGrowth/plan.md
+  - .growing/plan.md
   - plan.md
   - docs/**
   - README.md
@@ -49,7 +49,7 @@ alwaysApply: false
 
 | 内容 | 落点 |
 |------|------|
-| design token 路径 · i18n 库 · OpenAPI 文件 · **浏览器走查默认 URL** | `.cursorGrowth/learn/acceptance.md`（**learn**） |
+| design token 路径 · i18n 库 · OpenAPI 文件 · **浏览器走查默认 URL** | `.growing/learn/acceptance.md`（**learn**） |
 | 团队额外门禁 | `.cursor/rules/local/`（用户自建） |
 
 母版 **delivery** skill 保持 **Universal only** — 不写死业务路径；**不**强制安装任何 MCP。

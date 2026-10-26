@@ -1,7 +1,7 @@
 {
   "version": 1,
   "enabled": true,
-  "description": "复制为 .cursorGrowth/temp-cleanup.json。在此登记本项目 /tmp glob（勿写入母版 .cursor/）。",
+  "description": "复制为 .growing/temp-cleanup.json。在此登记本项目 /tmp glob（勿写入母版 .cursor/）。",
   "rules": [
     {
       "id": "ephemeral-workdirs",
