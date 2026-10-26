@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.3] - 2026-10-26
+
 ### Changed
 
 - **Harness 布局（母版）** — SSOT 在 `.cursor/harness/core` + `.cursor/adaptors`；根下协议路径为 **相对 symlink**（`link-cursor-ide.sh`），整包 `.cursor/` 可拷贝；install 复制分区树后补链；消费方 `verify-super-cursor` · plugin 冒烟适配分区路径
