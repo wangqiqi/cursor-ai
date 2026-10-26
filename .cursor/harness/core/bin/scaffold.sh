@@ -99,11 +99,9 @@ cmd_files() {
 }
 
 count_project_files() {
-  local count=0
-  local f
-  while IFS= read -r -d '' f; do
-    count=$((count + 1))
-  done < <(find "$ROOT" -mindepth 1 -maxdepth 3 \( \
+  local count=0 f list_tmp
+  list_tmp="$(mktemp)"
+  find "$ROOT" -mindepth 1 -maxdepth 3 \( \
     -path "$ROOT/.git/*" -o \
     -path "$ROOT/.cursor/*" -o \
     -path "$ROOT/.growing/*" -o \
@@ -111,7 +109,11 @@ count_project_files() {
     -name .venv -o \
     -name build -o \
     -name dist \
-    \) -prune -o -type f -print0 2>/dev/null)
+    \) -prune -o -type f -print0 2>/dev/null >"$list_tmp" || true
+  while IFS= read -r -d '' f; do
+    count=$((count + 1))
+  done <"$list_tmp"
+  rm -f "$list_tmp"
   echo "$count"
 }
 
@@ -165,9 +167,13 @@ cmd_adapt() {
 
   local detected_raw detected_lines=() primary_lines=()
   detected_raw="$(detect_stack)"
+  local stack_words_tmp
+  stack_words_tmp="$(mktemp)"
+  detect_stack_words "$detected_raw" >"$stack_words_tmp" || true
   while IFS= read -r line; do
     [[ -n "$line" ]] && detected_lines+=("$line")
-  done < <(detect_stack_words "$detected_raw")
+  done <"$stack_words_tmp"
+  rm -f "$stack_words_tmp"
 
   if [[ -n "$primary_override" ]]; then
     primary_override="${primary_override//,/ }"
@@ -346,18 +352,23 @@ cmd_apply() {
   echo "=== apply: $id (dry_run=$dry_run force=$force) ==="
 
   # 先铺共享层（scripts 分层骨架 + lib 公因子），栈内同名文件随后覆盖
+  local find_tmp
+  find_tmp="$(mktemp)"
   if [[ -d "$shared_dir" ]]; then
+    ( cd "$shared_dir" && find . -type f -print0 ) >"$find_tmp" || true
     while IFS= read -r -d '' rel; do
       rel="${rel#./}"
       apply_file "$shared_dir/$rel" "$ROOT/$rel" "$force" "$dry_run"
-    done < <(cd "$shared_dir" && find . -type f -print0)
+    done <"$find_tmp"
   fi
+  ( cd "$src_dir" && find . -type f ! -path './.git/*' -print0 ) >"$find_tmp" || true
   while IFS= read -r -d '' rel; do
     rel="${rel#./}"
     src="$src_dir/$rel"
     dest="$ROOT/$rel"
     apply_file "$src" "$dest" "$force" "$dry_run"
-  done < <(cd "$src_dir" && find . -type f ! -path './.git/*' -print0)
+  done <"$find_tmp"
+  rm -f "$find_tmp"
 
   # Shared Cursor ignore (one file for all stacks)
   local shared_ignore="$TEMPLATE_ROOT/_shared.cursorignore"
@@ -412,12 +423,16 @@ apply_bundle_layer() {
   }
 
   echo "=== layer: $layer_key ($layer_sub) ==="
+  local layer_find_tmp
+  layer_find_tmp="$(mktemp)"
+  ( cd "$src_dir" && find . -type f ! -path './.git/*' -print0 ) >"$layer_find_tmp" || true
   while IFS= read -r -d '' rel; do
     rel="${rel#./}"
     src="$src_dir/$rel"
     dest="$ROOT/$rel"
     apply_file "$src" "$dest" "$force" "$dry_run"
-  done < <(cd "$src_dir" && find . -type f ! -path './.git/*' -print0)
+  done <"$layer_find_tmp"
+  rm -f "$layer_find_tmp"
 }
 
 should_apply_web_layer() {

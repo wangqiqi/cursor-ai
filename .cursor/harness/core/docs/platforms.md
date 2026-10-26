@@ -149,6 +149,7 @@ git config core.autocrlf   # 建议 false；或依赖仓库根 .gitattributes（
 | **Windows** | `core.autocrlf=true` 把 `*.sh` 检出为 CRLF | `#!/usr/bin/env bash\r` → 脚本**秒退无报错** | 仓库根 `.gitattributes` 强制 `eol=lf`；门禁断言其存在且含 `eol=lf` |
 | **Windows** | `str(path.relative_to(root))` 返回 `rules\x.mdc` | 与 POSIX 字面量比较**全不中** → 大批误报 | 一律 `.as_posix()`；门禁静态拦截未归一的写法 |
 | **Windows / Git Bash** | 无符号链接权限时裸 `ln -s` | `set -e` 下**直接中止安装/自检** | 安装脚本降级为目录副本（含 README）；门禁要求 `ln -s` 带 `2>/dev/null`/`||`/`if` |
+| **Windows / Git Bash** | bash **process substitution** `< <(` | `plan-check` / scaffold 在 CI 偶发失败 | `runner.sh` · `scaffold.sh` · `scaffold-integrity.sh` 用 **mktemp 重定向**；`verify-portability` 静态拦截 |
 
 **CI 矩阵**（`.github/workflows/verify.yml`）：ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，**非阻塞观察中**）。无 jq 的分支用 `SC_FORCE_PYTHON=1` 覆盖——因为 macOS runner 自带 jq，"runner 上恰好没有 jq"不可靠。
 

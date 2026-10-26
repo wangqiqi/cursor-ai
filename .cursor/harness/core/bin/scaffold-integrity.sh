@@ -33,6 +33,9 @@ if [[ -f "$onekey_ssot" && -f "$onekey_shared" ]]; then
   fi
 fi
 
+manifest_ids_tmp="$(mktemp)"
+sc_manifest_ids "$MANIFEST" >"$manifest_ids_tmp" || true
+
 while IFS= read -r id; do
   id="${id%$'\r'}"          # Windows python 文本模式可能残留 CR
   dir="$TEMPLATE_ROOT/$id"
@@ -63,7 +66,7 @@ while IFS= read -r id; do
   esac
 
   ok "$id"
-done < <(sc_manifest_ids "$MANIFEST")
+done <"$manifest_ids_tmp"
 
 # 测试框架必须与声明一致（testing.mdc 选型表 · 优先成熟开源）
 while IFS= read -r id; do
@@ -83,7 +86,7 @@ while IFS= read -r id; do
   else
     fail "$id declares test_framework='$declared' but no script/config references it"
   fi
-done < <(sc_manifest_ids "$MANIFEST")
+done <"$manifest_ids_tmp"
 
 while IFS= read -r id; do
   id="${id%$'\r'}"
@@ -95,7 +98,8 @@ while IFS= read -r id; do
   else
     fail "$id verify.sh does not source scripts/lib/_*.sh (scripts 分层前导)"
   fi
-done < <(sc_manifest_ids "$MANIFEST")
+done <"$manifest_ids_tmp"
+rm -f "$manifest_ids_tmp"
 
 bundle_root="$TEMPLATE_ROOT/_bundles/user-manual"
 if sc_manifest_bundle_exists "$MANIFEST" "user-manual"; then

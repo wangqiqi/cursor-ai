@@ -310,20 +310,24 @@ plan_check() {
     echo "WARN: 缺 **执行顺序** 行（兼容 **Order**；NEXT 回退靠表序）"
     issues=$((issues + 1))
   fi
-  local line cols bad=0
+  local line cols bad=0 plan_active_tmp
+  plan_active_tmp="$(mktemp)"
+  grep -E '\| (⬜|🔧) \|' "$PLAN" 2>/dev/null >"$plan_active_tmp" || true
   while IFS= read -r line; do
     [[ "$line" =~ \|[[:space:]]*(⬜|🔧)[[:space:]]*\| ]] || continue
     cols="$(echo "$line" | awk -F'|' '{print NF}')"
     if [[ "$cols" -lt 8 ]]; then
       bad=$((bad + 1))
     fi
-  done < <(grep -E '\| (⬜|🔧) \|' "$PLAN" 2>/dev/null || true)
+  done <"$plan_active_tmp"
   if [[ "$bad" -gt 0 ]]; then
     echo "WARN: ${bad} 行活跃任务可能缺「验收」或「落点」"
     issues=$((issues + 1))
   fi
   # 验收列必须可判定：task-verify 是 fail-closed，prose 验收开工前就该发现
-  local tid tacc prose_acc=0
+  local tid tacc prose_acc=0 plan_tid_tmp
+  plan_tid_tmp="$(mktemp)"
+  awk -F'|' '{gsub(/^[ \t*]+|[ \t*]+$/, "", $2); print $2}' "$plan_active_tmp" >"$plan_tid_tmp" 2>/dev/null || true
   while IFS= read -r tid; do
     [[ -z "$tid" ]] && continue
     tacc="$(plan_task_acceptance "$tid")"
@@ -331,7 +335,8 @@ plan_check() {
       echo "WARN: ${tid} 验收列不可执行 → task-verify 会 FAIL: ${tacc:-（空）}"
       prose_acc=$((prose_acc + 1))
     fi
-  done < <(grep -E '\| (⬜|🔧) \|' "$PLAN" 2>/dev/null | awk -F'|' '{gsub(/^[ \t*]+|[ \t*]+$/, "", $2); print $2}' || true)
+  done <"$plan_tid_tmp"
+  rm -f "$plan_active_tmp" "$plan_tid_tmp"
   if [[ "$prose_acc" -gt 0 ]]; then
     echo "      → 改成可执行命令，或写 manual: <步骤与证据要求>（见 templates/plan.md）"
     issues=$((issues + prose_acc))
