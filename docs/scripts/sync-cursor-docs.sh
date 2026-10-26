@@ -42,6 +42,23 @@ sed_rewrite() {
   mv "$tmp" "$file"
 }
 
+# adaptors/* 不在 VitePress 站内；reference/*.md 镜像到 docs/reference/
+GITHUB_CURSOR="https://github.com/wangqiqi/cursor-ai/blob/master/.cursor"
+
+rewrite_adaptor_layout_links() {
+  local file="$1"
+  [[ -f "$file" ]] || return 0
+  sed_rewrite "$file" \
+    -e "s](\.\./\.\./\.\./adaptors/\\([^/]*\\)/docs/layout\\.md)](${GITHUB_CURSOR}/adaptors/\\1/docs/layout.md)]g" \
+    -e "s](\.\./\.\./adaptors/\\([^/]*\\)/docs/layout\\.md)](${GITHUB_CURSOR}/adaptors/\\1/docs/layout.md)]g" \
+    -e "s](\.\./adaptors/\\([^/]*\\)/docs/layout\\.md)](${GITHUB_CURSOR}/adaptors/\\1/docs/layout.md)]g" \
+    -e 's](reference/harness-ide-matrix\.md)](/reference/harness-ide-matrix)]g' \
+    -e 's](reference/harness-ide-matrix)](/reference/harness-ide-matrix)]g' \
+    -e 's](reference/adaptor-contract\.md)](/reference/adaptor-contract)]g' \
+    -e 's](reference/adaptor-contract)](/reference/adaptor-contract)]g' \
+    -e 's](adaptor-contract\.md)](/reference/adaptor-contract)]g'
+}
+
 rm -rf "$DEST/guide" "$DEST/reference" "$DEST/training"
 mkdir -p "$DEST/guide" "$DEST/reference" "$DEST/training"
 
@@ -61,6 +78,13 @@ for src_path in "$SRC"/$TRAINING_GLOB; do
   [[ -f "$src_path" ]] || continue
   rel="${src_path#"$SRC"/}"
   copy "$rel" "$rel"
+  SYNC_COUNT=$((SYNC_COUNT + 1))
+done
+
+for src_path in "$SRC/reference"/*.md; do
+  [[ -f "$src_path" ]] || continue
+  base="$(basename "$src_path")"
+  copy "reference/$base" "reference/$base"
   SYNC_COUNT=$((SYNC_COUNT + 1))
 done
 
@@ -119,6 +143,10 @@ sed_rewrite "$DEST/reference/library-index.md" \
 
 sed_rewrite "$DEST/reference/migration-catalog.md" \
   -e 's](consumer-refresh\.md)](/guide/consumer-refresh)]g'
+
+for f in "$DEST/guide"/*.md "$DEST/reference"/*.md; do
+  rewrite_adaptor_layout_links "$f"
+done
 
 # training → reference 链须在镜像后变为站内路径（VitePress dead-link 门禁）
 if grep -qE '\]\(\.\./migration-catalog' "$DEST/training/"*.md 2>/dev/null; then
