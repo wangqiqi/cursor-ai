@@ -17,5 +17,6 @@
   ],
   "build_artifact_tmp_globs": [
     "/tmp/my-app-test-*"
-  ]
+  ],
+  "_note_temp_cleanup": "测试后立即回收请用 temp-cleanup.example.json → .cursorGrowth/temp-cleanup.json（ephemeral/persistent 分层）；本文件偏 maintain --clean 周期清扫"
 }

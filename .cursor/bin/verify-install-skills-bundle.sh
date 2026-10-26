@@ -2,9 +2,13 @@
 # Install --skills-bundle full|core smoke (temp dir only).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/temp-cleanup.sh
+source "$CURSOR_DIR/lib/temp-cleanup.sh"
+sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
-TMP="$(mktemp -d)"
-trap 'rm -rf "$TMP"' EXIT
+sc_mktemp_dir sc-verify-skills-bundle
+TMP="$SC_MKTEMP_LAST"
 
 count_skills() {
   find "$1/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' '

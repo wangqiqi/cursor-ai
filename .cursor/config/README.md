@@ -36,6 +36,11 @@ Project behavior here — not in rules/skills. Learned knowledge → `.cursorGro
 | `task_verify_heuristics.enabled` | `true`（`full`）· `false`（`lite`/`rules-only`） | 描述性验收列回退 `fallback_test_script`（存在才跑） |
 | `task_verify_heuristics.fallback_test_script` | `./scripts/test.sh` | 开发任务默认验收 |
 | `task_verify_heuristics.fallback_verify_script` | `./scripts/verify.sh` | 含 verify 关键词时回退 |
+| `temp_cleanup.enabled` | `true` | 是否启用项目 `/tmp` 契约清理 |
+| `temp_cleanup.config` | `.cursorGrowth/temp-cleanup.json` | 规则文件（Growth · 每项目自填 glob） |
+| `temp_cleanup.after_*` | `true` | `test` / `verify` / `task-verify` 成功后跑 ephemeral 规则 |
+| `temp_cleanup.sweep_after_verify` | `true` | Sprint `runner.sh verify` 成功后跑 `persistent` 的 `sweep` |
+| `temp_cleanup.dry_run` | `false` | 只打印不删 |
 | `task_verify_heuristics.frontend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `task_verify_heuristics.backend_test_dir` | `.` | 单仓 scaffold 默认根目录 |
 | `version_line_meta` | `VERSION_LINE` | plan HTML 注释 · 发版版本线 |

@@ -58,6 +58,15 @@
       "backend_test_dir": "string",
       "frontend_test_cmd": "string",
       "backend_test_cmd": "string"
+    },
+    "temp_cleanup": {
+      "enabled": "bool",
+      "config": "string",
+      "after_test": "bool",
+      "after_verify": "bool",
+      "after_task_verify": "bool",
+      "sweep_after_verify": "bool",
+      "dry_run": "bool"
     }
   },
   "release.json": {

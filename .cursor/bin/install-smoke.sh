@@ -3,8 +3,13 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/temp-cleanup.sh
+source "$CURSOR_DIR/lib/temp-cleanup.sh"
+sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
-TMP_ROOT="$(mktemp -d)"
+sc_mktemp_dir sc-install-smoke
+TMP_ROOT="$SC_MKTEMP_LAST"
 FAIL=0
 
 fail() { echo "FAIL $1"; FAIL=$((FAIL + 1)); }
@@ -12,9 +17,6 @@ fail() { echo "FAIL $1"; FAIL=$((FAIL + 1)); }
 # set -e 下"哪一行中止"必须可见 —— 曾出现「无 FAIL 行、秒退」，导致 macOS/Windows 失败无法定位
 trap 'echo "FAIL install smoke aborted at line $LINENO (unguarded command under set -e)" >&2' ERR
 ok() { echo "OK  $1"; }
-
-cleanup() { rm -rf "$TMP_ROOT"; }
-trap cleanup EXIT
 
 assert_file() {
   local path="$1" label="$2"

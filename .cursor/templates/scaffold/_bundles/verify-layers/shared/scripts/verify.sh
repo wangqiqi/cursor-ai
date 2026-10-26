@@ -47,3 +47,8 @@ case "$layer" in
     sc_verify_l3
     ;;
 esac
+
+if [[ -f "$SC_ROOT/.cursor/lib/project-tmp-cleanup.sh" ]]; then
+  bash "$SC_ROOT/.cursor/lib/project-tmp-cleanup.sh" --phase verify --root "$SC_ROOT" 2>/dev/null || true
+  bash "$SC_ROOT/.cursor/lib/project-tmp-cleanup.sh" --phase sweep --root "$SC_ROOT" 2>/dev/null || true
+fi

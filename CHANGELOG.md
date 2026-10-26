@@ -4,13 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.24] - 2026-10-26
+
 ### Added
 
+- **项目 /tmp 契约** — `.cursorGrowth/temp-cleanup.json`（`ephemeral` 测试后删 · `persistent` + `max_age_hours` + `sweep`）；`project-tmp-cleanup.sh` · `runner.sh tmp-cleanup` · `task-verify`/`verify`/`scripts/verify.sh` 挂钩
 - **Runner** — `release-tag` 发版前默认跑 `RELEASE_VERIFY_CMD`（fail-closed；`RELEASE_SKIP_VERIFY=1` 显式跳过留痕）；验收列支持 `node`/`vitest` 行首与反引号内命令（`runner-smoke` 回归）
 - **verify-layers scaffold** — `verify:changed` · `changed-map` 示例 · `changed-plan.mjs` / `run-changed.mjs`
 
 ### Changed
 
+- **/tmp 回收** — 母版 smoke 使用 `sc_mktemp_*` + `SC_MKTEMP_LAST`（修复 `$(sc_mktemp_dir)` 子 shell 不回收）；`maintain` 默认 glob 含 `sc-*` · `pytest-of-*`；verify 并行日志 `sc-verify-parallel.*`；测试规范补充 /tmp 纪律
 - **verify-layers** — 默认 `changed-map` 空 `prefixRules`；L1 仅 `scripts/test.sh`（lint/build 进 manifest）；无 Node 时 `verify:changed` 回退 `VERIFY_CHANGED_FALLBACK`（默认 `--core`）
 - **Runner** — `task-verify` 验收列支持 `uv run` · `dotnet` · `mvn` 行首命令
 - **verify.mdc** / **test** skill — Agent 分层运行纪律（TASK 用最快层，Sprint 用 plan VERIFY）

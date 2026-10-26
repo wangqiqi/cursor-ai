@@ -10,7 +10,7 @@
 
 | 位置 | 放什么 | 禁止 |
 |------|--------|------|
-| `test.sh` | **开发循环**入口（最快反馈） | 塞全量验收逻辑 |
+| `test.sh` | **开发循环**入口（最快反馈）；收尾可 `sc_project_tmp_cleanup test` | 塞全量验收逻辑 |
 | `verify.sh` | **聚合入口**（L2；可转发 `verify/tier/`） | 每个域复制一套编排 |
 | `verify/tier/` | L0 / L2-core / L3 orchestrator 实现 | 根目录复制 tier 逻辑 |
 | `verify/domain/` | L1 域脚本 `verify_<feature>.sh` | 根目录新建域脚本 |

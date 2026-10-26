@@ -39,3 +39,12 @@ sc_summary() {
   echo "${SC_STEP_FAILS} step(s) failed."
   return 1
 }
+
+# test.sh 末尾调用：sc_project_tmp_cleanup test（配置见 .cursorGrowth/temp-cleanup.json）
+sc_project_tmp_cleanup() {
+  local phase="${1:-test}"
+  sc_root
+  local script=".cursor/lib/project-tmp-cleanup.sh"
+  [[ -f "$script" ]] || return 0
+  bash "$script" --phase "$phase" --root "$(pwd)" 2>/dev/null || true
+}

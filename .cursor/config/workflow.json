@@ -81,5 +81,14 @@
     "backend_test_dir": ".",
     "frontend_test_cmd": "npm run test",
     "backend_test_cmd": "pytest"
+  },
+  "temp_cleanup": {
+    "enabled": true,
+    "config": ".cursorGrowth/temp-cleanup.json",
+    "after_test": true,
+    "after_verify": true,
+    "after_task_verify": true,
+    "sweep_after_verify": true,
+    "dry_run": false
   }
 }

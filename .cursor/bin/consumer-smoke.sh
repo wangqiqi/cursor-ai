@@ -6,6 +6,10 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/temp-cleanup.sh
+source "$CURSOR_DIR/lib/temp-cleanup.sh"
+sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 FAIL=0
 
@@ -17,9 +21,8 @@ if [[ ! -x "$INSTALL" ]]; then
   exit 0
 fi
 
-TMP="$(mktemp -d)"
-cleanup() { rm -rf "$TMP"; }
-trap cleanup EXIT
+sc_mktemp_dir sc-consumer-smoke
+TMP="$SC_MKTEMP_LAST"
 
 echo "=== consumer smoke（目标项目视角）==="
 

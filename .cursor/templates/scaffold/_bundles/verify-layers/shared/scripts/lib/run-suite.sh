@@ -20,7 +20,8 @@ run_suite() {
     local -a pids=()
     local -a scripts=()
     local logdir
-    logdir="$(mktemp -d)"
+    logdir="$(mktemp -d "${TMPDIR:-/tmp}/sc-verify-parallel.XXXXXX")"
+    trap 'rm -rf "${logdir:-}"' EXIT
     local script base
     for script in "$@"; do
       base="$(basename "$script")"
@@ -40,6 +41,7 @@ run_suite() {
       fi
     done
     rm -rf "$logdir"
+    trap - EXIT
     return "$failed"
   fi
 

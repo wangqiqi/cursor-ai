@@ -65,6 +65,21 @@ alwaysApply: false
 - 新 bug → 先补回归再修实现
 - 红测不 ✅ plan task
 
+## 临时目录与 /tmp（防爆盘）
+
+| 层级 | 做法 |
+|------|------|
+| **测例内** | `fixture` / `afterAll` / `try/finally` **删除**自建目录；嵌入式 DB 用 `:memory:` 或 `tmp_path` + 不 `keepdb` 长期留盘 |
+| **项目契约** | 复制 `templates/cursorGrowth/temp-cleanup.example.json` → `.cursorGrowth/temp-cleanup.json`；按项目登记 `/tmp/yourapp-*`（**勿**写进母版 `workflow.json`） |
+| **tier** | `ephemeral`：`test` / `verify` / `task-verify` 成功后自动删；`persistent`：仅 `sweep` 且超过 `max_age_hours`（默认由 `runner.sh verify` 与 `scripts/verify.sh` 触发） |
+| **Shell smoke** | 母版 `.cursor/lib/temp-cleanup.sh`：`sc_mktemp_dir label` → `$SC_MKTEMP_LAST`（**禁止** `$(sc_mktemp_dir …)`）+ `sc_temp_trap_cleanup` |
+| **test.sh** | 末尾 `sc_project_tmp_cleanup test`（`scripts/lib/_common.sh`） |
+| **本机大扫除** | 未挂钩的残留 → **maintain** `--clean`；`maintain-config` 的 `tmp_dev_globs` 与 `temp-cleanup.json` 分工：前者偏周期清扫，后者偏测试后即时回收 |
+
+手动：`bash .cursor/bin/runner.sh tmp-cleanup sweep` · `project-tmp-cleanup.sh --phase test --dry-run`
+
+勿依赖「从不清理的 /tmp」；一次性文件默认**不会**再被读取。
+
 ## 验收
 
 - 开发 TASK：`./scripts/test.sh` 或 stack 默认

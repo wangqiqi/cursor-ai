@@ -57,6 +57,34 @@ source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
 
 cmd="${1:-status}"
 
+# 项目 /tmp 契约（.cursorGrowth/temp-cleanup.json）— 测试/验收成功后回收 ephemeral；verify 后可 sweep persistent
+project_tmp_cleanup() {
+  local phase="$1"
+  local flag dry rel script
+  [[ "$(sc_config '.temp_cleanup.enabled' 'true')" == "true" ]] || return 0
+  case "$phase" in
+    test)
+      [[ "$(sc_config '.temp_cleanup.after_test' 'true')" == "true" ]] || return 0 ;;
+    verify)
+      [[ "$(sc_config '.temp_cleanup.after_verify' 'true')" == "true" ]] || return 0 ;;
+    task-verify)
+      [[ "$(sc_config '.temp_cleanup.after_task_verify' 'true')" == "true" ]] || return 0 ;;
+    sweep) ;;
+    *) return 0 ;;
+  esac
+  script="$CURSOR_DIR/lib/project-tmp-cleanup.sh"
+  [[ -f "$script" ]] || return 0
+  rel="$(sc_config '.temp_cleanup.config' '.cursorGrowth/temp-cleanup.json')"
+  [[ -f "$ROOT/$rel" ]] || return 0
+  dry=0
+  [[ "$(sc_config '.temp_cleanup.dry_run' 'false')" == "true" ]] && dry=1
+  if [[ "$dry" -eq 1 ]]; then
+    bash "$script" --phase "$phase" --root "$ROOT" --config "$ROOT/$rel" --dry-run 2>/dev/null || true
+  else
+    bash "$script" --phase "$phase" --root "$ROOT" --config "$ROOT/$rel" 2>/dev/null || true
+  fi
+}
+
 sc_env_get() {
   local name="$1"
   printf '%s' "${!name-}"
@@ -612,6 +640,14 @@ friction_report() {
 }
 
 task_verify() {
+  if _task_verify_body "${1:-}"; then
+    project_tmp_cleanup task-verify
+    return 0
+  fi
+  return 1
+}
+
+_task_verify_body() {
   local id="${1:-$(plan_active)}"
   local acc loc pattern test_py
   if [[ -z "$id" ]]; then
@@ -757,7 +793,14 @@ run_verify() {
   echo "==> Full VERIFY (L3): $verify_cmd"
   cd "$ROOT"
   # shellcheck disable=SC2086
-  eval "$verify_cmd"
+  if eval "$verify_cmd"; then
+    project_tmp_cleanup verify
+    if [[ "$(sc_config '.temp_cleanup.sweep_after_verify' 'true')" == "true" ]]; then
+      project_tmp_cleanup sweep
+    fi
+    return 0
+  fi
+  return 1
 }
 
 case "$cmd" in
@@ -803,6 +846,9 @@ case "$cmd" in
   archive-check)
     archive_check
     ;;
+  tmp-cleanup)
+    project_tmp_cleanup "${2:-sweep}"
+    ;;
   docs-init)
     docs_init "${@:2}"
     ;;
@@ -822,6 +868,7 @@ case "$cmd" in
   friction-log  记一行摩擦数据（--task --rounds --rework --verify --note）
   friction-report  汇总摩擦数据（tasks · verify 通过率 · 平均轮次/返工）
   archive-check archive 域分层检查（根目录 flat 文件超阈值即 FAIL）
+  tmp-cleanup      按 .cursorGrowth/temp-cleanup.json 回收 /tmp（phase: test|verify|task-verify|sweep）
   docs-init     按 profile 铺 docs/ 文档骨架（号位=瀑布阶段；默认只铺必选号位）
 
 环境变量（跨项目 · 名称见 workflow.json \`version_*_env\`）:

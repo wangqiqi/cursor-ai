@@ -4,11 +4,14 @@ set -euo pipefail
 
 CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(cd "$CURSOR_DIR/.." && pwd)"
+# shellcheck source=../lib/temp-cleanup.sh
+source "$CURSOR_DIR/lib/temp-cleanup.sh"
+sc_temp_trap_cleanup
 # Git Bash / Windows 可能只有 python；勿硬编码 python3
 PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
 [[ -n "$PYTHON_BIN" ]] || { echo "FAIL: python required for runner smoke"; exit 1; }
-TMP_PLAN="$(mktemp)"
-trap 'rm -f "$TMP_PLAN"' EXIT
+sc_mktemp_file sc-runner-smoke.plan
+TMP_PLAN="$SC_MKTEMP_LAST"
 
 cp "$CURSOR_DIR/templates/plan.md" "$TMP_PLAN"
 
@@ -63,7 +66,8 @@ echo "OK  runner help is clean"
 # 造一个含 TASK-001 的临时项目；stdout 只回目录路径
 mk_plan_project() {
   local acc="$1" d
-  d="$(mktemp -d)"
+  sc_mktemp_dir sc-runner-smoke
+  d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.cursorGrowth"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
@@ -159,7 +163,8 @@ rm -rf "$D"
 # run-stop：SPRINT_STATUS closed + 无待办 → 不再 followup（自治收尾死循环回归）
 mk_closed_autonomous_plan() {
   local d
-  d="$(mktemp -d)"
+  sc_mktemp_dir sc-runner-smoke
+  d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.cursorGrowth"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
@@ -190,7 +195,8 @@ rm -rf "$D"
 # closed + 无 PLAN_APPROVED（收尾后常见）→ 仍静默，勿 gate followup
 mk_closed_no_approval() {
   local d
-  d="$(mktemp -d)"
+  sc_mktemp_dir sc-runner-smoke
+  d="$SC_MKTEMP_LAST"
   mkdir -p "$d/.cursor" "$d/.cursorGrowth"
   cp -a "$CURSOR_DIR/." "$d/.cursor/"
   echo "# t" > "$d/README.md"
@@ -237,11 +243,11 @@ grep -qE 'uv run \|dotnet \|mvn' "$CURSOR_DIR/bin/runner.sh" \
 
 # verify-layers：无 Node 时 --changed 回退（dry-run）
 VL_SCRIPTS="$CURSOR_DIR/templates/scaffold/_bundles/verify-layers/shared/scripts"
-FAKE_BIN="$(mktemp -d)"
+sc_mktemp_dir sc-runner-smoke-fakebin
+FAKE_BIN="$SC_MKTEMP_LAST"
 printf '#!/bin/sh\nexit 127\n' > "$FAKE_BIN/node"
 chmod +x "$FAKE_BIN/node"
 out="$( cd "$VL_SCRIPTS" && env VERIFY_CHANGED_DRY=1 PATH="$FAKE_BIN:/usr/bin:/bin" bash verify/changed-fallback.sh 2>&1 )" || true
-rm -rf "$FAKE_BIN"
 case "$out" in
   *"Node 不可用"*|*"跳过 changed-plan"*) echo "OK  verify:changed no-node dry-run fallback" ;;
   *) echo "FAIL: verify:changed no-node unexpected: $out"; exit 1 ;;

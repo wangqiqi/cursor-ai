@@ -391,6 +391,7 @@ bash "$CUR/bin/verify-scripts-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-docs-layout.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-changelog.sh" || VC_FAIL=$((VC_FAIL + 1))
 bash "$CUR/bin/verify-onekey-template.sh" || VC_FAIL=$((VC_FAIL + 1))
+bash "$CUR/bin/verify-project-tmp-cleanup.sh" || VC_FAIL=$((VC_FAIL + 1))
 
 echo "=== mother-only: platform · SPIKE · plugin · hygiene ==="
 if is_mother_repo; then
