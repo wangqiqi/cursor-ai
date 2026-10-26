@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.1] - 2026-10-26
+
+### Fixed
+
+- **cursor-coherence** — `alwaysApply` / verify 注册 / description 门禁跳过 `rules/local/**`（消费方示例 `.mdc` 不再误报）
+
 ## [5.0.0] - 2026-10-26
 
 ### Breaking

@@ -13,6 +13,9 @@ source "$CUR/lib/platform.sh"
 
 echo "=== cursor coherence ==="
 
+# 母版 rules 门禁（不含 rules/local — 项目私有 · 示例可 alwaysApply）
+PACKAGED_RULE_MDC_FIND=(find "$CUR/rules" -path "$CUR/rules/local" -prune -o -name '*.mdc' -print)
+
 # 1. skills/*/ directory name = SKILL.md name: field
 for skill_dir in "$CUR"/skills/*/; do
   [[ -d "$skill_dir" ]] || continue
@@ -113,7 +116,9 @@ while IFS= read -r f; do
   else
     fail "alwaysApply in unexpected file: $f"
   fi
-done < <(grep -rl 'alwaysApply:[[:space:]]*true' "$CUR/rules" 2>/dev/null || true)
+done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | while IFS= read -r mdc; do
+  [[ -f "$mdc" ]] && grep -qE 'alwaysApply:[[:space:]]*true' "$mdc" && printf '%s\n' "$mdc"
+done)
 
 # 6b. SDD install seeds ↔ reference templates stay in sync
 for tpl in spec-template tasks-template tech-plan-template principles-template; do
@@ -148,16 +153,16 @@ done
 while IFS= read -r mdc; do
   base="${mdc#"$CUR/rules/"}"
   grep -qE '^description:' "$mdc" && ok "rule $base description" || fail "rule $base missing description"
-done < <(find "$CUR/rules" -name '*.mdc' | sort)
+done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | sort)
 
-# 9. every rules/**/*.mdc basename appears in verify-super-cursor.sh
+# 9. every packaged rules/**/*.mdc basename appears in verify-super-cursor.sh
 verify_sh="$CUR/verify-super-cursor.sh"
 while IFS= read -r mdc; do
   base="$(basename "$mdc")"
   grep -qF "$base" "$verify_sh" \
     && ok "verify registers $base" \
     || fail "verify-super-cursor.sh missing check for $base"
-done < <(find "$CUR/rules" -name '*.mdc' | sort)
+done < <("${PACKAGED_RULE_MDC_FIND[@]}" 2>/dev/null | sort)
 
 # 10. docs/training/skills.md lists every disk skill
 training="$CUR/docs/training/skills.md"
