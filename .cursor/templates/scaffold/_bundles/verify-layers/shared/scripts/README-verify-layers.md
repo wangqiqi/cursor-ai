@@ -71,4 +71,4 @@ VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_layers_registry.sh
 
 ## 并行
 
-互不共享可变状态的条目由 `run-manifest-tier.sh` 并行（`VERIFY_SLICE_PARALLEL`）；共享 DB/seed 的 `command` 请合并为单条或设并行度为 1。
+互不共享可变状态的条目由 `run-manifest-tier.sh` 并行（`VERIFY_SLICE_PARALLEL`，默认 4）；`command` 行含空格时依赖 `xargs -n 1` 整串传入，勿改回 `-I{}`（会拆词导致 `[verify] manifest:` 后为空）。共享 DB/seed 请设 `VERIFY_SLICE_PARALLEL=1`。

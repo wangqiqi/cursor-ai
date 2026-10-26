@@ -52,7 +52,8 @@ if [[ ${#ROWS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-BASH_CMDS=()
+# Do not name arrays BASH_CMDS — clashes with bash's special history array (appends become empty).
+MANIFEST_BASH_CMDS=()
 BUNDLE_CMDS=()
 matched=0
 
@@ -73,10 +74,10 @@ for row in "${ROWS[@]}"; do
   matched=$((matched + 1))
   case "$type" in
     bash)
-      BASH_CMDS+=("bash scripts/verify/$target")
+      MANIFEST_BASH_CMDS+=("bash scripts/verify/$target")
       ;;
     command)
-      BASH_CMDS+=("$target")
+      MANIFEST_BASH_CMDS+=("$target")
       ;;
     bundle-commands)
       load_bundle_commands "$target"
@@ -99,15 +100,16 @@ run_one() {
   eval "$cmd"
 }
 
-ALL_CMDS=("${BASH_CMDS[@]}" "${BUNDLE_CMDS[@]}")
+ALL_CMDS=("${MANIFEST_BASH_CMDS[@]}" "${BUNDLE_CMDS[@]}")
 if [[ ${#ALL_CMDS[@]} -eq 0 ]]; then
   echo "FAIL: no commands collected for tier=$TIER" >&2
   exit 1
 fi
 
+# Parallel: -n 1 passes each null-delimited command as a single $1 (never use -I{} — it word-splits).
 if [[ "$PARALLEL" -gt 1 && ${#ALL_CMDS[@]} -gt 1 ]]; then
   export -f run_one
-  printf '%s\0' "${ALL_CMDS[@]}" | xargs -0 -P "$PARALLEL" -I{} bash -c 'run_one "$1"' _ {}
+  printf '%s\0' "${ALL_CMDS[@]}" | xargs -0 -n 1 -P "$PARALLEL" bash -c 'run_one "$1"' bash
 else
   for cmd in "${ALL_CMDS[@]}"; do
     run_one "$cmd"
