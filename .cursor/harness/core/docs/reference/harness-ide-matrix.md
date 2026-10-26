@@ -11,4 +11,6 @@
 | OpenCode | `.opencode/` | Core 已装（`install-adaptor-opencode.sh`） | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
 | VS Code 系 | `AGENTS.md` 等 | 薄 | https://code.visualstudio.com/docs/copilot |
 
-映射草案：`config/install-map.example.json`。占位 adaptor 机器验收 → [adaptor-contract.md](adaptor-contract.md)（`verify-adaptor-contract.sh`）。
+映射草案：`config/install-map.example.json`。非 Cursor adaptor 机器验收 → [adaptor-contract.md](adaptor-contract.md)（`bash .cursor/bin/verify-adaptor-contract.sh`）。
+
+**布局文档状态**（SPIKE-ADAPTOR-LAYOUT）：四 id 均有 `adaptors/<id>/docs/layout.md`；官方目录 **待确认**，安装行为以各 `install-adaptor-*.sh` + layout 为准。差距表 → `.growing/archive/harness/20261026_SPIKE_adaptor-layout.md`。
