@@ -205,11 +205,11 @@ PY
 }
 
 # Remove optional tools skills after install (--skills-bundle core).
-# SSOT: .cursor/config/skill-bundles.json
+# SSOT: <pack_rel>/config/skill-bundles.json（默认 pack_rel=.cursor）
 sc_apply_skills_bundle() {
-  local target="$1" bundle="${2:-full}"
-  local cfg="$target/.cursor/config/skill-bundles.json"
-  local skills_dir="$target/.cursor/skills"
+  local target="$1" bundle="${2:-full}" pack_rel="${3:-.cursor}"
+  local cfg="$target/$pack_rel/config/skill-bundles.json"
+  local skills_dir="$target/$pack_rel/skills"
   local py skill
 
   if [[ "$bundle" == "full" ]]; then

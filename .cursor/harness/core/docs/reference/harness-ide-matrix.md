@@ -5,7 +5,7 @@
 | 环境 | 安装根 | Adaptor 厚度 | 文档入口 |
 |------|--------|--------------|----------|
 | Cursor | `.cursor/` | 厚（hooks · Cloud · Bugbot） | https://cursor.com/docs |
-| DeepSeek `.dsh` | `.dsh/` | 中（官方 layout **待确认**） | 产品文档待补链 |
+| DeepSeek `.dsh` | `.dsh/` | Core 已装（`install-adaptor-dsh.sh` · layout **假设**） | [adaptors/dsh/docs/layout.md](../../adaptors/dsh/docs/layout.md) |
 | Kiro | `.kiro/` | 薄～中 | https://kiro.dev/docs |
 | Trae | `.trae/` | 薄～中 | https://www.trae.ai/ |
 | OpenCode | 产品约定 | 中 | https://opencode.ai/docs |

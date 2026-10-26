@@ -109,6 +109,15 @@ Install profiles（`install-super-cursor.sh --profile`）:
 
 验收：`bash .cursor/bin/verify-skill-bundles-ssot.sh`（JSON ↔ 磁盘）· `bash .cursor/bin/verify-install-skills-bundle.sh`（临时目录 install 冒烟）。**不是** `.cursor-plugin/`（5 lifecycle）轨。
 
+### IDE adaptor 安装（`install-map.example.json`）
+
+| adaptor | 安装根 | 入口 | 验收 |
+|---------|--------|------|------|
+| `cursor`（默认） | `.cursor/` | `install-super-cursor.sh` | `install-smoke.sh` · `consumer-smoke.sh` |
+| `dsh` | `.dsh/` | `install-adaptor-dsh.sh` 或 `install-super-cursor.sh --adaptor dsh` | `verify-install-dsh.sh` |
+
+布局 → `adaptors/dsh/docs/layout.md` · 映射草案 → `install-map.example.json` → `adaptors.dsh`。
+
 ## release.json
 
 | Key | Default |
