@@ -9,6 +9,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CURSOR_DIR="$ROOT/.cursor"
 # shellcheck source=../lib/temp-cleanup.sh
 source "$CURSOR_DIR/lib/temp-cleanup.sh"
+# shellcheck source=../lib/smoke-git.sh
+source "$CURSOR_DIR/lib/smoke-git.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 FAIL=0
@@ -28,9 +30,9 @@ echo "=== consumer smoke（目标项目视角）==="
 
 PROJ="$TMP/proj"
 mkdir -p "$PROJ"
+sc_smoke_git_init_repo "$PROJ" "$ROOT"
 (
   cd "$PROJ"
-  git init -q
   echo "# demo" > README.md
   git add -A
   git -c user.email=smoke@test -c user.name=smoke commit -qm init
@@ -123,10 +125,16 @@ fi
 
 # 5. 消费方视角的验证器（universal 项在目标项目也必须过）
 for v in verify-super-cursor.sh bin/cursor-coherence.sh bin/verify-config.sh bin/verify-portability.sh bin/verify-rules-globs.sh bin/verify-docs-layout.sh bin/verify-scripts-layout.sh; do
-  if run_in_proj bash ".cursor/$v" >/dev/null 2>&1; then
+  v_out=""
+  v_rc=0
+  v_out="$(run_in_proj bash ".cursor/$v" 2>&1)" || v_rc=$?
+  if [[ "$v_rc" -eq 0 ]]; then
     ok "target $v exits 0"
   else
     fail "target $v failed"
+    echo "  ---- $v (tail) ----" >&2
+    echo "$v_out" | tail -25 | sed 's/^/  | /' >&2
+    echo "  -------------------" >&2
   fi
 done
 

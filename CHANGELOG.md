@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.33] - 2026-10-26
+
+### Fixed
+
+- **CI Windows** — `verify.yml` 检出后强制 LF working tree；`install-super-cursor` 向消费方种子 `.gitattributes`；install/consumer smoke 用 `sc_smoke_git_init_repo` 消除 `git add` CRLF 警告
+- **consumer-smoke** — 目标项目验证器失败时打印尾部日志（便于定位 `cursor-coherence`）
+
 ## [4.29.32] - 2026-10-26
 
 ### Fixed

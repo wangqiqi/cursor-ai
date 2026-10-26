@@ -69,6 +69,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Windows runner 默认 autocrlf=true → 检出 CRLF → smoke 里 git add 刷屏 + 脚本/coherence 误报
+      - name: Enforce LF working tree
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.safecrlf false
+          git config --global core.eol lf
+          git reset --hard HEAD
+
       - name: Install jq
         if: matrix.jq
         run: sudo apt-get update && sudo apt-get install -y jq

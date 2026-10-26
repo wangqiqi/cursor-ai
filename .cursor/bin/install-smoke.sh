@@ -6,6 +6,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CURSOR_DIR="$ROOT/.cursor"
 # shellcheck source=../lib/temp-cleanup.sh
 source "$CURSOR_DIR/lib/temp-cleanup.sh"
+# shellcheck source=../lib/smoke-git.sh
+source "$CURSOR_DIR/lib/smoke-git.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 sc_mktemp_dir sc-install-smoke
@@ -52,9 +54,9 @@ run_install() {
 
 assert_git_ignored() {
   local dir="$1" file="$2" label="$3"
+  sc_smoke_git_init_repo "$dir" "$ROOT"
   (
     cd "$dir"
-    git init -q
     git add -A
     if git status --short | grep -qF "$file"; then
       echo "FAIL $label (would be tracked)"
@@ -130,7 +132,7 @@ assert_git_ignored "$FULL" ".cursorGrowth/plan.md" "full: .cursorGrowth/plan.md 
 # 6. --here / auto git root from subdirectory
 HERE_ROOT="$TMP_ROOT/here-project"
 mkdir -p "$HERE_ROOT/src/pkg"
-git -C "$HERE_ROOT" init -q
+sc_smoke_git_init_repo "$HERE_ROOT" "$ROOT"
 HERE_OUT="$TMP_ROOT/here.out"
 if ( cd "$HERE_ROOT/src/pkg" && "$INSTALL" --replace >"$HERE_OUT" 2>&1 ); then
   ok "here: install from nested dir"

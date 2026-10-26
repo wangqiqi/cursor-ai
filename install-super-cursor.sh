@@ -300,6 +300,11 @@ else
   printf '%s\n' "${SC_IGNORE_LINES[@]}" > "$TARGET/.gitignore"
 fi
 
+# 消费方仓库尚无行尾策略时继承母版 .gitattributes（Windows Git 默认 autocrlf 会污染 *.sh）
+if [[ -f "$SOURCE/.gitattributes" && ! -f "$TARGET/.gitattributes" ]]; then
+  cp "$SOURCE/.gitattributes" "$TARGET/.gitattributes"
+fi
+
 # .cursorignore — Agent 硬排除（与 .gitignore 互补；密钥须重复声明）
 if [[ -f "$SOURCE/.cursorignore" ]]; then
   if [[ ! -f "$TARGET/.cursorignore" ]]; then
