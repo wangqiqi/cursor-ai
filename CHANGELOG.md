@@ -4,6 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **Runner** — `release-tag` 发版前默认跑 `RELEASE_VERIFY_CMD`（fail-closed；`RELEASE_SKIP_VERIFY=1` 显式跳过留痕）；验收列支持 `node`/`vitest` 行首与反引号内命令（`runner-smoke` 回归）
+- **verify-layers scaffold** — `verify:changed` · `changed-map` 示例 · `changed-plan.mjs` / `run-changed.mjs`
+
+### Changed
+
+- **verify.mdc** / **test** skill — Agent 分层运行纪律（TASK 用最快层，Sprint 用 plan VERIFY）
+- **maintain** — 测试 `/tmp` 前缀经 Growth `maintain-config` 扩展，母版默认 JSON 不写项目 glob
+- **release** — 文档与 `release-tag` CLI 闸门一致（`RELEASE_VERIFY_CMD`）
+
 ## [4.29.23] - 2026-10-15
 
 ### Fixed

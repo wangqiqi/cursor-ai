@@ -20,3 +20,7 @@ Config：`config/release.json` · `config/workflow.json` · `release.mode`（`pa
 `runner.sh release-tag`（tag-per-commit）或 `git tag -a <tag> -m "<summary>"`（patch-per-task / ship）· 名依 `release.json` · 打在含 CHANGELOG 的 commit
 
 Tag 后按团队 push；默认分支勿 force-push
+
+## release-tag 闸门
+
+`runner.sh release-tag` 默认在打 tag 前执行 `RELEASE_VERIFY_CMD`（缺省 `bash scripts/verify.sh --core`）；失败 **BLOCK**。母版空仓可设 `RELEASE_VERIFY_CMD='bash .cursor/template-verify.sh'`。显式跳过：`RELEASE_SKIP_VERIFY=1`（stderr 留 WARN）。

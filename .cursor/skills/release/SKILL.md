@@ -63,6 +63,8 @@ PR 生命周期（评论、CI、拆 PR）：`autopilot` · `split-to-prs`（**ma
 
 主轨已绿、需对外版本时执行本节。**分支收尾**与**打 tag** 可同一次 `/release` 会话，但须先完成 verify。
 
+**CLI**：`release-tag` 默认执行 `RELEASE_VERIFY_CMD`（缺省 `bash scripts/verify.sh --core`）后才 bump/tag；失败 BLOCK。母版仓：`RELEASE_VERIFY_CMD='bash .cursor/template-verify.sh'`。跳过：`RELEASE_SKIP_VERIFY=1`（留 WARN）。
+
 ### 发版模式（`workflow.release.mode`）
 
 | mode | 适用 | /run 收尾 |

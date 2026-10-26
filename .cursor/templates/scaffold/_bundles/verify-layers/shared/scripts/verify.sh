@@ -18,6 +18,11 @@ source "$(dirname "$0")/lib/run-suite.sh"
 # shellcheck source=lib/verify-layers.sh
 source "$(dirname "$0")/lib/verify-layers.sh"
 
+if [[ "${1:-}" == "--changed" ]]; then
+  node "$(dirname "$0")/verify/run-changed.mjs"
+  exit $?
+fi
+
 layer="$(sc_verify_resolve_layer "${1:-}")" || exit 1
 
 case "$layer" in

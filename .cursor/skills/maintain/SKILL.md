@@ -56,7 +56,11 @@ disable-model-invocation: true
 | `skills/maintain/config/default-protected.json` | 默认受保护目录与缓存列表 |
 | `.cursorGrowth/maintain-config.json` | 本机覆盖（模板 `templates/cursorGrowth/maintain-config.example.json`） |
 
-`tmp_dev_globs`（默认含 `/tmp/rdm-*`、`cursor-sandbox-cache`）在 `--clean` 时自动清扫开发测试残留；RDM 单测通过 `server/test/tempCleanupPreload.js` 进程退出时回收 `rdm-*` 临时目录。
+`tmp_dev_globs`（默认含 `/tmp/rdm-*`、`cursor-sandbox-cache`）在 `--clean` 时自动清扫开发测试残留；**项目测试栈**若在 `/tmp` 留前缀（embedded DB · 临时 workdir），应：
+
+1. 测例 teardown **stop/删除**临时目录（勿依赖扫尾脚本兜底）；
+2. 在 `.cursorGrowth/maintain-config.json` 的 `build_artifact_tmp_globs` 登记 glob，或通过 `MAINTAIN_BUILTIN_PROTECTED`（`|` 分隔）追加白名单；
+3. **勿**把项目专有前缀写进母版 `default-protected.json`（保持 install 通用）。
 
 Playwright 浏览器缓存（`~/.cache/ms-playwright*`）默认在 `protected_dirs`，清理时保留。薄封装可通过环境变量 `MAINTAIN_BUILTIN_PROTECTED`（`|` 分隔路径）追加白名单。
 

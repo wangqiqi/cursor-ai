@@ -31,3 +31,10 @@ sc_pass "verify_<feature>"
 ## 并行
 
 互不共享可变状态的 slice 由 `run_suite parallel` 执行；共享安装/seed 的路径用 `flock`（见 `scripts/verify.sh` 入口锁）。
+
+## 增量验收（verify:changed）
+
+1. 复制 `scripts/verify/changed-map.example.json` → `changed-map.json` 并按仓库路径改 `prefixRules`。
+2. `VERIFY_CHANGED_DRY=1 ./scripts/verify.sh --changed` 只打印计划。
+3. 无效 git base 时设置 `VERIFY_CHANGED_BASE=master`（或 `origin/main`）。
+4. 未命中 prefix 的文件按 `defaultLayer` fail-safe 抬层（保守）。

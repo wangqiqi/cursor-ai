@@ -34,6 +34,19 @@ alwaysApply: false
 
 **禁止**把 `--standard` 或 `--full` 当每个 TASK 的默认门禁。plan `<!-- VERIFY: ... -->` 写 Sprint 出口层（通常 `verify:core` 或 `verify:standard`），TASK 验收列写 L1 或域脚本。
 
+### Agent · 分层运行（禁止拖慢）
+
+Cursor Agent 跑验收时对齐上表 **L0–L3**，**勿**把 Sprint/打版层当每个 TASK 默认。
+
+| 意图 | 用这个 | 不是那个 |
+|------|--------|----------|
+| 仅客户端/前端树 | `./scripts/test.sh` · 定向单文件测 · 项目若有 `verify:changed` | 无参全量 L2/L3 集成 |
+| 服务端/后端树 | plan 验收列 · L2-core 子集 · 单文件测 | 连续多轮全量「消 flake」 |
+| TASK 收尾 | `task-verify` 列出的命令 | plan `<!-- VERIFY: ... -->` 全量 |
+| Sprint / `release-tag` | plan `VERIFY` · L2/L3 | — |
+
+增量计划（`verify:changed` + `changed-map`）由项目或 scaffold **verify-layers** bundle 提供；路径坐标写 Growth `learn/`，**勿**在 `.cursor/` 写死业务域。
+
 | 阶段（简表） | 推荐 |
 |------|------|
 | 开发任务 | `./scripts/test.sh`（= L1 子集） |

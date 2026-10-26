@@ -25,6 +25,7 @@ sc_verify_usage() {
   (无参) · --l1 · --fast       L1 快速（stack test.sh + 可选 lint/build）
   --core · --l2-core           L2-core：L1 + CORE 切片
   --l2 · --standard            L2 标准：L1 + STANDARD 切片
+  --changed                    按 git 变更跑最小层（见 changed-map.json）
   --full · --l3                L3 全量：L2 + HEAVY 切片
 
 环境变量:

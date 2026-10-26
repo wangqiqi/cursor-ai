@@ -56,6 +56,20 @@ Walkthrough 若用于**说明书配图**（非仅冒烟）→ 与 **user-manual*
 - 项目路径坐标 → Growth `learn/`（如 `dev-conventions.md`），**勿**写进 `.cursor/`；聚合脚本仅编排（见 verify.mdc）
 - 新项目 Day-1 骨架 → **scaffold** `apply-bundle verify-layers`（注册表 · 示例 slice · `VERIFY_REGISTRY_STRICT`）
 
+
+### Agent 终端 · 分层优先
+
+层定义 → **verify.mdc** §分层验收 · §Agent · 分层运行。项目增量计划见 scaffold **verify-layers**（`verify:changed` · `changed-map.json`）。
+
+| 意图 | 做法 |
+|------|------|
+| TASK 改完最小绿 | plan 验收列 · `./scripts/test.sh` · 若有 `verify:changed` 且 `VERIFY_CHANGED_DRY=1` 可先 dry-run |
+| 仅客户端 | 定向单文件测；**勿**为小改跑全量 L2/L3 |
+| 服务端 P0 | L2-core 子集或单文件集成测（项目脚本名见 `learn/`） |
+| Sprint / 打 tag | plan `VERIFY`；`release-tag` 受 `RELEASE_VERIFY_CMD` 闸门 |
+
+**禁止**：未触达慢层时用全量集成「消 flake」；用户中断后勿后台再开同一全量门禁（见下节孤儿回收）。
+
 ### Agent 终端 · 长测有界运行
 
 **用这个**：Cursor Agent / CI 跑 `node --test` · 长 verify。**不是那个**：裸跑无超时后杀 shell 留孤儿。
@@ -65,6 +79,7 @@ Walkthrough 若用于**说明书配图**（非仅冒烟）→ 与 **user-manual*
 | **有界超时** | wall + per-case timeout（项目 bounded-test wrapper 或栈等价物） |
 | **杀进程组** | 取消长命令用 `kill -<pgid>`，勿只 `kill <pid>` |
 | **孤儿回收** | verify 入口或项目 reap 脚本清理 PPID=systemd 的陈旧测试进程 |
+| **用户喊停** | 结束当前测试进程组；勿再开第二轮同全量门禁 |
 
 ### 并行 verify / 安装互斥
 

@@ -15,5 +15,7 @@
   "build_artifact_dirs": [
     "~/.cache/ccache"
   ],
-  "build_artifact_tmp_globs": []
+  "build_artifact_tmp_globs": [
+    "/tmp/my-app-test-*"
+  ]
 }
