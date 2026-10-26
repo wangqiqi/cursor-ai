@@ -356,7 +356,7 @@ acceptance_extract_exec_cmd() {
   local acc="${1:-}"
   acc="${acc//$'\r'/}"
   local inner
-  if [[ "$acc" =~ ^[[:space:]]*(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|make |bash ) ]]; then
+  if [[ "$acc" =~ ^[[:space:]]*(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|uv run |dotnet |mvn |make |bash ) ]]; then
     printf '%s' "${acc#"${acc%%[![:space:]]*}"}"
     return 0
   fi
@@ -364,7 +364,7 @@ acceptance_extract_exec_cmd() {
     inner="${BASH_REMATCH[1]}"
     inner="${inner#"${inner%%[![:space:]]*}"}"
     inner="${inner%"${inner##*[![:space:]]}"}"
-    if [[ "$inner" =~ ^(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|make |bash ) ]]; then
+    if [[ "$inner" =~ ^(\./|cd |npm |pnpm |npx |node |vitest |pytest |grep |cargo |go test|uv run |dotnet |mvn |make |bash ) ]]; then
       printf '%s' "$inner"
       return 0
     fi

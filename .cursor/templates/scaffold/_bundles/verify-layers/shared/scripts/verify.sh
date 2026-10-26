@@ -19,7 +19,11 @@ source "$(dirname "$0")/lib/run-suite.sh"
 source "$(dirname "$0")/lib/verify-layers.sh"
 
 if [[ "${1:-}" == "--changed" ]]; then
-  node "$(dirname "$0")/verify/run-changed.mjs"
+  if command -v node >/dev/null 2>&1; then
+    node "$(dirname "$0")/verify/run-changed.mjs"
+    exit $?
+  fi
+  bash "$(dirname "$0")/verify/changed-fallback.sh"
   exit $?
 fi
 

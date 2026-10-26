@@ -58,7 +58,16 @@ Cursor Agent 跑验收时对齐上表 **L0–L3**，**勿**把 Sprint/打版层�
 
 ## 分层验收（verify-layers）
 
-大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，项目可增设 **按域脚本**（命名示例 `scripts/verify_<feature>.sh`，路径由项目自定）。
+**通用增长 SSOT**（栈无关 · 详 **test** skill `reference/verify-growth.md`）：
+
+| 件 | 路径 | 用途 |
+|----|------|------|
+| **manifest** | `scripts/verify/manifest.tsv` | tier × 类型（`bash` · `command` · `bundle-commands`）一行一入口 |
+| **runner** | `scripts/verify/run-manifest-tier.sh` | 累积 tier；空 tier / 空 bundle **FAIL** |
+| **去重** | `audit-dedup.config.json` + `audit-dedup.mjs` | 测例只登记一次 |
+| **增量** | `changed-map.json` + `verify:changed` | 按 diff 最小层 |
+
+大型或跨模块功能：除 `./scripts/test.sh` / `./scripts/verify.sh` 外，新增能力 **只加 manifest 一行** 或 `scripts/verify/slices/verify_<feature>.sh`。栈专属坐标 → Growth `learn/`。
 
 | 层 | 典型内容 | 外部依赖 | 默认 CI |
 |----|----------|----------|---------|

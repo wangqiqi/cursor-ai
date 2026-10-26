@@ -6,7 +6,7 @@
 
 | 层 | 命令 | 用途 |
 |----|------|------|
-| **L1** | `./scripts/verify.sh` | 开发循环 · 每个 TASK |
+| **L1** | `./scripts/verify.sh` | 开发循环 · 每个 TASK（**仅** `scripts/test.sh`；lint/build 登记 manifest） |
 | **L2-core** | `./scripts/verify-core.sh` | merge 前 P0 |
 | **L2** | `./scripts/verify-release.sh` | Sprint 收尾 / 打版 |
 | **L3** | `./scripts/verify.sh --full` | CI / nightly |
@@ -45,9 +45,10 @@ VERIFY_REGISTRY_STRICT=1 bash scripts/verify/slices/verify_layers_registry.sh
 
 ## 增量验收（verify:changed）
 
-1. 复制 `changed-map.example.json` → `changed-map.json` 并按路径改 `prefixRules`。
+1. 默认 `changed-map.json` 的 `prefixRules` 为空 — 复制 `changed-map.example.json` 中的示例规则，或按仓库目录自建 `prefixRules`。
 2. `VERIFY_CHANGED_DRY=1 ./scripts/verify.sh --changed`
 3. `VERIFY_CHANGED_BASE=master`（无 `origin/main` 时）
+4. **无 Node**：与 registry slice 一致，不跑 `changed-plan.mjs`；回退 `VERIFY_CHANGED_FALLBACK`（默认 `--core`）并打印说明。全功能增量规划需 Node + git。
 
 ## 并行
 

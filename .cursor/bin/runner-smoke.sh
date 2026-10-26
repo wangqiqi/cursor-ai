@@ -230,4 +230,21 @@ esac
 echo "OK  run-start no autonomous block when closed idle"
 rm -rf "$D"
 
+# acceptance 行首前缀（不执行真实 uv/dotnet — 仅静态白名单）
+grep -qE 'uv run \|dotnet \|mvn' "$CURSOR_DIR/bin/runner.sh" \
+  && echo "OK  runner acceptance prefix whitelist (uv/dotnet/mvn)" \
+  || { echo "FAIL: runner missing uv/dotnet/mvn acceptance prefixes"; exit 1; }
+
+# verify-layers：无 Node 时 --changed 回退（dry-run）
+VL_SCRIPTS="$CURSOR_DIR/templates/scaffold/_bundles/verify-layers/shared/scripts"
+FAKE_BIN="$(mktemp -d)"
+printf '#!/bin/sh\nexit 127\n' > "$FAKE_BIN/node"
+chmod +x "$FAKE_BIN/node"
+out="$( cd "$VL_SCRIPTS" && env VERIFY_CHANGED_DRY=1 PATH="$FAKE_BIN:/usr/bin:/bin" bash verify/changed-fallback.sh 2>&1 )" || true
+rm -rf "$FAKE_BIN"
+case "$out" in
+  *"Node 不可用"*|*"跳过 changed-plan"*) echo "OK  verify:changed no-node dry-run fallback" ;;
+  *) echo "FAIL: verify:changed no-node unexpected: $out"; exit 1 ;;
+esac
+
 echo "runner smoke passed."

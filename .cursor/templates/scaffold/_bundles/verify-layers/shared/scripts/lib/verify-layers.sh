@@ -37,23 +37,7 @@ sc_verify_resolve_layer() {
 }
 
 sc_verify_l1_fast() {
-  if [[ -f package.json ]]; then
-    if npm run 2>/dev/null | grep -qE '^  lint'; then
-      npm run lint
-    fi
-    if npm run 2>/dev/null | grep -qE '^  type-check'; then
-      npm run type-check
-    fi
-    bash ./scripts/test.sh
-    if npm run 2>/dev/null | grep -qE '^  build'; then
-      npm run build
-    fi
-    return 0
-  fi
-  if [[ -f go.mod || -f Cargo.toml || -f pyproject.toml ]]; then
-    bash ./scripts/test.sh
-    return 0
-  fi
+  # L1 SSOT: project test loop. Stack hooks (npm lint/build, etc.) → manifest command / bundle-commands.
   bash ./scripts/test.sh
 }
 

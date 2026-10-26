@@ -12,6 +12,17 @@
 
 脚手架：`scaffold apply-bundle verify-layers` 一次铺齐；成熟仓从 Growth `learn/` 记栈专属 glob，**勿**写进 `.cursor/`。
 
+## 工具链依赖（矩阵）
+
+| 能力 | bash | git | Node |
+|------|------|-----|------|
+| L1 `test.sh` · manifest tier | ✅ | — | — |
+| `verify:changed` 全功能 | ✅ | ✅ | ✅ |
+| `verify:changed` 无 Node | ✅ | — | — → `VERIFY_CHANGED_FALLBACK`（默认 `--core`） |
+| registry / audit-dedup slice | ✅ | — | 可选（无则 SKIP） |
+
+默认 `changed-map.json` 的 `prefixRules` 为空；示例路径见 `changed-map.example.json`。
+
 ## manifest 类型（栈无关）
 
 | type | target | 何时用 |

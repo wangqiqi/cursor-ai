@@ -11,6 +11,8 @@ All notable changes to Super Cursor are documented here.
 
 ### Changed
 
+- **verify-layers** — 默认 `changed-map` 空 `prefixRules`；L1 仅 `scripts/test.sh`（lint/build 进 manifest）；无 Node 时 `verify:changed` 回退 `VERIFY_CHANGED_FALLBACK`（默认 `--core`）
+- **Runner** — `task-verify` 验收列支持 `uv run` · `dotnet` · `mvn` 行首命令
 - **verify.mdc** / **test** skill — Agent 分层运行纪律（TASK 用最快层，Sprint 用 plan VERIFY）
 - **maintain** — 测试 `/tmp` 前缀经 Growth `maintain-config` 扩展，母版默认 JSON 不写项目 glob
 - **release** — 文档与 `release-tag` CLI 闸门一致（`RELEASE_VERIFY_CMD`）
