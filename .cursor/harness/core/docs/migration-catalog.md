@@ -131,6 +131,19 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 
 **勿**用母版 `cursor-coherence.sh` 全绿要求目标项目根 README（门面检查仅母版仓库）。
 
+## IDE adaptor 布局（Harness 多 IDE）
+
+旧版无等价物；Super Cursor 用 **`adaptors/<id>/`** + `install-map.example.json` 描述非 Cursor 安装根。
+
+| adaptor | 安装根 | 厚度 | layout SSOT |
+|---------|--------|------|-------------|
+| dsh | `.dsh/` | `includes: core` | [adaptors/dsh/docs/layout.md](../../adaptors/dsh/docs/layout.md) |
+| opencode | `.opencode/` | `includes: core` | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
+| kiro | `.kiro/` | `core_rules_export` | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
+| trae | `.trae/` | `core_rules_export` | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
+
+机器门禁：`bash .cursor/bin/verify-adaptor-contract.sh` · 矩阵 → [harness-ide-matrix.md](reference/harness-ide-matrix.md)。
+
 ## 2026 官方面（Cursor IDE 配置）
 
 | 官方能力 | 母版策略 | 落点 |

@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **adaptor-layout（SPRINT-ADAPTOR-LAYOUT）** — 四占位 adaptor `layout.md` / README · `install-map` `hooks_manifest: null` · `verify-adaptor-contract` 断言 layout 链接 · `harness-ide-matrix` · `walkthrough` · `building-super-cursor` · `migration-catalog` IDE adaptor 节
+
 ## [5.0.6] - 2026-10-26
 
 ### Changed

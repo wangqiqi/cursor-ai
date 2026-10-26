@@ -60,11 +60,16 @@ for aid in PLACEHOLDERS:
         continue
     entry = adaptors[aid]
     readme = root / "adaptors" / aid / "README.md"
+    layout = root / "adaptors" / aid / "docs" / "layout.md"
     if not readme.is_file():
         fail(f"missing {readme}")
         continue
+    if not layout.is_file():
+        fail(f"missing {layout}")
 
     text = readme.read_text(encoding="utf-8")
+    if "layout.md" not in text:
+        fail(f"{aid}/README.md should link to docs/layout.md")
     if "adaptor-contract:v1" not in text:
         fail(f"{aid}/README.md missing adaptor-contract:v1 marker")
     for h in REQUIRED_HEADINGS:
