@@ -16,15 +16,22 @@ PERSISTENT_DEFAULT_AFTER = ("sweep",)
 
 
 def allowed_tmp_roots() -> list[Path]:
-    roots = [Path("/tmp").resolve()]
-    tmpdir = os.environ.get("TMPDIR")
-    if tmpdir:
-        roots.append(Path(tmpdir).resolve())
-    var_tmp = Path("/var/tmp")
-    if var_tmp.is_dir():
-        roots.append(var_tmp.resolve())
+    candidates: list[Path] = []
+    for key in ("TMPDIR", "TEMP", "TMP"):
+        val = os.environ.get(key)
+        if val:
+            candidates.append(Path(val))
+    if os.name != "nt":
+        candidates.append(Path("/tmp"))
+        var_tmp = Path("/var/tmp")
+        if var_tmp.is_dir():
+            candidates.append(var_tmp)
     out: list[Path] = []
-    for r in roots:
+    for p in candidates:
+        try:
+            r = p.resolve()
+        except OSError:
+            continue
         if r not in out:
             out.append(r)
     return out
@@ -36,14 +43,28 @@ def path_under_allowed_roots(p: Path, roots: list[Path]) -> bool:
     except OSError:
         return False
     for root in roots:
-        if rp == root or str(rp).startswith(str(root) + os.sep):
+        if rp == root:
             return True
+        try:
+            if rp.is_relative_to(root):
+                return True
+        except (ValueError, OSError):
+            if str(rp).startswith(str(root) + os.sep):
+                return True
     return False
+
+
+def _is_absolute_tmp_pattern(pattern: str) -> bool:
+    if pattern.startswith("/"):
+        return True
+    if len(pattern) >= 2 and pattern[1] == ":" and pattern[0].isalpha():
+        return True
+    return pattern.startswith("\\\\")
 
 
 def _pattern_probe_path(pattern: str) -> Path | None:
     """Resolve literal prefix of a glob (macOS: /tmp → /private/tmp)."""
-    if ".." in pattern or not pattern.startswith("/"):
+    if ".." in pattern or not _is_absolute_tmp_pattern(pattern):
         return None
     fixed = pattern.split("*", 1)[0].rstrip("/") or "/"
     try:

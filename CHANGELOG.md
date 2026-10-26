@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.31] - 2026-10-26
+
+### Fixed
+
+- **CI Windows tmp-cleanup** — `project-tmp-cleanup.py` 识别 `TEMP`/`TMP`/`TMPDIR` 与 `C:\` 绝对 glob（不再仅限 `/tmp` 前缀）
+
 ## [4.29.30] - 2026-10-26
 
 ### Fixed
