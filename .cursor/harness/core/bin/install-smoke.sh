@@ -220,7 +220,14 @@ assert_file "$DSH/.dsh/rules/core.mdc" "adaptor dsh: .dsh/rules/core.mdc"
 assert_file "$DSH/.cursor/rules/core.mdc" "adaptor dsh: .cursor still installed"
 assert_absent "$DSH/.dsh/hooks.json" "adaptor dsh: no hooks.json in .dsh"
 
-# 10. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
+# 10. adaptor kiro rules export
+KIRO="$TMP_ROOT/kiro-adaptor"
+run_install "adaptor kiro: install" "$TMP_ROOT/kiro.out" "$KIRO" --profile lite --adaptor kiro
+assert_file "$KIRO/.kiro/rules/core.mdc" "adaptor kiro: .kiro/rules/core.mdc"
+assert_file "$KIRO/.kiro/RULES.md" "adaptor kiro: RULES.md index"
+assert_absent "$KIRO/.kiro/skills" "adaptor kiro: no skills/"
+
+# 11. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
 # 需要符号链接来构造「source==target」；无符号链接权限的平台（Windows/Git Bash）显式 SKIP，
 # 而不是让裸 ln -s 在 set -e 下中止整个 smoke（曾导致 Windows 腿秒退且无 FAIL 行）
 SELF="$TMP_ROOT/self-replace"
