@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.27] - 2026-10-26
+
 ### Added
 
 - **scaffold `java-gradle`** — Gradle Kotlin DSL · JUnit 5 · JDK `HttpServer` `/health` · `gradlew` · manifest 第 8 栈
@@ -13,6 +15,7 @@ All notable changes to Super Cursor are documented here.
 
 - **run-start** — profile hint 含 `enabled_tiers` · `slices` 计数
 - **consumer-refresh** — 升级后核对 `SC_PROFILE_SYNC` 段
+- **README** — 8 栈脚手架清单
 
 ## [4.29.26] - 2026-10-26
 
