@@ -213,7 +213,14 @@ core_n="$(find -L "$CORE_BUNDLE/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 
 [[ "$core_n" == "23" ]] && ok "core bundle: 23 skills" || fail "core bundle: skills=$core_n (expected 23)"
 assert_absent "$CORE_BUNDLE/.cursor/skills/week/SKILL.md" "core bundle: no week skill"
 
-# 9. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
+# 9. adaptor dsh alongside .cursor
+DSH="$TMP_ROOT/dsh-adaptor"
+run_install "adaptor dsh: install" "$TMP_ROOT/dsh.out" "$DSH" --profile lite --adaptor dsh
+assert_file "$DSH/.dsh/rules/core.mdc" "adaptor dsh: .dsh/rules/core.mdc"
+assert_file "$DSH/.cursor/rules/core.mdc" "adaptor dsh: .cursor still installed"
+assert_absent "$DSH/.dsh/hooks.json" "adaptor dsh: no hooks.json in .dsh"
+
+# 10. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
 # 需要符号链接来构造「source==target」；无符号链接权限的平台（Windows/Git Bash）显式 SKIP，
 # 而不是让裸 ln -s 在 set -e 下中止整个 smoke（曾导致 Windows 腿秒退且无 FAIL 行）
 SELF="$TMP_ROOT/self-replace"

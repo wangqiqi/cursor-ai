@@ -108,7 +108,7 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | 组 | 脚本 | 守护 |
 |----|------|------|
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · **占位 adaptor README + install-map** · **project-onekey 模板**（母版根不得有 `onekey_start.sh`） |
-| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` ↔ 磁盘 · install 冒烟 · onekey SPIKE |
+| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-install-dsh` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` ↔ 磁盘 · install 冒烟 · **`.dsh/` core** · onekey SPIKE |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / docs-init SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
