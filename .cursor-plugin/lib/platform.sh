@@ -251,6 +251,21 @@ PY
   done <<< "$out"
 }
 
+# Stage full .cursor pack into a temp project (runner-smoke · 与 install 同路径).
+sc_stage_cursor_pack() {
+  local src_pack="$1" dest_cursor="$2"
+  mkdir -p "$dest_cursor"
+  if [[ -d "$src_pack/harness/core" ]]; then
+    sc_copy_cursor_pack "$src_pack" "$dest_cursor" "hooks/state/*"
+    local link_sh="$src_pack/harness/link-cursor-ide.sh"
+    if [[ -f "$link_sh" ]]; then
+      bash "$link_sh" "$dest_cursor" >/dev/null
+    fi
+  else
+    sc_copy_tree "$src_pack" "$dest_cursor" "hooks/state/*"
+  fi
+}
+
 # Copy partition-pack .cursor/ (harness + adaptors) without recreating IDE symlinks at pack root.
 # Windows Git Bash: cp -a/rsync -a on a tree full of symlinks often errors; link-cursor-ide.sh rebuilds links.
 sc_copy_cursor_pack() {
@@ -258,8 +273,9 @@ sc_copy_cursor_pack() {
   shift 2
   local excludes=("$@")
   mkdir -p "$dest"
+  local -a pack_excludes=(core/rules/local)
   if [[ -d "$src/harness" ]]; then
-    sc_copy_tree "$src/harness" "$dest/harness" ${excludes[@]+"${excludes[@]}"}
+    sc_copy_tree "$src/harness" "$dest/harness" ${pack_excludes[@]+"${pack_excludes[@]}"} ${excludes[@]+"${excludes[@]}"}
   fi
   if [[ -d "$src/adaptors" ]]; then
     sc_copy_tree "$src/adaptors" "$dest/adaptors" ${excludes[@]+"${excludes[@]}"}
@@ -295,7 +311,7 @@ sc_copy_tree() {
   mkdir -p "$dest"
 
   if command -v rsync >/dev/null 2>&1; then
-    local -a args=(-a)
+    local -a args=(-aL)
     local ex
     for ex in ${excludes[@]+"${excludes[@]}"}; do
       args+=(--exclude "$ex")
@@ -304,7 +320,12 @@ sc_copy_tree() {
     return 0
   fi
 
-  cp -a "${src}/." "${dest}/"
+  # Git Bash：无法创建 symlink 时 cp -a 会非零退出；-L 跟随为实体文件/目录
+  if cp -aL "${src}/." "${dest}/" 2>/dev/null; then
+    :
+  else
+    cp -rL "${src}/." "${dest}/" 2>/dev/null || cp -a "${src}/." "${dest}/"
+  fi
   local ex
   for ex in ${excludes[@]+"${excludes[@]}"}; do
     case "$ex" in

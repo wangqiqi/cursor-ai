@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 闸门见 `rules/workflow.mdc`。配置：`config/workflow.json`
 
-**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/sprint-goal-gate.md`（**Sprint Goal 合格性** · 禁止仪式型 Sprint）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/prioritization.md`（RICE/ICE/Kano · backlog 排序）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）· `reference/standalone-map.md`（母版独立 · 引用纪律）
+**详文**：`reference/phases.md`（阶段 1/2/3 · 头身一致）· `reference/sprint-goal-gate.md`（**Sprint Goal 合格性** · 禁止仪式型 Sprint）· `reference/task-retention.md`（**未完成任务不得删** · plan · ROADMAP）· `reference/followup-facade.md`（Follow-up · README 门面）· `reference/prioritization.md`（RICE/ICE/Kano · backlog 排序）· `reference/sdd/source-map.md`（Spec-Driven Development）· `reference/autonomy-chain.md`（Sprint 连跑 · hooks 触点）· `reference/standalone-map.md`（母版独立 · 引用纪律）
 
 配置坐标：`config/workflow.json` → `sdd.specs_dir` · `sdd.principles_file`
 
@@ -58,6 +58,16 @@ Sprint **Goal 必须是能力/模块交付**；打 tag · merge · 归档等**�
 | 设计拍板长文 · 多段 archive 互链 | `learn/` · `docs/` |
 
 Sprint **全部 TASK ✅** 后：**从 plan 删除整个 Active 区块**（不只改标题）；细节只留 archive + CHANGELOG。
+
+### 任务保留纪律（Agent 硬约束）
+
+完整表 → [reference/task-retention.md](reference/task-retention.md)。
+
+| 必须 | 禁止 |
+|------|------|
+| 保留所有 `⬜`/`🔧`/`⚠️` TASK 直至 ✅ 或用户明确取消 | **随意删除**未完成任务行、用摘要替换整张 TASK 表 |
+| 更新进度只改 Status / 元数据，不丢 ID | 因「已 push / 本地已绿」就从 plan 移除仍开放 TASK |
+| `docs/ROADMAP.md` 的 **进行中 / 计划中** 行同上 | 删 ROADMAP 未做项；只允许 **已完成** 迁出或清理旧行 |
 
 ### 新开 / 续开 Sprint（累加，不覆盖）
 
