@@ -125,6 +125,31 @@ if sc_manifest_bundle_exists "$MANIFEST" "test-report"; then
   done
 fi
 
+echo ""
+echo "=== project-profile template ==="
+pp_example="$CURSOR_DIR/templates/cursorGrowth/project-profile.example.json"
+pp_schema="$CURSOR_DIR/templates/cursorGrowth/project-profile.schema.json"
+if [[ -f "$pp_example" ]]; then
+  ok "project-profile.example.json present"
+  if command -v jq >/dev/null 2>&1; then
+    jq -e '.version == 1 and (.stacks.primary | length) >= 1' "$pp_example" >/dev/null \
+      && ok "project-profile.example.json shape" \
+      || fail "project-profile.example.json invalid"
+  fi
+else
+  fail "missing $pp_example"
+fi
+[[ -f "$pp_schema" ]] && ok "project-profile.schema.json present" || fail "missing project-profile.schema.json"
+
+echo ""
+echo "=== scaffold adapt (dry-run) ==="
+adapt_out="$(bash "$CURSOR_DIR/bin/scaffold.sh" adapt 2>&1)" || true
+if grep -q '=== scaffold adapt ===' <<<"$adapt_out"; then
+  ok "scaffold adapt dry-run"
+else
+  fail "scaffold adapt dry-run"
+fi
+
 [[ "$FAIL" -eq 0 ]] && exit 0
 echo "$FAIL scaffold check(s) failed." >&2
 exit 1

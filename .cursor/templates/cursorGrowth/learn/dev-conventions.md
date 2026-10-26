@@ -2,6 +2,14 @@
 
 > 由 **`/learn`** 维护。测试/verify 命令、分支策略、目录约定。
 
+## 技术栈（与 profile 对齐）
+
+| 项 | 本项目 |
+|----|--------|
+| 主栈 | （待填；与 `.cursorGrowth/project-profile.json` → `stacks.primary` 一致） |
+| 适配 | 升级或首次安装后运行：`.cursor/bin/scaffold.sh adapt --write` |
+| 说明 | 整包 `.cursor` · **按需启用** → `.cursor/docs/tech-stacks.md` |
+
 ## Verify / test
 
 | 场景 | 命令 |

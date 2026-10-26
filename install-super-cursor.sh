@@ -410,6 +410,7 @@ echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"
 echo "  0. 首次必做 → 对 Agent 说 /learn（填充项目认知；不做则闸门/验收会空转）"
+echo "     棕地/已有代码 → .cursor/bin/scaffold.sh adapt --write（project-profile · 按需启用栈）"
 echo "  1. 不确定从哪开始 → 对 Agent 说 /master"
 if [[ "$file_count" -le 3 ]]; then
   echo "  2. 空仓库 → /scaffold 选技术栈并创建骨架"

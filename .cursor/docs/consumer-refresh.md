@@ -51,11 +51,25 @@ install-super-cursor --replace
 
 ## 覆盖后自检（目标项目）
 
+| 步骤 | 命令 / 产物 | 说明 |
+|------|-------------|------|
+| 布局 | `bash .cursor/verify-super-cursor.sh` | hybrid 混合仓自动 SKIP 母版专属项 |
+| **栈适配** | `.cursor/bin/scaffold.sh adapt` → `adapt --write` | 写入 `.cursorGrowth/project-profile.json`（**按需启用**，非瘦安装） |
+| profile | `stacks.primary` · `verify.enabled_tiers` | 人读镜像 → `learn/dev-conventions.md` |
+| 平台 | `bash .cursor/bin/platform-check.sh` | 工具链 |
+| 业务 | `./scripts/verify.sh` | 见 learn |
+
+详 **整包安装 vs 按需启用** → [tech-stacks.md](tech-stacks.md)。
+
 ```bash
 cd /path/to/target-project
 
 # 布局与 SOP 自洽（混合仓自动 hybrid）
 bash .cursor/verify-super-cursor.sh
+
+# 棕地/升级后：探测主栈并落盘（先预览再 --write）
+.cursor/bin/scaffold.sh adapt
+.cursor/bin/scaffold.sh adapt --write
 
 # 平台工具
 bash .cursor/bin/platform-check.sh
@@ -85,11 +99,13 @@ tar -czf ".cursorGrowth/archive/pre-cursor-$(date +%Y%m%d).tar.gz" -C /path/to/t
 ## 升级后建议
 
 1. 打开 Cursor → 确认 rules/skills 加载无报错。  
-2. 跑一次 `/learn` 增量核对 `dev-conventions.md` 命令是否与现网一致。  
-3. 有问题：保留 **install 命令 · verify 输出 · hybrid/mother** 结论，回母版排查。
+2. **`scaffold adapt --write`** → 核对 `project-profile.json` 与真实栈一致（多栈用 `--primary=a,b`）。  
+3. 跑一次 `/learn` 增量核对 `dev-conventions.md` 命令是否与现网一致。  
+4. 有问题：保留 **install 命令 · verify 输出 · hybrid/mother** 结论，回母版排查。
 
 ## 交叉引用
 
+- 技术栈与按需启用 → [tech-stacks.md](tech-stacks.md)  
 - 安装入门 → `quickstart.md`  
 - 迁移步骤摘要 → `migration-catalog.md` §目标项目升级  
 - 母版自测 → `bash .cursor/bin/template-verify.sh`

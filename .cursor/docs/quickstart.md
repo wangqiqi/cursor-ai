@@ -31,7 +31,7 @@ cd /path/to/your-project
 | `lite` | 个人，无 hooks |
 | `rules-only` | 只要规范 |
 
-**已有项目升级 `.cursor/`**（保留 `.cursorGrowth/`）→ [consumer-refresh.md](consumer-refresh.md)（`--replace` · 自检清单）。
+**已有项目升级 `.cursor/`**（保留 `.cursorGrowth/`）→ [consumer-refresh.md](consumer-refresh.md)（`--replace` · 自检清单）· 栈与 **按需启用** → [tech-stacks.md](tech-stacks.md)（`scaffold adapt`）。
 
 ## 2. 空项目：脚手架（7 栈）
 

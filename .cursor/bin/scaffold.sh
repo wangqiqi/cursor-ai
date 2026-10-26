@@ -22,6 +22,7 @@ usage() {
   apply <id>        应用脚手架到仓库根目录
   apply-bundle <id> 应用可选附加包（如 user-manual · test-report）
   audit             审计已有项目，输出改进建议
+  adapt             探测技术栈，生成/预览 .cursorGrowth/project-profile.json（按需启用）
   files <id>        仅列出将创建的文件（等同 apply --dry-run）
 
 选项（apply）:
@@ -37,6 +38,7 @@ usage() {
   $0 apply-bundle user-manual --dry-run --stack react-vite-ts
   $0 apply-bundle test-report --dry-run --stack go-api
   $0 audit
+  $0 adapt [--write] [--primary stack[,stack]]
 EOF
 }
 
@@ -128,6 +130,122 @@ detect_stack() {
   else
     printf '%s ' "${hints[@]}"
   fi
+}
+
+detect_stack_words() {
+  local raw="$1"
+  raw="${raw%%$'\n'*}"
+  if [[ "$raw" == "none" || -z "${raw// /}" ]]; then
+    return 0
+  fi
+  # shellcheck disable=SC2206
+  local arr=($raw)
+  printf '%s\n' "${arr[@]}"
+}
+
+cmd_adapt() {
+  local write="false"
+  local primary_override=""
+  local arg
+  for arg in "$@"; do
+    case "$arg" in
+      --write) write="true" ;;
+      --dry-run) write="false" ;;
+      --primary=*) primary_override="${arg#--primary=}" ;;
+      --primary)
+        echo "FAIL: --primary requires =list (e.g. --primary=java,go)" >&2
+        exit 1
+        ;;
+      -*) echo "FAIL: unknown option: $arg" >&2; exit 1 ;;
+    esac
+  done
+
+  # shellcheck source=../lib/project-profile.sh
+  source "$CURSOR_DIR/lib/project-profile.sh"
+
+  local detected_raw detected_lines=() primary_lines=()
+  detected_raw="$(detect_stack)"
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && detected_lines+=("$line")
+  done < <(detect_stack_words "$detected_raw")
+
+  if [[ -n "$primary_override" ]]; then
+    primary_override="${primary_override//,/ }"
+    # shellcheck disable=SC2206
+    primary_lines=($primary_override)
+  elif [[ ${#detected_lines[@]} -gt 0 ]]; then
+    primary_lines=("${detected_lines[@]}")
+  else
+    primary_lines=("unknown")
+  fi
+
+  local profile_path="$ROOT/.cursorGrowth/project-profile.json"
+  local adapted_at
+  adapted_at="$(iso8601_now)"
+
+  echo "=== scaffold adapt ==="
+  echo "root=$ROOT"
+  echo "detected_stack=${detected_raw}"
+  echo "primary_stack=${primary_lines[*]}"
+  echo "profile=$profile_path"
+  echo "mode=$([[ "$write" == "true" ]] && echo write || echo dry-run)"
+
+  if [[ -f "$profile_path" ]]; then
+    echo ""
+    echo "--- existing profile (first 20 lines) ---"
+    head -n 20 "$profile_path" || true
+  fi
+
+  if [[ "$write" != "true" ]]; then
+    echo ""
+    echo "hint=确认 primary 无误后: $0 adapt --write"
+    echo "hint=多栈仓: $0 adapt --write --primary=java,vue"
+    return 0
+  fi
+
+  mkdir -p "$ROOT/.cursorGrowth"
+  local py
+  py="$(sc_python 2>/dev/null || true)"
+  if [[ -z "$py" ]]; then
+    echo "FAIL: python required to write project-profile.json" >&2
+    exit 1
+  fi
+
+  local default_tiers
+  default_tiers="$(sc_project_profile_default_verify_tiers)"
+
+  DETECTED_JSON="$(printf '%s\n' "${detected_lines[@]}")" \
+  PRIMARY_JSON="$(printf '%s\n' "${primary_lines[@]}")" \
+  ADAPTED_AT="$adapted_at" \
+  OUT_PATH="$profile_path" \
+  DEFAULT_TIERS="$default_tiers" \
+  "$py" <<'PY'
+import json, os, sys
+
+detected = [l.strip() for l in os.environ.get("DETECTED_JSON", "").splitlines() if l.strip()]
+primary = [l.strip() for l in os.environ.get("PRIMARY_JSON", "").splitlines() if l.strip()]
+if not primary:
+    primary = ["unknown"]
+tiers = os.environ.get("DEFAULT_TIERS", "l0 l1 l2-core").split()
+
+doc = {
+    "version": 1,
+    "adapted_at": os.environ["ADAPTED_AT"],
+    "stacks": {"detected": detected, "primary": primary},
+    "verify": {
+        "enabled_tiers": tiers,
+        "enabled_slices": [],
+    },
+    "tech_rules": {"mode": "globs-only"},
+}
+path = os.environ["OUT_PATH"]
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(doc, f, indent=2, ensure_ascii=False)
+    f.write("\n")
+print(f"WRITE {path}")
+PY
+
+  echo "OK adapt wrote $profile_path"
 }
 
 cmd_detect() {
@@ -411,6 +529,7 @@ main() {
     apply-bundle) shift; cmd_apply_bundle "$@" ;;
     files) shift; cmd_files "$@" ;;
     audit) cmd_audit ;;
+    adapt) shift; cmd_adapt "$@" ;;
     -h|--help|help|"") usage ;;
     *) echo "FAIL: unknown command: $cmd" >&2; usage; exit 1 ;;
   esac

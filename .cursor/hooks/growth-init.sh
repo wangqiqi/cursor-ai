@@ -76,6 +76,13 @@ if [[ -f "$TEMPLATE_DIR/rules/local/README.md" && ! -f "$GROWTH_DIR/rules/local/
   cp "$TEMPLATE_DIR/rules/local/README.md" "$GROWTH_DIR/rules/local/README.md"
 fi
 
+if [[ -f "$TEMPLATE_DIR/project-profile.example.json" && ! -f "$GROWTH_DIR/project-profile.example.json" ]]; then
+  cp "$TEMPLATE_DIR/project-profile.example.json" "$GROWTH_DIR/project-profile.example.json"
+fi
+if [[ -f "$TEMPLATE_DIR/project-profile.schema.json" && ! -f "$GROWTH_DIR/project-profile.schema.json" ]]; then
+  cp "$TEMPLATE_DIR/project-profile.schema.json" "$GROWTH_DIR/project-profile.schema.json"
+fi
+
 # Legacy migration: root plan.md / archive/
 if [[ -f "$PROJECT_ROOT/plan.md" && ! -f "$GROWTH_DIR/plan.md" ]]; then
   mv "$PROJECT_ROOT/plan.md" "$GROWTH_DIR/plan.md"

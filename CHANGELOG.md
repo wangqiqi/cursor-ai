@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **project-profile** — `.cursorGrowth/project-profile.json` Schema · example · `lib/project-profile.sh`；`scaffold adapt`（探测栈 · `--write` · `--primary=`）
+- **docs** — `tech-stacks.md`（整包安装 · 按需启用 · 绿地/棕地 · verify 阶段）
+- **hooks** — `run-start` 注入 Project profile 一行（primary/detected）
+
+### Changed
+
+- **consumer-refresh** · **quickstart** · **dev-conventions** 模板 — 升级后 `scaffold adapt` 与 profile ↔ learn 对齐
+- **install** — 安装完成提示棕地 `adapt --write`
+- **growth-init** — 种子 `project-profile.example.json` / schema
+
 ## [4.29.25] - 2026-10-26
 
 ### Added

@@ -18,6 +18,8 @@
 | `perception/` | 可选：用户偏好、临时上下文 |
 | `session/persona.json` | 当前呼叫人格 id（会话态；`run-start` 优先注入） |
 | `session/aliases.json` | （可选）项目昵称 → `persona_id`；覆盖母版 nicknames |
+| `project-profile.json` | **机器可读**：主栈 · verify 启用面（`scaffold adapt --write`）；Schema 见同目录 `project-profile.schema.json` |
+| `project-profile.example.json` | 安装种子（不覆盖已有 `project-profile.json`） |
 
 ### `learn/` 文件（安装或首条 prompt 自动种子）
 

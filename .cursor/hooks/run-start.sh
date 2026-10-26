@@ -12,6 +12,8 @@ CURSOR_DIR="$(cd "$HOOKS_DIR/.." && pwd)"
 source "$HOOKS_DIR/lib/config-load.sh"
 # shellcheck source=lib/json-utils.sh
 source "$HOOKS_DIR/lib/json-utils.sh"
+# shellcheck source=../lib/project-profile.sh
+source "$HOOKS_DIR/../lib/project-profile.sh"
 
 sc_resolve_project_root "$HOOKS_DIR"
 sc_init_config "$CURSOR_DIR"
@@ -88,15 +90,27 @@ for p in json.load(open(sys.argv[1], encoding="utf-8")).get("personas", []):
 PY
 }
 
-json_persona_only_context() {
-  local role_hint
+sc_session_context_block() {
+  local role_hint profile_hint
   role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
-  if [[ -n "$role_hint" ]]; then
-    json_additional_context "## session
-- **Persona hint**: ${role_hint}"
-  else
-    echo "{}"
+  profile_hint="$(sc_project_profile_hint "${SC_PROJECT_ROOT:-}" 2>/dev/null || true)"
+  if [[ -z "$role_hint" && -z "$profile_hint" ]]; then
+    return 1
   fi
+  local ctx="## session"
+  if [[ -n "$role_hint" ]]; then
+    ctx="${ctx}
+- **Persona hint**: ${role_hint}"
+  fi
+  if [[ -n "$profile_hint" ]]; then
+    ctx="${ctx}
+- **${profile_hint}**"
+  fi
+  json_additional_context "$ctx"
+}
+
+json_persona_only_context() {
+  sc_session_context_block || echo "{}"
 }
 
 if [[ "$SC_HOOKS_ENABLED" != "true" || "$SC_WORKFLOW_ENABLED" != "true" ]]; then
@@ -180,9 +194,14 @@ if [[ "$autonomous" == "true" && -n "$active" ]]; then
 - **Verify**: \`./.cursor/bin/runner.sh task-verify\`; release \`${verify}\`
 - Load \`run\`: gate-check → implement → task-verify → commit → next ACTIVE"
   role_hint="$(sc_role_hint "${SC_CURSOR_DIR:-$CURSOR_DIR}" 2>/dev/null || true)"
+  profile_hint="$(sc_project_profile_hint "${SC_PROJECT_ROOT:-}" 2>/dev/null || true)"
   if [[ -n "$role_hint" ]]; then
     ctx="${ctx}
 - **Persona hint**: ${role_hint}"
+  fi
+  if [[ -n "$profile_hint" ]]; then
+    ctx="${ctx}
+- **${profile_hint}**"
   fi
   json_additional_context "$ctx"
 else
