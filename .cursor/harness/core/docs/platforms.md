@@ -127,9 +127,9 @@ Cloud 不读 `.growing/plan.md`；验收命令写进 `environment.json` 的 `ins
 bash .cursor/bin/platform-check.sh
 bash .cursor/verify-super-cursor.sh    # 混合仓自动 hybrid，纯母版空仓为 mother
 bash .cursor/bin/cursor-coherence.sh   # 安装后项目优先
-bash .cursor/bin/template-verify.sh    # 纯母版全量（混合仓亦可用）
+bash .cursor/template-verify.sh    # 纯母版全量（混合仓亦可用）
 bash .cursor/bin/consumer-smoke.sh     # 目标项目端到端（仅母版仓）
-SC_FORCE_PYTHON=1 bash .cursor/bin/template-verify.sh   # 强制 python JSON 回退（无 jq 路径）
+SC_FORCE_PYTHON=1 bash .cursor/template-verify.sh   # 强制 python JSON 回退（无 jq 路径）
 # Windows（Git for Windows）：先确认行尾 —— 应为 LF，否则脚本不可执行
 git config core.autocrlf   # 建议 false；或依赖仓库根 .gitattributes（已强制 eol=lf）
 ```

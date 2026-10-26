@@ -102,7 +102,7 @@ See `config/README.md` for all keys. Copy `templates/plan.md` when using the pla
 Verify template integrity:
 
 ```bash
-bash .cursor/bin/template-verify.sh   # 母版全量（CI 入口）
+bash .cursor/template-verify.sh   # 母版全量（CI 入口）
 bash .cursor/bin/consumer-smoke.sh    # 目标项目端到端（install → 闸门 → hook → 全绿）
 bash .cursor/verify-super-cursor.sh   # layout + 聚合门禁；混合仓自动 hybrid
 bash .cursor/bin/cursor-coherence.sh  # skills/agents/rules 注册

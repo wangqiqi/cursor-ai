@@ -86,7 +86,7 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 
 ## 母版 verify 索引（`bin/verify-*.sh`）
 
-聚合入口：`bash .cursor/verify-super-cursor.sh`（含接线自检：每个 `bin/verify-*.sh` 须被本脚本或 `template-verify.sh` 调用）。母版 CI：`bash .cursor/bin/template-verify.sh`。
+聚合入口：`bash .cursor/verify-super-cursor.sh`（含接线自检：每个 `bin/verify-*.sh` 须被本脚本或 `template-verify.sh` 调用）。母版 CI：`bash .cursor/template-verify.sh`（先 `harness/assemble`）。分区：`verify-harness-layout.sh`（`.cursor/harness/core` + `adaptors`）。
 
 | 组 | 脚本 | 守护 |
 |----|------|------|

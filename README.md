@@ -37,13 +37,10 @@
 
 ```text
 .cursor/
-├── rules/      沟通 · 执行（含 oss-first · data-batch · i18n-copy · data-list · doc-hygiene · 长任务横切）· 反馈 · 13 种 tech 细则（含 Svelte）· 栈专用见 rules/local/
-├── skills/     28 个 · slash SSOT（/plan · /run · …；无 `commands/` 薄指针）
-├── agents/     ship · review · spike
-├── hooks/      growth-init · run-start · run-stop（`full` profile）
-├── config/     workflow.json · release.json · roles.json
-├── bin/        runner.sh（gate-check · task-verify · verify · release-tag · next-task）· scaffold.sh · cursor-coherence.sh · template-verify.sh · platform-check.sh · bootstrap-growth.sh
-└── templates/  plan.md · sdd/ · project-docs（`docs-init` 号位）· 8 栈脚手架 · user-manual / test-report 契约 · verify-layers / design-system bundles
+├── harness/    母版 SSOT：core/（rules · skills · bin · config · templates · docs）+ assemble.sh
+├── adaptors/   cursor/（hooks · cursor-only verify）· dsh/kiro/… 占位
+├── template-verify.sh   母版 CI 入口（内部先 assemble）
+└── （assemble 后平铺）skills/ · rules/ · hooks/ · bin/ … — 与 install 到目标项目的形态一致；母版 gitignore
 ```
 
 **根目录（可直接 clone / 复制）：**
@@ -317,12 +314,14 @@ Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [
 目标项目升级 `.cursor/`（保留 Growth）→ [consumer-refresh](.cursor/docs/consumer-refresh.md)。
 
 ```bash
-bash .cursor/bin/bootstrap-growth.sh           # 首次 clone：补 .growing/rules/local（template-verify 会自动调用）
-bash .cursor/bin/template-verify.sh          # 母版完整自测（CI：verify-super-cursor + coherence + scaffold + runner + install + consumer smoke）
-bash .cursor/verify-super-cursor.sh          # layout + 全量 bin/verify-*.sh 聚合（含接线自检；混合仓 hybrid）
-bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 BLOCK → hook → 批准放行 → 全绿
-bash .cursor/bin/cursor-coherence.sh         # 交叉自洽（skills/agents/rules 注册）
+bash .cursor/harness/assemble.sh             # 母版：生成平铺 .cursor/（IDE）；或由 template-verify 代劳
+bash .cursor/template-verify.sh                # 母版完整自测（CI）
+bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（需先 assemble）
+bash .cursor/bin/consumer-smoke.sh             # 目标项目端到端
+bash .cursor/bin/cursor-coherence.sh
 ```
+
+母版改文件 → **`.cursor/harness/core/`** · **`.cursor/adaptors/`**（见 `.cursor/harness/README.md`）。
 
 | 组 | 代表脚本 | 守护 |
 |----|----------|------|

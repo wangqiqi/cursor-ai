@@ -211,7 +211,7 @@ README 场景速查中无独立主菜单、经 `more` → `config` 或关键词�
 | 加项目私有 rules | `.cursor/rules/local/`（目标项目自建，不 commit 进母版） |
 | 验证 Super Cursor 母版 layout | `bash .cursor/verify-super-cursor.sh`（混合仓自动 hybrid · 纯空仓 mother） |
 | 验证母版交叉自洽（安装后项目） | `bash .cursor/bin/cursor-coherence.sh` |
-| 母版全量验收 | `bash .cursor/bin/template-verify.sh`（须用户明确授权才改母版 `.cursor/`） |
+| 母版全量验收 | `bash .cursor/template-verify.sh`（须用户明确授权才改母版 `.cursor/`） |
 | 自治 Sprint 连跑 | **plan** handoff `AUTONOMOUS:true`（默认）→ **`/run` 一次** → 同会话连跑 TASK；决策清单见 `autonomy-chain.md` |
 | Epic 长程 · 多 Sprint | **`/long`** → Epic 拆 Sprint → 每 Sprint **plan**+**run** → checkpoint；详 **long** skill |
 | 仅要规范不要闸门 | `workflow.json` → `workflow.enabled: false`（`rules-only` profile） |

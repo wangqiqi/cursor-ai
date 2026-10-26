@@ -1,32 +1,27 @@
 # Super Cursor — `.cursor/`
 
-通用 SOP 目录。**母版仓库**可自由演进；安装到目标项目后默认**只读**（见 **cursor-standalone**）。项目认知 → 运行时 `growth.learn_dir`（git 忽略）。
+通用 SOP 包。**母版仓库** SSOT 在 **`harness/core/`** + **`adaptors/`**（见 [`harness/README.md`](../harness/README.md)）；平铺的 `skills/` · `rules/` · `bin/` 由 **`bash .cursor/harness/assemble.sh`** 生成（母版 gitignore）。安装到目标项目后默认**只读**（见 **cursor-standalone**）。
 
-## 结构
+## 结构（母版 · 编辑真源）
+
+| 路径 | 内容 |
+|------|------|
+| `harness/core/` | rules · skills · agents · config · bin[core] · lib · templates · docs |
+| `adaptors/cursor/` | hooks · hooks.json · cursor-only verify/docs |
+| `adaptors/{dsh,…}/` | 其它 IDE 占位 |
+| `template-verify.sh` | 母版 CI 入口（先 assemble） |
+
+平铺树（assemble 后，与消费方 install 产物同形）：
 
 | 始终加载（4） | `rules/core.mdc` · `rules/workflow.mdc` · `rules/communication/cursor-standalone.mdc` · `rules/communication/super-cursor-persona.mdc` |
 | 按需 | skills · glob rules · `learn/` |
 
-```
-rules/   communication · execution · feedback · tech
-skills/  master plan run learn scaffold git release …（SOP + slash SSOT；日常只记 plan/run/master）
-agents/  ship review spike（子进程委派；日常不必记）
-hooks/   growth-init run-start run-stop
-config/  workflow.json release.json roles.json + schema.json（config 校验）· denylist.txt（母版独立扫描）
-bin/     runner.sh scaffold.sh（含 apply-bundle）· 验证器：template-verify · verify-super-cursor · cursor-coherence
-         · bin/verify-*.sh 分组聚合（core · install · plugin · platform · hygiene — 见 migration-catalog / verify.mdc）
-         · smoke：install-smoke · consumer-smoke（目标项目端到端）· runner-smoke · scaffold-integrity · platform-check
-         · 其它：bootstrap-growth · resolve-role · validate-commit-msg
-lib/     platform.sh（跨平台工具 · JSON python 回退 · SC_FORCE_PYTHON）
-templates/scaffold/   manifest + stack templates
-```
-
 ```bash
-bash .cursor/bin/template-verify.sh          # 母版全量（推荐 · CI 入口）
-bash .cursor/verify-super-cursor.sh          # layout + 全量 verify-*.sh 聚合（混合仓自动 hybrid；目标项目亦可跑）
-bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端：install → 闸门 → hook → 全绿
-bash .cursor/bin/cursor-coherence.sh         # 交叉自洽
-bash .cursor/verify-system.sh                # 同上 layout（alias）
+bash .cursor/harness/assemble.sh             # 本地 IDE / 单测前（或交给 template-verify）
+bash .cursor/template-verify.sh              # 母版全量（CI 入口）
+bash .cursor/verify-super-cursor.sh          # layout + verify-*.sh 聚合
+bash .cursor/bin/consumer-smoke.sh           # 目标项目端到端
+bash .cursor/bin/cursor-coherence.sh
 ```
 
 门禁清单与语义 → [`rules/feedback/verify.mdc`](rules/feedback/verify.mdc) §母版门禁清单。

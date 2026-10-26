@@ -79,7 +79,7 @@ release / ship
 ## 母版自测
 
 ```bash
-bash .cursor/bin/template-verify.sh     # 纯母版全量（CI 入口；含 consumer smoke）
+bash .cursor/template-verify.sh     # 纯母版全量（CI 入口；含 consumer smoke）
 bash .cursor/verify-super-cursor.sh     # layout + 8 道门禁；混合仓 hybrid 自动
 bash .cursor/bin/consumer-smoke.sh      # 目标项目端到端：install → 闸门 BLOCK → hook → 放行 → 全绿
 bash .cursor/bin/cursor-coherence.sh    # 交叉自洽

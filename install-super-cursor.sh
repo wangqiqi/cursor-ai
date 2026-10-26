@@ -10,7 +10,7 @@ usage() {
   也可显式使用 --here（同上）。
 
 环境变量:
-  SUPER_CURSOR_HOME   cursor-ai 母版仓库根（含 .cursor/）
+  SUPER_CURSOR_HOME   cursor-ai 母版仓库根（含 .cursor/harness/core 或已 assemble 的 .cursor/）
   CURSOR_AI_HOME      同上（别名）
 
   配合 PATH: install-super-cursor · super-cursor-sync（依赖 SUPER_CURSOR_HOME）

@@ -12,12 +12,10 @@ never in the shared template.
 
 ```text
 .cursor/
-├── rules/       4 always-on + 49 glob-scoped + 1 description-scoped rules
-├── skills/      28 skills (plan · run · learn · scaffold · debug · test · review …); slash SSOT (/plan, /run, …), no commands/ stubs
-├── agents/      ship · review · spike (subagents)
-├── hooks/       growth-init · run-start · run-stop
-├── config/      workflow.json · release.json · roles.json · schema.json · denylist.txt
-└── bin/         runner.sh · scaffold.sh · template-verify.sh · consumer-smoke.sh · verify-*.sh
+├── harness/     mother SSOT: core/ + assemble.sh
+├── adaptors/    cursor/ (hooks) · other IDE placeholders
+├── template-verify.sh   CI entry (assembles flat tree first)
+└── (after assemble) skills/ · rules/ · hooks/ · bin/ … — same shape as install target; gitignored on mother repo
 ```
 
 ## Install into any project
@@ -55,11 +53,14 @@ Lost? `/master` routes you via a ≤7-item menu. Everything else is auto-selecte
 The template ships its own gates, and they are wired into CI:
 
 ```bash
-bash .cursor/bin/template-verify.sh     # mother repo, full suite
-bash .cursor/bin/consumer-smoke.sh      # install into a throwaway project and use it
-bash .cursor/verify-super-cursor.sh     # layout + cross-checks (works in target projects too)
-bash .cursor/bin/cursor-coherence.sh    # skills/agents/rules registration
+bash .cursor/harness/assemble.sh        # mother: flat tree for IDE (optional if using template-verify)
+bash .cursor/template-verify.sh         # mother repo, full suite (CI)
+bash .cursor/bin/consumer-smoke.sh
+bash .cursor/verify-super-cursor.sh
+bash .cursor/bin/cursor-coherence.sh
 ```
+
+Edit mother SOP under `.cursor/harness/core/` and `.cursor/adaptors/` — see `.cursor/harness/README.md`.
 
 - **Gate** — `PLAN_APPROVED` is required before code is written; a fresh install *blocks* until you plan.
 - **Acceptance** — every task needs an executable acceptance command; prose acceptance **fails**

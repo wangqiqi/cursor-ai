@@ -90,7 +90,7 @@ CLI：
 
 消费方：`scaffold apply-bundle verify-layers` 后，栈专属 `command` 行保持注释，**按需取消注释**并填写 `stacks` 列。详 bundle 内 `README-verify-layers.md`。
 
-母版自检仍用 `bash .cursor/bin/template-verify.sh`（与业务 verify 分层无关）。
+母版自检仍用 `bash .cursor/template-verify.sh`（与业务 verify 分层无关）。
 
 ## 控制面 · profile 与 token（诚实矩阵）
 

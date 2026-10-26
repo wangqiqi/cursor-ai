@@ -7,7 +7,7 @@
 ```bash
 cd /path/to/cursor-ai   # 母版克隆路径
 git pull
-bash .cursor/bin/template-verify.sh
+bash .cursor/template-verify.sh
 ```
 
 记录母版 commit 或即将发布的 tag，便于消费方 CHANGELOG 对照。
@@ -108,4 +108,4 @@ tar -czf ".growing/archive/pre-cursor-$(date +%Y%m%d).tar.gz" -C /path/to/target
 - 技术栈与按需启用 → [tech-stacks.md](tech-stacks.md)  
 - 安装入门 → `quickstart.md`  
 - 迁移步骤摘要 → `migration-catalog.md` §目标项目升级  
-- 母版自测 → `bash .cursor/bin/template-verify.sh`
+- 母版自测 → `bash .cursor/template-verify.sh`

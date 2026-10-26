@@ -4,15 +4,15 @@
 
 ## Harness Core × Cursor × 换 IDE
 
-Super Cursor 母版当前以 **`.cursor/`** 为安装包根，语义上分三层：
+母版 **编辑真源**：`.cursor/harness/core/` + `.cursor/adaptors/`；`install` / IDE 使用的平铺 `.cursor/skills` 等由 **`assemble`** 生成（消费方仓库通常只有平铺树）。
 
 | 层 | 是什么 | 换 IDE 时 |
 |----|--------|-----------|
-| **Harness Core** | `skills/` · `rules/` · `bin/runner.sh` · `config/` · Growth 种子 — 通用 SOP 与验收 | 尽量保留语义，只改落盘路径 |
-| **Cursor 能力** | `hooks.json` · Cloud 模板 · Bugbot · Automations · Plan Mode 对照 | 留在 Cursor 环境或 **cursor** adaptor |
-| **IDE Adaptor** | 装到 `.cursor` / `.dsh` / `.kiro` / `.trae` 等 | 见 `config/install-map.example.json` · `docs/reference/harness-ide-matrix.md` |
+| **Harness Core** | `harness/core/` 内 skills · rules · runner · config · Growth 种子 | 尽量保留语义 |
+| **Cursor 能力** | `adaptors/cursor/`（hooks · 部分 docs/verify） | 留在 cursor adaptor |
+| **IDE Adaptor** | `adaptors/dsh` 等占位 · 未来装到 `.dsh` / `.kiro` | `config/install-map.example.json` · `docs/reference/harness-ide-matrix.md` |
 
-清点与安装映射 SPIKE 归档在本地 **`.growing/archive/meta/`**；母版摘要见 `skills/plan/reference/harness-core-inventory.md`。后续 Sprint：**HARNESS-LAYOUT**（物理分区）→ **HARNESS-INSTALL**（`--adaptor`）。
+SPIKE 归档 → `.growing/archive/meta/` · 摘要 → `skills/plan/reference/harness-core-inventory.md`。
 
 ## 0. 安装
 
