@@ -120,7 +120,7 @@ for tpl in spec-template tasks-template tech-plan-template principles-template; 
   ref="$CUR/skills/plan/reference/sdd/${tpl}.md"
   seed="$CUR/templates/sdd/${tpl}.md"
   if [[ -f "$ref" && -f "$seed" ]]; then
-    if diff -q "$ref" "$seed" >/dev/null 2>&1; then
+    if diff -q <(tr -d '\r' < "$ref") <(tr -d '\r' < "$seed") >/dev/null 2>&1; then
       ok "sdd twin $tpl"
     else
       fail "sdd twin drift: templates/sdd/${tpl}.md vs reference/sdd/${tpl}.md"

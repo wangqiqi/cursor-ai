@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.32] - 2026-10-26
+
+### Fixed
+
+- **CI Windows consumer-smoke** — `cursor-coherence` SDD twin 比对忽略 CRLF（Git 检出后 `diff` 误报漂移）
+
 ## [4.29.31] - 2026-10-26
 
 ### Fixed
