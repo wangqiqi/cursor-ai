@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [4.29.29] - 2026-10-26
+
+### Fixed
+
+- **CI Windows tmp-cleanup** — `verify-project-tmp-cleanup` 将 `TMPDIR` 反斜杠规范为 `/`，避免 JSON glob 被转义后匹配失败
+- **CI macOS verify** — `run-manifest-tier` / `verify_manifest_integrity` 用 `while read` 替代 `mapfile`（bash 3.2）
+
 ## [4.29.28] - 2026-10-26
 
 ### Fixed

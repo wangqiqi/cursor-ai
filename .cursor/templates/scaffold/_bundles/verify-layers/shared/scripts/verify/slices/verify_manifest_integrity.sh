@@ -7,7 +7,10 @@ sc_cd_root
 MANIFEST="scripts/verify/manifest.tsv"
 [[ -f "$MANIFEST" ]] || { echo "FAIL: missing $MANIFEST"; exit 1; }
 
-mapfile -t ROWS < <(awk -F'\t' 'NF>=3 && $0 !~ /^#/ { print }' "$MANIFEST")
+ROWS=()
+while IFS= read -r line; do
+  ROWS+=("$line")
+done < <(awk -F'\t' 'NF>=3 && $0 !~ /^#/ { print }' "$MANIFEST")
 [[ ${#ROWS[@]} -gt 0 ]] || { echo "FAIL: manifest has no data rows"; exit 1; }
 
 for row in "${ROWS[@]}"; do

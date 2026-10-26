@@ -15,6 +15,7 @@ sc_mktemp_dir sc-verify-ptc
 FIX="$SC_MKTEMP_LAST"
 CFG="$FIX/temp-cleanup.json"
 TMP_ROOT="${TMPDIR:-/tmp}"
+TMP_ROOT="${TMP_ROOT//\\//}"
 PREFIX="${TMP_ROOT%/}/sc-verify-ptc-$$"
 mkdir -p "$PREFIX-ephemeral" "$PREFIX-persist"
 echo old > "$PREFIX-ephemeral/data"

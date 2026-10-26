@@ -38,7 +38,10 @@ load_bundle_commands() {
   local full="$ROOT/scripts/verify/$rel"
   [[ -f "$full" ]] || full="$ROOT/$rel"
   [[ -f "$full" ]] || { echo "FAIL: missing bundle-commands file $rel" >&2; exit 1; }
-  mapfile -t _lines < <(grep -v '^[[:space:]]*#' "$full" | grep -v '^[[:space:]]*$' || true)
+  _lines=()
+  while IFS= read -r line; do
+    _lines+=("$line")
+  done < <(grep -v '^[[:space:]]*#' "$full" | grep -v '^[[:space:]]*$' || true)
   if [[ ${#_lines[@]} -eq 0 ]]; then
     echo "FAIL: empty bundle-commands $rel (tier=$TIER)" >&2
     exit 1
@@ -46,7 +49,10 @@ load_bundle_commands() {
   BUNDLE_CMDS+=("${_lines[@]}")
 }
 
-mapfile -t ROWS < <(awk -F'\t' 'NF>=3 && $0 !~ /^#/ { print }' "$MANIFEST")
+ROWS=()
+while IFS= read -r line; do
+  ROWS+=("$line")
+done < <(awk -F'\t' 'NF>=3 && $0 !~ /^#/ { print }' "$MANIFEST")
 if [[ ${#ROWS[@]} -eq 0 ]]; then
   echo "FAIL: manifest has no data rows: $MANIFEST" >&2
   exit 1
