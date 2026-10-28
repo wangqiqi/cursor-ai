@@ -36,6 +36,12 @@
       "growth_dir": ".growing",
       "includes": ["core"],
       "hooks_manifest": null
+    },
+    "zcode": {
+      "install_dir": ".zcode",
+      "growth_dir": ".growing",
+      "includes": ["core"],
+      "hooks_manifest": ".zcode/config.json"
     }
   }
 }

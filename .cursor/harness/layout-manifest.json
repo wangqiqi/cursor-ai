@@ -20,6 +20,12 @@
       "bin_from_core": true,
       "docs_from_core": true
     },
+    "zcode": {
+      "top_level_dirs": ["docs"],
+      "top_level_files": ["README.md", "hooks.json"],
+      "bin_from_core": false,
+      "docs_from_core": false
+    },
     "placeholders": ["dsh", "kiro", "trae", "opencode"]
   }
 }

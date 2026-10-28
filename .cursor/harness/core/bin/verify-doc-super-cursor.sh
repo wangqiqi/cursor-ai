@@ -327,15 +327,15 @@ done
 vc_ok "facade docs use current scaffold count (no 7-stack drift)"
 
 # --- v5: runtime dir SSOT is .growing (legacy path only in install + CHANGELOG Breaking) ---
-if git -C "$ROOT" grep -rnE '\.cursorGrowth|templates/cursorGrowth' -- . \
+if git -C "$ROOT" grep -rnE '\.growing|templates/cursorGrowth' -- . \
   ':(exclude)install-super-cursor.sh' \
   ':(exclude)CHANGELOG.md' \
   ':(exclude).cursor/harness/core/bin/verify-doc-super-cursor.sh' \
   ':(exclude).cursor/bin/verify-doc-super-cursor.sh' \
   2>/dev/null | grep -q .; then
-  vc_fail "legacy .cursorGrowth path outside install migration + CHANGELOG (SSOT must be .growing)"
+  vc_fail "legacy .growing path outside install migration + CHANGELOG (SSOT must be .growing)"
 else
-  vc_ok "no legacy .cursorGrowth path outside install/CHANGELOG"
+  vc_ok "no legacy .growing path outside install/CHANGELOG"
 fi
 
 vc_summary "verify-doc-super-cursor passed."

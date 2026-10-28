@@ -40,7 +40,7 @@ map_path = Path(os.environ["MAP"])
 data = json.loads(map_path.read_text(encoding="utf-8"))
 adaptors = data.get("adaptors") or {}
 
-PLACEHOLDERS = ("dsh", "kiro", "trae", "opencode")
+PLACEHOLDERS = ("dsh", "kiro", "trae", "opencode", "zcode")
 REQUIRED_HEADINGS = (
     "## Status",
     "## Identity",

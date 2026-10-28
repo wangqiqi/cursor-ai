@@ -45,6 +45,7 @@
     "/tmp/sc-verify-parallel.*",
     "/tmp/sc-verify-skills-bundle.*",
     "/tmp/sc-verify-plugin-mvp.*",
-    "/tmp/pytest-of-*"
+    "/tmp/pytest-of-*",
+    "/tmp/sais-pg-*"
   ]
 }
