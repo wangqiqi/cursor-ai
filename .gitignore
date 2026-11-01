@@ -2,6 +2,8 @@
 /onekey_start.sh
 
 .growing/
+# 旧目录名（本地历史工作副本；install 会迁到 .growing/）— 勿提交
+.cursorGrowth/
 # DSH 运行时生长/会话状态（本地私有，不入 git）
 .dsh/
 .cursor/rules/local

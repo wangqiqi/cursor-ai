@@ -4,6 +4,10 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- **gitignore** — 显式忽略 legacy `.cursorGrowth/`（Growth SSOT 为 `.growing/`）
+
 ## [5.0.7] - 2026-10-26
 
 ### Changed
