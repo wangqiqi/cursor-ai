@@ -1,92 +1,82 @@
-# Super Cursor (English)
+# Super Cursor
 
-> Chinese is the canonical language of this project; **this file is a minimal English entry point.**
-> Canonical docs: [README.md](README.md) · [`docs/`](https://wangqiqi.github.io/cursor-ai/)
+[![Version](https://img.shields.io/badge/version-5.0.8-blue.svg)](CHANGELOG.md)
+[![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Super Cursor turns "how to work with an AI agent" from chat conventions into an installable,
-reusable, evolvable workflow master: **rules + skills + hooks + config**, installed once and
-usable in every repository. Project-specific knowledge lives in `.growing/` (git-ignored),
-never in the shared template.
+> **Turn Cursor Agent from one-off chats into plan → approve → run → verify workflows you can ship.**
 
-## What you get
+Drop a reusable `.cursor/` SOP into any repo. Sprint plans and learnings live in `.growing/` (`config/workflow.json`) so you can upgrade the template without losing local work.
 
-```text
-.cursor/
-├── harness/     mother SSOT: core/ + link-cursor-ide.sh
-├── adaptors/    cursor/ (hooks) · other IDE placeholders
-├── template-verify.sh   CI entry (runs link-cursor-ide first; no flat copy)
-└── (symlink protocol) skills/ · rules/ · hooks/ · bin/ … — point at core/adaptors; install target gets a copied flat tree
-```
+**中文：** [README.md](README.md)
 
-## Install into any project
+---
 
-```bash
-git clone https://github.com/wangqiqi/cursor-ai.git
-cd cursor-ai
-./install-super-cursor.sh /path/to/your-project          # default profile: full
-# or, from anywhere inside a git project:
-SUPER_CURSOR_HOME=$PWD ./install-super-cursor.sh --setup-shell
-```
+## Why teams pick this
 
-| Option | Effect |
-|--------|--------|
-| `--profile full\|lite\|rules-only` | `full` (default, hooks on) · `lite` (no hooks) · `rules-only` (no gate) |
-| `--skills-bundle full\|core` | `full` (28 skills) · `core` (23; no five tool skills) |
-| `--replace` | delete the target `.cursor/` first (recommended for upgrades) |
-| `--copy-plan` | seed `.growing/plan.md` |
+| Pain | What you get |
+|------|----------------|
+| Scope creep mid-chat | **`/plan`** + **`gate-check`** — no business code without approval |
+| “Done” but broken | **`task-verify`** per task · **`verify`** before release |
+| Long epics need babysitting | One **`/run`** can chain ACTIVE tasks when autonomous |
+| Rules baked into the repo | Project overrides in **`.growing/`** · installed **`.cursor/` stays read-only** |
 
-**Scaffolds**: 8 stacks (`react-vite-ts` … `java-gradle` · `cpp-cmake`) — `./.cursor/bin/scaffold.sh list`.
+---
 
-Supported on **Linux · macOS · Windows (Git Bash)**. No `rsync` → `cp -a`; no `jq` → `python`
-(forced with `SC_FORCE_PYTHON=1`, which CI exercises). Per-skill platform scope is documented
-in `.cursor/docs/platforms.md` — note that the `maintain` skill is Linux-only.
-
-## Three commands to remember
+## Three commands
 
 ```text
-/learn   # first thing after install: fill in project knowledge
-/plan    # break a Sprint into tasks (no ACTIVE task yet)
-/run     # implement the ACTIVE task
+/master  →  route when lost
+/plan      →  slice the Sprint; wait for approval
+/run       →  execute; chain tasks in one session when AUTONOMOUS
 ```
 
-Lost? `/master` routes you via a ≤7-item menu. Everything else is auto-selected by the agent.
+```bash
+bash install-super-cursor.sh /path/to/your-project
+cd /path/to/your-project && bash onekey_start.sh
+```
 
-## How it stays honest
+| When | Use |
+|------|-----|
+| Learn this repo | **`/learn`** |
+| Release | **`/release`** (**ship** agent handles release automation) |
 
-The template ships its own gates, and they are wired into CI:
+Mantra: **one approved plan · one run session · stop only for decisions · verify before ✅**
+
+Full walkthrough → [quickstart.en.md](.cursor/docs/quickstart.en.md) · Slash SSOT → `.cursor/skills/master/routes.md`
+
+---
+
+## Install flags
+
+| Flag | Purpose |
+|------|---------|
+| `--profile minimal\|standard\|full` | Install size |
+| `--skills-bundle minimal\|standard\|full` | Skill bundle ([skills-bundle.md](.cursor/docs/skills-bundle.md)) |
+| `--no-growth` | Copy `.cursor/` only |
+| `--dry-run` | Preview |
+
+[distribution-channels.md](.cursor/docs/distribution-channels.md) · [migration-catalog.md](.cursor/docs/migration-catalog.md)
+
+---
+
+## Verify (mother repo)
 
 ```bash
-bash .cursor/harness/link-cursor-ide.sh # mother: IDE protocol symlinks (template-verify also runs this)
-bash .cursor/template-verify.sh         # mother repo, full suite (CI)
-bash .cursor/bin/ci-preflight.sh        # before push: CI matrix legs + docs build
-bash .cursor/bin/consumer-smoke.sh
-bash .cursor/verify-super-cursor.sh
+bash .cursor/bin/template-verify.sh
 bash .cursor/bin/cursor-coherence.sh
 ```
 
-Edit mother SOP under `.cursor/harness/core/` and `.cursor/adaptors/` — see `.cursor/harness/README.md`.
+Do not commit root `onekey_start.sh` here (**verify-onekey-template**). **hygiene** / **verify-spike-mother-hygiene-scope** → [migration-catalog.md](.cursor/docs/migration-catalog.md).
 
-- **Gate** — `PLAN_APPROVED` is required before code is written; a fresh install *blocks* until you plan.
-- **Acceptance** — every task needs an executable acceptance command; prose acceptance **fails**
-  (`task-verify` is fail-closed). Genuinely manual checks must be declared as `manual: <steps>`.
-- **Standalone** — `config/denylist.txt` is scanned across `.cursor/` so no author, machine path
-  or company codename leaks into the shared template.
-- **Portability** — `verify-portability.sh` bans GNU-only constructs and hardcoded `python3`.
-- **Protocol** — `verify-roo-compat.sh` keeps frontmatter within open protocol fields, so the
-  same content can be copied to `.roo/`.
+`.cursor/skills/` — **28** skills on disk (`template-verify` checks the count).
 
-## Design principles
+---
 
-1. **Universal only** — no company paths; any repository can install it.
-2. **Config over fork** — behaviour switches live in `config/*.json`, validated by `config/schema.json`.
-3. **Growth boundary** — project knowledge only in `.growing/`.
-4. **Immutable after install** — the agent does not edit `.cursor/` unless you ask.
-5. **Protocol-agnostic** — open skills/rules protocol; `.cursor/` can be copied to `.roo/`.
-6. **Effectiveness over verbosity** — fewer round-trips beats shorter replies.
+## Docs
 
-## Links
+```bash
+npm install && npm run docs:dev
+```
 
-- Quickstart (EN): [`quickstart.en.md`](.cursor/docs/quickstart.en.md) · 中文: [`quickstart.md`](.cursor/docs/quickstart.md)
-- Cross-platform notes: [`platforms.md`](.cursor/docs/platforms.md)
-- Rules catalog: [`rules-catalog.md`](.cursor/docs/rules-catalog.md)
-- Hosted docs: <https://wangqiqi.github.io/cursor-ai/>
+Deep dive: [README.md](README.md) · `.cursor/docs/` · [library-index.md](.cursor/docs/library-index.md)

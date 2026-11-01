@@ -20,7 +20,8 @@ usage() {
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
-  --adaptor dsh|kiro|trae|opencode  额外安装 IDE adaptor（可重复传入；见 adaptors/*/docs/layout.md）
+  --adaptor dsh|kiro|trae|opencode|zcode  额外安装 IDE adaptor（可重复传入；见 adaptors/*/docs/layout.md）
+  --pack-offline [--strip-urls] [--strip-home]  打离线 tar + 说明文档 → .growing/offline-dist/（仅母版）
   --copy-plan                      复制 templates/plan.md → .growing/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
@@ -30,6 +31,7 @@ usage() {
   source ~/.bashrc && install-super-cursor --replace   # 任意项目子目录同步
   $0 --replace                     # 在仓库任意子目录执行（需已 setup-shell）
   $0 /path/to/my-app --profile lite --copy-plan
+  $0 --pack-offline --strip-urls --strip-home   # 母版：离线分发包 → .growing/offline-dist/
   super-cursor-sync --replace      # 若已将 \$SUPER_CURSOR_HOME/bin 加入 PATH
 
 项目特化与产出 → .growing/（plan · archive · learn · rules/local）
@@ -128,12 +130,21 @@ EOF
   fi
 }
 
-# --help 须在解析母版路径之前生效（无母版时也应能看用法）
 for _arg in "$@"; do
   case "$_arg" in
     -h|--help) usage; exit 0 ;;
   esac
 done
+
+if [[ "${1:-}" == "--pack-offline" ]]; then
+  shift
+  SOURCE="$(resolve_source_root)" || exit 1
+  pack_script="$SOURCE/.cursor/harness/core/bin/pack-offline-dist.sh"
+  [[ -f "$pack_script" ]] || pack_script="$SOURCE/.cursor/bin/pack-offline-dist.sh"
+  exec bash "$pack_script" "$SOURCE" "$@"
+fi
+
+# --help 须在解析母版路径之前生效（无母版时也应能看用法）
 
 SOURCE="$(resolve_source_root)" || exit 1
 TARGET=""
@@ -147,6 +158,7 @@ ADAPTOR_DSH="false"
 ADAPTOR_KIRO="false"
 ADAPTOR_TRAE="false"
 ADAPTOR_OPENCODE="false"
+ADAPTOR_ZCODE="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -187,7 +199,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --adaptor)
       if [[ $# -lt 2 ]]; then
-        echo "错误: --adaptor 需要取值（dsh · kiro · trae · opencode）" >&2
+        echo "错误: --adaptor 需要取值（dsh · kiro · trae · opencode · zcode）" >&2
         usage
         exit 1
       fi
@@ -196,8 +208,9 @@ while [[ $# -gt 0 ]]; do
         kiro) ADAPTOR_KIRO="true" ;;
         trae) ADAPTOR_TRAE="true" ;;
         opencode) ADAPTOR_OPENCODE="true" ;;
+        zcode) ADAPTOR_ZCODE="true" ;;
         *)
-          echo "错误: 未知 adaptor: $2（支持 dsh · kiro · trae · opencode）" >&2
+          echo "错误: 未知 adaptor: $2（支持 dsh · kiro · trae · opencode · zcode）" >&2
           usage
           exit 1
           ;;
@@ -473,6 +486,9 @@ fi
 if [[ "$ADAPTOR_OPENCODE" == "true" ]]; then
   sc_run_pack_script install-adaptor-opencode.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
 fi
+if [[ "$ADAPTOR_ZCODE" == "true" ]]; then
+  sc_run_pack_script install-adaptor-zcode.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
+fi
 
 # Detect empty-ish project for hints
 file_count=0
@@ -492,6 +508,7 @@ echo "  skills-bundle: $SKILLS_BUNDLE"
 [[ "$ADAPTOR_KIRO" == "true" ]] && echo "  adaptor: kiro → $TARGET/.kiro/"
 [[ "$ADAPTOR_TRAE" == "true" ]] && echo "  adaptor: trae → $TARGET/.trae/"
 [[ "$ADAPTOR_OPENCODE" == "true" ]] && echo "  adaptor: opencode → $TARGET/.opencode/"
+[[ "$ADAPTOR_ZCODE" == "true" ]] && echo "  adaptor: zcode → $TARGET/.zcode/"
 echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"

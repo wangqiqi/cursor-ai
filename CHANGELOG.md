@@ -4,8 +4,16 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.0.8] - 2026-11-01
+
+### Added
+
+- **offline-pack** — `pack-offline-dist.sh` · `install-super-cursor.sh --pack-offline`（消费端 tar + USAGE.md/html → `.growing/offline-dist/`；rsync 保留 symlink · prune 母版 verify/CI · 锚定 exclude 防误删 `skills/learn`）
+- **install** — `--adaptor zcode` 聚合安装 `.zcode/`（与既有 `install-adaptor-zcode.sh` 对齐）
+
 ### Changed
 
+- **README** · **README.en.md** — 门面精简、价值主张与冷启动结构；保留 verify-doc / coherence 门面字符串
 - **gitignore** — 显式忽略 legacy `.cursorGrowth/`（Growth SSOT 为 `.growing/`）
 
 ## [5.0.7] - 2026-10-26

@@ -1,362 +1,116 @@
 # Super Cursor
 
-> **English**: [README.en.md](README.en.md) · Quickstart → [quickstart.en.md](.cursor/docs/quickstart.en.md)
+[![Version](https://img.shields.io/badge/version-5.0.8-blue.svg)](CHANGELOG.md)
+[![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[![Version](https://img.shields.io/badge/version-5.0.7-blue?style=flat-square)](CHANGELOG.md)
-[![Docs](https://img.shields.io/badge/docs-VitePress-646cff?style=flat-square)](https://wangqiqi.github.io/cursor-ai/)
-[![GitHub Stars](https://img.shields.io/github/stars/wangqiqi/cursor-ai?style=flat-square&logo=github)](https://github.com/wangqiqi/cursor-ai/stargazers)
-[![Issues](https://img.shields.io/github/issues/wangqiqi/cursor-ai?style=flat-square)](https://github.com/wangqiqi/cursor-ai/issues)
-[![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Git%20Bash-lightgrey?style=flat-square)](.cursor/docs/platforms.md)
-[![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-brightgreen?style=flat-square)](.cursor/docs/scaffold.md)
-[![Cursor](https://img.shields.io/badge/built%20for-Cursor-000000?style=flat-square)](https://cursor.com)
+> **把 Cursor Agent 从「聊完就散」变成「先规划、可验收、能连跑」的团队级工作流。**
 
-让 Cursor Agent 像资深同事一样协作：先规划、再执行、可验收、能收尾、能发版。
+安装一套 `.cursor/` SOP 到你的仓库；Sprint 计划、归档与学习笔记落在 `.growing/`（见 `config/workflow.json`），母版模板与项目产出分离，升级模板不必丢本地 plan。
 
-> 不是又一个 `.cursorrules` 片段合集，而是一套**可安装、可复用、可演进**的 Agent 工作流母版。
+**English:** [README.en.md](README.en.md) · [Quick start (EN)](.cursor/docs/quickstart.en.md)
 
 ---
 
-## 一句话
-
-把「怎么和 Agent 协作」从聊天里的口头约定，变成 **rules + skills + hooks + config** —— 装一次，每个仓库都能用；项目特化知识进 `.growing/`（git 忽略），**不污染通用模板**。
-
-> **Roo Code 兼容** — `.cursor/` 内的所有内容**也可以整体复制到 `.roo/`**（`cp -r .cursor .roo` 即可），既支持 **Roo Code** 模式，也兼容 **Cursor 内遵循相同 skills/rules 协议** 的 Agent；详见 [§ 兼容 Roo Code](#兼容-roo-code)。
-
 ## 适合谁
 
-| 你可能是… | Super Cursor 帮你… |
-|-----------|-------------------|
-| 独立开发者 | 空仓库 5 分钟起盘，Agent 不再乱改一通 |
-| 技术负责人 | 统一 plan/run 闸门，任务可追溯、验收可脚本化 |
-| 新加入的成员 | `/master` 路由 + `/learn` 项目常识，少问重复问题 |
-| 开源维护者 | security/api/review/git 审查 skills，发版有 release/ship 清单 |
-| 产品 / 文档 | `/manual` · Manual Contract — 可发布使用说明书与配图 regen |
-| QA / 测试 | `/report` · Report Contract — verify 后 benchmark 测试报告 |
+| 你现在的痛点 | Super Cursor 怎么帮 |
+|--------------|---------------------|
+| Agent 直接改代码、范围漂移 | **`/plan`** 冻结 Goal · **`gate-check`** 未批准不写业务 |
+| 「好了」但测不过 | 每任务 **`task-verify`**，Sprint 前 **`verify`**（fail-closed） |
+| 长需求要反复催 | **`/run`** + 自治链：一次批准，连跑多个 TASK，只在决策点停 |
+| 规则写进模板、难升级 | 项目特化进 **`.growing/`**；安装后 **`.cursor/` 只读** |
 
-## 开箱即用
+---
 
-```text
-.cursor/
-├── harness/    母版 SSOT：core/（rules · skills · bin · config · templates · docs）+ link-cursor-ide.sh
-├── adaptors/   cursor/（hooks · cursor-only verify）· dsh/kiro/… 占位
-├── template-verify.sh   母版 CI 入口（内部先 `link-cursor-ide.sh`，无平铺复制）
-└── （symlink 协议路径）skills/ · rules/ · hooks/ · bin/ … — 指向 harness/core + adaptors；**install 后**目标项目为拷贝平铺树
-```
-
-协议路径下 `skills/` 目录 **28 个** skill（`--skills-bundle core` 为 23 个）；计数由 `verify-doc-super-cursor` 与磁盘对齐。
-
-**根目录（可直接 clone / 复制）：**
+## 三条指令走天下
 
 ```text
-.cursor/  .cursor-plugin/  install-super-cursor.sh  README.md  CHANGELOG.md  .gitignore  .cursorignore
-# plan 工作副本：安装时从 templates/plan.md → workflow.json 的 plan_file（Growth，gitignore）
-# .cursor-plugin/：可选 Cursor Plugin MVP（lifecycle 子集）；全量 SOP 仍走 install-super-cursor.sh
+/master  →  迷路？先路由
+/plan    →  拆 Sprint，等人点头
+/run     →  开跑；AUTONOMOUS 时同一轮连完 ACTIVE 链
 ```
 
-**安装到其它项目：**
-
-```bash
-git clone https://github.com/wangqiqi/cursor-ai.git
-cd cursor-ai
-bash .cursor/bin/bootstrap-growth.sh          # 母版 clone 后首次：补 .growing/rules/local
-
-./install-super-cursor.sh /path/to/your-project
-# 或已配置 SUPER_CURSOR_HOME + PATH 后，在仓库任意子目录：
-# super-cursor-sync --replace
-cd /path/to/your-project
-bash .cursor/bin/platform-check.sh            # 可选：环境自检
-```
-
-| 选项 | 作用 |
+| 场景 | 命令 |
 |------|------|
-| `--profile full\|lite\|rules-only` | 工作流档位（默认 `full`） |
-| `--replace` | 先删目标 `.cursor/` 再拷贝（**升级/迁移推荐**） |
-| `--copy-plan` | 复制 `templates/plan.md` → `.growing/plan.md` |
-| `--skills-bundle full\|core` | skills 子集（默认 **full**=28；**core**=23，不含五工具 skill） |
+| 安装到目标项目 | `bash install-super-cursor.sh /path/to/project` |
+| 本仓认知 / 改 SOP | **`/learn`** |
+| 发版 | **`/release`**（无 `/ship` slash；**ship** agent 负责自治发版） |
 
-| 分发 | 说明 |
-|------|------|
-| **`install-super-cursor.sh`** | **默认 / 主路径** — 全量 `.cursor/` · `runner.sh` · `verify-super-cursor` |
-| **`.cursor-plugin/`** | **可选** — lifecycle 子集 + agents（本地加载）；与 **`--skills-bundle core`** 不同轨；**先 install** 再靠 hooks 读 config → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
+口诀：**一次 plan 批准 · 一次 run 开跑 · 决策才停 · verify 才勾 ✅**
 
-| profile | 适合 |
-|---------|------|
-| `full`（默认） | 团队：plan/run + hooks（自治 Sprint 连跑） |
-| `lite` | 个人：plan/run，无 hooks |
-| `rules-only` | 只要 rules/skills，关闭 plan/run 闸门 |
-
-**profile × skills-bundle × 分发轨**（`config/skill-bundles.json` SSOT · 详 `config/README.md`）：
-
-| 组合 | skills | hooks / 闸门 | 典型场景 |
-|------|--------|--------------|----------|
-| `full` + `full`（默认） | 28 | hooks + plan/run | 团队母版 / 完整 SOP |
-| `lite` + `core` | 23（无五工具 skill） | plan/run，无 hooks | 个人机 · 少占盘 |
-| `lite` + `full` | 28 | 无 hooks | 要全 skill 但不要自治 hooks |
-| `rules-only` + `core` | 23 | 关闭 workflow 闸门 | 仅 rules/skills 参考 |
-| **`.cursor-plugin/`** | 5 lifecycle + agents | 依赖已 install 的 `config/` | **第三轨** · 不替代 install → [.cursor-plugin/README.md](.cursor-plugin/README.md) |
-
-栈与 `project-profile` → [.cursor/docs/tech-stacks.md](.cursor/docs/tech-stacks.md) §安装 vs 启用。
-
-支持 **Linux · macOS · Windows（Git Bash）** — 无 `rsync` 自动 `cp -a`，无 `jq` 回退 `python`；由 `bash .cursor/bin/verify-portability.sh` 静态守护。**技能另有各自平台作用域**（如 `maintain` 仅 Linux），见 [跨平台说明](.cursor/docs/platforms.md) §技能平台作用域。
-
-### 全局同步（任意子目录 → Git 项目根）
-
-**首次**在母版仓库执行（只写 shell 环境变量，不装项目）：
-
-```bash
-cd /path/to/cursor-ai
-./install-super-cursor.sh --setup-shell
-source ~/.bashrc   # 或重开终端
-```
-
-之后在 `projectA/dir1/dir2` 等深层目录：
-
-```bash
-install-super-cursor --replace          # 同步母版 .cursor/ 到 Git 项目根
-super-cursor-sync --replace             # 同上（PATH 包装）
-```
-
-母版仓库须保留根目录 **`bin/super-cursor-sync`**（`verify-mother-root-bin.sh` 门禁）；勿删该文件，否则 `--setup-shell` 后 PATH 同步会断。
-
-手动配置（等价于 `--setup-shell`）：
-
-```bash
-# ~/.bashrc 或 ~/.zshrc
-export SUPER_CURSOR_HOME="$HOME/workspace/cursor-ai"   # 母版仓库路径
-export PATH="$SUPER_CURSOR_HOME/bin:$PATH"
-alias install-super-cursor="$SUPER_CURSOR_HOME/install-super-cursor.sh"
-```
-
-## 工作流一览
+Slash 与 skill 详表 → `.cursor/skills/master/routes.md`（根 README 不重复整表）。
 
 ```mermaid
-flowchart TB
-  master["/master 不确定先路由"] --> scaffold["/scaffold 空仓库起盘"]
-  master --> learn["/learn 项目认知"]
-  learn --> plan["/plan 先总后分 Sprint"]
-  scaffold --> plan
-  plan --> gate{"gate-check"}
-  gate -->|pass| run["/run 实现与验收"]
-  gate -->|block| plan
-  run --> tv["task-verify"]
-  tv --> commit["commit 与 next-task"]
-  commit --> run
-  commit --> delivery["/delivery 可选"]
-  delivery --> report["/report 可选"]
-  report --> release["/release merge PR tag"]
-  commit --> ship["verify 与 release ship"]
+flowchart LR
+  A["/master"] --> B["/plan"]
+  B --> C["PLAN_APPROVED"]
+  C --> D["/run"]
+  D --> E["task-verify"]
+  E --> F["/release"]
 ```
 
-**核心机制：**
+---
 
-- **任务地图** — ROADMAP/Goal（总）→ TASK/ACTIVE（分）→ 验收/archive；详见 [plan/run](.cursor/docs/plan-run.md)
-- **闸门** — 无 `PLAN_APPROVED` 不写业务代码，避免 Agent「想到哪改到哪」
-- **自治 Sprint** — 默认 `AUTONOMOUS:true`：**`/plan` 批准一次 · `/run` 一次**连跑 TASK，仅决策点打断（见 `super-cursor-persona` · `autonomy-chain.md`）
-- **长程 Epic** — **`/long`**：Epic→Sprint→Task 三层收敛 · 多 Sprint plan/run 链 · checkpoint 续跑（单 Sprint 仍用 plan+run）
-- **验收** — 每个 `TASK-*` 有可执行 Acceptance 列，`task-verify` 不过不 commit
-- **任务 ID** — `TASK-*` 实现（`/run` 主路径）· `REV-*` 回顾 · `SPIKE-*` 调研 · `DOC-*` 文档；`next-task` 自动跳过后三者
-- **发版节奏** — `release.mode`：`patch-per-task`（默认，Sprint 收尾打 tag）或 `tag-per-commit`（每 TASK 一 tag；见 `config/workflow.json`）
-- **SDD（可选）** — 大特性可走 **plan** §SDD + `templates/sdd/`（吸收 [spec-kit](https://github.com/github/spec-kit)）
-- **沉淀** — 项目路径、模块地图、发版节奏 → `/learn` 写入 `.growing/learn/`
-- **边界** — 安装后 `.cursor/` 默认只读；团队差异用 `config/*.json` 或 `.cursor/rules/local/`（社区 rules → [rules-catalog](.cursor/docs/rules-catalog.md)）
-
-## 和「只用 Cursor 默认 Agent」的差别
-
-| 场景 | 默认 Agent | Super Cursor |
-|------|-----------|--------------|
-| 空仓库 | 「帮我建个 React 项目」→ 结构各异 | `/scaffold` → 8 栈标准层（lint/test/verify/CI） |
-| 大需求 | 一次改很多文件，难 review | `/plan` 先总后分 → **`/run` 一次**连跑（默认自治） |
-| 新会话 | 重新解释项目结构 | `/learn` 读过 `.growing/learn/` |
-| 分支收尾 | merge/PR 靠口头约定 | **release** skill（§分支 4 选 1）· PR 维护可用 Cursor 内置 `autopilot`（见 **master** → `git`） |
-| 合并前 | 靠人想起来查安全/API | **review** · **security** · **api** · **delivery** · **git** skills |
-| 发版 | 口头 checklist | **`/release`**（人）或 **ship**（自治执行同一清单） |
-| 用户文档 | README 碎片 + 过期截图 | **`/manual`** · Manual Contract · 5 种 Capture Profile · Reader Test |
-| 测试报告 | 终端 log 碎片 · 口头「全绿」 | **`/report`** · Report Contract · full/from-logs · 发版 benchmark |
-
-## 30 秒上手
-
-对 Agent 说（**记三个即可**）：
-
-```text
-/run     # 默认：做事 · 写代码
-/plan    # 拆 Sprint（无 ACTIVE 时）
-/master  # 真迷路才用
-```
-
-完整 slash 见 [`.cursor/README.md`](.cursor/README.md) 三层表。常见路径：
-
-```text
-新仓库     →  /scaffold  →  /learn  →  /plan  →  /run
-长程 Epic  →  /long <目标>  →  每 Sprint plan+run  →  checkpoint
-已有代码   →  /learn  →  /plan  →  /run
-小修小补   →  /run 或描述复现步骤（bugfix rules）
-根因不明   →  skill **debug**（系统调试循环）
-合并前回顾 →  skill **review** 或 REV-* · 可委派 review agent
-体验/导航  →  skill **ux** / **ia**（无 slash）
-```
-
-| 层 | Command | 作用 |
-|----|---------|------|
-| **【日常】** | `/run` · `/plan` · `/master` | 做事 · 拆 Sprint · 真迷路时路由 |
-| **【生命周期】** | `/scaffold` · `/learn` · `/long` · `/release` | 空仓起盘 · 项目认知 · Epic 长程 · Sprint 出口 |
-| **【高级】** | `/delivery` · `/manual` · `/report` | 上线走查 · 说明书 · 测试报告 |
-
-> 完整三层表（含"何时用/不做什么"）→ [`.cursor/README.md`](.cursor/README.md) §Slash 入口；**canonical 路由表** → `master` skill `routes.md`。此处只列名字，避免与两处重复。
-
-
-发版：**`/release`**（人主导清单）· **ship** agent（自治执行 **release §打版**，无独立 slash）。
-
-**无独立 slash、Agent 常自动选用**：**ux** · **ia** · **debug** · **review** · **pencil-design** · **security** · **api** · **test** · **mcp** · **refactor** · **perf** · **study** · **user-manual** · **test-report** — 入口见 **master** `routes.md`；说明书/报告用 **`/manual`** · **`/report`**。
-
-**需显式调用**（`disable-model-invocation: true`，Agent **不会**按关键词自动选用）：**`/week`** · **`/disk`** · **`/maintain`** · **`/ops-deploy`** · **`/code-stats-viz`**。
-
-## 8 栈脚手架
-
-每个栈自带 `scripts/test.sh`（开发循环）+ `scripts/verify.sh`（全量验收），与 plan/run 验收列对齐。
+## 安装
 
 ```bash
-./.cursor/bin/scaffold.sh list                    # 8 栈清单（唯一真源）
-./.cursor/bin/scaffold.sh apply go-api --dry-run   # 先预览
-./.cursor/bin/scaffold.sh apply go-api
+bash install-super-cursor.sh /path/to/your-project
+cd /path/to/your-project && bash onekey_start.sh   # 安装后由 growth 生成；母版根目录不应提交 onekey
 ```
 
-| 类别 | scaffold id |
-|------|-------------|
-| 前端 | `react-vite-ts` · `vue-vite-ts` · `nextjs-ts` |
-| 后端 | `go-api` · `rust-axum` · `python-fastapi` · `java-gradle` |
-| 系统 | `cpp-cmake` |
-
-> 各栈依赖与目录 → `scaffold.sh list` · [`scaffold.md`](.cursor/docs/scaffold.md) · `templates/scaffold/manifest.json`（避免在此维护第三份栈清单）。
-
-完整 walkthrough → [端到端示例](.cursor/docs/walkthrough.md)
-
-## 效果型效率（少拉扯才是真省）
-
-Agent 协作的「省钱」不是单次会话少说几句，而是 **总轮次少、方向对、一次可验证**。
-
-```text
-总成本 ≈ 固定开销 + 轮次 × token + 返工
-```
-
-压短回复或盲目压缩 rules，常带来更多纠偏与返工 —— **合计更贵，还可能降智**。Super Cursor 用 **闸门 + 验收 + 沉淀** 把成本花在「第一轮就对」上：
-
-| 机制 | 作用 |
+| 选项 | 说明 |
 |------|------|
-| `/plan` · `gate-check` | 先对齐 Goal，避免想到哪改到哪 |
-| `task-verify` · Acceptance | 可验证才 commit，防假完成 |
-| glob 按需 rules | 固定开销可控（仅 `core` · `workflow` · `cursor-standalone` · `super-cursor-persona` 4 条常驻） |
-| `/learn` · `.growing/` | 新会话少重复讲项目结构 |
+| `--profile minimal\|standard\|full` | 安装体量（默认 `standard`） |
+| `--skills-bundle minimal\|standard\|full` | 技能包裁剪（与 profile 独立；见 `.cursor/docs/skills-bundle.md`） |
+| `--no-growth` | 只复制 `.cursor/`，不初始化 `.growing/` |
+| `--dry-run` | 预演不写盘 |
 
-日常习惯：**一事一对话** · 模糊先 `/plan` · 关键决策用强模型 · `@文件` 精准投喂。详述 → [效果型效率](.cursor/docs/effective-collaboration.md)
+脚本 / 插件 / npm 三通道 → [distribution-channels.md](.cursor/docs/distribution-channels.md)  
+迁移与边界 → [migration-catalog.md](.cursor/docs/migration-catalog.md)（**刻意不迁移** · **完整性边界**）
 
-## 设计原则
-
-1. **Universal only** — 母版不含公司路径，任何仓库都能装
-2. **Config over fork** — 行为开关在 `config/*.json`，不必 fork 母版
-3. **Growth boundary** — 项目认知只进 `.growing/`，模板保持干净
-4. **Immutable after install** — Agent 默认不改 `.cursor/`，除非你明确要求
-5. **Protocol-agnostic** — `.cursor/` 用业界**开放的 skills/rules 协议**，整体复制到 `.roo/` 即可被 Roo Code 加载，详见下节
-6. **Effectiveness over verbosity** — 结构防拉扯优先于压 token；见上节与 [effective-collaboration](.cursor/docs/effective-collaboration.md)
-
-## 兼容 Roo Code
-
-**Roo Code** 采用与 Cursor 兼容的 **skills / rules** 协议（母版 slash 直挂 skill，无 `commands/` 层），**Super Cursor 的分发内容可以原样复制到 `.roo/`**。一次安装，两端生效：
-
-```bash
-# Cursor 用户：标准安装
-./install-super-cursor.sh /path/to/your-project
-
-# Roo Code 用户：复制到 .roo/ 即可
-./install-super-cursor.sh /path/to/your-project
-cp -r /path/to/your-project/.cursor /path/to/your-project/.roo
-```
-
-| 路径 | 作用 |
+| 路径 | 角色 |
 |------|------|
-| `.cursor/` | Cursor Agent 加载（rules / skills / hooks / config） |
-| `.roo/` | **可选**：Roo Code 加载同源内容（`cp -r .cursor .roo`） |
-| `.growing/` | 共享，**无需重复**（两边 Agent 都按 `learn/` 读序） |
+| `.cursor/` | 可安装 SOP（rules · skills · hooks · config · templates） |
+| `.growing/` | 目标项目 plan · learn · archive · rules/local（git 忽略） |
+| `.cursor/harness/` · adaptors | 运行时壳与 IDE 适配；消费方见 `.cursor/README.md` |
 
-**设计要点**：
+---
 
-- 母版**只**使用双方都识别的协议字段：`rules/*.mdc` · `skills/*/SKILL.md` · `agents/*.md` · `config/*.json` — 由 **`bash .cursor/bin/verify-roo-compat.sh`** 断言（frontmatter 键 ⊆ 开放协议白名单，出现编辑器私有键即 FAIL）
-- **不**依赖 `.cursorrules` 单文件等旧式约定；核心 plan/run 闸门靠 rules + skills + `config/*.json`，**不绑** Cursor 私有 API
-- **hooks**（`run-start` / `run-stop`）为 Cursor **自治 Sprint 增强**；Roo 或无需连跑时用 `--profile lite` / `rules-only` 即可降级
-- `.growing/` 内的 `plan.md` / `learn/` / `rules/local/` **只维护一份**，避免两边漂移
-- 装一次、两端都用 —— 适合团队混用编辑器，或同时上 Cursor + Roo Code 的项目
-
-> 协议细节见 [Roo Code 文档](https://docs.roocode.com) 与 Cursor 官方 `rules` / `skills` 加载机制。
-
-## 文档
-
-**在线文档（VitePress）**：<https://wangqiqi.github.io/cursor-ai/> — 镜像 `.cursor/docs/` 全量侧栏；本地预览：
+## 文档站
 
 ```bash
-npm install
-npm run docs:dev
+npm install && npm run docs:dev
+npm run docs:build
 ```
 
-| 文档 | 说明 |
-|------|------|
-| [5 分钟上手](https://wangqiqi.github.io/cursor-ai/guide/quickstart) · [源文件](.cursor/docs/quickstart.md) | 最短闭环 |
-| [效果型效率](https://wangqiqi.github.io/cursor-ai/guide/effective-collaboration) · [源文件](.cursor/docs/effective-collaboration.md) | 少拉扯才是真省 · 与 skills 市场 token skill 的取舍 |
-| [plan/run](https://wangqiqi.github.io/cursor-ai/guide/plan-run) · [源文件](.cursor/docs/plan-run.md) | 闸门、验收、hooks、先总后分 |
-| [rules-catalog](https://wangqiqi.github.io/cursor-ai/reference/rules-catalog) · [源文件](.cursor/docs/rules-catalog.md) | 社区 rules 索引 · `rules/local/` 引用 |
-| [使用场景（20+）](.cursor/README.md) | onboarding → 发版全场景 |
-| [scaffold](https://wangqiqi.github.io/cursor-ai/guide/scaffold) · [源文件](.cursor/docs/scaffold.md) | 脚手架与 audit |
-| [端到端示例](https://wangqiqi.github.io/cursor-ai/guide/walkthrough) · [源文件](.cursor/docs/walkthrough.md) | go-api 可跟练 |
-| [Building](https://wangqiqi.github.io/cursor-ai/guide/building-super-cursor) · [源文件](.cursor/docs/building-super-cursor.md) | 扩展母版、贡献指南 |
+`.cursor/docs/` · [library-index.md](.cursor/docs/library-index.md) · Roo / 其它 IDE 专题同目录。
 
-## 致谢与协议出处
+---
 
-Super Cursor 从下列开源项目**蒸馏协议与清单**（完整落点 → [`.cursor/docs/library-index.md`](.cursor/docs/library-index.md)）。**只链不拷**整包进母版 `.cursor/skills/`。
+## 贡献者 · 验收（母版）
 
-| 上游项目 | 许可 | 维护方 | 母版落点（摘要） |
-|----------|------|--------|------------------|
-| [wangqiqi/cursor-ai-rules](https://github.com/wangqiqi/cursor-ai-rules) | MIT | wangqiqi | Super Cursor 前身：三公理 · `.growing/` 双目录 · core skills · VIBE · [migration-catalog](.cursor/docs/migration-catalog.md) |
-| [anthropics/skills](https://github.com/anthropics/skills) | 各 skill 自有（见 `LICENSE-anthropics.txt`） | Anthropic | **mcp** Eval · **test** E2E · **delivery** 反模板/PDF · **plan/run** 协作文档 |
-| [github/spec-kit](https://github.com/github/spec-kit) | MIT | GitHub | **plan** SDD · **review** analyze · **run** converge · `templates/sdd/` |
-| SkillsMP 社区协议 | protocol only | 见 CHANGELOG | **review** 双轴 · **run** closeout · **debug** 内省 · **test** factory · **master** LIBRARY · **security** · **git** |
-| [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 社区 | PatrickJS 等 | `rules/execution/scope.mdc` anti-overengineering |
-| [LessUp/awesome-cursorrules-zh](https://github.com/LessUp/awesome-cursorrules-zh) | MIT | LessUp | PatrickJS 中文镜像 · BDD/评审/Issue 模板 · [rules-catalog](.cursor/docs/rules-catalog.md) |
-| [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
-| [spencerpauly/awesome-cursor-skills](https://github.com/spencerpauly/awesome-cursor-skills) | 社区 | — | [rules-catalog](.cursor/docs/rules-catalog.md) 策展索引 |
-| [SpaceZephyr/pm-skills](https://github.com/SpaceZephyr/pm-skills) | MIT | SpaceZephyr | **plan** PRD 体检/补漏 · **review** 文档预审 · **delivery** §埋点 · **master** 产品工作流 LIBRARY |
-
-安装外网 skill 前 → **security** §外部 Agent Skill · **master** → `deps`。
-
-## 验证
-
-目标项目升级 `.cursor/`（保留 Growth）→ [consumer-refresh](.cursor/docs/consumer-refresh.md)。
+PR 前建议跑通：
 
 ```bash
-bash .cursor/harness/link-cursor-ide.sh      # 母版：补齐 IDE 协议 symlink（非复制）；template-verify 也会调
-bash .cursor/template-verify.sh                # 母版完整自测（CI）
-bash .cursor/bin/ci-preflight.sh               # push 前：三矩阵腿 + VitePress（对齐 Actions）
-bash .cursor/verify-super-cursor.sh            # layout + verify-*.sh（缺链时先 link-cursor-ide）
-bash .cursor/bin/consumer-smoke.sh             # 目标项目端到端
-bash .cursor/bin/cursor-coherence.sh
+bash .cursor/bin/template-verify.sh    # 全量母版验收
+bash .cursor/bin/cursor-coherence.sh   # 门面 README · skills/agents · migration-catalog
+bash .cursor/bin/verify-doc-super-cursor.sh
 ```
 
-母版改文件 → **`.cursor/harness/core/`** · **`.cursor/adaptors/`**（见 `.cursor/harness/README.md`）。
+含 **`verify-onekey-template`**（母版根不得有 `onekey_start.sh`）、**`verify-spike-mother-hygiene-scope`**（母版 **hygiene** 范围）；索引见 [migration-catalog.md](.cursor/docs/migration-catalog.md)。
 
-| 组 | 代表脚本 | 守护 |
-|----|----------|------|
-| **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-mother-root-bin` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · 占位 adaptor 契约 · 母版根 `bin/super-cursor-sync` · project-onekey 模板 |
-| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` SSOT · `--skills-bundle` 冒烟 |
-| **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / `docs-init` SPIKE |
-| **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-*-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep（Defer） |
-| **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
-| **hygiene** | `verify-spike-mother-hygiene-scope` | 门面漂移审计 |
-| **E2E** | `consumer-smoke.sh`（`template-verify` 内） | 目标项目 install → 闸门 → hook 闭环 |
+`.cursor/skills/` 目录当前 **28 个** skill（磁盘为准；`template-verify` 校验计数）。子 agent：**ship** · **review** · **spike**（`.cursor/agents/`）。
 
-全表与三轨分发 → [migration-catalog](.cursor/docs/migration-catalog.md) §母版 verify 索引。语义（含 `task-verify` fail-closed）→ [verify.mdc](.cursor/rules/feedback/verify.mdc) §母版门禁清单。
+<details>
+<summary>Skill 名索引（coherence 维护用）</summary>
 
-母版 SPIKE 证据在本地 `.growing/archive/meta/`（不入 git）；fresh clone / CI 对 meta 门禁 **SKIP**、目录存在则严格校验 → [growth-meta-ci-dual](.cursor/skills/plan/reference/growth-meta-ci-dual.md)。
+api · code-stats-viz · debug · delivery · disk · git · ia · learn · long · maintain · master · mcp · ops-deploy · pencil-design · perf · plan · refactor · release · review · run · scaffold · security · study · test · test-report · user-manual · ux · week
 
-## 参与
+</details>
 
-如果 Super Cursor 帮你省了重复教 Agent 的时间 —— 欢迎 [**Star**](https://github.com/wangqiqi/cursor-ai/stargazers) 支持，或用 [Issue](https://github.com/wangqiqi/cursor-ai/issues)/PR 反馈缺口。
+---
 
-- 扩展**通用**能力 → 改本仓库
-- **项目私有**约定 → 目标仓库的 `.cursor/rules/local/`（见 [rules-catalog](.cursor/docs/rules-catalog.md) · 勿 commit 进母版 `.cursor/`）
+## 致谢
+
+灵感与对照 → [library-index.md](.cursor/docs/library-index.md) 与各 skill `reference/`。
