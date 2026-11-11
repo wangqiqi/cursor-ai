@@ -1,6 +1,17 @@
 # OpenCode `.opencode/` 布局（Super Cursor · `includes: core`）
 
-OpenCode 官方安装根 **待确认**（见 [opencode.ai/docs](https://opencode.ai/docs)）；本布局与 **dsh** 相同假设：Harness Core 平铺到 `.opencode/`。若官方规范冲突，以 SPIKE 更新本文件与 `install-adaptor-opencode.sh`。
+> ⚠️ **本布局为 Super Cursor 自创假设，与官方机制方向性错位**，见下方「官方对照」。
+
+## 官方对照（2026-11 核实）
+
+| 项 | 官方 OpenCode | 本 adaptor 现状 |
+|----|------|------|
+| 项目规则 | 项目根 `AGENTS.md`（`/init` 生成或手写） | `.opencode/AGENTS.md` ✗ |
+| 全局规则 | `~/.config/opencode/AGENTS.md` | 未覆盖 ✗ |
+| 配置 | `opencode.json`（`instructions` 数组可引用 `.cursor/rules/*.md` 或远程 URL） | 无 ✗ |
+| 兼容回退 | `CLAUDE.md`（Claude Code 约定） | 无 ✗ |
+
+结论：OpenCode **没有 `.opencode/` 目录约定**，规则走 `AGENTS.md` + `opencode.json`。当前 `install-adaptor-opencode.sh` 平铺到 `.opencode/` 不会被 OpenCode 读取。重做方向见 `## Next sprint`。
 
 ## 目标路径
 

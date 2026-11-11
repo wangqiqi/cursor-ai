@@ -1,6 +1,17 @@
 # DeepSeek `.dsh/` 布局（Super Cursor · `includes: core`）
 
-DeepSeek 官方 harness 目录规范**尚未公开**；本布局为 Super Cursor **自定假设**，与 `install-adaptor-dsh.sh` 一致。若官方规范冲突，以 SPIKE 更新本文件与安装脚本。
+> ⚠️ **本布局为 Super Cursor 自创假设，与官方机制方向性错位**，见下方「官方对照」。
+
+## 官方对照（2026-11 核实）
+
+| 项 | 官方 DeepSeek Harness（dsh） | 本 adaptor 现状 |
+|----|------|------|
+| 配置根 | **用户级** `~/.dsh`（`$DSH_HOME`，含 `profiles/` · `cordis.patch.yml` · `.credentials.yaml`） | 项目内 `.dsh/` ✗ |
+| 全局指令 | `~/.agents/AGENTS.md`（`$DSH_AGENTS_HOME`，默认 `~/.agents`） | 未覆盖 ✗ |
+| skills | `~/.agents/skills/`（用户级扫描） | 项目内 `.dsh/skills/` ✗ |
+| 架构 | everything-is-a-plugin（Cordis）；Developer Preview，允许 breaking changes | core 平铺 ✗ |
+
+结论：dsh 是「用户级 harness」，不是「项目内目录」范式。当前 `install-adaptor-dsh.sh` 平铺到项目 `.dsh/` 不会被官方 dsh 读取。重做方向见 `## Next sprint`。
 
 ## 目标路径
 

@@ -6,7 +6,7 @@ DeepSeek harness · Harness Core 安装到 `.dsh/`。
 
 ## Status
 
-**implemented（core install）** — 官方 DeepSeek layout **待确认**；当前按 [docs/layout.md](docs/layout.md) 自定平铺 core 树。无 hooks。
+**misaligned（待按官方重做）** — 官方 DeepSeek Harness（dsh）配置在**用户级** `~/.dsh`（`$DSH_HOME`），全局指令在 `~/.agents/AGENTS.md`、skills 在 `~/.agents/skills/`，**不在项目内**；且为 Developer Preview（允许 breaking changes）。当前 `install-adaptor-dsh.sh` 平铺 core 到项目 `.dsh/` 是**方向性错位**。详见 [docs/layout.md](docs/layout.md) §官方对照。
 
 ## Identity
 

@@ -6,7 +6,7 @@ OpenCode · Harness Core 安装到 `.opencode/`。
 
 ## Status
 
-**implemented（core install）** — 官方 OpenCode layout **待确认**；当前按 [docs/layout.md](docs/layout.md) 平铺 core（同 dsh 模式）。
+**misaligned（待按官方重做）** — 官方 OpenCode **不使用 `.opencode/` 目录**，项目规则走根目录 `AGENTS.md`、配置走 `opencode.json`（`instructions` 数组可引用 `.cursor/rules/*.md`）。当前 `install-adaptor-opencode.sh` 平铺 core 到 `.opencode/` 是**自创假设，OpenCode 不会读取**。详见 [docs/layout.md](docs/layout.md) §官方对照。
 
 ## Identity
 

@@ -4,6 +4,15 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.1] - 2026-11-11
+
+### Changed
+
+- **adaptor 诚实标注（P0）** — 联网核实各家官方规范后，将 `opencode` / `dsh` 的 `Status` 从「implemented」改为「misaligned」，并新增 layout §官方对照：
+  - **opencode** 官方用项目根 `AGENTS.md` + `opencode.json`，无 `.opencode/` 目录 → 当前平铺不会被读取
+  - **dsh** 官方配置在用户级 `~/.dsh`（`$DSH_HOME`）+ `~/.agents/`，非项目内目录 → 当前平铺方向性错位
+  - `harness-ide-matrix.md` / `adaptor-contract.md` 同步修正「占位 / 待确认」表述，并注明契约校验只查结构、不校验官方符合度
+
 ## [5.1.0] - 2026-11-11
 
 ### Added

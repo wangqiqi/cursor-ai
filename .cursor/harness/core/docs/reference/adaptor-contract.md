@@ -1,4 +1,4 @@
-# Adaptor 最小契约（占位 · v1）
+# Adaptor 最小契约（v1）
 
 非 Cursor IDE 的 adaptor 在实现安装/导出前，须满足本契约，使 `install-map.example.json` 与仓库目录可机器验收。
 
@@ -10,8 +10,10 @@
 
 | 类型 | adaptor id | 本契约 |
 |------|------------|--------|
-| 占位（本 Sprint） | `dsh` · `kiro` · `trae` · `opencode` | **必须** |
-| 已实现 | `cursor` | 另有 hooks · plugin verify；本契约仅作字段对照，不在此 Sprint 改行为 |
+| 待对齐 / 错位 | `dsh` · `kiro` · `trae` · `opencode` | **必须**（dsh/opencode 已确认与官方错位，见各 layout §官方对照） |
+| 已实现 | `cursor` | 另有 hooks · plugin verify；本契约仅作字段对照 |
+
+> 注意：`verify-adaptor-contract.sh` 目前仅校验 README 章节结构与 install-map 字段一致，**不校验**与各家官方规范的实际符合度。官方规范符合度见 [harness-ide-matrix.md](harness-ide-matrix.md) 及各 `adaptors/*/docs/layout.md` §官方对照。
 
 ## 目录布局
 
@@ -29,7 +31,7 @@
 
 | 章节 | 内容要求 |
 |------|----------|
-| `## Status` | 写明 **placeholder**；官方 layout **待确认** 时直说 |
+| `## Status` | 写明当前对齐状态：**implemented** / **misaligned**；官方 layout 待确认或已错位时直说 |
 | `## Identity` | 一行 `adaptor id`: **&lt;id&gt;**（与目录名一致） |
 | `## Install map` | 与 `install-map.example.json` 一致：`install_dir` · `growth_dir` · `hooks_manifest`（可为 `null`） |
 | `## Includes` | 列出 `includes` 数组；说明各 token 语义（见下） |
@@ -57,7 +59,7 @@
 | `cursor_hooks` | Cursor 专用（仅 `cursor` adaptor） |
 | `cursor_plugin_verify` | Cursor Plugin 冒烟（仅 `cursor` adaptor） |
 
-## 占位 adaptor 对照表（与 install-map 同步）
+## adaptor 对照表（与 install-map 同步）
 
 | id | install_dir | includes | hooks_manifest |
 |----|-------------|----------|----------------|
@@ -76,5 +78,5 @@ bash .cursor/bin/verify-adaptor-contract.sh
 
 ## 变更纪律
 
-- 改 `install_dir` / `includes` → 同步 **install-map** · 四份 README · 本表
-- 新增 adaptor id → 新建 `adaptors/<id>/` · map 条目 · 扩展 `verify-adaptor-contract.sh` 占位列表
+- 改 `install_dir` / `includes` → 同步 **install-map** · 各份 README · 本表
+- 新增 adaptor id → 新建 `adaptors/<id>/` · map 条目 · 扩展 `verify-adaptor-contract.sh` 的 adaptor 列表
