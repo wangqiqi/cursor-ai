@@ -38,6 +38,20 @@ WorkBuddy 官方 `.workbuddy/` 目录规范 **待确认**；本布局与 **dsh**
 | 排除 `harness/core/rules/local` | — |
 | `.cursor/adaptors/workbuddy/README.md` | `.workbuddy/README.md` |
 
+## Skill frontmatter 适配
+
+安装时对 `.workbuddy/skills/*/SKILL.md` 做 frontmatter 补全，使 WorkBuddy 能识别（Super Cursor 原文只有 `name` + `description`）：
+
+| 转换 | 说明 |
+|------|------|
+| `version` | 注入母版版本（当前 5.1.0） |
+| `display_name` | 用 skill `name` |
+| `description_zh` | 原中文 `description`（折叠多行为单行） |
+| `description_en` | 保留已有，否则生成 `Super Cursor workflow skill '<name>'.` 骨架 |
+| `disable-model-invocation` | 剔除（Cursor 专属字段，WorkBuddy 忽略） |
+
+正文原样保留。无 python 时跳过（skill 仍可用，仅缺元数据）。
+
 ## 安装
 
 ```bash
