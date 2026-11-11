@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Placeholder adaptors: README sections + install-map.example.json alignment.
+# IDE adaptors: README sections + install-map.example.json alignment.
 set -euo pipefail
 
 _walk="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -40,7 +40,7 @@ map_path = Path(os.environ["MAP"])
 data = json.loads(map_path.read_text(encoding="utf-8"))
 adaptors = data.get("adaptors") or {}
 
-PLACEHOLDERS = ("dsh", "kiro", "trae", "opencode", "zcode")
+ADAPTORS = ("dsh", "kiro", "trae", "opencode", "zcode", "workbuddy")
 REQUIRED_HEADINGS = (
     "## Status",
     "## Identity",
@@ -54,7 +54,7 @@ failures: list[str] = []
 def fail(msg: str) -> None:
     failures.append(msg)
 
-for aid in PLACEHOLDERS:
+for aid in ADAPTORS:
     if aid not in adaptors:
         fail(f"install-map missing adaptors.{aid}")
         continue

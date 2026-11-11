@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.0.8-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.0-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -51,12 +51,13 @@ Full walkthrough → [quickstart.en.md](.cursor/docs/quickstart.en.md) · Slash 
 
 | Flag | Purpose |
 |------|---------|
-| `--profile minimal\|standard\|full` | Install size |
-| `--skills-bundle minimal\|standard\|full` | Skill bundle ([skills-bundle.md](.cursor/docs/skills-bundle.md)) |
-| `--no-growth` | Copy `.cursor/` only |
-| `--dry-run` | Preview |
+| `--profile full\|lite\|rules-only` | Workflow config (default `full`) |
+| `--skills-bundle full\|core` | Skill bundle (default `full`=28; `core`=23) |
+| `--adaptor dsh\|kiro\|trae\|opencode\|zcode\|workbuddy` | Extra IDE adaptor (repeatable) |
+| `--copy-plan` | Copy `templates/plan.md` → `.growing/plan.md` |
+| `--replace` | Remove target `.cursor/` first, then copy |
 
-[distribution-channels.md](.cursor/docs/distribution-channels.md) · [migration-catalog.md](.cursor/docs/migration-catalog.md)
+Distribution & migration → [migration-catalog.md](.cursor/docs/migration-catalog.md)
 
 ---
 

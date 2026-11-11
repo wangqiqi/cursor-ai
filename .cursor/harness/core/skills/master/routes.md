@@ -284,5 +284,5 @@ README 场景速查中无独立主菜单、经 `more` → `config` 或关键词�
 - [effective-collaboration.md](../../docs/effective-collaboration.md) — 效果型效率 · 少拉扯才是真省
 - [walkthrough.md](../../docs/walkthrough.md) — 端到端示例
 - [training/skills.md](../../docs/training/skills.md) — 全 skill 表
-- [scaffold.md](../../docs/scaffold.md) · [plan-run.md](../../docs/plan-run.md)
+- [scaffold.md](../../docs/scaffold.md) · [plan-run.md](../../../adaptors/cursor/docs/plan-run.md)
 - [README 场景速查](../../README.md) — 摘要表 + 链回本文件

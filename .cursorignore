@@ -45,8 +45,6 @@ coverage.out
 
 # --- Java / JVM ---
 .gradle/
-build/
-out/
 target/
 *.class
 

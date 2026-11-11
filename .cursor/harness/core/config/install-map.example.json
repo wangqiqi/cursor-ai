@@ -42,6 +42,12 @@
       "growth_dir": ".growing",
       "includes": ["core"],
       "hooks_manifest": ".zcode/config.json"
+    },
+    "workbuddy": {
+      "install_dir": ".workbuddy",
+      "growth_dir": ".growing",
+      "includes": ["core"],
+      "hooks_manifest": null
     }
   }
 }

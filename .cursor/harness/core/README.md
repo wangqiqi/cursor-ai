@@ -8,7 +8,7 @@
 |------|------|
 | `harness/core/` | rules · skills · agents · config · bin[core] · lib · templates · docs |
 | `adaptors/cursor/` | hooks · hooks.json · cursor-only verify/docs |
-| `adaptors/{dsh,…}/` | 其它 IDE 占位 |
+| `adaptors/{dsh,kiro,trae,opencode,zcode,workbuddy}/` | 其它 IDE adaptor（core install / rules export） |
 | `template-verify.sh` | 母版 CI 入口（先 `link-cursor-ide.sh`） |
 
 协议路径（**symlink** / **install 后**平铺；消费方 install 后通常仅见平铺树）：
@@ -105,5 +105,5 @@ bash .cursor/bin/cursor-coherence.sh
 
 ## 更多文档
 
-- [Naming](docs/naming.md) · [plan/run](docs/plan-run.md) · [效果型效率](docs/effective-collaboration.md) · [Quickstart](docs/quickstart.md)
+- [Naming](docs/naming.md) · [plan/run](../../adaptors/cursor/docs/plan-run.md) · [效果型效率](docs/effective-collaboration.md) · [Quickstart](docs/quickstart.md)
 - [Skills 速查](docs/training/skills.md) · [跨平台](docs/platforms.md)

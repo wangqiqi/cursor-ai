@@ -20,7 +20,7 @@ usage() {
   --here                           安装到当前目录所属的 Git 项目根
   --profile full|lite|rules-only   工作流配置（默认 full）
   --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
-  --adaptor dsh|kiro|trae|opencode|zcode  额外安装 IDE adaptor（可重复传入；见 adaptors/*/docs/layout.md）
+  --adaptor dsh|kiro|trae|opencode|zcode|workbuddy  额外安装 IDE adaptor（可重复传入；见 adaptors/*/docs/layout.md）
   --pack-offline [--strip-urls] [--strip-home]  打离线 tar + 说明文档 → .growing/offline-dist/（仅母版）
   --copy-plan                      复制 templates/plan.md → .growing/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
@@ -159,6 +159,7 @@ ADAPTOR_KIRO="false"
 ADAPTOR_TRAE="false"
 ADAPTOR_OPENCODE="false"
 ADAPTOR_ZCODE="false"
+ADAPTOR_WORKBUDDY="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -199,7 +200,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --adaptor)
       if [[ $# -lt 2 ]]; then
-        echo "错误: --adaptor 需要取值（dsh · kiro · trae · opencode · zcode）" >&2
+        echo "错误: --adaptor 需要取值（dsh · kiro · trae · opencode · zcode · workbuddy）" >&2
         usage
         exit 1
       fi
@@ -209,8 +210,9 @@ while [[ $# -gt 0 ]]; do
         trae) ADAPTOR_TRAE="true" ;;
         opencode) ADAPTOR_OPENCODE="true" ;;
         zcode) ADAPTOR_ZCODE="true" ;;
+        workbuddy) ADAPTOR_WORKBUDDY="true" ;;
         *)
-          echo "错误: 未知 adaptor: $2（支持 dsh · kiro · trae · opencode · zcode）" >&2
+          echo "错误: 未知 adaptor: $2（支持 dsh · kiro · trae · opencode · zcode · workbuddy）" >&2
           usage
           exit 1
           ;;
@@ -489,6 +491,9 @@ fi
 if [[ "$ADAPTOR_ZCODE" == "true" ]]; then
   sc_run_pack_script install-adaptor-zcode.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
 fi
+if [[ "$ADAPTOR_WORKBUDDY" == "true" ]]; then
+  sc_run_pack_script install-adaptor-workbuddy.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
+fi
 
 # Detect empty-ish project for hints
 file_count=0
@@ -509,6 +514,7 @@ echo "  skills-bundle: $SKILLS_BUNDLE"
 [[ "$ADAPTOR_TRAE" == "true" ]] && echo "  adaptor: trae → $TARGET/.trae/"
 [[ "$ADAPTOR_OPENCODE" == "true" ]] && echo "  adaptor: opencode → $TARGET/.opencode/"
 [[ "$ADAPTOR_ZCODE" == "true" ]] && echo "  adaptor: zcode → $TARGET/.zcode/"
+[[ "$ADAPTOR_WORKBUDDY" == "true" ]] && echo "  adaptor: workbuddy → $TARGET/.workbuddy/"
 echo "  母版: $SOURCE"
 echo ""
 echo "  下一步（推荐顺序）:"

@@ -28,7 +28,7 @@ OpenCode 官方安装根 **待确认**（见 [opencode.ai/docs](https://opencode
 └── lib/
 ```
 
-**刻意不含**：`harness/` · `adaptors/` · 母版 `verify-super-cursor.sh` · cursor-only 切片。
+**刻意不含**：`harness/` · `adaptors/` · cursor-only 切片。母版聚合校验脚本 `verify-super-cursor.sh` / `verify-system.sh` 随 core 树一并复制，但非 adaptor 验收范围。
 
 ## `core` 包映射
 

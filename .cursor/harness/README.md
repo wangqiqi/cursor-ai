@@ -6,7 +6,7 @@
 |------|------|
 | `.cursor/harness/core/` | Harness Core（skills · rules · bin[core] · config · …） |
 | `.cursor/adaptors/cursor/` | Cursor 能力（hooks · cursor-only verify · 部分 docs） |
-| `.cursor/adaptors/{dsh,kiro,trae,opencode}/` | 占位 · 后续 adaptor Sprint |
+| `.cursor/adaptors/{dsh,kiro,trae,opencode,zcode,workbuddy}/` | 各 IDE adaptor（core install / rules export；详见各 `README.md` 的 Status） |
 | `.cursor/rules` · `skills/` · `hooks/` … | **相对 symlink** → core / adaptor（Cursor/Roo 协议路径，**非第二份文件树**） |
 
 ```bash
@@ -18,4 +18,4 @@ bash .cursor/bin/verify-harness-layout.sh
 
 **改文件只动 `harness/core` / `adaptors`**。根下 symlink 让 IDE 仍读 `.cursor/rules` 等默认路径。
 
-映射草案 → `config/install-map.example.json`。占位 adaptor 最小契约 → `harness/core/docs/reference/adaptor-contract.md`（`bash .cursor/bin/verify-adaptor-contract.sh`）。
+映射 → `config/install-map.example.json`。adaptor 最小契约 → `harness/core/docs/reference/adaptor-contract.md`（`bash .cursor/bin/verify-adaptor-contract.sh`）。

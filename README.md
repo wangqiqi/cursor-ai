@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.0.8-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.0-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -9,6 +9,8 @@
 安装一套 `.cursor/` SOP 到你的仓库；Sprint 计划、归档与学习笔记落在 `.growing/`（见 `config/workflow.json`），母版模板与项目产出分离，升级模板不必丢本地 plan。
 
 **English:** [README.en.md](README.en.md) · [Quick start (EN)](.cursor/docs/quickstart.en.md)
+
+> **Windows 用户注意**：本仓 `.cursor/` 顶层（`agents` / `rules` / `skills` / `docs` / `templates` / `bin` / `config` / `hooks` / `lib` 等）是**相对符号链接**，指向 `harness/core` 与 `adaptors/cursor`。若克隆后这些路径为空或打不开，请先 `git config core.symlinks true` 后重新克隆，或运行 `bash .cursor/harness/link-cursor-ide.sh` 自动补链（无法建链时会回退为复制）。
 
 ---
 
@@ -61,13 +63,13 @@ cd /path/to/your-project && bash onekey_start.sh   # 安装后由 growth 生成�
 
 | 选项 | 说明 |
 |------|------|
-| `--profile minimal\|standard\|full` | 安装体量（默认 `standard`） |
-| `--skills-bundle minimal\|standard\|full` | 技能包裁剪（与 profile 独立；见 `.cursor/docs/skills-bundle.md`） |
-| `--no-growth` | 只复制 `.cursor/`，不初始化 `.growing/` |
-| `--dry-run` | 预演不写盘 |
+| `--profile full\|lite\|rules-only` | 工作流配置（默认 `full`） |
+| `--skills-bundle full\|core` | 技能包裁剪（默认 `full`=28；`core`=23，不含五工具 skill） |
+| `--adaptor dsh\|kiro\|trae\|opencode\|zcode\|workbuddy` | 额外安装 IDE adaptor（可重复传入；见 `adaptors/*/docs/layout.md`） |
+| `--copy-plan` | 复制 `templates/plan.md` → `.growing/plan.md` |
+| `--replace` | 先删除目标 `.cursor/` 再拷贝（推荐升级/迁移） |
 
-脚本 / 插件 / npm 三通道 → [distribution-channels.md](.cursor/docs/distribution-channels.md)  
-迁移与边界 → [migration-catalog.md](.cursor/docs/migration-catalog.md)（**刻意不迁移** · **完整性边界**）
+脚本 / 插件 / npm 三通道见 `install-super-cursor.sh` 与 adaptors 分发逻辑；迁移与边界 → [migration-catalog.md](.cursor/docs/migration-catalog.md)（**刻意不迁移** · **完整性边界**）
 
 | 路径 | 角色 |
 |------|------|

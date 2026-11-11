@@ -38,4 +38,3 @@ bash .cursor/harness/core/bin/install-adaptor-zcode.sh /path/to/project
 
 - Cursor 专属 frontmatter（`disable-model-invocation` 等）在 ZCode 的语义对齐（当前按未知键忽略）
 - 与 ZCode 内建/plugin skills 的重名冲突审计（workspace scope 优先于 plugin，重名会遮蔽内建）
-- 供 `install-super-cursor.sh --adaptor zcode` 的聚合安装接入

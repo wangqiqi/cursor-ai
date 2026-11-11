@@ -27,7 +27,7 @@ DeepSeek 官方 harness 目录规范**尚未公开**；本布局为 Super Cursor
 └── hooks.json             # 不存在（core 包无 Cursor 生命周期 hooks）
 ```
 
-**刻意不含**：`harness/` · `adaptors/` · `verify-super-cursor.sh`（母版聚合）· `adaptors/cursor/**` · cursor-only `verify-*.sh`。
+**刻意不含**：`harness/` · `adaptors/` · `adaptors/cursor/**` · cursor-only `verify-*.sh`。母版聚合校验脚本 `verify-super-cursor.sh` / `verify-system.sh` 随 core 树一并复制，但非 adaptor 验收范围。
 
 ## `core` 包映射
 

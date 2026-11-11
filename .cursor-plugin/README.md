@@ -1,3 +1,5 @@
+> ⚠️ **禁止手改本目录**：`.cursor-plugin/` 是 `.cursor/` 的发布子集副本，仅由 `bash .cursor/bin/sync-plugin-subset.sh` 单向生成，并由 `verify-cursor-plugin-mvp.sh` 校验 parity。直接修改会静默偏离 SSOT，直到 CI 才暴露。改规则 / 技能请改 `.cursor/harness/core/` 后重跑 sync。
+
 # Super Cursor MVP (Cursor Plugin)
 
 **不是**完整母版安装。全量 rules · skills · config · Growth → [`install-super-cursor.sh`](../install-super-cursor.sh)。
@@ -36,6 +38,6 @@ bash .cursor/bin/verify-spike-marketplace-prep-scope.sh   # 母版：归档回�
 
 ```bash
 bash .cursor/bin/sync-plugin-subset.sh   # 母版改 rules 后先同步
-bash .cursor/bin/verify-cursor-plugin-manifest.sh
-bash .cursor/bin/verify-cursor-plugin-mvp.sh   # 含 verify.mdc 与母版 diff parity
+bash .cursor/adaptors/cursor/bin/verify-cursor-plugin-manifest.sh
+bash .cursor/adaptors/cursor/bin/verify-cursor-plugin-mvp.sh   # 含 verify.mdc 与母版 diff parity
 ```

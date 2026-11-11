@@ -141,6 +141,8 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | opencode | `.opencode/` | `includes: core` | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
 | kiro | `.kiro/` | `core_rules_export` | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
 | trae | `.trae/` | `core_rules_export` | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
+| zcode | `.zcode/` | `includes: core` + hooks | [adaptors/zcode/docs/layout.md](../../adaptors/zcode/docs/layout.md) |
+| workbuddy | `.workbuddy/` | `includes: core` | [adaptors/workbuddy/docs/layout.md](../../adaptors/workbuddy/docs/layout.md) |
 
 机器门禁：`bash .cursor/bin/verify-adaptor-contract.sh` · 矩阵 → [harness-ide-matrix.md](reference/harness-ide-matrix.md)。
 

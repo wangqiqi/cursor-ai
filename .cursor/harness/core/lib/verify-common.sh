@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 验证器公共骨架 —— 消除 8 个 verify-*.sh 各自重复的样板
+# 验证器公共骨架 —— 供 verify-*.sh 复用标题 / 断言 / python 块样板
 #
 # 用法：
 #   source "$CUR/lib/verify-common.sh" "verify-xxx"

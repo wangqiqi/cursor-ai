@@ -6,6 +6,8 @@
 .cursorGrowth/
 # DSH 运行时生长/会话状态（本地私有，不入 git）
 .dsh/
+# WorkBuddy 本地工作数据（个人日志 · 不入 git）
+.workbuddy/
 .cursor/rules/local
 # 母版：SSOT 在 harness/core + adaptors；根下 agents/bin/rules/… 为 git 跟踪的相对 symlink（link-cursor-ide.sh）
 # hooks 运行时状态（源树 adaptors/cursor/hooks/state）
