@@ -6,7 +6,7 @@ Trae 项目规则 · `core_rules_export`。
 
 ## Status
 
-**implemented（rules export）** — 官方 Trae layout **待确认**；当前导出 [docs/layout.md](docs/layout.md) · SSOT [core-rules-export.md](../../harness/core/docs/reference/core-rules-export.md)。
+**implemented（rules export）** — 官方 Trae 项目规则走 `.trae/rules/*.md`；本 adaptor 导出 [docs/layout.md](docs/layout.md) · SSOT [core-rules-export.md](../../harness/core/docs/reference/core-rules-export.md)。
 
 ## Identity
 
@@ -37,4 +37,4 @@ install-super-cursor /path/to/project --adaptor trae
 
 ## Next sprint
 
-Trae 官方规则目录公开后：SPIKE 差距表驱动 `layout.md` / 导出范围（另开 Sprint）。
+规则 frontmatter 对齐 Trae 语义（`description`/`alwaysApply`/`globs`）；当前 `.md` 保留 Cursor 风格 frontmatter，正文为通用规则（另开 Sprint）。

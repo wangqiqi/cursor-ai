@@ -1,6 +1,17 @@
 # ZCode `.zcode/` 布局（Super Cursor · `includes: core`）
 
-ZCode 无官方 harness 目录规范；本布局为 Super Cursor **自定约定**，与 `install-adaptor-zcode.sh` 一致。与 Cursor 安装（`.cursor/`）**并存、互不引用、互不影响**；升级母版后对每个消费项目分别重装。
+> ✅ **与官方机制一致**：ZCode 工作区配置在 `<项目>/.zcode/config.json`（`mcp.servers` 键管理 MCP；`hooks` 键管理生命周期 hooks）；`.zcode/skills` · `.zcode/commands` 为官方扩展点。
+
+## 官方机制（2026-11 核实）
+
+| 项 | 官方 ZCode |
+|----|------|
+| 工作区配置 | `<项目>/.zcode/config.json`（`mcp.servers`；本 adaptor 额外用 `hooks` 键） |
+| 用户级配置 | `~/.zcode/cli/config.json` |
+| skills | `.zcode/skills/` |
+| commands | `.zcode/commands/` |
+
+> 本 adaptor 的 `config.json` 用 `hooks` 键（ZCode 生命周期 hooks schema：`SessionStart`/`UserPromptSubmit`/`Stop`），与 `mcp.servers`（可选）互不冲突，可并存于同一 config.json。
 
 ## 目标路径
 

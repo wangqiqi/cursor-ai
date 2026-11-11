@@ -4,6 +4,14 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.3] - 2026-11-11
+
+### Changed
+
+- **kiro/trae 目录与格式对齐（P2）** — 按官方机制修正：kiro 规则导出到 `.kiro/steering/`（官方 steering，非 rules）、trae 保持 `.trae/rules/`；两者 `.mdc` 统一重命名为 `.md`（Kiro/Trae 均用 Markdown）。
+- **zcode 说明补充（P2）** — layout 新增「官方机制」对照，明确 `config.json` 的 `hooks` 键（生命周期 hooks）与 `mcp.servers`（可选）可并存，本 adaptor 已对齐官方。
+- `verify-install-rules-export.sh` 更新为分叉断言（kiro=steering · trae=rules · 无 .mdc 残留）。
+
 ## [5.1.2] - 2026-11-11
 
 ### Changed

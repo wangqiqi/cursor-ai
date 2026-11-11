@@ -38,7 +38,8 @@ resolve_source_root() {
 
 write_rules_index() {
   local dest_root="$1"
-  local rules_dir="$dest_root/rules"
+  local subdir="${2:-rules}"
+  local rules_dir="$dest_root/$subdir"
   local out="$dest_root/RULES.md"
   {
     echo "# Super Cursor rules index"
@@ -46,7 +47,7 @@ write_rules_index() {
     echo "自动生成 · 源：\`harness/core/rules\` · token：\`core_rules_export\`"
     echo ""
     if [[ -d "$rules_dir" ]]; then
-      find "$rules_dir" -type f -name '*.mdc' | sort | while read -r f; do
+      find "$rules_dir" -type f -name '*.md' | sort | while read -r f; do
         echo "- \`${f#"$dest_root"/}\`"
       done
     fi
@@ -87,8 +88,8 @@ done
 [[ -n "$TARGET" ]] || { echo "错误: 需要目标项目路径" >&2; usage; exit 1; }
 
 case "$ADAPTOR" in
-  kiro) INSTALL_DIR=".kiro" ;;
-  trae) INSTALL_DIR=".trae" ;;
+  kiro) INSTALL_DIR=".kiro"; RULES_SUBDIR="steering" ;;
+  trae) INSTALL_DIR=".trae"; RULES_SUBDIR="rules" ;;
   *)
     echo "错误: 无效 adaptor: ${ADAPTOR}（仅 kiro · trae）" >&2
     exit 1
@@ -105,7 +106,7 @@ DEST="$TARGET/$INSTALL_DIR"
 [[ -d "$RULES_SRC" ]] || { echo "错误: 缺少 $RULES_SRC" >&2; exit 1; }
 
 if [[ "$DRY_RUN" == "true" ]]; then
-  echo "DRY RUN: rules $RULES_SRC -> $DEST/rules (exclude rules/local)"
+  echo "DRY RUN: rules $RULES_SRC -> $DEST/$RULES_SUBDIR (exclude rules/local; .mdc → .md)"
   echo "DRY RUN: README $ADAPTOR_README -> $DEST/README.md"
   echo "DRY RUN: generate $DEST/RULES.md"
   exit 0
@@ -115,10 +116,16 @@ fi
 source "$CORE_SRC/lib/platform.sh"
 
 mkdir -p "$TARGET" "$DEST"
-sc_copy_tree "$RULES_SRC" "$DEST/rules" "local"
+
+# 复制 rules，并把 .mdc 重命名为 .md（Kiro steering / Trae rules 均用 .md）
+sc_copy_tree "$RULES_SRC" "$DEST/$RULES_SUBDIR" "local"
+find "$DEST/$RULES_SUBDIR" -type f -name '*.mdc' | while read -r f; do
+  mv "$f" "${f%.mdc}.md"
+done
+
 [[ -f "$ADAPTOR_README" ]] && cp -a "$ADAPTOR_README" "$DEST/README.md"
-write_rules_index "$DEST"
+write_rules_index "$DEST" "$RULES_SUBDIR"
 
 mkdir -p "$TARGET/.growing/archive" "$TARGET/.growing/rules/local" 2>/dev/null || true
 
-echo "OK: core_rules_export 已安装 → $DEST ($ADAPTOR)"
+echo "OK: core_rules_export 已安装 → $DEST/$RULES_SUBDIR ($ADAPTOR)"

@@ -6,7 +6,7 @@ Kiro 项目规则 · `core_rules_export`。
 
 ## Status
 
-**implemented（rules export）** — 官方 Kiro layout **待确认**；当前导出 [docs/layout.md](docs/layout.md) · SSOT [core-rules-export.md](../../harness/core/docs/reference/core-rules-export.md)。
+**implemented（steering export）** — 官方 Kiro 项目规则走 `.kiro/steering/*.md`（`inclusion` frontmatter）；本 adaptor 导出 [docs/layout.md](docs/layout.md) · SSOT [core-rules-export.md](../../harness/core/docs/reference/core-rules-export.md)。
 
 ## Identity
 
@@ -37,4 +37,4 @@ install-super-cursor /path/to/project --adaptor kiro
 
 ## Next sprint
 
-Kiro 官方规则目录公开后：SPIKE 差距表驱动 `layout.md` / 导出范围（另开 Sprint）。
+导出 `.kiro/agents/`（按 Kiro agent schema：`prompt`/`tools`/`permissions`/`resources`）与 `.kiro/skills/`；当前仅 steering 规则（另开 Sprint）。
