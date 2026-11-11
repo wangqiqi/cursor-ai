@@ -9,8 +9,10 @@ source "$CURSOR_DIR/lib/platform.sh"
 # shellcheck source=../lib/temp-cleanup.sh
 source "$CURSOR_DIR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
-# Git Bash / Windows 可能只有 python；勿硬编码 python3
-PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+# Git Bash / Windows 可能只有 python；勿硬编码 python3（sc_python 会排除 Windows Store 假 python）
+if [[ -z "${PYTHON_BIN:-}" ]]; then
+  PYTHON_BIN="$(sc_python 2>/dev/null || true)"
+fi
 [[ -n "$PYTHON_BIN" ]] || { echo "FAIL: python required for runner smoke"; exit 1; }
 sc_mktemp_file sc-runner-smoke.plan
 TMP_PLAN="$SC_MKTEMP_LAST"

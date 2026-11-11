@@ -108,7 +108,7 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | 组 | 脚本 | 守护 |
 |----|------|------|
 | **core** | `verify-rules-globs` · `verify-portability` · `verify-config` · `verify-roo-compat` · `verify-secrets` · `verify-scripts-layout` · `verify-docs-layout` · `verify-changelog` · `verify-doc-super-cursor` · `verify-growth-layout` · `verify-harness-layout` · `verify-adaptor-contract` · `verify-mother-root-bin` · `verify-onekey-template` | 规则 glob · 可移植 · schema · 协议字段 · 密钥 · scripts/docs 布局 · CHANGELOG · 门面计数 · harness/adaptors 分区 · **占位 adaptor README + install-map** · **母版根 `bin/super-cursor-sync`** · **project-onekey 模板**（母版根不得有 `onekey_start.sh`） |
-| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-install-rules-export` · `verify-install-opencode` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` ↔ 磁盘 · install 冒烟 · **`.kiro/`/`.trae/`** · **`.opencode/`** · onekey SPIKE |
+| **install** | `verify-skill-bundles-ssot` · `verify-install-skills-bundle` · `verify-install-rules-export` · `verify-install-opencode` · `verify-spike-skills-bundle-scope` · `verify-spike-onekey-bootstrap-scope` | `skill-bundles.json` ↔ 磁盘 · install 冒烟 · **`.kiro/steering/`/`.trae/rules/`** · **`AGENTS.md` + `opencode.json`** · onekey SPIKE |
 | **docs-sync** | `verify-spike-docs-sync-scope` | project-docs / docs-init SPIKE |
 | **plugin** | `verify-cursor-plugin-manifest` · `verify-cursor-plugin-mvp` · `verify-spike-plugin-mvp-scope` · `verify-spike-plugin-agents-scope` · `verify-spike-plugin-phase2-scope` · `verify-spike-marketplace-prep-scope` | `.cursor-plugin/` 子集 · 三轨 · Marketplace prep 归档 |
 | **platform** | `verify-cursor-platform-contract` · `verify-spike-tools-skills-archive` | 官方对齐 · tools/skills SPIKE |
@@ -138,9 +138,9 @@ Marketplace 上架：**Defer**（三轨决策见 `*_SPIKE_plugin_phase2_scope.md
 | adaptor | 安装根 | 厚度 | layout SSOT |
 |---------|--------|------|-------------|
 | dsh | （用户级，无项目内安装） | guide-only | [adaptors/dsh/docs/layout.md](../../adaptors/dsh/docs/layout.md) |
-| opencode | `.opencode/` | `includes: core` | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
-| kiro | `.kiro/` | `core_rules_export` | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
-| trae | `.trae/` | `core_rules_export` | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
+| opencode | 项目根 `AGENTS.md` + `opencode.json` | `core_rules_export` | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
+| kiro | `.kiro/steering/` | `core_rules_export` | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
+| trae | `.trae/rules/` | `core_rules_export` | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
 | zcode | `.zcode/` | `includes: core` + hooks | [adaptors/zcode/docs/layout.md](../../adaptors/zcode/docs/layout.md) |
 | workbuddy | `.workbuddy/` | `includes: core` | [adaptors/workbuddy/docs/layout.md](../../adaptors/workbuddy/docs/layout.md) |
 

@@ -481,7 +481,8 @@ if [[ "$ADAPTOR_TRAE" == "true" ]]; then
   sc_run_pack_script install-adaptor-rules-export.sh --adaptor trae "$TARGET"
 fi
 if [[ "$ADAPTOR_OPENCODE" == "true" ]]; then
-  sc_run_pack_script install-adaptor-opencode.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
+  # opencode 只生成 AGENTS.md + opencode.json（不再平铺 core），无 profile/skills-bundle 概念
+  sc_run_pack_script install-adaptor-opencode.sh "$TARGET"
 fi
 if [[ "$ADAPTOR_ZCODE" == "true" ]]; then
   sc_run_pack_script install-adaptor-zcode.sh "$TARGET" --profile "$PROFILE" --skills-bundle "$SKILLS_BUNDLE"
@@ -506,7 +507,7 @@ echo "  profile: $PROFILE"
 echo "  skills-bundle: $SKILLS_BUNDLE"
 [[ "$ADAPTOR_KIRO" == "true" ]] && echo "  adaptor: kiro → $TARGET/.kiro/"
 [[ "$ADAPTOR_TRAE" == "true" ]] && echo "  adaptor: trae → $TARGET/.trae/"
-[[ "$ADAPTOR_OPENCODE" == "true" ]] && echo "  adaptor: opencode → $TARGET/.opencode/"
+[[ "$ADAPTOR_OPENCODE" == "true" ]] && echo "  adaptor: opencode → $TARGET/AGENTS.md + $TARGET/opencode.json"
 [[ "$ADAPTOR_ZCODE" == "true" ]] && echo "  adaptor: zcode → $TARGET/.zcode/"
 [[ "$ADAPTOR_WORKBUDDY" == "true" ]] && echo "  adaptor: workbuddy → $TARGET/.workbuddy/"
 echo "  母版: $SOURCE"

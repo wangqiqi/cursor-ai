@@ -10,7 +10,8 @@
 
 | 类型 | adaptor id | 本契约 |
 |------|------------|--------|
-| 待对齐 / 错位 | `dsh` · `kiro` · `trae` · `opencode` | **必须**（dsh/opencode 已确认与官方错位，见各 layout §官方对照） |
+| 已实现（项目内可安装） | `kiro` · `trae` · `opencode` · `zcode` · `workbuddy` | **必须**（字段 + 章节机器校验） |
+| 指引型（无项目内安装） | `dsh` | 不适用（用户级 harness，见 `adaptors/dsh/README.md`） |
 | 已实现 | `cursor` | 另有 hooks · plugin verify；本契约仅作字段对照 |
 
 > 注意：`verify-adaptor-contract.sh` 目前仅校验 README 章节结构与 install-map 字段一致，**不校验**与各家官方规范的实际符合度。官方规范符合度见 [harness-ide-matrix.md](harness-ide-matrix.md) 及各 `adaptors/*/docs/layout.md` §官方对照。
@@ -23,11 +24,11 @@
 .cursor/adaptors/<adaptor id>/README.md
 ```
 
-`verify-harness-layout.sh` 已要求上述四 id 存在 `README.md`；内容须符合下文。
+`verify-harness-layout.sh` 已要求上述 adaptor id 均存在 `README.md`；内容须符合下文。
 
 ## README 必备章节（机器检查）
 
-每个占位 adaptor 的 `README.md` 须包含以下 **二级标题**（顺序不限），且文首 HTML 注释含 `adaptor-contract:v1`：
+每个 adaptor 的 `README.md` 须包含以下 **二级标题**（顺序不限），且文首 HTML 注释含 `adaptor-contract:v1`：
 
 | 章节 | 内容要求 |
 |------|----------|
@@ -43,7 +44,7 @@
 
 | 字段 | 含义 |
 |------|------|
-| `install_dir` | 安装到目标项目时的根目录（如 `.dsh` · `.kiro`） |
+| `install_dir` | 安装到目标项目时的根目录（如 `.kiro`）；生成根目录文件的 adaptor（opencode）为 `null` |
 | `growth_dir` | Growth 坐标（通常 `.growing`） |
 | `includes` | 从 Harness Core 打入的包片段（**v1 仅文档化**，install 脚本未实现多 adaptor） |
 | `hooks_manifest` | 生命周期 hooks 清单路径；无则 JSON `null`，README 写 `hooks_manifest`: **null** |
@@ -63,10 +64,9 @@
 
 | id | install_dir | includes | hooks_manifest |
 |----|-------------|----------|----------------|
-| `dsh` | `.dsh` | `core` | `null` |
-| `kiro` | `.kiro` | `core_rules_export` | （map 未列则 README 写 **未定义**） |
-| `trae` | `.trae` | `core_rules_export` | （同上） |
-| `opencode` | `.opencode` | `core` | （同上） |
+| `kiro` | `.kiro`（rules → `.kiro/steering/*.md`） | `core_rules_export` | （map 未列则 README 写 **未定义**） |
+| `trae` | `.trae`（rules → `.trae/rules/*.md`） | `core_rules_export` | （同上） |
+| `opencode` | `null`（项目根 `AGENTS.md` + `opencode.json`） | `core_rules_export` | （同上） |
 
 ## 验收
 

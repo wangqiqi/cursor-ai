@@ -30,7 +30,7 @@ link_rel() {
     return 0
   fi
   # 回退：无法建符号链接（如 Windows core.symlinks=false）时复制实体，保证本地可用
-  echo "WARN: 无法创建符号链接 $name，回退为复制实体（建议 Windows 设 git config core.symlinks true 后重克隆）" >&2
+  echo "WARN: 无法创建符号链接 ${name}，回退为复制实体（建议 Windows 设 git config core.symlinks true 后重克隆）" >&2
   rm -rf "$path"
   if [[ -d "$PACK/$target" ]]; then
     # 复制目录「内容」到 path，避免 cp -R 把源目录整体塞成 path/<basename> 嵌套

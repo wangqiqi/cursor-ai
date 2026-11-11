@@ -213,25 +213,29 @@ core_n="$(find -L "$CORE_BUNDLE/.cursor/skills" -mindepth 1 -maxdepth 1 -type d 
 [[ "$core_n" == "23" ]] && ok "core bundle: 23 skills" || fail "core bundle: skills=$core_n (expected 23)"
 assert_absent "$CORE_BUNDLE/.cursor/skills/week/SKILL.md" "core bundle: no week skill"
 
-# 9. adaptor dsh alongside .cursor
+# 9. dsh 已降级为 guide-only：--adaptor dsh 必须被拒绝，且不得生成 .dsh/
 DSH="$TMP_ROOT/dsh-adaptor"
-run_install "adaptor dsh: install" "$TMP_ROOT/dsh.out" "$DSH" --profile lite --adaptor dsh
-assert_file "$DSH/.dsh/rules/core.mdc" "adaptor dsh: .dsh/rules/core.mdc"
-assert_file "$DSH/.cursor/rules/core.mdc" "adaptor dsh: .cursor still installed"
-assert_absent "$DSH/.dsh/hooks.json" "adaptor dsh: no hooks.json in .dsh"
+if "$INSTALL" "$DSH" --profile lite --adaptor dsh >"$TMP_ROOT/dsh.out" 2>&1; then
+  fail "adaptor dsh: must be rejected (guide-only, no project install)"
+else
+  ok "adaptor dsh: rejected as guide-only"
+fi
+assert_absent "$DSH/.dsh" "adaptor dsh: no .dsh/ created"
 
-# 10. adaptor kiro rules export
+# 10. adaptor kiro → .kiro/steering/*.md（官方 steering，非 rules）
 KIRO="$TMP_ROOT/kiro-adaptor"
 run_install "adaptor kiro: install" "$TMP_ROOT/kiro.out" "$KIRO" --profile lite --adaptor kiro
-assert_file "$KIRO/.kiro/rules/core.mdc" "adaptor kiro: .kiro/rules/core.mdc"
+assert_file "$KIRO/.kiro/steering/core.md" "adaptor kiro: .kiro/steering/core.md"
 assert_file "$KIRO/.kiro/RULES.md" "adaptor kiro: RULES.md index"
+assert_absent "$KIRO/.kiro/rules" "adaptor kiro: no .kiro/rules/ (official is steering/)"
 assert_absent "$KIRO/.kiro/skills" "adaptor kiro: no skills/"
 
-# 11. adaptor opencode
+# 11. adaptor opencode → 项目根 AGENTS.md + opencode.json（官方无 .opencode/ 目录）
 OC="$TMP_ROOT/opencode-adaptor"
 run_install "adaptor opencode: install" "$TMP_ROOT/opencode.out" "$OC" --profile lite --adaptor opencode
-assert_file "$OC/.opencode/rules/core.mdc" "adaptor opencode: .opencode/rules/core.mdc"
-assert_absent "$OC/.opencode/hooks.json" "adaptor opencode: no hooks.json"
+assert_file "$OC/AGENTS.md" "adaptor opencode: AGENTS.md"
+assert_file "$OC/opencode.json" "adaptor opencode: opencode.json"
+assert_absent "$OC/.opencode" "adaptor opencode: no .opencode/"
 
 # 12. self-replace guard（P0-4）：目标 == 母版目录时必须拒绝且不删 .cursor/
 # 需要符号链接来构造「source==target」；无符号链接权限的平台（Windows/Git Bash）显式 SKIP，

@@ -4,6 +4,19 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.4] - 2026-11-11
+
+### Fixed
+
+- **CI 门禁修复（v5.1.1～v5.1.3 遗留）**：
+  - `README.md` / `README.en.md` 版本徽章同步 latest（`verify-doc-super-cursor` 断言）
+  - `link-cursor-ide.sh` 的 `$name` → `${name}`（bash 3.2 可移植门禁）
+  - `verify-install-opencode.sh` 改用 `sc_python`，JSON 路径经 argv 传递（Git Bash → Windows Python 路径转换）
+  - `install-smoke.sh` 断言更新：dsh 必须被拒绝（guide-only）· kiro `.kiro/steering/*.md` · opencode 根 `AGENTS.md` + `opencode.json`
+  - `install-super-cursor.sh` 不再向 opencode 安装器传 `--profile/--skills-bundle`；安装摘要改为官方产物路径
+  - `verify-project-tmp-cleanup.sh` · `runner-smoke.sh` · `resolve-role.sh` 改用 `sc_python`（Windows Store 假 python 不再误判）
+- **文档残留清理** — `README.md` / `README.en.md` 安装参数、`config/README.md`、`migration-catalog.md`、`adaptor-contract.md`、`rules/feedback/verify.mdc` 移除 `.dsh/` / `.opencode/` 旧布局与已删脚本的表述
+
 ## [5.1.3] - 2026-11-11
 
 ### Changed

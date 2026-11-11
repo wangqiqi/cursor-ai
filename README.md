@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.4-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -65,7 +65,7 @@ cd /path/to/your-project && bash onekey_start.sh   # 安装后由 growth 生成�
 |------|------|
 | `--profile full\|lite\|rules-only` | 工作流配置（默认 `full`） |
 | `--skills-bundle full\|core` | 技能包裁剪（默认 `full`=28；`core`=23，不含五工具 skill） |
-| `--adaptor dsh\|kiro\|trae\|opencode\|zcode\|workbuddy` | 额外安装 IDE adaptor（可重复传入；见 `adaptors/*/docs/layout.md`） |
+| `--adaptor kiro\|trae\|opencode\|zcode\|workbuddy` | 额外安装 IDE adaptor（可重复传入；见 `adaptors/*/docs/layout.md`） |
 | `--copy-plan` | 复制 `templates/plan.md` → `.growing/plan.md` |
 | `--replace` | 先删除目标 `.cursor/` 再拷贝（推荐升级/迁移） |
 

@@ -26,7 +26,9 @@ elif [[ -z "$project_root" ]]; then
     d="$(dirname "$d")"
   done
 fi
-py="$(command -v python3 || command -v python || true)"
+# shellcheck source=../lib/platform.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../lib/platform.sh"
+py="$(sc_python 2>/dev/null || true)"
 [[ -n "$py" ]] || { echo "FAIL: no python" >&2; exit 1; }
 "$py" - "$roles_file" "$query" "$aliases_file" <<'PY'
 import json, sys

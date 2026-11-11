@@ -27,9 +27,13 @@ grep -q '\.cursor/rules' "$TMP/opencode.json" || { echo "FAIL: opencode.json mus
 # 不应再生成 .opencode/ 目录（官方无此约定）
 [[ ! -d "$TMP/.opencode" ]] || { echo "FAIL: must NOT create .opencode/ dir (not an official convention)" >&2; exit 1; }
 
-# JSON 有效性（有 python/jq 时校验）
-if command -v python3 >/dev/null 2>&1; then
-  python3 -c "import json;json.load(open('$TMP/opencode.json'))" || { echo "FAIL: invalid opencode.json" >&2; exit 1; }
+# JSON 有效性（有可用的 python/jq 时校验；sc_python 会排除 Windows Store 假 python）
+# shellcheck source=../lib/platform.sh
+source "$CURSOR_DIR/lib/platform.sh"
+if py="$(sc_python 2>/dev/null)"; then
+  # 路径作为 argv 传入：Git Bash 会自动转成 Windows 路径（写进 -c 字符串里则不会）
+  "$py" -c 'import json,sys;json.load(open(sys.argv[1],encoding="utf-8"))' "$TMP/opencode.json" \
+    || { echo "FAIL: invalid opencode.json" >&2; exit 1; }
 elif command -v jq >/dev/null 2>&1; then
   jq empty "$TMP/opencode.json" || { echo "FAIL: invalid opencode.json" >&2; exit 1; }
 fi

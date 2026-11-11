@@ -10,8 +10,10 @@ source "$CUR/lib/platform.sh"
 source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
 
-PY="$(command -v python3 || command -v python)"
-[[ -n "$PY" ]] || { echo "FAIL: python required"; exit 1; }
+if ! PY="$(sc_python 2>/dev/null)"; then
+  echo "FAIL: python required"
+  exit 1
+fi
 
 sc_mktemp_dir sc-verify-ptc
 FIX="$SC_MKTEMP_LAST"
