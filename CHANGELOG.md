@@ -4,6 +4,13 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.2] - 2026-11-11
+
+### Changed
+
+- **opencode 重写（P1）** — 按官方机制重做：`install-adaptor-opencode.sh` 改为生成项目根 `AGENTS.md` + `opencode.json`（`instructions` 引用 `.cursor/rules/*.mdc`），废弃 `.opencode/` 目录平铺；`install_dir` 改为 `null`、`includes` 改为 `core_rules_export`；`verify-install-opencode.sh` 断言产物并验证无 `.opencode/` 目录。
+- **dsh 降级（P1）** — DeepSeek Harness 是用户级 harness（`~/.dsh` + `~/.agents`），项目内无法安装：移除 `install-adaptor-dsh.sh` / `verify-install-dsh.sh`、`--adaptor dsh` 入口、install-map 的 dsh 条目；README/layout 改为「用户级配置指引」。
+
 ## [5.1.1] - 2026-11-11
 
 ### Changed

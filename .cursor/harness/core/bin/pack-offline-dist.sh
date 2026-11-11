@@ -118,7 +118,6 @@ pack_rsync_excludes=(
   ".github"
   "/docs"
   "node_modules"
-  ".dsh"
   "/archive"
   "/learn"
   "/plan.md"
@@ -184,7 +183,6 @@ sc_pack_prune_consumer() {
     verify-config.sh
     verify-skill-bundles-ssot.sh
     verify-onekey-template.sh
-    verify-install-dsh.sh
     verify-install-opencode.sh
     verify-install-rules-export.sh
     verify-install-skills-bundle.sh
@@ -404,14 +402,13 @@ ZCode 需在 workspace 启用 **\`.zcode/config.json\`** 里 \`hooks.enabled: tr
 
 ### DeepSeek（DSH）· OpenCode
 
-Core 平铺安装（无 Cursor hooks 那套）：
+OpenCode 走官方 `AGENTS.md` + `opencode.json`（无 `.opencode/` 目录）；DeepSeek Harness（dsh）为用户级 harness，无项目内安装（见各 adaptor 的 `docs/layout.md` §官方对照）：
 
 \`\`\`bash
-bash install-super-cursor.sh "\$TARGET" --adaptor dsh
 bash install-super-cursor.sh "\$TARGET" --adaptor opencode
 \`\`\`
 
-产出：**\`.dsh/\`** · **\`.opencode/\`** — 详见 \`adaptors/dsh/docs/layout.md\` · \`adaptors/opencode/docs/layout.md\`
+产出：**\`AGENTS.md\`** · **\`opencode.json\`** — 详见 \`adaptors/opencode/docs/layout.md\`
 
 ### Kiro · Trae
 
@@ -428,11 +425,11 @@ bash install-super-cursor.sh "\$TARGET" --adaptor trae
 
 \`\`\`bash
 bash install-super-cursor.sh "\$TARGET" --replace --copy-plan \\
-  --adaptor zcode --adaptor dsh
+  --adaptor zcode
 \`\`\`
 
 **共用：** \`\$TARGET/.growing/\`（plan · learn · archive · rules/local）  
-**独立：** \`.cursor/\` · \`.zcode/\` · \`.dsh/\` 等互不引用，升级母版后需分别重装各 adaptor。
+**独立：** \`.cursor/\` · \`.zcode/\` · \`AGENTS.md\`（OpenCode）等互不引用，升级母版后需分别重装各 adaptor。
 
 ---
 

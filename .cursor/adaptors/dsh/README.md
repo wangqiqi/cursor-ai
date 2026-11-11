@@ -2,11 +2,11 @@
 
 # adaptor: dsh
 
-DeepSeek harness · Harness Core 安装到 `.dsh/`。
+DeepSeek Harness（dsh）· 用户级配置指引。
 
 ## Status
 
-**misaligned（待按官方重做）** — 官方 DeepSeek Harness（dsh）配置在**用户级** `~/.dsh`（`$DSH_HOME`），全局指令在 `~/.agents/AGENTS.md`、skills 在 `~/.agents/skills/`，**不在项目内**；且为 Developer Preview（允许 breaking changes）。当前 `install-adaptor-dsh.sh` 平铺 core 到项目 `.dsh/` 是**方向性错位**。详见 [docs/layout.md](docs/layout.md) §官方对照。
+**guide-only（无项目内安装）** — 官方 dsh 是**用户级 harness**：配置在 `~/.dsh`（`$DSH_HOME`），全局指令在 `~/.agents/AGENTS.md`、skills 在 `~/.agents/skills/`，**不在项目内**；且为 Developer Preview（允许 breaking changes）。Super Cursor 作为项目级模板无法替用户写用户级目录，故本 adaptor 只提供配置指引，不再提供项目内安装脚本。详见 [docs/layout.md](docs/layout.md)。
 
 ## Identity
 
@@ -18,24 +18,25 @@ DeepSeek harness · Harness Core 安装到 `.dsh/`。
 
 | 字段 | 值 |
 |------|-----|
-| `install_dir` | `.dsh` |
+| `install_dir` | （无项目内安装） |
 | `growth_dir` | `.growing` |
 | `hooks_manifest` | **null** |
 
 ## Includes
 
-- `core` — Harness Core 主体（skills · rules · bin · config）；见 [adaptor-contract.md](../../harness/core/docs/reference/adaptor-contract.md) §`includes` token。
+- `core` — 仅供参考；dsh 官方用 `~/.agents/skills/` 加载技能，不读项目内 `.dsh/`。
 
 ## Install
 
-```bash
-bash .cursor/harness/core/bin/install-adaptor-dsh.sh /path/to/project
-# 或与 Cursor 一并：
-install-super-cursor /path/to/project --adaptor dsh
-```
+无项目内安装。用户级配置指引见 [docs/layout.md](docs/layout.md)：
 
-布局 SSOT → [docs/layout.md](docs/layout.md) · 验收 `bash .cursor/bin/verify-install-dsh.sh`。
+```bash
+# 全局指令与 skills（用户级，非项目内）
+#   ~/.agents/AGENTS.md        全局规则
+#   ~/.agents/skills/          技能（dsh 扫描此目录）
+#   ~/.dsh/profiles/*/         harness 配置（$DSH_HOME）
+```
 
 ## Next sprint
 
-DeepSeek 官方 harness 目录公开后：对照 SPIKE 差距表更新本 `layout.md` 与 `install-adaptor-dsh.sh`（另开 Sprint；无 Breaking 假设前保持当前 core 平铺）。
+dsh 官方转为项目内可安装机制后：新增 install 脚本并接入 `install-super-cursor.sh --adaptor dsh`（另开 Sprint）。

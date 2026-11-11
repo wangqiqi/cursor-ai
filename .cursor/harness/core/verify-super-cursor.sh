@@ -421,7 +421,6 @@ if is_mother_repo; then
   bash "$CUR/bin/verify-spike-skills-bundle-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-skill-bundles-ssot.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
-  bash "$CUR/bin/verify-install-dsh.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-rules-export.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-opencode.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-zcode.sh" || VC_FAIL=$((VC_FAIL + 1))

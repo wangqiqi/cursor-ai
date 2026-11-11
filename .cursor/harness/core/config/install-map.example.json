@@ -13,12 +13,6 @@
       "includes": ["core", "cursor_hooks", "cursor_plugin_verify"],
       "hooks_manifest": ".cursor/hooks.json"
     },
-    "dsh": {
-      "install_dir": ".dsh",
-      "growth_dir": ".growing",
-      "includes": ["core"],
-      "hooks_manifest": null
-    },
     "kiro": {
       "install_dir": ".kiro",
       "growth_dir": ".growing",
@@ -32,9 +26,9 @@
       "hooks_manifest": null
     },
     "opencode": {
-      "install_dir": ".opencode",
+      "install_dir": null,
       "growth_dir": ".growing",
-      "includes": ["core"],
+      "includes": ["core_rules_export"],
       "hooks_manifest": null
     },
     "zcode": {
