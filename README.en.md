@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.1.11-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.12-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 

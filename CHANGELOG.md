@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.12] - 2026-11-13
+
+### Fixed
+
+- **`.cursor/docs` gitlink** — 从索引移除 v5.1.9 误提交的实体文档树，仅保留 `harness/core/docs` 符号链接。
+
 ## [5.1.11] - 2026-11-13
 
 ### Fixed
