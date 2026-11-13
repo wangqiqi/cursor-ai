@@ -1,18 +1,28 @@
 # Quickstart — 5 分钟闭环
 
-## 1. 安装
+## 1. 安装（CLI · 拖放 二选一）
+
+详见 [install-paths.md](reference/install-paths.md)。
+
+**轨 A · CLI**（推荐团队 · 含 `.growing/`）：
 
 ```bash
-# 方式 A：指定目标路径
-./install-super-cursor.sh /path/to/your-project --profile full
+./install-super-cursor.sh /path/to/your-project --replace --copy-plan --profile full
+```
 
-# 方式 B：母版首次 setup-shell，之后任意目录 install
+**轨 B · 复制 / 拖放**（任意项目 · 仅 `.cursor/`）：
+
+1. 母版：`./install-super-cursor.sh --pack-dropin`
+2. 将 `super-cursor-dropin-*.tar.gz` 解压到项目根，或把解压出的 **`.cursor` 文件夹拖进项目根**
+3. Cursor **Reload Window** · 可选 `bash .cursor/bin/verify-cursor-dropin.sh .`
+
+稍后若要完整工作流，再执行轨 A（可保留已有 `.cursor`）。
+
+```bash
+# CLI 快捷：母版 setup-shell 后任意子目录安装
 cd /path/to/cursor-ai && ./install-super-cursor.sh --setup-shell
 source ~/.bashrc
-cd /path/to/your-project/src/any/deep/dir
-install-super-cursor --replace
-
-cd /path/to/your-project
+cd /path/to/your-project && install-super-cursor --replace
 ```
 
 `full` profile 会自动复制 `plan.md`。若仓库根尚无 `onekey_start.sh`，install / `growth-init` 会按 `growth.onekey_bootstrap`（默认开）从 `templates/project-onekey/` 铺一份薄菜单（→ `scripts/test.sh` · `scripts/verify.sh`；**不覆盖**已有文件）。`/scaffold apply` 亦经 `_shared/onekey_start.sh` 同源铺设。

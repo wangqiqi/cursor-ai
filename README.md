@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.1.5-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.6-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -10,7 +10,7 @@
 
 **English:** [README.en.md](README.en.md) · [Quick start (EN)](.cursor/docs/quickstart.en.md)
 
-> **Windows 用户注意**：本仓 `.cursor/` 顶层（`agents` / `rules` / `skills` 等）是**门面指针**（符号链接或 `core.symlinks=false` 时的单行文本路径），指向 `harness/core` 与 `adaptors/cursor`。**跑 verify / 冒烟** 可直接用 `bash .cursor/harness/core/bin/*` 或 `template-verify`（`pack-root.sh` 已兼容）。**Cursor IDE 要加载 rules/skills**：开启开发人员模式 + `git config core.symlinks true` 后重克隆（推荐），或本地运行 `bash .cursor/harness/link-cursor-ide.sh`（勿把实体化结果提交）。消费方项目用 `install-super-cursor.sh --replace` 即可。详见 [platforms.md](.cursor/docs/platforms.md) §母版仓 vs 消费方。
+> **Windows 用户注意**：本仓 `.cursor/` 顶层是**门面指针**（非 `harness/` 实体）。**Verify** 走 `harness/core/bin` 或 `template-verify` 即可。**IDE 读 rules**：重克隆 + 开发人员模式（推荐），或 `bash .cursor/harness/core/bin/prepare-mother-ide-local.sh`（含 skip-worktree；**Trae 仍可能显示上万变更，勿全选提交**）。消费方用 `install-super-cursor.sh --replace`。详见 [platforms.md](.cursor/docs/platforms.md)。
 
 ---
 
@@ -56,9 +56,22 @@ flowchart LR
 
 ## 安装
 
+**双轨并列**（IDE 均可加载 rules · skills · hooks；详表 → [install-paths.md](.cursor/docs/reference/install-paths.md)）：
+
+| 轨 | 做法 | 适合 |
+|----|------|------|
+| **CLI** | `bash install-super-cursor.sh /path/to/project --replace --copy-plan` | 团队仓库 · `.growing/` · adaptor · gitignore |
+| **复制 / 拖放** | 母版 `bash install-super-cursor.sh --pack-dropin` → 解压或**把整个 `.cursor` 拖进项目根** → Reload Window | 无 Git · 内网分发 · 先试用规则 |
+
 ```bash
-bash install-super-cursor.sh /path/to/your-project
-cd /path/to/your-project && bash onekey_start.sh   # 安装后由 growth 生成；母版根目录不应提交 onekey
+# CLI
+bash install-super-cursor.sh /path/to/your-project --replace --copy-plan
+cd /path/to/your-project && bash onekey_start.sh   # growth 生成；母版根不应提交 onekey
+
+# 拖放（母版打一次包，可发给多个项目）
+bash install-super-cursor.sh --pack-dropin
+# tar -xzf .growing/offline-dist/super-cursor-dropin-*.tar.gz -C /path/to/your-project
+bash .cursor/bin/verify-cursor-dropin.sh /path/to/your-project
 ```
 
 | 选项 | 说明 |
@@ -68,6 +81,8 @@ cd /path/to/your-project && bash onekey_start.sh   # 安装后由 growth 生成�
 | `--adaptor kiro\|trae\|opencode\|zcode\|workbuddy` | 额外安装 IDE adaptor（可重复传入；见 `adaptors/*/docs/layout.md`） |
 | `--copy-plan` | 复制 `templates/plan.md` → `.growing/plan.md` |
 | `--replace` | 先删除目标 `.cursor/` 再拷贝（推荐升级/迁移） |
+| `--pack-dropin` | 母版：生成 **仅 `.cursor` 拖放包** → `.growing/offline-dist/*.tar.gz` |
+| `--pack-offline` | 母版：离线全量包（含 `install-super-cursor.sh`，多次 CLI 安装） |
 
 脚本 / 插件 / npm 三通道见 `install-super-cursor.sh` 与 adaptors 分发逻辑；迁移与边界 → [migration-catalog.md](.cursor/docs/migration-catalog.md)（**刻意不迁移** · **完整性边界**）
 

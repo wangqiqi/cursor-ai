@@ -140,10 +140,30 @@ Cloud 不读 `.growing/plan.md`；验收命令写进 `environment.json` 的 `ins
 门面是文本指针时，Cursor **不会**把 `.cursor/rules`、`.cursor/skills`、`.cursor/hooks.json` 当正常配置加载。脚本层照常可用；要让 IDE 生效，任选其一（**本地准备，勿提交** `link-cursor-ide` 产生的实体副本）：
 
 1. **推荐（与母版仓布局一致）**：系统 **设置 → 隐私和安全性 → 开发人员模式** 开启 → `git config core.symlinks true` → **重新克隆** 本仓（门面应为真 symlink）。
-2. **无法开 symlink**：在克隆目录执行 `bash .cursor/harness/link-cursor-ide.sh` 或 `bash .cursor/template-verify.sh`（内部会回退为与 `harness/core` 一致的实体副本）。工作区会出现大量变更 → **不要 commit**；仅本机 IDE 使用。
+2. **无法开 symlink（本机常态）**：一键：
+
+   ```bash
+   bash .cursor/harness/core/bin/prepare-mother-ide-local.sh
+   ```
+
+   等价于 `link-cursor-ide` + `bootstrap-growth`，并对 15 个门面路径设 `git update-index --skip-worktree`。**提交母版 / 打版前**先跑 `unprepare-mother-ide-local.sh` 再 restore，勿把实体副本 commit。
+
+   `template-verify` 会再次实体化门面 → 跑完 verify 后**再执行一次 prepare**（或 unprepare → 仅 CLI 提交）。
+
 3. **纯消费方项目**：对目标仓库跑 `bash install-super-cursor.sh /path/to/project --replace`，与母版仓维护策略无关。
 
 **不要**对母版仓根目录执行 `install-super-cursor.sh --replace` 并提交：那是给业务项目升级用的，不是本仓的 git 布局。
+
+### 本机 IDE 与 Trae / 图形 SCM
+
+| 现象 | 原因 | 正确做法 |
+|------|------|----------|
+| Trae 显示 **+3 万**、`.cursor/bin/*.sh` 全是 New | 图形 SCM 扫**磁盘**下实体目录；索引里仍是 14 个指针；**不一定认 skip-worktree** | **勿**在 Trae 点「全选提交」；以终端 `git status` 为准（应干净） |
+| Cursor 规则/hooks 不生效 | 门面仍是文本指针 | `prepare-mother-ide-local.sh` 后 **Reload Window** |
+| 跑完 `template-verify` 又想提交 | verify 会 `link-cursor-ide` | 提交前：`unprepare` → `git restore` 门面，或再 `prepare` 隐藏脏迹 |
+| 长期不想再折腾 | 真符号链接 | 开发人员模式 + `core.symlinks true` + **重克隆**（首选） |
+
+**日常母版开发（Windows · 无 symlink）**：`prepare` 一次 → 平时改 `harness/`、`adaptors/` → **只用终端** `git add` 明确路径并 push；发版走 `runner release-tag`，不要用 Trae 变更面板提交 `.cursor/rules` 树。
 
 ## 自测
 

@@ -3,15 +3,19 @@
 > Minimal English entry point. Canonical (Chinese) docs: `README.md` · `.cursor/docs/`.
 > Back to the English README at the repository root: `README.en.md`.
 
-## 1. Install
+## 1. Install (CLI · drag-drop)
 
-（Clone or copy this repository first, then run from its root.）
+See [install-paths.md](reference/install-paths.md).
+
+**CLI** (teams, `.growing/`):
 
 ```bash
-./install-super-cursor.sh /path/to/your-project        # --profile full is the default
+./install-super-cursor.sh /path/to/your-project --replace --copy-plan
 ```
 
-Then open the target project in your editor. Everything below is said to the **agent**.
+**Copy / drop** (any folder): mother repo runs `./install-super-cursor.sh --pack-dropin`, then unpack or drag `.cursor/` into the project root · **Reload Window** in Cursor.
+
+Then open the target project. Everything below is said to the **agent**.
 
 ## 2. First five minutes
 

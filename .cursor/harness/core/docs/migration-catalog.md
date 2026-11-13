@@ -72,13 +72,15 @@
 
 审计旧版时：对照本表 **已迁移** 列即可；未列项视为 intentional skip，非缺口。
 
-## 分发三轨（install · skills-bundle · Plugin）
+## 分发三轨（CLI · 拖放 · bundle · Plugin）
 
-与旧版「单一路径装 rules」不同，母版对外有 **三条并行分发轨**（能力矩阵见 `learn/cursor-platform.md` §分发三轨 · SPIKE 归档 `archive/meta/*_SPIKE_plugin_phase2_scope.md`）：
+消费方装 `.cursor/` 的 **双轨 SSOT** → [reference/install-paths.md](reference/install-paths.md)（**CLI install** · **`--pack-dropin` 复制/拖放**）。  
+Plugin / skills-bundle 矩阵见 `learn/cursor-platform.md` §分发三轨 · SPIKE 归档 `archive/meta/*_SPIKE_plugin_phase2_scope.md`。
 
 | 轨 | 入口 | skills 规模 | config / hooks | 典型场景 |
 |----|------|-------------|----------------|----------|
-| **install 全量** | `install-super-cursor.sh`（默认） | **28** | 完整 `.cursor/config/` + `hooks/` | 目标项目 SSOT · `runner.sh` 闸门 |
+| **CLI install** | `install-super-cursor.sh`（默认） | **28** | 完整 `.cursor/config/` + `hooks/` | 目标项目 SSOT · `runner.sh` 闸门 · `.growing/` |
+| **拖放 / 复制** | `--pack-dropin` → 解压或拖 `.cursor/` | **28**（与 install 同构） | 同 CLI | 无 Git · 内网 · 先试规则 |
 | **`--skills-bundle core`** | 同上 + `--skills-bundle core` | **23**（`skill-bundles.json`） | 同 install 全量 | 精简工具 skill，**不是** Plugin |
 | **`.cursor-plugin/`** | 本地加载 Plugin 子集 | **5** lifecycle + **agents** | **无** 打包 config；hooks 依赖已 install 的 `workflow.json` | 可选叠加；须 **先 install** |
 

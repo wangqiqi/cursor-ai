@@ -1,6 +1,6 @@
 # Super Cursor
 
-[![Version](https://img.shields.io/badge/version-5.1.5-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.6-blue.svg)](CHANGELOG.md)
 [![Scaffolds](https://img.shields.io/badge/scaffolds-8%20stacks-green.svg)](.cursor/templates/scaffold/manifest.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -49,7 +49,14 @@ Full walkthrough → [quickstart.en.md](.cursor/docs/quickstart.en.md) · Slash 
 
 ---
 
-## Install flags
+## Install (CLI · drag-drop)
+
+Two supported paths (same flat `.cursor/` tree for the IDE) → [install-paths.md](.cursor/docs/reference/install-paths.md):
+
+| Path | How | Best for |
+|------|-----|----------|
+| **CLI** | `bash install-super-cursor.sh /path/to/project --replace --copy-plan` | Teams · `.growing/` · adaptors |
+| **Copy / drop** | Mother: `--pack-dropin` → unpack or drag `.cursor/` into project root → Reload Window | No Git · offline handoff |
 
 | Flag | Purpose |
 |------|---------|
@@ -58,6 +65,8 @@ Full walkthrough → [quickstart.en.md](.cursor/docs/quickstart.en.md) · Slash 
 | `--adaptor kiro\|trae\|opencode\|zcode\|workbuddy` | Extra IDE adaptor (repeatable) |
 | `--copy-plan` | Copy `templates/plan.md` → `.growing/plan.md` |
 | `--replace` | Remove target `.cursor/` first, then copy |
+| `--pack-dropin` | Mother only: tar with `.cursor/` for copy-into-project |
+| `--pack-offline` | Mother only: full offline bundle with installer |
 
 Distribution & migration → [migration-catalog.md](.cursor/docs/migration-catalog.md)
 

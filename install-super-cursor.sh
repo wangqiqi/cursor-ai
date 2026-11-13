@@ -22,6 +22,7 @@ usage() {
   --skills-bundle full|core        skills 子集（默认 full=28；core=23，不含五工具 skill）
   --adaptor kiro|trae|opencode|zcode|workbuddy  额外安装 IDE adaptor（可重复传入；见 adaptors/*/docs/layout.md）
   --pack-offline [--strip-urls] [--strip-home]  打离线 tar + 说明文档 → .growing/offline-dist/（仅母版）
+  --pack-dropin [--profile ...] [--skills-bundle ...]  打「仅 .cursor」拖放包（解压到任意项目根 · Cursor IDE 直读）
   --copy-plan                      复制 templates/plan.md → .growing/plan.md
   --replace                        先删除目标 .cursor/ 再拷贝（无残留；推荐升级/迁移）
   -h, --help                       显示帮助
@@ -32,8 +33,10 @@ usage() {
   $0 --replace                     # 在仓库任意子目录执行（需已 setup-shell）
   $0 /path/to/my-app --profile lite --copy-plan
   $0 --pack-offline --strip-urls --strip-home   # 母版：离线分发包 → .growing/offline-dist/
+  $0 --pack-dropin                             # 母版：仅 .cursor 拖放包（复制/解压即用）
   super-cursor-sync --replace      # 若已将 \$SUPER_CURSOR_HOME/bin 加入 PATH
 
+消费双轨：CLI 安装（上例）· 拖放复制（--pack-dropin → 解压/拖 .cursor 到项目根）→ .cursor/docs/reference/install-paths.md
 项目特化与产出 → .growing/（plan · archive · learn · rules/local）
 EOF
 }
@@ -141,6 +144,14 @@ if [[ "${1:-}" == "--pack-offline" ]]; then
   SOURCE="$(resolve_source_root)" || exit 1
   pack_script="$SOURCE/.cursor/harness/core/bin/pack-offline-dist.sh"
   [[ -f "$pack_script" ]] || pack_script="$SOURCE/.cursor/bin/pack-offline-dist.sh"
+  exec bash "$pack_script" "$SOURCE" "$@"
+fi
+
+if [[ "${1:-}" == "--pack-dropin" ]]; then
+  shift
+  SOURCE="$(resolve_source_root)" || exit 1
+  pack_script="$SOURCE/.cursor/harness/core/bin/pack-cursor-dropin.sh"
+  [[ -f "$pack_script" ]] || pack_script="$SOURCE/.cursor/bin/pack-cursor-dropin.sh"
   exec bash "$pack_script" "$SOURCE" "$@"
 fi
 

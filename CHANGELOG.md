@@ -4,6 +4,17 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.6] - 2026-11-13
+
+### Added
+
+- **`.cursor` 拖放包（dropin）** — `pack-cursor-dropin.sh` · `verify-cursor-dropin.sh` · `install-super-cursor.sh --pack-dropin`：在母版打出仅含平铺 `.cursor/` 的 tar.gz，解压到任意 Git/非 Git 项目根即可被 Cursor IDE 加载；产物与 `install --replace` 的 `.cursor` 树一致。
+- **安装双轨文档** — `docs/reference/install-paths.md` · 根 README / quickstart / `migration-catalog`：并列 **CLI 安装** 与 **复制拖放**；Windows 资源管理器拖 `.cursor` 与 tar 解压等价。
+
+### Changed
+
+- **Windows 母版本机 IDE** — `prepare-mother-ide-local.sh` / `unprepare-mother-ide-local.sh`：`link-cursor-ide` + `skip-worktree`，避免 Trae 图形 SCM 误提交实体门面；`platforms.md` §本机 IDE 与 Trae SCM。
+
 ## [5.1.5] - 2026-11-13
 
 ### Added
