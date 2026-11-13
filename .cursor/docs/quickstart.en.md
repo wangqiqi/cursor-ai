@@ -5,7 +5,7 @@
 
 ## 1. Install (CLI · drag-drop)
 
-See [install-paths](/reference/install-paths).
+See [install-paths.md](reference/install-paths.md).
 
 **CLI** (teams, `.growing/`):
 

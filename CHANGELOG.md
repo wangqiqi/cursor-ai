@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.10] - 2026-11-13
+
+### Fixed
+
+- **CI Verify** — 文档 SSOT 链恢复相对路径 + denylist 去掉仓库 URL；`.cursor/docs` 恢复 harness 符号链接（撤销 v5.1.9 误实体化）。
+
 ## [5.1.9] - 2026-11-13
 
 ### Fixed

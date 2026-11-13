@@ -24,7 +24,7 @@ bash install-super-cursor.sh /path/to/your-project --replace --copy-plan
 | `.gitignore` / `.cursorignore` | 合并 Growth 与 `rules/local` |
 | `--adaptor *` | Kiro · Trae · OpenCode 等（可选） |
 
-升级：[`consumer-refresh.md`](../consumer-refresh.md) · `install-super-cursor.sh --replace`。
+升级：[consumer-refresh.md](../consumer-refresh.md) · `install-super-cursor.sh --replace`。
 
 ---
 
@@ -78,4 +78,4 @@ bash .cursor/bin/verify-cursor-dropin.sh /path/to/your-project
 | `--pack-dropin` | 仅 `.cursor/` + README | **任意项目复制即用** |
 | `--pack-offline` | 母版根 + `install-super-cursor.sh` | 无网络环境 · 多次 install |
 
-详见 [platforms.md](../platforms.md) · 根 [README.md](../../../../../README.md) §安装。
+详见 [platforms.md](../platforms.md) · 根仓库 `README.md` §安装（Marketplace / 发布仓替换为实际 URL）。

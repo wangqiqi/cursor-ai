@@ -2,7 +2,7 @@
 
 ## 1. 安装（CLI · 拖放 二选一）
 
-详见 [install-paths](/reference/install-paths)。
+详见 [install-paths.md](reference/install-paths.md)。
 
 **轨 A · CLI**（推荐团队 · 含 `.growing/`）：
 
