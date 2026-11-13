@@ -167,6 +167,8 @@ sc_pack_prune_consumer() {
     runner-smoke.sh
     install-smoke.sh
     sync-plugin-subset.sh
+    pack-plugin-marketplace.sh
+    verify-plugin-marketplace-pack.sh
     verify-adaptor-contract.sh
     verify-changelog.sh
     verify-doc-super-cursor.sh

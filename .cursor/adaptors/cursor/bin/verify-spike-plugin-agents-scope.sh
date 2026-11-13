@@ -20,7 +20,7 @@ if [[ ${#files[@]} -eq 0 ]]; then
   exit 1
 fi
 latest="$(printf '%s\n' "${files[@]}" | sort | tail -1)"
-for needle in "ship" "review" "spike" "sync-plugin-subset" "super-cursor-mvp" "0.2.0"; do
+for needle in "ship" "review" "spike" "sync-plugin-subset" "super-cursor-mvp" "0.3.0"; do
   grep -qF "$needle" "$latest" || { echo "FAIL: missing '$needle' in $latest" >&2; exit 1; }
 done
 echo "OK: plugin agents scope spike archive $latest"

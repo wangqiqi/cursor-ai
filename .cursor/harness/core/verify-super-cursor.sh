@@ -436,6 +436,8 @@ if is_mother_repo; then
   bash "$(sc_verify_script verify-spike-plugin-mvp-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-cursor-plugin-manifest.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-cursor-plugin-mvp.sh)" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/pack-plugin-marketplace.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-plugin-marketplace-pack.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-spike-plugin-agents-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-spike-plugin-phase2-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-spike-marketplace-prep-scope.sh" || VC_FAIL=$((VC_FAIL + 1))

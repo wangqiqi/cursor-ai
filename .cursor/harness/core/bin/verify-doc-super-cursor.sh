@@ -129,6 +129,7 @@ grep -q "## Marketplace" "$cloud_doc" || vc_fail "cursor-cloud.md missing Market
 grep -qF "verify-spike-marketplace-prep-scope" "$cloud_doc" || vc_fail "cursor-cloud.md missing marketplace prep verify command"
 grep -q "## Marketplace" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing Marketplace section"
 grep -qF "marketplace_prep_scope" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing marketplace prep archive pointer"
+grep -qF "pack-plugin-marketplace" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing pack-plugin-marketplace"
 grep -qF "verify-spike-marketplace-prep-scope" "$mc" || vc_fail "migration-catalog missing marketplace prep verifier"
 grep -qF "verify-spike-marketplace-prep-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-marketplace-prep-scope"

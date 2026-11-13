@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.8] - 2026-11-13
+
+### Added
+
+- **Cursor Plugin Marketplace Prep** — harness `templates/cursor-plugin/`（manifest · README · logo · `marketplace.json`）；`sync-plugin-subset` 同步门面；`pack-plugin-marketplace.sh` · `verify-plugin-marketplace-pack.sh`；manifest 显式组件路径与上架字段门禁；rules 同步优先 harness SSOT。
+
 ## [5.1.7] - 2026-11-13
 
 ### Fixed

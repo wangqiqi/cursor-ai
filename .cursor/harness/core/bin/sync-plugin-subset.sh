@@ -13,6 +13,8 @@ while [[ "$_walk" != "/" ]]; do
 done
 [[ -n "$ROOT" ]] || { echo "FAIL: install-super-cursor.sh not found above $(dirname "$0")" >&2; exit 1; }
 SRC="$ROOT/.cursor"
+HARNESS="$ROOT/.cursor/harness/core"
+[[ -d "$HARNESS" ]] || HARNESS="$SRC"
 DEST="$ROOT/.cursor-plugin"
 
 RULES=(
@@ -59,8 +61,11 @@ rm -rf "$DEST/rules" "$DEST/skills" "$DEST/agents" "$DEST/lib"
 mkdir -p "$DEST/rules" "$DEST/skills" "$DEST/agents"
 
 for rel in "${RULES[@]}"; do
-  [[ -f "$SRC/$rel" ]] || { echo "FAIL: missing $SRC/$rel" >&2; exit 1; }
-  copy_file "$rel"
+  src_file="$SRC/$rel"
+  [[ -f "$HARNESS/$rel" ]] && src_file="$HARNESS/$rel"
+  [[ -f "$src_file" ]] || { echo "FAIL: missing $rel (checked $SRC and $HARNESS)" >&2; exit 1; }
+  mkdir -p "$(dirname "$DEST/$rel")"
+  cp "$src_file" "$DEST/$rel"
 done
 
 for name in "${SKILLS[@]}"; do
@@ -118,5 +123,21 @@ cat > "$DEST/hooks/hooks.json" <<'EOF'
   }
 }
 EOF
+
+# Manifest · README · logo · marketplace template (SSOT: harness templates/cursor-plugin/)
+TPL="$ROOT/.cursor/harness/core/templates/cursor-plugin"
+[[ -d "$TPL" ]] || TPL="$SRC/templates/cursor-plugin"
+if [[ -d "$TPL" ]]; then
+  for f in plugin.json README.md marketplace.json; do
+    [[ -f "$TPL/$f" ]] || continue
+    cp "$TPL/$f" "$DEST/$f"
+  done
+  if [[ -d "$TPL/assets" ]]; then
+    mkdir -p "$DEST/assets"
+    cp -a "$TPL/assets/." "$DEST/assets/"
+  fi
+else
+  echo "WARN: missing templates/cursor-plugin — plugin.json/README not synced" >&2
+fi
 
 echo "sync-plugin-subset: rules=${#RULES[@]} skills=${#SKILLS[@]} agents=${#AGENTS[@]} lib=${#LIB_SCRIPTS[@]} hooks+lib → $DEST"

@@ -23,6 +23,7 @@ archive/
 node_modules/
 docs/.vitepress/cache
 docs/.vitepress/dist
+/dist/
 docs/guide/
 docs/reference/
 docs/training/

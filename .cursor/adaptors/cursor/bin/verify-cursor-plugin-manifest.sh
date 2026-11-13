@@ -35,6 +35,21 @@ if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name):
     print(f"FAIL: plugin name not kebab-case: {name}", file=sys.stderr)
     sys.exit(1)
 
+desc = data.get("description")
+if not desc or not isinstance(desc, str) or len(desc.strip()) < 40:
+    print("FAIL: plugin.json needs description (>= 40 chars) for Marketplace", file=sys.stderr)
+    sys.exit(1)
+
+author = data.get("author")
+if not isinstance(author, dict) or not str(author.get("name", "")).strip():
+    print("FAIL: plugin.json missing author.name", file=sys.stderr)
+    sys.exit(1)
+
+for key in ("rules", "skills", "agents", "hooks"):
+    if key not in data:
+        print(f"FAIL: plugin.json missing explicit {key} path (marketplace discovery)", file=sys.stderr)
+        sys.exit(1)
+
 def check_path_value(val: str, ctx: str) -> None:
     if val.startswith("/") or "\\" in val:
         print(f"FAIL: absolute path in {ctx}: {val}", file=sys.stderr)
@@ -65,6 +80,33 @@ if not (plugin_root / "README.md").is_file():
     sys.exit(1)
 if not (plugin_root / "hooks" / "hooks.json").is_file():
     print("FAIL: hooks/hooks.json missing", file=sys.stderr)
+    sys.exit(1)
+
+logo = data.get("logo")
+if logo and isinstance(logo, str) and not logo.startswith("http"):
+    if not (plugin_root / logo).is_file():
+        print(f"FAIL: logo file missing: {logo}", file=sys.stderr)
+        sys.exit(1)
+
+def resolve_dir(key: str) -> None:
+    val = data.get(key)
+    if val is None:
+        return
+    rel = val[0] if isinstance(val, list) else val
+    if not isinstance(rel, str):
+        print(f"FAIL: invalid {key} path", file=sys.stderr)
+        sys.exit(1)
+    if not (plugin_root / rel).is_dir():
+        print(f"FAIL: {key} path not found: {rel}", file=sys.stderr)
+        sys.exit(1)
+
+for k in ("rules", "skills", "agents"):
+    resolve_dir(k)
+
+hooks_val = data.get("hooks")
+hook_rel = hooks_val if isinstance(hooks_val, str) else None
+if hook_rel and not (plugin_root / hook_rel).is_file():
+    print(f"FAIL: hooks path not found: {hook_rel}", file=sys.stderr)
     sys.exit(1)
 
 print(f"OK  plugin manifest name={name}")

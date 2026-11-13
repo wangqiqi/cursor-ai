@@ -66,14 +66,15 @@ Plugin hooks **不**打包 `workflow.json`。`config-load.sh` 期望目标仓库
 
 归档矩阵 → `archive/meta/*_SPIKE_plugin_phase2_scope.md`（Growth）。
 
-## Marketplace（Defer · 未来清单）
+## Marketplace（Prep · Defer 上架）
 
-**仍 Defer 上架** — Marketplace 不是第三轨替代物；Plugin 包未来可能上架，当前仅本地 `.cursor-plugin/`。
+Marketplace 不是第三轨替代物；**Prep** 阶段已支持 `pack-plugin-marketplace.sh` · `verify-plugin-marketplace-pack.sh`（输出 `dist/cursor-plugin-marketplace/`）。实际上架仍 **Defer**，经 [marketplace/publish](https://cursor.com/marketplace/publish) 人工审核。
 
 | 项 | 指针 |
 |----|------|
 | 清单归档 | `archive/meta/*_SPIKE_marketplace_prep_scope.md`（Growth） |
-| 门禁脚本 | `bash .cursor/bin/verify-spike-marketplace-prep-scope.sh` |
+| 打包 | `bash .cursor/bin/pack-plugin-marketplace.sh` |
+| 门禁 | `verify-plugin-marketplace-pack` · `verify-spike-marketplace-prep-scope` |
 | 长文 SSOT | install 后 `learn/cursor-platform.md` §Marketplace |
 
 ## Skills bundle（install 可选）
