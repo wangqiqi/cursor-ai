@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.11] - 2026-11-13
+
+### Fixed
+
+- **母版门面** — git 索引中 `.cursor/docs` 恢复为 `120000` 符号链接（非误提交的实体目录树）。
+
 ## [5.1.10] - 2026-11-13
 
 ### Fixed
