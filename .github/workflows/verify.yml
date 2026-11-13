@@ -79,8 +79,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Windows runner 默认 autocrlf=true → 检出 CRLF → smoke 里 git add 刷屏 + 脚本/coherence 误报
+      # 仅 Windows：autocrlf 会把 *.sh 检出为 CRLF → 脚本/coherence 误报；Linux/macOS 勿 reset（会破坏 symlink 门面）
       - name: Enforce LF working tree
+        if: runner.os == 'Windows'
         run: |
           git config --global core.autocrlf false
           git config --global core.safecrlf false
@@ -97,6 +98,14 @@ jobs:
 
       - name: IDE protocol links (before verify)
         run: bash .cursor/harness/link-cursor-ide.sh
+
+      - name: Ensure docs facade (.cursor/docs → harness/core/docs)
+        run: |
+          if [[ ! -e .cursor/docs/quickstart.md ]]; then
+            rm -rf .cursor/docs 2>/dev/null || true
+            ln -sfn harness/core/docs .cursor/docs || cp -a .cursor/harness/core/docs .cursor/docs
+          fi
+          test -f .cursor/docs/quickstart.md
 
       - name: Secret scan (tracked files)
         run: bash .cursor/bin/verify-secrets.sh

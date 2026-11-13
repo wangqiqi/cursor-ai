@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.14] - 2026-11-13
+
+### Fixed
+
+- **CI（Linux · macOS）** — `Enforce LF`/`git reset --hard` 仅限 Windows；verify 补 `Ensure docs facade`；`link-cursor-ide` 不再改写 `.cursor/docs` gitlink。
+
 ## [5.1.13] - 2026-11-13
 
 ### Fixed
