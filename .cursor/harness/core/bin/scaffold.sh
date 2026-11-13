@@ -2,8 +2,9 @@
 # Scaffold CLI — list / detect / apply / audit
 set -euo pipefail
 
-CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CURSOR_DIR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
+CURSOR_DIR="$CUR"
 TEMPLATE_ROOT="$CURSOR_DIR/templates/scaffold"
 MANIFEST="$TEMPLATE_ROOT/manifest.json"
 # shellcheck source=../lib/platform.sh
@@ -543,7 +544,7 @@ cmd_audit() {
   if [[ ! -f "$ROOT/scripts/verify.sh" ]]; then
     echo "  → 用 /scaffold 补 scripts/verify.sh，或从模板 manifest 选相近栈"
   fi
-  if [[ ! -f "$ROOT/.growing/plan.md" && -f "$ROOT/.cursor/templates/plan.md" ]]; then
+  if [[ ! -f "$ROOT/.growing/plan.md" && -f "$CUR/templates/plan.md" ]]; then
     echo "  → mkdir -p .growing && cp .cursor/templates/plan.md .growing/plan.md 后 /plan"
   fi
   if [[ "$stack" != "none "* && "$stack" != "none" ]]; then

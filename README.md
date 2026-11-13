@@ -10,7 +10,7 @@
 
 **English:** [README.en.md](README.en.md) · [Quick start (EN)](.cursor/docs/quickstart.en.md)
 
-> **Windows 用户注意**：本仓 `.cursor/` 顶层（`agents` / `rules` / `skills` / `docs` / `templates` / `bin` / `config` / `hooks` / `lib` 等）是**相对符号链接**，指向 `harness/core` 与 `adaptors/cursor`。若克隆后这些路径为空或打不开，请先 `git config core.symlinks true` 后重新克隆，或运行 `bash .cursor/harness/link-cursor-ide.sh` 自动补链（无法建链时会回退为复制）。
+> **Windows 用户注意**：本仓 `.cursor/` 顶层（`agents` / `rules` / `skills` 等）是**门面指针**（符号链接或 `core.symlinks=false` 时的单行文本路径），指向 `harness/core` 与 `adaptors/cursor`。**跑 verify / 冒烟** 可直接用 `bash .cursor/harness/core/bin/*` 或 `template-verify`（`pack-root.sh` 已兼容）。**Cursor IDE 要加载 rules/skills**：开启开发人员模式 + `git config core.symlinks true` 后重克隆（推荐），或本地运行 `bash .cursor/harness/link-cursor-ide.sh`（勿把实体化结果提交）。消费方项目用 `install-super-cursor.sh --replace` 即可。详见 [platforms.md](.cursor/docs/platforms.md) §母版仓 vs 消费方。
 
 ---
 

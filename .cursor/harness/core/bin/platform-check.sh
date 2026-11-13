@@ -2,7 +2,9 @@
 # Environment probe — Linux · macOS · Git Bash
 set -euo pipefail
 
-CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
+CURSOR_DIR="$CUR"
 # shellcheck source=../lib/platform.sh
 source "$CURSOR_DIR/lib/platform.sh"
 

@@ -57,6 +57,7 @@
 |-------|------|
 | `core` | Harness Core 主体（skills · rules · bin · config 等） |
 | `core_rules_export` | 面向 Kiro/Trae 的 rules 导出 → [core-rules-export.md](core-rules-export.md) |
+| `core_skills_export` | 面向 Trae 的 skills 导出（`.trae/skills/<id>/SKILL.md`）→ [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
 | `cursor_hooks` | Cursor 专用（仅 `cursor` adaptor） |
 | `cursor_plugin_verify` | Cursor Plugin 冒烟（仅 `cursor` adaptor） |
 
@@ -65,7 +66,7 @@
 | id | install_dir | includes | hooks_manifest |
 |----|-------------|----------|----------------|
 | `kiro` | `.kiro`（rules → `.kiro/steering/*.md`） | `core_rules_export` | （map 未列则 README 写 **未定义**） |
-| `trae` | `.trae`（rules → `.trae/rules/*.md`） | `core_rules_export` | （同上） |
+| `trae` | `.trae`（rules → `.trae/rules/*.md` · skills → `.trae/skills/`） | `core_rules_export` · `core_skills_export` | （同上） |
 | `opencode` | `null`（项目根 `AGENTS.md` + `opencode.json`） | `core_rules_export` | （同上） |
 
 ## 验收

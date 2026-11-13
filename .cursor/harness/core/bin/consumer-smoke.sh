@@ -5,12 +5,12 @@
 # 全部在 mktemp 目录中进行，不改仓库。
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 # shellcheck source=../lib/smoke-git.sh
-source "$CURSOR_DIR/lib/smoke-git.sh"
+source "$CUR/lib/smoke-git.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 FAIL=0

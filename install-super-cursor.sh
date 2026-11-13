@@ -314,7 +314,10 @@ mkdir -p "$TARGET"
 if [[ "$REPLACE" == "true" && -e "$TARGET/.cursor" ]]; then
   # 身份校验（P0-4 补强）：只覆盖 Super Cursor 安装，别把 Cursor 自己的 ~/.cursor
   # 或在 dotfiles 仓库根跑 --replace 时的无关目录整体删掉。
-  if [[ -f "$TARGET/.cursor/hooks.json" && -f "$TARGET/.cursor/rules/core.mdc" ]]; then
+  # Windows core.symlinks=false：.cursor/rules 是文本指针，内容在 harness/core/rules
+  _identity_rules="$TARGET/.cursor/rules/core.mdc"
+  [[ -f "$_identity_rules" ]] || _identity_rules="$TARGET/.cursor/harness/core/rules/core.mdc"
+  if [[ -f "$TARGET/.cursor/hooks.json" && -f "$_identity_rules" ]]; then
     rm -rf "$TARGET/.cursor"
     echo "已删除旧 .cursor/（--replace 干净覆盖）"
   else
@@ -378,6 +381,8 @@ sc_chmod_scripts "$TARGET/.cursor"
 
 # Bootstrap .growing (plan · archive · learn · rules — gitignored on target)
 GROWTH_TEMPLATE="$SOURCE/.cursor/templates/growing"
+# Windows core.symlinks=false：.cursor/templates 是文本指针，内容在 harness/core
+[[ -d "$GROWTH_TEMPLATE" ]] || GROWTH_TEMPLATE="$SOURCE/.cursor/harness/core/templates/growing"
 GROWTH_DIR="$TARGET/.growing"
 LEGACY_GROWTH="$TARGET/.cursorGrowth"
 if [[ -d "$LEGACY_GROWTH" && ! -e "$GROWTH_DIR" ]]; then
@@ -422,6 +427,9 @@ if [[ "$COPY_PLAN" == "true" || ( "$PROFILE" == "full" && ! -f "$GROWTH_DIR/plan
   if [[ -f "$TARGET/.cursor/templates/plan.md" ]]; then
     cp "$TARGET/.cursor/templates/plan.md" "$GROWTH_DIR/plan.md"
     echo "已复制 .growing/plan.md（profile=${PROFILE}）"
+  elif [[ -f "$TARGET/.cursor/harness/core/templates/plan.md" ]]; then
+    cp "$TARGET/.cursor/harness/core/templates/plan.md" "$GROWTH_DIR/plan.md"
+    echo "已复制 .growing/plan.md（profile=${PROFILE}）"
   fi
 fi
 
@@ -445,6 +453,10 @@ if [[ -d "$GROWTH_DIR/rules/local" && ! -L "$CURSOR_LOCAL" ]]; then
       cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null || true
       echo "OK  .cursor/rules/local 目录（符号链接不可用 · 已降级为目录副本）"
     fi
+  elif [[ -d "$CURSOR_LOCAL" && ! -f "$CURSOR_LOCAL/README.md" ]]; then
+    # 已存在实体目录（常来自无符号链接的检出）：保留其内容，补 README 供门禁识别
+    cp "$GROWTH_DIR/rules/local/README.md" "$CURSOR_LOCAL/README.md" 2>/dev/null || true
+    echo "OK  .cursor/rules/local 已存在实体目录 · 已补 README"
   fi
 fi
 
@@ -479,6 +491,7 @@ if [[ "$ADAPTOR_KIRO" == "true" ]]; then
 fi
 if [[ "$ADAPTOR_TRAE" == "true" ]]; then
   sc_run_pack_script install-adaptor-rules-export.sh --adaptor trae "$TARGET"
+  sc_run_pack_script install-adaptor-skills-export.sh --adaptor trae "$TARGET" --skills-bundle "$SKILLS_BUNDLE"
 fi
 if [[ "$ADAPTOR_OPENCODE" == "true" ]]; then
   # opencode 只生成 AGENTS.md + opencode.json（不再平铺 core），无 profile/skills-bundle 概念

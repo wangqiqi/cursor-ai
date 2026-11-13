@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Mother template: .cursor/templates/project-onekey/onekey_start.sh
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CUR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 tpl="$CUR/templates/project-onekey/onekey_start.sh"
 
 # 母版仓 SSOT 在 templates/；根目录 onekey 仅属于 install/growth-init 后的目标项目

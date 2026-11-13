@@ -2,8 +2,9 @@
 # plan / run CLI
 set -euo pipefail
 
-CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CURSOR_DIR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
+CURSOR_DIR="$CUR"
 CONFIG="$CURSOR_DIR/config/workflow.json"
 # shellcheck source=../lib/platform.sh
 source "$CURSOR_DIR/lib/platform.sh"
@@ -52,8 +53,11 @@ VERSION_TAG_GLOB_ENV="$(sc_config 'version_tag_glob_env' 'VERSION_TAG_GLOB')"
 VERSION_DEFAULT_ENV="$(sc_config 'version_default_env' 'RELEASE_VERSION_DEFAULT')"
 SC_SKIP_PREFIXES="$(sc_config_join '.task_id.prefixes_skip' 'REV- SPIKE- DOC-')"
 export SC_SKIP_PREFIXES
+# hooks 在 adaptor 侧（母版 adaptors/cursor/hooks；安装后 .cursor/hooks）；无符号链接的 Windows 检出走后者
+HOOKS_DIR="$CURSOR_DIR/hooks"
+[[ -d "$HOOKS_DIR" ]] || HOOKS_DIR="$ROOT/.cursor/adaptors/cursor/hooks"
 # shellcheck source=../hooks/lib/plan-parse.sh
-source "$CURSOR_DIR/hooks/lib/plan-parse.sh" "$PLAN"
+source "$HOOKS_DIR/lib/plan-parse.sh" "$PLAN"
 
 cmd="${1:-status}"
 

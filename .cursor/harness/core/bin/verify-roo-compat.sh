@@ -7,7 +7,8 @@
 # 本脚本按文件类型断言 frontmatter 键集 ⊆ 白名单，并检查 `.mdc`/`.md` 扩展名约定。
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-roo-compat"
 

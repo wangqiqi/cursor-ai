@@ -35,4 +35,4 @@ install-super-cursor /path/to/project --adaptor kiro
 
 ## 验收
 
-`bash .cursor/bin/verify-install-rules-export.sh`（kiro · trae 共用）。
+`bash .cursor/bin/verify-install-rules-export.sh`（kiro · trae 的 rules 共用；trae skills 另见 `verify-install-skills-export.sh`）。

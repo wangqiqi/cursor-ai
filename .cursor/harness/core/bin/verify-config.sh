@@ -7,7 +7,8 @@
 # 由 `config/schema.json` 声明允许的嵌套键与类型；角色/版本等自由结构用 "object"。
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-config"
 

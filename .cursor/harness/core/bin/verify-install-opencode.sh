@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Smoke: install OpenCode adaptor (generate AGENTS.md + opencode.json in temp dir).
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
-INSTALL_OC="$CURSOR_DIR/bin/install-adaptor-opencode.sh"
-[[ -f "$INSTALL_OC" ]] || INSTALL_OC="$CURSOR_DIR/harness/core/bin/install-adaptor-opencode.sh"
+INSTALL_OC="$CUR/bin/install-adaptor-opencode.sh"
 
 sc_mktemp_dir sc-verify-install-opencode
 TMP="$SC_MKTEMP_LAST"
@@ -29,7 +28,7 @@ grep -q '\.cursor/rules' "$TMP/opencode.json" || { echo "FAIL: opencode.json mus
 
 # JSON 有效性（有可用的 python/jq 时校验；sc_python 会排除 Windows Store 假 python）
 # shellcheck source=../lib/platform.sh
-source "$CURSOR_DIR/lib/platform.sh"
+source "$CUR/lib/platform.sh"
 if py="$(sc_python 2>/dev/null)"; then
   # 路径作为 argv 传入：Git Bash 会自动转成 Windows 路径（写进 -c 字符串里则不会）
   "$py" -c 'import json,sys;json.load(open(sys.argv[1],encoding="utf-8"))' "$TMP/opencode.json" \

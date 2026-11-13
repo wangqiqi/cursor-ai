@@ -3,8 +3,8 @@
 # Idempotent — safe to run before template-verify or on first clone.
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CUR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 GROWTH_TEMPLATE="$CUR/templates/growing"
 GROWTH_DIR="$ROOT/.growing"
 

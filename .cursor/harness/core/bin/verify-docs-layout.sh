@@ -8,8 +8,8 @@
 # 配置真源：.cursor/config/docs-layout.json · 规则：rules/execution/project-docs.mdc
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CUR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 
 # shellcheck source=../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-docs-layout"

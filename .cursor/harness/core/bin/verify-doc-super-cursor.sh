@@ -13,14 +13,17 @@ while [[ "$_walk" != "/" ]]; do
 done
 [[ -n "$ROOT" ]] || { echo "FAIL: repo root not found" >&2; exit 1; }
 CUR="$ROOT/.cursor"
+# harness 分区：内容在 .cursor/harness/core（Windows core.symlinks=false 时 .cursor/* 是文本指针）
+CORE="$CUR/harness/core"
+[[ -d "$CORE" ]] || CORE="$CUR"
 
 # shellcheck source=../lib/verify-common.sh
-source "$CUR/lib/verify-common.sh" "verify-doc-super-cursor"
+source "$CORE/lib/verify-common.sh" "verify-doc-super-cursor"
 
 echo "=== verify-doc-super-cursor ==="
 
 # --- README skills count vs disk ---
-disk_skills="$(find -L "$CUR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
+disk_skills="$(find -L "$CORE/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')"
 readme_line="$(grep -E 'skills/.*[0-9]+ 个' "$ROOT/README.md" 2>/dev/null | head -1 || true)"
 if [[ -z "$readme_line" ]]; then
   vc_fail "README.md missing skills count line (N 个)"
@@ -34,9 +37,9 @@ else
 fi
 
 # --- migration-catalog skills/rules counts (optional line) ---
-mc="$CUR/docs/migration-catalog.md"
+mc="$CORE/docs/migration-catalog.md"
 if [[ -f "$mc" ]]; then
-  disk_rules="$(find -L "$CUR/rules" -name '*.mdc' 2>/dev/null | wc -l | tr -d ' ')"
+  disk_rules="$(find -L "$CORE/rules" -name '*.mdc' 2>/dev/null | wc -l | tr -d ' ')"
   if grep -qE "${disk_skills} skills" "$mc" && grep -qE "${disk_rules} rules" "$mc"; then
     vc_ok "migration-catalog counts skills=$disk_skills rules=$disk_rules"
   else
@@ -50,12 +53,12 @@ fi
 check_rule() {
   [[ -f "$1" ]] && vc_ok "exists $1" || vc_fail "missing $1"
 }
-check_rule "$CUR/rules/execution/doc-hygiene.mdc"
+check_rule "$CORE/rules/execution/doc-hygiene.mdc"
 
 # --- 双语最低集（A5）：英文入口存在且被主 README 链接 ---
 if [[ -f "$ROOT/README.en.md" ]] \
   && grep -q 'README\.en\.md' "$ROOT/README.md" \
-  && [[ -f "$CUR/docs/quickstart.en.md" ]]; then
+  && [[ -f "$CORE/docs/quickstart.en.md" ]]; then
   vc_ok "bilingual entry (README.en.md + docs/quickstart.en.md) present and linked"
 else
   vc_fail "bilingual entry missing or not linked from README.md (README.en.md · docs/quickstart.en.md)"
@@ -63,7 +66,7 @@ fi
 
 # --- skill metadata 契约：description ≤85 字 + dmi 分桶（防再次被删的回归）---
 # 该节曾在 ef5521b 被静默删除且无人发现；此处断言存在性 + 实际元数据
-training="$CUR/docs/training/skills.md"
+training="$CORE/docs/training/skills.md"
 if grep -q 'disable-model-invocation' "$training" 2>/dev/null \
   && grep -q '≤85' "$training" 2>/dev/null; then
   vc_ok "training/skills.md documents dmi policy + description cap"
@@ -72,9 +75,9 @@ else
 fi
 
 # --- slash SSOT: routes.md canonical; README/training no full 3-tier Command tables ---
-routes="$CUR/skills/master/routes.md"
-readme="$CUR/README.md"
-naming="$CUR/docs/naming.md"
+routes="$CORE/skills/master/routes.md"
+readme="$CORE/README.md"
+naming="$CORE/docs/naming.md"
 [[ -f "$routes" ]] || vc_fail "missing $routes"
 grep -q "## 主路由" "$routes" || vc_fail "routes.md missing 主路由 section"
 grep -qE 'skills/master/routes\.md|master/routes\.md' "$readme" \
@@ -93,8 +96,8 @@ fi
 vc_ok "slash SSOT (routes.md canonical · README/training no 3-tier duplicate tables)"
 
 # --- Plugin MVP docs: install primary + sync/verify commands ---
-platform_learn="$CUR/templates/growing/learn/cursor-platform.md"
-cloud_doc="$CUR/docs/cursor-cloud.md"
+platform_learn="$CORE/templates/growing/learn/cursor-platform.md"
+cloud_doc="$CORE/docs/cursor-cloud.md"
 [[ -f "$cloud_doc" ]] || cloud_doc="$CUR/adaptors/cursor/docs/cursor-cloud.md"
 [[ -f "$platform_learn" ]] || vc_fail "missing cursor-platform.md learn template"
 [[ -f "$cloud_doc" ]] || vc_fail "missing cursor-cloud.md (core or adaptors/cursor/docs)"
@@ -105,7 +108,7 @@ grep -q "## Plugin MVP" "$cloud_doc" || vc_fail "cursor-cloud.md missing Plugin 
 grep -q "verify-cursor-plugin-mvp" "$cloud_doc" || vc_fail "cursor-cloud.md missing plugin verify command"
 grep -qF "agents" "$platform_learn" || vc_fail "cursor-platform.md must document plugin agents"
 grep -qF "ship" "$cloud_doc" || vc_fail "cursor-cloud.md must mention plugin agents (ship)"
-grep -qF "verify-spike-plugin-agents-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "verify-spike-plugin-agents-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-plugin-agents-scope"
 vc_ok "Plugin MVP docs (install primary · agents · cursor-platform + cursor-cloud)"
 
@@ -113,8 +116,8 @@ grep -q "## 分发三轨" "$platform_learn" || vc_fail "cursor-platform.md missi
 grep -q "## Hooks 与 config" "$platform_learn" || vc_fail "cursor-platform.md missing Hooks 与 config section"
 grep -q "分发三轨" "$cloud_doc" || vc_fail "cursor-cloud.md missing 分发三轨 table"
 grep -q "config-load" "$cloud_doc" || vc_fail "cursor-cloud.md missing hooks config dependency"
-grep -qF "cursor-plugin" "$CUR/config/skill-bundles.json" || vc_fail "skill-bundles.json must reference plugin boundary"
-grep -qF "verify-spike-plugin-phase2-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "cursor-plugin" "$CORE/config/skill-bundles.json" || vc_fail "skill-bundles.json must reference plugin boundary"
+grep -qF "verify-spike-plugin-phase2-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-plugin-phase2-scope"
 vc_ok "plugin phase2 docs (三轨 · hooks/config · skill-bundles · verify wire)"
 
@@ -127,7 +130,7 @@ grep -qF "verify-spike-marketplace-prep-scope" "$cloud_doc" || vc_fail "cursor-c
 grep -q "## Marketplace" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing Marketplace section"
 grep -qF "marketplace_prep_scope" "$plugin_readme" || vc_fail ".cursor-plugin/README.md missing marketplace prep archive pointer"
 grep -qF "verify-spike-marketplace-prep-scope" "$mc" || vc_fail "migration-catalog missing marketplace prep verifier"
-grep -qF "verify-spike-marketplace-prep-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "verify-spike-marketplace-prep-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-marketplace-prep-scope"
 vc_ok "marketplace prep docs (platform · cloud · plugin README · catalog · verify wire)"
 
@@ -147,35 +150,35 @@ grep -qF "verify-spike-mother-hygiene-scope" "$ROOT/README.md" || vc_fail "READM
 if grep -qF "11 道门禁" "$ROOT/README.md"; then
   vc_fail "README.md still mentions obsolete 11 道门禁"
 fi
-grep -qF "verify-spike-mother-hygiene-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "verify-spike-mother-hygiene-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-mother-hygiene-scope"
 vc_ok "mother hygiene facade (migration-catalog · README · verify wire)"
 
-grep -qF "onekey_bootstrap" "$CUR/config/README.md" || vc_fail "config/README.md missing growth.onekey_bootstrap"
+grep -qF "onekey_bootstrap" "$CORE/config/README.md" || vc_fail "config/README.md missing growth.onekey_bootstrap"
 grep -qF "verify-onekey-template" "$mc" || vc_fail "migration-catalog missing verify-onekey-template"
 grep -qF "verify-spike-onekey-bootstrap-scope" "$mc" || vc_fail "migration-catalog missing verify-spike-onekey-bootstrap-scope"
 grep -qF "verify-onekey-template" "$ROOT/README.md" || vc_fail "README.md missing verify-onekey-template"
-grep -qF "onekey_start.sh" "$CUR/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing onekey触发表"
-grep -qF "templates/project-onekey" "$CUR/docs/scaffold.md" || vc_fail "scaffold.md missing project-onekey pointer"
-grep -qF "verify-onekey-template" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "onekey_start.sh" "$CORE/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing onekey触发表"
+grep -qF "templates/project-onekey" "$CORE/docs/scaffold.md" || vc_fail "scaffold.md missing project-onekey pointer"
+grep -qF "verify-onekey-template" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-onekey-template"
-grep -qF "verify-spike-onekey-bootstrap-scope" "$ROOT/.cursor/verify-super-cursor.sh" \
+grep -qF "verify-spike-onekey-bootstrap-scope" "$CORE/verify-super-cursor.sh" \
   || vc_fail "verify-super-cursor must wire verify-spike-onekey-bootstrap-scope"
 vc_ok "onekey bootstrap docs (config · catalog · README · building · scaffold · verify wire)"
 
-tpl_07="$CUR/templates/project-docs/07_用户手册.md"
-tpl_08="$CUR/templates/project-docs/08_测试报告.md"
-learn_pc="$CUR/templates/growing/learn/plan-conventions.md"
+tpl_07="$CORE/templates/project-docs/07_用户手册.md"
+tpl_08="$CORE/templates/project-docs/08_测试报告.md"
+learn_pc="$CORE/templates/growing/learn/plan-conventions.md"
 [[ -f "$tpl_07" ]] || vc_fail "templates/project-docs/07_用户手册.md missing"
 [[ -f "$tpl_08" ]] || vc_fail "templates/project-docs/08_测试报告.md missing"
 grep -qF "generated: manual" "$tpl_07" || vc_fail "07 template missing manual generated marker"
 grep -qF "generated: report" "$tpl_08" || vc_fail "08 template missing report generated marker"
 grep -qF "docs-layout.json" "$learn_pc" || vc_fail "plan-conventions missing docs-layout.json pointer"
-grep -qF "docs-init" "$CUR/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing docs-init"
+grep -qF "docs-init" "$CORE/docs/building-super-cursor.md" || vc_fail "building-super-cursor missing docs-init"
 grep -qF "docs-init" "$mc" || vc_fail "migration-catalog missing docs-init"
 vc_ok "project-docs SSOT (07/08 templates · plan-conventions · contributor docs)"
 
-vc_py "$CUR" <<'PY'
+vc_py "$CORE" <<'PY'
 import re, sys
 from pathlib import Path
 
@@ -234,7 +237,7 @@ print(f"OK  skill metadata (28 files · description <=85 · dmi buckets · run/p
 PY
 
 # --- relative markdown links under .cursor/docs ---
-vc_py "$CUR/docs" "$CUR" <<'PY'
+vc_py "$CORE/docs" "$CUR" <<'PY'
 import re, sys
 from pathlib import Path
 from typing import Optional
@@ -298,10 +301,10 @@ fi
 manifest_stacks=""
 _py_manifest="$(vc_python 2>/dev/null || true)"
 if [[ -n "$_py_manifest" ]]; then
-  manifest_stacks="$("$_py_manifest" - "$ROOT" <<'PY'
+  manifest_stacks="$("$_py_manifest" - "$CORE" <<'PY'
 import json, sys
 from pathlib import Path
-m = Path(sys.argv[1]) / ".cursor/templates/scaffold/manifest.json"
+m = Path(sys.argv[1]) / "templates/scaffold/manifest.json"
 data = json.loads(m.read_text(encoding="utf-8"))
 ids = [s["id"] for s in data.get("scaffolds", []) if isinstance(s, dict) and s.get("id")]
 print(len(ids))
@@ -319,8 +322,8 @@ fi
 
 for stale in "7 栈" "7 stacks" "scaffolds-7%20stacks"; do
   if grep -qF "$stale" "$ROOT/README.md" \
-    || grep -qF "$stale" "$CUR/docs/quickstart.md" \
-    || grep -qF "$stale" "$CUR/docs/training/skills.md" 2>/dev/null; then
+    || grep -qF "$stale" "$CORE/docs/quickstart.md" \
+    || grep -qF "$stale" "$CORE/docs/training/skills.md" 2>/dev/null; then
     vc_fail "stale scaffold count ($stale) in README or .cursor/docs facade"
   fi
 done

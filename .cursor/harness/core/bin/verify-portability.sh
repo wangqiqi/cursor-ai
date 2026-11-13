@@ -14,8 +14,8 @@
 # 自检脚本本身把模式当**数据**用，故排除；`lib/platform.sh` 是解析器，允许 `command -v python3`。
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CUR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-portability"
 

@@ -8,8 +8,8 @@
 # 重复块 = 两个脚本共享 ≥N 行连续相同内容 → 应提取到 `lib/_*.sh`。
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ROOT="$(cd "$CUR/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 
 # shellcheck source=../lib/verify-common.sh
 source "$CUR/lib/verify-common.sh" "verify-scripts-layout"

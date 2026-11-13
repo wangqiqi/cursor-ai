@@ -185,6 +185,7 @@ sc_pack_prune_consumer() {
     verify-onekey-template.sh
     verify-install-opencode.sh
     verify-install-rules-export.sh
+    verify-install-skills-export.sh
     verify-install-skills-bundle.sh
     verify-install-zcode.sh
     verify-spike-docs-sync-scope.sh

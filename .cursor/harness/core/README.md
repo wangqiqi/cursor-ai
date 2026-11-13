@@ -8,7 +8,7 @@
 |------|------|
 | `harness/core/` | rules · skills · agents · config · bin[core] · lib · templates · docs |
 | `adaptors/cursor/` | hooks · hooks.json · cursor-only verify/docs |
-| `adaptors/{dsh,kiro,trae,opencode,zcode,workbuddy}/` | 其它 IDE adaptor（core install / rules export） |
+| `adaptors/{dsh,kiro,trae,opencode,zcode,workbuddy}/` | 其它 IDE adaptor（core install / rules + skills export） |
 | `template-verify.sh` | 母版 CI 入口（先 `link-cursor-ide.sh`） |
 
 协议路径（**symlink** / **install 后**平铺；消费方 install 后通常仅见平铺树）：

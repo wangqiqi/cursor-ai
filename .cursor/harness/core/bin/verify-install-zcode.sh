@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Smoke: install Harness Core into .zcode/ (temp dir).
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
-INSTALL_ZCODE="$CURSOR_DIR/bin/install-adaptor-zcode.sh"
-[[ -f "$INSTALL_ZCODE" ]] || INSTALL_ZCODE="$CURSOR_DIR/harness/core/bin/install-adaptor-zcode.sh"
+INSTALL_ZCODE="$CUR/bin/install-adaptor-zcode.sh"
 
 sc_mktemp_dir sc-verify-install-zcode
 TMP="$SC_MKTEMP_LAST"
@@ -57,7 +56,7 @@ full_n="$(find -L "$TMP/.zcode/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/nu
 [[ "$full_n" == "28" ]] || { echo "FAIL: .zcode skills=$full_n (expected 28 for full bundle)" >&2; exit 1; }
 
 # shellcheck source=../lib/platform.sh
-source "$CURSOR_DIR/lib/platform.sh"
+source "$CUR/lib/platform.sh"
 py="$(sc_python)"
 "$py" - "$TMP/.zcode/config.json" <<'PY'
 import json, sys

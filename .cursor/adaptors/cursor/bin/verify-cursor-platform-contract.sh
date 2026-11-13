@@ -5,13 +5,16 @@ set -euo pipefail
 # shellcheck source=../lib/resolve-root.sh
 source "$(cd "$(dirname "$0")/.." && pwd)/lib/resolve-root.sh"
 ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
-CUR="$ROOT/.cursor"
+PACK="$ROOT/.cursor"
+# 内容在 harness/core；hooks.json 等 IDE 协议文件在 pack 根（Windows 无符号链接时后者是文本指针）
+CUR="$PACK/harness/core"
+[[ -d "$CUR" ]] || CUR="$PACK"
 TPL="$CUR/templates/growing"
 ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
 # 归档为本地私有（.growing/ 不入 git）→ 未引导时跳过归档段，其余契约检查照跑
 # shellcheck source=../lib/growth-archive.sh
-source "$ROOT/.cursor/lib/growth-archive.sh"
+source "$CUR/lib/growth-archive.sh"
 archive_ready=false
 if sc_growth_archive_available "$ARCHIVE_DIR" "verify-cursor-platform-contract"; then
   archive_ready=true
@@ -61,7 +64,7 @@ grep -q "review" "$TPL/BUGBOT.md" || fail "BUGBOT.md missing review skill split"
 
 # --- MCP + Cloud templates ---
 DOC="$CUR/docs/cursor-cloud.md"
-[[ -f "$DOC" ]] || DOC="$CUR/adaptors/cursor/docs/cursor-cloud.md"
+[[ -f "$DOC" ]] || DOC="$PACK/adaptors/cursor/docs/cursor-cloud.md"
 for f in mcp.json.example environment.json.example; do
   [[ -f "$TPL/$f" ]] || fail "missing $TPL/$f"
 done
@@ -94,7 +97,8 @@ for needle in "Cloud Agents parity" "beforeTabFileRead" "run-start.sh"; do
   grep -q "$needle" "$PLAT" || fail "platforms.md missing '$needle'"
 done
 grep -q 'platforms.md' "$DOC" || fail "cursor-cloud.md missing platforms cross-link"
-HOOKS="$CUR/hooks.json"
+HOOKS="$PACK/adaptors/cursor/hooks.json"
+[[ -f "$HOOKS" ]] || HOOKS="$PACK/hooks.json"
 if grep -q 'beforeTabFileRead\|afterTabFileEdit' "$HOOKS"; then
   fail "hooks.json should not enable Tab hooks by default"
 fi

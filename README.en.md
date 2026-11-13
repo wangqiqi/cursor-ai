@@ -10,6 +10,8 @@ Drop a reusable `.cursor/` SOP into any repo. Sprint plans and learnings live in
 
 **中文：** [README.md](README.md)
 
+> **Windows:** Facade paths under `.cursor/` (rules, skills, hooks, …) are **symlinks or text pointers** to `harness/core`. **Verify/smoke scripts** work with `pack-root.sh` without materializing. For **Cursor IDE** to load rules, enable Developer Mode, set `git config core.symlinks true`, and re-clone—or run `bash .cursor/harness/link-cursor-ide.sh` locally without committing the copy. Target repos should use `install-super-cursor.sh --replace`. See [platforms.md](.cursor/docs/platforms.md) (mother repo vs consumer).
+
 ---
 
 ## Why teams pick this

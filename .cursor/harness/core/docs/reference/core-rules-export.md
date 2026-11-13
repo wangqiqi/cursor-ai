@@ -1,6 +1,6 @@
 # `core_rules_export`（Kiro · Trae）
 
-`install-map` token **`core_rules_export`**：把 Harness **rules** 子集安装到项目规则型 IDE 根目录，**不**拷贝 skills · bin · config · templates 全量。
+`install-map` token **`core_rules_export`**：把 Harness **rules** 子集安装到项目规则型 IDE 根目录，**不**拷贝 skills · bin · config · templates 全量。Trae 另有 **`core_skills_export`** 单独导出 skills（`.trae/skills/`），见 [adaptors/trae/docs/layout.md](../../../adaptors/trae/docs/layout.md)。
 
 ## 适用 adaptor
 
@@ -36,4 +36,5 @@ bash .cursor/bin/verify-install-rules-export.sh
 ## 相关
 
 - [adaptor-contract.md](adaptor-contract.md) §`includes` token
+- Trae skills 导出（`core_skills_export`）→ [adaptors/trae/docs/layout.md](../../../adaptors/trae/docs/layout.md)
 - dsh（guide-only）→ [adaptors/dsh/docs/layout.md](../../../adaptors/dsh/docs/layout.md)

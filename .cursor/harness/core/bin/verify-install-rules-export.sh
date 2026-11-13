@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-# Smoke: kiro + trae core_rules_export installs.
+# Smoke: kiro + trae core_rules_export installs（trae skills → verify-install-skills-export.sh）。
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
-INSTALL="$CURSOR_DIR/bin/install-adaptor-rules-export.sh"
-[[ -f "$INSTALL" ]] || INSTALL="$CURSOR_DIR/harness/core/bin/install-adaptor-rules-export.sh"
+INSTALL="$CUR/bin/install-adaptor-rules-export.sh"
 
 sc_mktemp_dir sc-verify-rules-export
 TMP="$SC_MKTEMP_LAST"
@@ -24,7 +23,10 @@ for id in kiro trae; do
   for f in "$dir/$subdir/core.md" "$dir/RULES.md" "$dir/README.md"; do
     [[ -f "$TMP/$f" ]] || { echo "FAIL: missing $TMP/$f" >&2; exit 1; }
   done
-  [[ ! -d "$TMP/$dir/skills" ]] || { echo "FAIL: $dir must not contain skills/" >&2; exit 1; }
+  # kiro 无 skills 机制；trae 的 skills 由 verify-install-skills-export.sh 单独覆盖
+  if [[ "$id" == "kiro" ]]; then
+    [[ ! -d "$TMP/$dir/skills" ]] || { echo "FAIL: $dir must not contain skills/" >&2; exit 1; }
+  fi
   grep -q 'core.md' "$TMP/$dir/RULES.md" || {
     echo "FAIL: $dir/RULES.md missing core.md entry" >&2
     exit 1

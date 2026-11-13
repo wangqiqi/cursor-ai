@@ -3,12 +3,12 @@
 # skills-bundle full|core 契约 → verify-install-skills-bundle.sh（非本脚本；install 默认 full）
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 # shellcheck source=../lib/smoke-git.sh
-source "$CURSOR_DIR/lib/smoke-git.sh"
+source "$CUR/lib/smoke-git.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 sc_mktemp_dir sc-install-smoke
@@ -229,6 +229,14 @@ assert_file "$KIRO/.kiro/steering/core.md" "adaptor kiro: .kiro/steering/core.md
 assert_file "$KIRO/.kiro/RULES.md" "adaptor kiro: RULES.md index"
 assert_absent "$KIRO/.kiro/rules" "adaptor kiro: no .kiro/rules/ (official is steering/)"
 assert_absent "$KIRO/.kiro/skills" "adaptor kiro: no skills/"
+
+# 10b. adaptor trae → .trae/rules/*.md + .trae/skills/<id>/SKILL.md
+TRAE="$TMP_ROOT/trae-adaptor"
+run_install "adaptor trae: install" "$TMP_ROOT/trae.out" "$TRAE" --profile lite --adaptor trae
+assert_file "$TRAE/.trae/rules/core.md" "adaptor trae: .trae/rules/core.md"
+assert_file "$TRAE/.trae/RULES.md" "adaptor trae: RULES.md index"
+assert_file "$TRAE/.trae/skills/plan/SKILL.md" "adaptor trae: .trae/skills/plan/SKILL.md"
+assert_absent "$TRAE/.trae/rules/core.mdc" "adaptor trae: .mdc renamed to .md"
 
 # 11. adaptor opencode → 项目根 AGENTS.md + opencode.json（官方无 .opencode/ 目录）
 OC="$TMP_ROOT/opencode-adaptor"

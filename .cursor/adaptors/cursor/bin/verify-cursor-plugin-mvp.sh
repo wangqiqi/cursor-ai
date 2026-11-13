@@ -42,7 +42,8 @@ done
 # hooks/lib 里 source ../../lib/platform.sh —— 缺这份就三个 hook 全哑（2026-10-14 修）
 [[ -f "$PLUGIN/lib/platform.sh" ]] || fail "missing lib/platform.sh (hooks source ../../lib/platform.sh)"
 [[ -f "$PLUGIN/lib/onekey-bootstrap.sh" ]] || fail "missing lib/onekey-bootstrap.sh"
-onekey_ssot="$ROOT/.cursor/templates/project-onekey/onekey_start.sh"
+onekey_ssot="$ROOT/.cursor/harness/core/templates/project-onekey/onekey_start.sh"
+[[ -f "$onekey_ssot" ]] || onekey_ssot="$ROOT/.cursor/templates/project-onekey/onekey_start.sh"
 onekey_plugin="$PLUGIN/templates/project-onekey/onekey_start.sh"
 [[ -f "$onekey_plugin" ]] || fail "missing templates/project-onekey/onekey_start.sh (run sync-plugin-subset.sh)"
 cmp -s "$onekey_ssot" "$onekey_plugin" \
@@ -52,7 +53,8 @@ grep -q '"command": "hooks/run-start.sh"' "$PLUGIN/hooks/hooks.json" \
   || fail "hooks.json must use plugin-local hooks/ paths"
 
 verify_mdc="$PLUGIN/rules/feedback/verify.mdc"
-mother_verify="$ROOT/.cursor/rules/feedback/verify.mdc"
+mother_verify="$ROOT/.cursor/harness/core/rules/feedback/verify.mdc"
+[[ -f "$mother_verify" ]] || mother_verify="$ROOT/.cursor/rules/feedback/verify.mdc"
 [[ -f "$verify_mdc" ]] || fail "missing rules/feedback/verify.mdc"
 [[ -f "$mother_verify" ]] || fail "missing mother rules/feedback/verify.mdc"
 if ! diff -q "$mother_verify" "$verify_mdc" >/dev/null 2>&1; then

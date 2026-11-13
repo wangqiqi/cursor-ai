@@ -2,7 +2,9 @@
 # Validate scaffold templates: test.sh · verify.sh · tests layout
 set -euo pipefail
 
-CURSOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
+CURSOR_DIR="$CUR"
 TEMPLATE_ROOT="$CURSOR_DIR/templates/scaffold"
 MANIFEST="$TEMPLATE_ROOT/manifest.json"
 # shellcheck source=../lib/platform.sh

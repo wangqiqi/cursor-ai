@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # SPIKE-001 SPRINT-MOTHER-LEAN: tools skills optional bundle decision archived.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
 # 归档为本地私有（.growing/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验
 # shellcheck source=../lib/growth-archive.sh
-source "$ROOT/.cursor/lib/growth-archive.sh"
+source "$CUR/lib/growth-archive.sh"
 sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-tools-skills-archive" || exit 0
 
 shopt -s nullglob

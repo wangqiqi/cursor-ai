@@ -115,12 +115,12 @@ Install profiles（`install-super-cursor.sh --profile`）:
 |---------|--------|------|------|
 | `cursor`（默认） | `.cursor/` | `install-super-cursor.sh` | `install-smoke.sh` · `consumer-smoke.sh` |
 | `kiro` | `.kiro/` | `install-adaptor-rules-export.sh --adaptor kiro` 或 `--adaptor kiro` | `verify-install-rules-export.sh` |
-| `trae` | `.trae/` | `install-adaptor-rules-export.sh --adaptor trae` 或 `--adaptor trae` | 同上（kiro + trae） |
+| `trae` | `.trae/` | `install-adaptor-rules-export.sh --adaptor trae` + `install-adaptor-skills-export.sh --adaptor trae` 或 `--adaptor trae` | `verify-install-rules-export.sh` · `verify-install-skills-export.sh` |
 | `opencode` | 项目根 `AGENTS.md` + `opencode.json`（无 `.opencode/`） | `install-adaptor-opencode.sh` 或 `--adaptor opencode` | `verify-install-opencode.sh` |
 | `zcode` | `.zcode/` | `install-adaptor-zcode.sh` 或 `--adaptor zcode` | `verify-install-zcode.sh` |
 | `workbuddy` | `.workbuddy/` | `install-adaptor-workbuddy.sh` 或 `--adaptor workbuddy` | `verify-install-workbuddy.sh` |
 
-布局 → `adaptors/*/docs/layout.md` · `core_rules_export` SSOT → `docs/reference/core-rules-export.md` · 映射 → `install-map.example.json`。
+布局 → `adaptors/*/docs/layout.md` · `core_rules_export` SSOT → `docs/reference/core-rules-export.md` · `core_skills_export` → `adaptors/trae/docs/layout.md` §Skills · 映射 → `install-map.example.json`。
 
 ## release.json
 

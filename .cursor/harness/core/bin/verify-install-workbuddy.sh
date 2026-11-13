@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Smoke: install Harness Core into .workbuddy/ (temp dir).
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
-INSTALL_WB="$CURSOR_DIR/bin/install-adaptor-workbuddy.sh"
-[[ -f "$INSTALL_WB" ]] || INSTALL_WB="$CURSOR_DIR/harness/core/bin/install-adaptor-workbuddy.sh"
+INSTALL_WB="$CUR/bin/install-adaptor-workbuddy.sh"
 
 sc_mktemp_dir sc-verify-install-workbuddy
 TMP="$SC_MKTEMP_LAST"

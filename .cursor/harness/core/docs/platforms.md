@@ -20,7 +20,7 @@ bash .cursor/bin/platform-check.sh
 | jq | 推荐 | 推荐（`brew install jq`） | ⚠️ 可选；无则用 **python** |
 | python | 回退 | ✅ 通常已有 | ⚠️ 可能是 `python` 而非 `python3` |
 
-共享工具：`.cursor/lib/platform.sh`（ISO 时间戳、目录复制、JSON 读写、Node 栈检测）。
+共享工具：`.cursor/lib/platform.sh`（ISO 时间戳、目录复制、JSON 读写、Node 栈检测）· `.cursor/lib/pack-root.sh`（pack 根解析：兼容 `.cursor/bin` 符号链接与 `harness/core/bin` 实体路径）。
 
 ## 技能平台作用域
 
@@ -124,6 +124,27 @@ Cloud 不读 `.growing/plan.md`；验收命令写进 `environment.json` 的 `ins
 
 跨 WSL ↔ Windows 复制 `.cursor/` 时用 install 脚本或 `cp -a`，勿混用 PowerShell 手改 shell 脚本行尾。
 
+## 母版仓 vs 消费方（门面指针）
+
+本仓库（Super Cursor **母版 / 混合开发仓**）在 `.cursor/` 根下保留 **14 个门面入口**（`bin` · `lib` · `rules` · `skills` · …），内容为**相对符号链接**；在 `git config core.symlinks=false` 或无符号链接权限时，Git 会检出为**单行文本指针**（例如 `.cursor/rules` 文件内容是 `harness/core/rules`）。
+
+| 角色 | 推荐布局 | 说明 |
+|------|----------|------|
+| **母版 / 本仓** | **保持指针**（方案 B） | SSOT 在 `.cursor/harness/core` + `.cursor/adaptors`；不要把 `install-super-cursor.sh --replace` 的实体化结果提交进 git（约数百个重复文件 + typechange，后续同步 diff 噪声极大） |
+| **消费方项目** | **`install-super-cursor.sh --replace`** | 整包 `.cursor/` 落成实体目录，Cursor IDE 与各平台无需 symlink 即可读 rules / skills / hooks |
+
+**门禁与冒烟**（verify · install-smoke · runner-smoke · consumer-smoke）已通过 `lib/pack-root.sh` 兼容「门面指针」与 `harness/core/bin` 实体路径，**不要求**母版仓为跑脚本而实体化。
+
+### Windows 上让 Cursor IDE 读到 rules / skills
+
+门面是文本指针时，Cursor **不会**把 `.cursor/rules`、`.cursor/skills`、`.cursor/hooks.json` 当正常配置加载。脚本层照常可用；要让 IDE 生效，任选其一（**本地准备，勿提交** `link-cursor-ide` 产生的实体副本）：
+
+1. **推荐（与母版仓布局一致）**：系统 **设置 → 隐私和安全性 → 开发人员模式** 开启 → `git config core.symlinks true` → **重新克隆** 本仓（门面应为真 symlink）。
+2. **无法开 symlink**：在克隆目录执行 `bash .cursor/harness/link-cursor-ide.sh` 或 `bash .cursor/template-verify.sh`（内部会回退为与 `harness/core` 一致的实体副本）。工作区会出现大量变更 → **不要 commit**；仅本机 IDE 使用。
+3. **纯消费方项目**：对目标仓库跑 `bash install-super-cursor.sh /path/to/project --replace`，与母版仓维护策略无关。
+
+**不要**对母版仓根目录执行 `install-super-cursor.sh --replace` 并提交：那是给业务项目升级用的，不是本仓的 git 布局。
+
 ## 自测
 
 ```bash
@@ -144,6 +165,7 @@ git config core.autocrlf   # 建议 false；或依赖仓库根 .gitattributes（
 | 平台 | 坑 | 症状 | 护栏 |
 |------|----|------|------|
 | **macOS**（系统 bash 3.2） | `set -u` 下展开**空数组** `"${arr[@]}"` | `arr[@]: unbound variable` → 脚本中止（bash 4.4+ 才把它当空展开） | 一律写 `${arr[@]+"${arr[@]}"}`；`verify-portability` 拦截由 `"$@"` 填充的数组未守卫展开 |
+| **Windows** | 仓库检出时 `core.symlinks=false` → `.cursor/bin` 等是**文本指针**而非目录 | 直接 `bash .cursor/bin/verify-*.sh` 报 `Not a directory`；`$CUR/lib/...` 无法 source | 先 `bash .cursor/template-verify.sh`（内部 `link-cursor-ide.sh` 回退为实体副本）；或 `git config core.symlinks true` 后重克隆 |
 | **Windows** | Python 文本模式把 `\n` 写成 `\r\n` | `sc_manifest_ids` 的输出被 `read` 读成 `react-vite-ts\r` → `[[ -d ]]`／字符串比较失败（CI 报 `missing dir`） | python 助手 `sys.stdout.reconfigure(newline="\n")`；消费点 `${var%$'\r'}` 兜底剥离 |
 | **Windows** | Python stdout 默认 cp1252 | python 块打印中文即 `UnicodeEncodeError` 崩溃 | `platform.sh` 导出 `PYTHONIOENCODING=utf-8` + `PYTHONUTF8=1`；用 python 的脚本必须 source 平台库或自行导出（静态断言） |
 | **Windows** | `core.autocrlf=true` 把 `*.sh` 检出为 CRLF | `#!/usr/bin/env bash\r` → 脚本**秒退无报错** | 仓库根 `.gitattributes` 强制 `eol=lf`；门禁断言其存在且含 `eol=lf` |
@@ -151,6 +173,6 @@ git config core.autocrlf   # 建议 false；或依赖仓库根 .gitattributes（
 | **Windows / Git Bash** | 无符号链接权限时裸 `ln -s` | `set -e` 下**直接中止安装/自检** | 安装脚本降级为目录副本（含 README）；门禁要求 `ln -s` 带 `2>/dev/null`/`||`/`if` |
 | **Windows / Git Bash** | bash **process substitution** `< <(` | `plan-check` / scaffold 在 CI 偶发失败 | `runner.sh` · `scaffold.sh` · `scaffold-integrity.sh` 用 **mktemp 重定向**；`verify-portability` 静态拦截 |
 
-**CI 矩阵**（`.github/workflows/verify.yml`）：ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，**非阻塞观察中**）。无 jq 的分支用 `SC_FORCE_PYTHON=1` 覆盖——因为 macOS runner 自带 jq，"runner 上恰好没有 jq"不可靠。
+**CI 矩阵**（`.github/workflows/verify.yml`）：ubuntu（+jq，含文档构建）· macos（BSD 工具链 / bash 3.2）· windows（Git Bash，三腿均为**阻塞**）。无 jq 的分支用 `SC_FORCE_PYTHON=1` 覆盖——因为 macOS runner 自带 jq，"runner 上恰好没有 jq"不可靠。
 
 混合仓（业务树 + `.cursor/`）：`verify-super-cursor` 对纯母版 layout 项 **SKIP**，不 FAIL。强制空仓标准：`SC_VERIFY_LAYOUT=mother`。

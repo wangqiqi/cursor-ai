@@ -7,7 +7,7 @@
 | Cursor | `.cursor/` | 厚（hooks · Cloud · Bugbot） | https://cursor.com/docs |
 | DeepSeek `.dsh` | （用户级，无项目内安装） | guide-only（用户级 `~/.dsh` + `~/.agents`） | [adaptors/dsh/docs/layout.md](../../adaptors/dsh/docs/layout.md) |
 | Kiro | `.kiro/` | rules export（`core_rules_export`） | [adaptors/kiro/docs/layout.md](../../adaptors/kiro/docs/layout.md) |
-| Trae | `.trae/` | rules export（同 Kiro 集） | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
+| Trae | `.trae/` | rules + skills export（`core_rules_export` · `core_skills_export`） | [adaptors/trae/docs/layout.md](../../adaptors/trae/docs/layout.md) |
 | OpenCode | `AGENTS.md` + `opencode.json` | 官方机制（无 `.opencode/` 目录） | [adaptors/opencode/docs/layout.md](../../adaptors/opencode/docs/layout.md) |
 | VS Code 系 | `AGENTS.md` 等 | 薄 | https://code.visualstudio.com/docs/copilot |
 

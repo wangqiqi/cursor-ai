@@ -2,7 +2,8 @@
 # Cross-reference coherence checks for Super Cursor .cursor/ tree
 set -euo pipefail
 
-CUR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 FAIL=0
 
 fail() { echo "FAIL $1"; FAIL=$((FAIL+1)); }
@@ -199,7 +200,7 @@ grep -q '刻意不迁移' "$catalog" && grep -q '完整性边界' "$catalog" \
   || fail "migration-catalog missing 完整性边界 section"
 
 # 13–14. Facade README: mother root README, else .cursor/README.md (installed target)
-root_readme="$CUR/../README.md"
+root_readme="$ROOT/README.md"
 cursor_readme="$CUR/README.md"
 facade_readme=""
 if [[ -f "$root_readme" ]] && grep -q 'template-verify' "$root_readme" && grep -q 'cursor-coherence' "$root_readme"; then
@@ -227,9 +228,9 @@ if [[ -n "$facade_readme" ]]; then
   done
 fi
 
-# 15. rules/local symlink resolves (.growing/rules/local)
-repo_root="$(cd "$CUR/.." && pwd)"
-local_link="$CUR/rules/local"
+# 15. rules/local 可达（.growing/rules/local）；IDE 协议路径在 pack 根，不在 harness/core
+repo_root="$ROOT"
+local_link="$CURSOR_DIR/rules/local"
 if [[ -L "$local_link" ]]; then
   if [[ -d "$local_link" && -f "$local_link/README.md" ]]; then
     ok "rules/local symlink resolves"

@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # SPIKE-009 SPRINT-INSTALL-ONEKEY: onekey bootstrap scope archived.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
 # shellcheck source=../lib/growth-archive.sh
-source "$ROOT/.cursor/lib/growth-archive.sh"
+source "$CUR/lib/growth-archive.sh"
 sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-onekey-bootstrap-scope" || exit 0
 
 shopt -s nullglob

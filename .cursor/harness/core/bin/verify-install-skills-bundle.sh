@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Install --skills-bundle full|core smoke (temp dir only).
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-CURSOR_DIR="$ROOT/.cursor"
+# shellcheck source=../lib/pack-root.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/pack-root.sh"
 # shellcheck source=../lib/temp-cleanup.sh
-source "$CURSOR_DIR/lib/temp-cleanup.sh"
+source "$CUR/lib/temp-cleanup.sh"
 sc_temp_trap_cleanup
 INSTALL="$ROOT/install-super-cursor.sh"
 # SSOT counts + exclude list (no install)
-_ssot_line="$(bash "$CURSOR_DIR/bin/verify-skill-bundles-ssot.sh" 2>/dev/null | grep '^OK  skill-bundles SSOT:' || true)"
+_ssot_line="$(bash "$CUR/bin/verify-skill-bundles-ssot.sh" 2>/dev/null | grep '^OK  skill-bundles SSOT:' || true)"
 FULL_EXPECT="$(printf '%s' "$_ssot_line" | sed -n 's/.*full=\([0-9][0-9]*\).*/\1/p')"
 CORE_EXPECT="$(printf '%s' "$_ssot_line" | sed -n 's/.*core=\([0-9][0-9]*\).*/\1/p')"
 [[ -n "$FULL_EXPECT" && -n "$CORE_EXPECT" ]] || {

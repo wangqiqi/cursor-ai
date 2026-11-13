@@ -6,8 +6,13 @@ _script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/platform.sh
 source "$_script/lib/platform.sh"
 ROOT="$(sc_repo_root_from_dir "$_script")" || { echo "FAIL: repo root not found above verify-super-cursor.sh" >&2; exit 1; }
-CUR="$ROOT/.cursor"
-CUR_ADAPTOR_BIN="$CUR/adaptors/cursor/bin"
+PACK="$ROOT/.cursor"
+# 内容在 harness/core；hooks 在 adaptor 侧（Windows core.symlinks=false 时 .cursor/hooks 是文本指针）
+CUR="$PACK/harness/core"
+[[ -d "$CUR" ]] || CUR="$PACK"
+CUR_ADAPTOR_BIN="$PACK/adaptors/cursor/bin"
+HOOKS_DIR="$PACK/hooks"
+[[ -d "$HOOKS_DIR" ]] || HOOKS_DIR="$PACK/adaptors/cursor/hooks"
 
 sc_verify_script() {
   local name="$1"
@@ -158,12 +163,12 @@ check "$CUR/rules/execution/commit.mdc"
 check "$CUR/rules/execution/bugfix.mdc"
 check "$CUR/templates/growing/README.md"
 check "$CUR/templates/growing/learn/plan-conventions.md"
-check "$CUR/hooks/growth-init.sh"
-check "$CUR/hooks/run-start.sh"
-check "$CUR/hooks/run-stop.sh"
-check "$CUR/hooks/lib/config-load.sh"
-check "$CUR/hooks/lib/plan-parse.sh"
-check "$CUR/hooks/lib/json-utils.sh"
+check "$HOOKS_DIR/growth-init.sh"
+check "$HOOKS_DIR/run-start.sh"
+check "$HOOKS_DIR/run-stop.sh"
+check "$HOOKS_DIR/lib/config-load.sh"
+check "$HOOKS_DIR/lib/plan-parse.sh"
+check "$HOOKS_DIR/lib/json-utils.sh"
 check "$CUR/README.md"   # .cursor/README.md
 check "$CUR/verify-system.sh"
 check "$CUR/lib/platform.sh"
@@ -214,7 +219,7 @@ check "$CUR/docs/platforms.md"
 check "$ROOT/.cursorignore"
 check "$CUR/templates/scaffold/_shared.cursorignore"
 check "$CUR/bin/template-verify.sh"
-check_mother_only "$CUR/template-verify.sh" "template-verify wrapper"
+check_mother_only "$PACK/template-verify.sh" "template-verify wrapper"
 check_absent_mother_only "$ROOT/scripts"
 check_absent "$ROOT/examples"
 check_verify_workflow
@@ -224,7 +229,7 @@ check "$CUR/docs/naming.md"
 check "$CUR/docs/rules-catalog.md"
 check "$CUR/bin/runner.sh"
 check "$CUR/bin/platform-check.sh"
-check "$CUR/hooks.json"
+check "$PACK/hooks.json"
 check "$CUR/bin/cursor-coherence.sh"
 check "$CUR/bin/validate-commit-msg.sh"
 check "$CUR/rules/tech/cpp.mdc"
@@ -422,6 +427,7 @@ if is_mother_repo; then
   bash "$CUR/bin/verify-skill-bundles-ssot.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-skills-bundle.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-rules-export.sh" || VC_FAIL=$((VC_FAIL + 1))
+  bash "$CUR/bin/verify-install-skills-export.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-opencode.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-zcode.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-workbuddy.sh" || VC_FAIL=$((VC_FAIL + 1))

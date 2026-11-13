@@ -8,7 +8,9 @@ ARCHIVE_DIR="$ROOT/.growing/archive/meta"
 
 # 归档为本地私有（.growing/ 不入 git）→ 未引导时 SKIP；本地有 meta/ 仍严格校验
 # shellcheck source=../lib/growth-archive.sh
-source "$ROOT/.cursor/lib/growth-archive.sh"
+CORE_LIB="$ROOT/.cursor/harness/core/lib"
+[[ -d "$CORE_LIB" ]] || CORE_LIB="$ROOT/.cursor/lib"
+source "$CORE_LIB/growth-archive.sh"
 sc_growth_archive_available "$ARCHIVE_DIR" "verify-spike-plugin-mvp-scope" || exit 0
 
 shopt -s nullglob

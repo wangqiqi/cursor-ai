@@ -7,7 +7,9 @@ ROOT="$(sc_adaptor_repo_root_from "$(cd "$(dirname "$0")" && pwd)")"
 CUR="$ROOT/.cursor"
 PLUGIN="$ROOT/.cursor-plugin"
 # shellcheck source=../lib/verify-common.sh
-source "$CUR/lib/verify-common.sh" "verify-cursor-plugin-manifest"
+CORE_LIB="$CUR/harness/core/lib"
+[[ -d "$CORE_LIB" ]] || CORE_LIB="$CUR/lib"
+source "$CORE_LIB/verify-common.sh" "verify-cursor-plugin-manifest"
 
 vc_title
 MANIFEST="$PLUGIN/plugin.json"

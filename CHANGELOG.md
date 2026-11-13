@@ -4,6 +4,18 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **trae adaptor skills 导出** — 新增 token `core_skills_export` 与 `install-adaptor-skills-export.sh` / `verify-install-skills-export.sh`：`--adaptor trae` 现同时导出 `.trae/rules/*.md` 与 `.trae/skills/<id>/SKILL.md`（`--skills-bundle full`=28 · `core`=23；增量复制，不删除消费方自有 skill）。**导出逐字节复制**：不改写 frontmatter（保留 `disable-model-invocation`）、不改写正文 `.cursor/…` 路径，确保与 Cursor 内行为一致；`verify-install-skills-export` 有 `diff -r` 断言守护。`install-map.example.json` · `adaptor-contract.md` · trae README/layout · `install-smoke.sh` · `verify-super-cursor.sh` 同步。
+
+### Changed
+
+- **Windows 文档** — `platforms.md` · 根 `README` / `README.en.md` 明确母版仓保持门面指针（勿提交 `--replace` 实体化）、消费方 `--replace`、以及本机 Cursor IDE 读取 rules 的三步（开发人员模式 · 重克隆 · 本地 `link-cursor-ide`）。
+
+### Fixed
+
+- **Windows 本地门禁（`core.symlinks=false`）** — 新增 `lib/pack-root.sh`，`bin/*` 脚本统一按 pack 根解析（兼容 `.cursor/bin` 符号链接与 `.cursor/harness/core/bin` 实体路径）；修正 `verify-install-*` / SPIKE scope / `verify-doc-super-cursor` / `cursor-coherence` / `runner` / `runner-smoke` / `scaffold` / `bootstrap-growth` / `install-super-cursor` 的 `.cursor/…` 指针路径与 `templates` 回退；`--replace` 身份校验接受 `harness/core/rules/core.mdc`。Windows 检出无需先 `link-cursor-ide` 实体化即可直接跑 verify、`install-smoke`、`runner-smoke`、`consumer-smoke`（此前报 `Not a directory`、learn 种子缺失、`rules/local` 不可达、`--replace` 误拒）。
+
 ## [5.1.4] - 2026-11-11
 
 ### Fixed

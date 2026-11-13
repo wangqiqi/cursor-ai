@@ -22,7 +22,7 @@
     "trae": {
       "install_dir": ".trae",
       "growth_dir": ".growing",
-      "includes": ["core_rules_export"],
+      "includes": ["core_rules_export", "core_skills_export"],
       "hooks_manifest": null
     },
     "opencode": {
