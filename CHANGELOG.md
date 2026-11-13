@@ -4,6 +4,8 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.5] - 2026-11-13
+
 ### Added
 
 - **trae adaptor skills 导出** — 新增 token `core_skills_export` 与 `install-adaptor-skills-export.sh` / `verify-install-skills-export.sh`：`--adaptor trae` 现同时导出 `.trae/rules/*.md` 与 `.trae/skills/<id>/SKILL.md`（`--skills-bundle full`=28 · `core`=23；增量复制，不删除消费方自有 skill）。**导出逐字节复制**：不改写 frontmatter（保留 `disable-model-invocation`）、不改写正文 `.cursor/…` 路径，确保与 Cursor 内行为一致；`verify-install-skills-export` 有 `diff -r` 断言守护。`install-map.example.json` · `adaptor-contract.md` · trae README/layout · `install-smoke.sh` · `verify-super-cursor.sh` 同步。
