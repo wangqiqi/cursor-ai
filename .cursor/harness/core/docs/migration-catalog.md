@@ -74,7 +74,7 @@
 
 ## 分发三轨（CLI · 拖放 · bundle · Plugin）
 
-消费方装 `.cursor/` 的 **双轨 SSOT** → [reference/install-paths.md](reference/install-paths.md)（**CLI install** · **`--pack-dropin` 复制/拖放**）。  
+消费方装 `.cursor/` 的 **双轨 SSOT** → [install-paths](/reference/install-paths)（**CLI install** · **`--pack-dropin` 复制/拖放**）。  
 Plugin / skills-bundle 矩阵见 `learn/cursor-platform.md` §分发三轨 · SPIKE 归档 `archive/meta/*_SPIKE_plugin_phase2_scope.md`。
 
 | 轨 | 入口 | skills 规模 | config / hooks | 典型场景 |

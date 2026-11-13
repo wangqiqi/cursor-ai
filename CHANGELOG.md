@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.9] - 2026-11-13
+
+### Fixed
+
+- **CI / Pages** — VitePress 死链：`install-paths` · `quickstart` 站内路径；`sync-cursor-docs` 补 reference/install-paths 重写。
+
 ## [5.1.8] - 2026-11-13
 
 ### Added

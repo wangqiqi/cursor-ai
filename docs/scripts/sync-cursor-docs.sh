@@ -108,7 +108,9 @@ rewrite_guide_links() {
   sed_rewrite "$file" \
     -e 's](\([a-z0-9_-]*\)\.md)](/guide/\1)]g' \
     -e 's](rules-catalog\.md)](/reference/rules-catalog)]g' \
-    -e 's](rules-catalog)](/reference/rules-catalog)]g'
+    -e 's](rules-catalog)](/reference/rules-catalog)]g' \
+    -e 's](reference/install-paths\.md)](/reference/install-paths)]g' \
+    -e 's](reference/install-paths)](/reference/install-paths)]g'
 }
 
 for f in "$DEST/guide"/*.md; do
@@ -142,7 +144,16 @@ sed_rewrite "$DEST/reference/library-index.md" \
   -e 's](rules-catalog)](/reference/rules-catalog)]g'
 
 sed_rewrite "$DEST/reference/migration-catalog.md" \
-  -e 's](consumer-refresh\.md)](/guide/consumer-refresh)]g'
+  -e 's](consumer-refresh\.md)](/guide/consumer-refresh)]g' \
+  -e 's](reference/install-paths\.md)](/reference/install-paths)]g' \
+  -e 's](reference/install-paths)](/reference/install-paths)]g'
+
+if [[ -f "$DEST/reference/install-paths.md" ]]; then
+  sed_rewrite "$DEST/reference/install-paths.md" \
+    -e 's](\.\./consumer-refresh\.md)](/guide/consumer-refresh)]g' \
+    -e 's](\.\./platforms\.md)](/guide/platforms)]g' \
+    -e 's](\.\./\.\./\.\./\.\./\.\./README\.md)](https://github.com/wangqiqi/cursor-ai)]g'
+fi
 
 for f in "$DEST/guide"/*.md "$DEST/reference"/*.md; do
   rewrite_adaptor_layout_links "$f"
