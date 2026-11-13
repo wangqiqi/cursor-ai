@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.15] - 2026-11-13
+
+### Fixed
+
+- **CI（Linux · macOS）** — `verify-cursor-dropin.sh` 对 `skills`/`rules` 符号链接使用 `find -L` 计数，修复 install-smoke 误报 `skills count 0 < 23`。
+
 ## [5.1.14] - 2026-11-13
 
 ### Fixed
