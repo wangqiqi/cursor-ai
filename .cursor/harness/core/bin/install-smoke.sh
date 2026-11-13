@@ -75,6 +75,11 @@ echo "=== install smoke ==="
 FULL="$TMP_ROOT/full-empty"
 run_install "full: install into empty target" "$TMP_ROOT/full.out" "$FULL" --profile full
 assert_file "$FULL/.growing/plan.md" "full: .growing/plan.md copied"
+if bash "$CUR/bin/verify-cursor-dropin.sh" "$FULL"; then
+  ok "full: bin/verify-cursor-dropin.sh contract"
+else
+  fail "full: bin/verify-cursor-dropin.sh"
+fi
 assert_file "$FULL/.growing/learn/plan-conventions.md" "full: learn seeds"
 # B4：安装输出必须把「首次必做 /learn」讲清楚，否则闸门与验收会空转
 assert_grep "$TMP_ROOT/full.out" '/learn' "full: output points at /learn first-run"

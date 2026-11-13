@@ -431,6 +431,7 @@ if is_mother_repo; then
   bash "$CUR/bin/verify-install-opencode.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-zcode.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$CUR/bin/verify-install-workbuddy.sh" || VC_FAIL=$((VC_FAIL + 1))
+  # dropin 契约：install-smoke 调用 bin/verify-cursor-dropin.sh
   bash "$CUR/bin/verify-spike-docs-sync-scope.sh" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-spike-plugin-mvp-scope.sh)" || VC_FAIL=$((VC_FAIL + 1))
   bash "$(sc_verify_script verify-cursor-plugin-manifest.sh)" || VC_FAIL=$((VC_FAIL + 1))

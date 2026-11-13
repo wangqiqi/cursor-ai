@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.7] - 2026-11-13
+
+### Fixed
+
+- **CI（v5.1.6 遗留）** — `verify-cursor-dropin.sh` 接入 `install-smoke` 与 `verify-super-cursor` 接线登记，修复 `template-verify` 孤儿门禁失败；`sync-plugin-subset` 同步 plugin `verify.mdc`。
+
 ## [5.1.6] - 2026-11-13
 
 ### Added
