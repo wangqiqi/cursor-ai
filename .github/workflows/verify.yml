@@ -95,16 +95,18 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: IDE protocol links (before verify)
+        run: bash .cursor/harness/link-cursor-ide.sh
+
+      - name: Secret scan (tracked files)
+        run: bash .cursor/bin/verify-secrets.sh
+
       # 无 jq 的矩阵项：用 SC_FORCE_PYTHON=1 强制走 python JSON 回退。
-      # 不能靠"runner 上恰好没有 jq"来验证（macOS runner 自带 jq），所以要把回退做成可切换路径。
       - name: Template verify (python JSON fallback)
         if: ${{ !matrix.jq }}
         env:
           SC_FORCE_PYTHON: '1'
         run: bash .cursor/template-verify.sh
-
-      - name: Secret scan (tracked files)
-        run: bash .cursor/harness/link-cursor-ide.sh && bash .cursor/bin/verify-secrets.sh
 
       - name: Template layout + scaffold + runner + install + consumer smoke
         if: matrix.jq

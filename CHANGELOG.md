@@ -4,6 +4,12 @@ All notable changes to Super Cursor are documented here.
 
 ## [Unreleased]
 
+## [5.1.13] - 2026-11-13
+
+### Fixed
+
+- **CI** — Verify 矩阵先 `link-cursor-ide` 再 `template-verify`（macOS/Windows 曾倒序）；`link-cursor-ide` 补 `.cursor/docs` 门面。
+
 ## [5.1.12] - 2026-11-13
 
 ### Fixed

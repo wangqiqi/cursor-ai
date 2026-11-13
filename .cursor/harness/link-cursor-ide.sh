@@ -42,6 +42,8 @@ link_rel() {
 }
 
 link_rel agents harness/core/agents
+# 门面 gitlink（与 harness 同步；Windows 检出失败时回退复制）
+link_rel docs harness/core/docs
 link_rel bin harness/core/bin
 link_rel config harness/core/config
 link_rel docs harness/core/docs
